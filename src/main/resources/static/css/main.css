@@ -1,0 +1,117 @@
+body{
+	background-color: #90a4ae;
+	padding-top: 0px;
+	color: #263238;
+}
+body button{
+	border: 0px;
+	background-color: #455a64;
+	opacity: 50%;
+	color: white;
+}
+body button:hover{
+	background-color: white;
+	color: #455a64;
+}
+body button a{
+	color: white;
+}
+body button a:hover{
+	color: #455a64;
+}
+.container {
+	margin-left: 94px;
+	margin-top: 10px;
+}
+.user-form {
+	display: inline-block;
+	width: 45%;
+	vertical-align: middle;
+	margin: 20px;
+	border: 1px solid white;
+	padding: 15px;
+	color: white;
+}
+
+.table-hover a{
+	color: white;
+	font-style: bold;
+	font-size: 17px;
+}
+.navbar {
+    background-color: #455a64;
+    margin-bottom: 15px;
+    padding: 0px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 50%;
+}
+.titles{
+
+	margin: 10px;
+	margin-bottom: 60px;
+	vertical-align: middle;
+	color: white;
+}
+
+.titles h1{
+	color: white;
+}
+
+.titles a{
+	color: white;
+}
+.titles a:hover{
+	color: white;
+	opacity: 50%
+}
+
+.navbarmenu {
+    width: auto;
+    margin-left: 10%;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+.navbarmenu li {
+	padding: 20px;
+    vertical-align: middle;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbarmenu li:hover {
+	opacity: 50%;
+}
+.navbarmenu li a {
+	color: white;
+	font-style: bold;
+	font-size: 24px;
+}
+.subset li{
+	padding: 0px;
+	margin: 0px;
+	opacity: 0%;
+}
+.wrapper{
+	width: 1000px;
+	margin-left: 10%;
+}
+.buttons1{
+	margin-left:30%;
+}
+.user-form{
+	margin-left: 25%;
+	width: 50%;
+}
+.date-form{
+	margin-left: 30%;
+	margin-bottom: 10px;
+	width: 50%;
+}
+.pointer{
+	width: 20px;
+	display: inline-block;
+}
