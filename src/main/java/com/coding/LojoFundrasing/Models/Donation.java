@@ -26,8 +26,8 @@ public class Donation {
 	private Double amount;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Dondate;
-	@DateTimeFormat(pattern ="kk:mm")
-	private Date Dontime;
+	/*@DateTimeFormat(pattern ="kk:mm")
+	private Date Dontime;*/
 	
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="donor_id")
@@ -75,13 +75,13 @@ public class Donation {
 	}
 	
 
-	public Date getDontime() {
+	/*public Date getDontime() {
 		return Dontime;
 	}
 
 	public void setDontime(Date dontime) {
 		Dontime = dontime;
-	}
+	}*/
 
 	public Donor getDonor() {
 		return donor;
@@ -118,10 +118,10 @@ public class Donation {
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
     	return df.format(this.Dondate);
     }
-    public String getDonationTimeFormatted() {
+    /*public String getDonationTimeFormatted() {
     	SimpleDateFormat df = new SimpleDateFormat("kk:mm");
     	return df.format(this.Dontime);
-    }
+    }*/
 
 	public Emails getEmailDonation() {
 		return emailDonation;

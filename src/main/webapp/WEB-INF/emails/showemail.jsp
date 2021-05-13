@@ -59,7 +59,6 @@
 			        <tr>
 			            <th>Donor</th>
 			            <th>Date</th>
-			            <th>Time</th>
 			            <th>Amount</th>
 			            <th>Action</th>
 			        </tr>
@@ -69,7 +68,6 @@
 						<tr>
 						<td><a href="/donors/${c.donor.id}">${ c.donor.donorFirstName } ${c.donor.donorLastName}</a></td>
 						<td>${ c.getDonationDateFormatted() }</td>
-						<td>${ c.getDonationTimeFormatted() }</td>
 						<td>$${ c.amount }</td>
 						<td>
 							<p><a href="/donations/edit/${c.id}">Edit</a></p>

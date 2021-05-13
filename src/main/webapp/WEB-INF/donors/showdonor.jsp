@@ -36,7 +36,6 @@
 			    <thead>
 			        <tr>
 			            <th>Date</th>
-			            <th>Time</th>
 			            <th>Amount</th>
 			            <th>Email</th>
 			            <th>Action</th>
@@ -46,7 +45,6 @@
 				<c:forEach items="${ donor.contributions }" var="d">
 					<tr>
 						<td>${ d.getDonationDateFormatted() }</td>
-						<td>${ d.getDonationTimeFormatted() }</td>
 						<td>${ d.amount }</td>
 						<td><a href="/emails/${ d.emailDonation.id }">${ d.emailDonation.emailName }</a></td>
 						<td>

@@ -44,11 +44,6 @@
 	            <form:input type="Dondate" path="Dondate"/>
 	        </p>
 	        <p>
-	            <form:label path="Dontime">Time:</form:label>
-	            <form:errors path="Dontime"></form:errors>
-	            <form:input type="Dontime"  path="Dontime"/>
-	        </p>
-	        <p>
 		        <label for="donor">Assign a donor:</label>
 				<select id="donor" name="donor">
 				  	<c:forEach items="${ donor }" var="p">

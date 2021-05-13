@@ -53,8 +53,8 @@ public class Donor {
     @DateTimeFormat(pattern ="yyyy-MM-dd kk:mm:ss")
     private Date mostrecentDate;
     
-	@DateTimeFormat(pattern ="kk:mm")
-	private Date mostrecenttime;
+	/*@DateTimeFormat(pattern ="kk:mm")
+	private Date mostrecenttime;*/
 	
 	private Double mostrecentamount;
 	
@@ -168,13 +168,13 @@ public class Donor {
 		this.mostrecentDate = mostrecentDate;
 	}
 
-	public Date getMostrecenttime() {
+	/*public Date getMostrecenttime() {
 		return mostrecenttime;
 	}
 
 	public void setMostrecenttime(Date mostrecenttime) {
 		this.mostrecenttime = mostrecenttime;
-	}
+	}*/
 
 	public Double getMostrecentamount() {
 		return mostrecentamount;
@@ -188,10 +188,10 @@ public class Donor {
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     	return df.format(this.mostrecentDate);
     }
-    public String getRecentTimeFormatted() {
+    /*public String getRecentTimeFormatted() {
     	SimpleDateFormat df = new SimpleDateFormat("kk:mm");
     	return df.format(this.mostrecenttime);
-    }
+    }*/
 	public String getDonorRecentAmountFormatted() {
 		if (this.mostrecentamount == null) {
 			this.mostrecentamount = 0.0;

@@ -98,11 +98,11 @@ public class DonorService {
 						mostrecent_donation_id = drepo.mostRecentDonationDate(id);
 						Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 						mostrecentDate = mostrecent.getDondate();
-						mostrecenttime = mostrecent.getDontime();
+						//mostrecenttime = mostrecent.getDontime();
 						mostrecentamount = mostrecent.getAmount();
 						donor.setMostrecentDate(mostrecentDate);
 						donor.setMostrecentamount(mostrecentamount);
-						donor.setMostrecenttime(mostrecenttime);
+						//donor.setMostrecenttime(mostrecenttime);
 						//donordata.setMostrecent_donation(mostrecent_donation_id);
 						//donor.setMostrecentDonationbyDonor(mostrecent);
 						System.out.println("date " + mostrecent_donation_id);
@@ -120,11 +120,11 @@ public class DonorService {
 			mostrecent_donation_id = drepo.mostRecentDonationDate(id);
 			Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 			mostrecentDate = mostrecent.getDondate();
-			mostrecenttime = mostrecent.getDontime();
+			//mostrecenttime = mostrecent.getDontime();
 			mostrecentamount = mostrecent.getAmount();
 			donor.setMostrecentDate(mostrecentDate);
 			donor.setMostrecentamount(mostrecentamount);
-			donor.setMostrecenttime(mostrecenttime);
+			//donor.setMostrecenttime(mostrecenttime);
 			//donor.setMostrecentDonationbyDonor(mostrecent);
 			donordata = new DonorData(donor, daverage, donorsum, donationcount);
 			System.out.println(donordata.getId());
