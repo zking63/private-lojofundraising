@@ -24,7 +24,7 @@ public class Donation {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private Double amount;
-	@DateTimeFormat(pattern ="yyyy-MM-dd")
+	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Dondate;
 	@DateTimeFormat(pattern ="kk:mm")
 	private Date Dontime;
@@ -40,9 +40,6 @@ public class Donation {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="email_id")
     private Emails emailDonation;
-    
-	/*@OneToOne(mappedBy="mostrecentDonationbyDonor", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Donor donorRecent;*/
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -118,7 +115,7 @@ public class Donation {
 		this.updatedAt = updatedAt;
 	}
     public String getDonationDateFormatted() {
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
     	return df.format(this.Dondate);
     }
     public String getDonationTimeFormatted() {
@@ -142,13 +139,5 @@ public class Donation {
 	protected void onUpdate(){
 	    this.updatedAt = new Date();
 	}
-
-	/*public Donor getdonorRecent() {
-		return donorRecent;
-	}
-
-	public void setdonorRecent(Donor donorRecent) {
-		this.donorRecent = donorRecent;
-	}*/
     
 }

@@ -21,7 +21,7 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 	List<Donation> findByemailDonation(Long email_id);
 	List<Donation> findAllByOrderByAmountAsc();
 	List<Donation> findAllByOrderByAmountDesc();
-	@Query(value = "SELECT * FROM donations where donations.Dondate >= :startdate and donations.Dondate <= :enddate order by donations.Dondate DESC, donations.Dontime DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM donations where donations.Dondate >= :startdate and donations.Dondate <= DATE(:enddate) order by donations.Dondate DESC, donations.Dontime DESC", nativeQuery = true)
 	List <Donation> findAllWithDondateAfter(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate);
 	@Query(value = "SELECT * FROM donations where donations.Dondate >= :startdate and donations.Dondate <= :enddate order by donations.Dondate ASC, donations.Dontime ASC", nativeQuery = true)
@@ -32,5 +32,5 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate);
 	@Query(value = "SELECT * FROM donations where donations.Dondate >= :startdate and donations.Dondate <= :enddate order by donations.amount ASC", nativeQuery = true)
 	List<Donation> findByOrderByAmountAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss") String enddate);
 }

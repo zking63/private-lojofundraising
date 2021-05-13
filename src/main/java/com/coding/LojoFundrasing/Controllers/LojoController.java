@@ -152,9 +152,10 @@ public class LojoController {
 		 }
 		 if (enddateD == null) {
 			 enddateD = dateFormat();
+			 enddateD = enddateD + " 23:59:00";
 		 }
 		 model.addAttribute("startdateD", startdateD);
-		 model.addAttribute("enddateD", enddateD);
+		 model.addAttribute("enddateD", dateFormat());
 		 model.addAttribute("dateFormat", dateFormat());
 		 //model.addAttribute("donorswithin", this.dservice.DonorsWithinRange(startdateD, enddateD));
 		 dservice.DonorsWithinRange(startdateD, enddateD);
@@ -163,6 +164,10 @@ public class LojoController {
 	 }
 	private String dateFormat() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(new Date());
+	}
+	private String dateFormat2() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
 		return df.format(new Date());
 	}
 	private String dateFormat7daysAgo() {
@@ -186,7 +191,7 @@ public class LojoController {
 		 model.addAttribute("user", user);
 		 model.addAttribute("donor", this.dservice.allDonors());
 		 model.addAttribute("email", this.eservice.allEmails());
-		 model.addAttribute("dateFormat", dateFormat());
+		 model.addAttribute("dateFormat", dateFormat2());
 		 model.addAttribute("timeFormat", timeFormat());
 		 return "newdonation.jsp";
 	 }
@@ -247,9 +252,10 @@ public class LojoController {
 		 }
 		 if (enddateE == null) {
 			 enddateE = dateFormat();
+			 enddateE = enddateE + " 23:59:00";
 		 }
 		 model.addAttribute("startdateE", startdateE);
-		 model.addAttribute("enddateE", enddateE);
+		 model.addAttribute("enddateE", dateFormat());
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 model.addAttribute("email", this.eservice.EmailTest(startdateE, enddateE));
@@ -387,7 +393,7 @@ public class LojoController {
 				model.addAttribute("user", user);
 				model.addAttribute("donor", this.dservice.allDonors());
 				model.addAttribute("email", this.eservice.allEmails());
-				model.addAttribute("dateFormat", dateFormat());
+				model.addAttribute("dateFormat", dateFormat2());
 				model.addAttribute("timeFormat", timeFormat());
 				return "/donations/editdonation.jsp";
 			}
@@ -422,7 +428,7 @@ public class LojoController {
 		 @RequestMapping(value="/home/sortdown")
 		 public String sortdownPost(Model model, HttpSession session, @ModelAttribute("donations")Donation donation,
 				 @RequestParam("startdate") @DateTimeFormat(iso = ISO.DATE) String startdate, 
-				 @RequestParam("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate, @RequestParam("field") String field) {
+				 @RequestParam("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate, @RequestParam("field") String field) throws ParseException {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -434,6 +440,7 @@ public class LojoController {
 			 model.addAttribute("enddate", enddate);
 			 model.addAttribute("field",field);
 			 List<Donation> donations = null;
+			 enddate = enddate + " 23:59:00";
 			 if (field.equals("amount")) {
 				 donations = this.donservice.orderAmounts2(startdate, enddate);
 			 }
@@ -458,6 +465,7 @@ public class LojoController {
 			 model.addAttribute("enddate", enddate);
 			 model.addAttribute("field",field);
 			 List<Donation> donations = null;
+			 enddate = enddate + " 23:59:00";
 			 if (field.equals("amount")) {
 				 donations = this.donservice.orderAmounts(startdate, enddate);
 			 }
@@ -478,6 +486,7 @@ public class LojoController {
 		 public String sortdownEmail(Model model, HttpSession session,
 				 @RequestParam("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
 				 @RequestParam("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @RequestParam("field") String field) {
+			 enddateE = enddateE + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -511,6 +520,7 @@ public class LojoController {
 		 public String sortUpEmail(Model model, HttpSession session,
 				 @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
 				 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @Param("field") String field) {
+			 enddateE = enddateE + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -544,6 +554,7 @@ public class LojoController {
 		 public String sortdownDonors(Model model, HttpSession session,
 				 @RequestParam("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @RequestParam("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field) {
+			 enddateD = enddateD + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -578,6 +589,7 @@ public class LojoController {
 		 public String sortUpDonors(Model model, HttpSession session,
 				 @RequestParam("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @RequestParam("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field) {
+			 enddateD = enddateD + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";

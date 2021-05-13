@@ -41,7 +41,7 @@ public class DonationService {
 		return donrepo.findByemailDonation(email_id);
 	}
 	public List<Donation> orderAmounts2(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss") String enddate){
 		return donrepo.findByOrderByAmountDesc(startdate, enddate);
 	}
 	public List<Donation> orderAmounts(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
@@ -53,6 +53,7 @@ public class DonationService {
 	}
 	public List<Donation> DonTest(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, @Param("enddate") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
+		enddate = enddate + " 23:50:00";
 		return donrepo.findAllWithDondateAfter(startdate, enddate);
 	}
 	public List<Donation> DonTestAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, @Param("enddate") 

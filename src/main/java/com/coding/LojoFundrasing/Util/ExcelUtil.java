@@ -16,10 +16,17 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Services.DonorService;
 
 @Component
 public class ExcelUtil {
+	@Autowired
+	private DonorService dservice;
+	
 	public void getSheetDetails(String excelPath)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		
@@ -72,12 +79,16 @@ public class ExcelUtil {
 			DataFormatter dataFormatter = new DataFormatter();
 			int NameColumn = 0;
 			int EmailColumn = 0;
-			int AgeColumn = 0;
+			int LastNameColumn = 0;
+			int AmountColumn = 0;
+			int TimeColumn = 0;
+			int RefcodeColumn = 0;
 			int DateColumn = 0;
 			String emailValue = null;
-			String valValue = null;
-			Integer ageValue = null;
+			String nameValue = null;
+			String LNValue = null;
 			String date = null;
+			Donor donor = null;
 			Date dateValue = new Date();
 			Date timeValue = null;
 			System.out.println("The sheet number is " + i + 1);
@@ -97,13 +108,21 @@ public class ExcelUtil {
 							//System.out.println("Header column: " + header.getColumn());
 							System.out.println("Headers: " + headers);
 							String headerValue = dataFormatter.formatCellValue(header);
-							if (headerValue.contentEquals("Name")) {
+							if (headerValue.contentEquals("FirstName")) {
 								NameColumn = header.getColumnIndex();
 								System.out.println("NameColumn: " + NameColumn);
 							}
-							if (headerValue.contentEquals("name")) {
+							if (headerValue.contentEquals("firstname")) {
 								NameColumn = header.getColumnIndex();
 								System.out.println("NameColumn: " + NameColumn);
+							}
+							if (headerValue.contentEquals("LastName")) {
+								LastNameColumn = header.getColumnIndex();
+								System.out.println("DateColumn: " + LastNameColumn);
+							}
+							if (headerValue.contentEquals("lastname")) {
+								LastNameColumn = header.getColumnIndex();
+								System.out.println("DateColumn: " + LastNameColumn);
 							}
 							if (headerValue.contentEquals("email")) {
 								EmailColumn = header.getColumnIndex();
@@ -113,21 +132,21 @@ public class ExcelUtil {
 								EmailColumn = header.getColumnIndex();
 								System.out.println("NameColumn: " + NameColumn);
 							}
-							if (headerValue.contentEquals("age")) {
-								AgeColumn = header.getColumnIndex();
+							if (headerValue.contentEquals("Amount")) {
+								EmailColumn = header.getColumnIndex();
 								System.out.println("NameColumn: " + NameColumn);
-							}
-							if (headerValue.contentEquals("Age")) {
-								AgeColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
-							}
-							if (headerValue.contentEquals("date")) {
-								DateColumn = header.getColumnIndex();
-								System.out.println("DateColumn: " + DateColumn);
 							}
 							if (headerValue.contentEquals("Date")) {
-								DateColumn = header.getColumnIndex();
-								System.out.println("DateColumn: " + DateColumn);
+								EmailColumn = header.getColumnIndex();
+								System.out.println("NameColumn: " + NameColumn);
+							}
+							if (headerValue.contentEquals("Time")) {
+								EmailColumn = header.getColumnIndex();
+								System.out.println("NameColumn: " + NameColumn);
+							}
+							if (headerValue.contentEquals("Refcode")) {
+								EmailColumn = header.getColumnIndex();
+								System.out.println("NameColumn: " + NameColumn);
 							}
 						}
 						else {
@@ -142,7 +161,7 @@ public class ExcelUtil {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
-										valValue = dataFormatter.formatCellValue(cell);
+										nameValue = dataFormatter.formatCellValue(cell);
 										/*System.out.print("map: " + userMap);
 								        System.out.print("usermap section");*/
 								        /*Set<String> keys = userMap.keySet();
@@ -155,9 +174,9 @@ public class ExcelUtil {
 									if (cell.getColumnIndex() == EmailColumn) {
 										emailValue = dataFormatter.formatCellValue(value);
 									}
-									/*if (cell.getColumnIndex() == AgeColumn) {
-										ageValue = (int) cell.getNumericCellValue();
-									}*/
+									if (cell.getColumnIndex() == LastNameColumn) {
+										LNValue = dataFormatter.formatCellValue(value);
+									}
 									/*if (cell.getColumnIndex() == DateColumn) {
 										date = dataFormatter.formatCellValue(cell);
 										//dateValue = cell.getDateCellValue();
@@ -180,26 +199,22 @@ public class ExcelUtil {
 										//dateValue = cell.getDateCellValue();
 										//System.out.println("DATE: " + dateValue);
 									}*/
-					        /*if (pservice.findPersonbyName(valValue) == null) {
-					        	person = new Person();
-								person.setName(valValue);
-								person.setEmail(emailValue);
-								person.setAge(ageValue);
-								person.setDate(dateValue);
-								person.setTime(timeValue);
-								pservice.createPerson(person);
-								System.out.println("UPDATED Id: " + person.getId() + " Person: " + person.getName() + " Email: " + person.getEmail());
+					        if (dservice.findDonorbyEmail(emailValue) == null) {
+					        	donor = new Donor();
+					        	donor.setDonorFirstName(nameValue);
+					        	donor.setDonorLastName(LNValue);
+					        	donor.setDonorEmail(emailValue);
+					        	dservice.createDonor(donor);
+								System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					        }
 					        else {
-					        	person = pservice.findPersonbyName(valValue);
-					        	person.setName(valValue);
-					        	person.setEmail(emailValue);
-					        	person.setAge(ageValue);
-					        	person.setDate(dateValue);
-					        	person.setTime(timeValue);
-					        	pservice.updatePerson(person);
-					        	System.out.println("UPDATED Id: " + person.getId() + " Person: " + person.getName() + " Email: " + person.getEmail());
-					        }*/
+					        	donor = dservice.findDonorbyEmail(emailValue);
+					        	donor.setDonorFirstName(nameValue);
+					        	donor.setDonorLastName(LNValue);
+					        	donor.setDonorEmail(emailValue);
+					        	dservice.updateDonor(donor);
+					        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					        }
 						}
 
 	                }
