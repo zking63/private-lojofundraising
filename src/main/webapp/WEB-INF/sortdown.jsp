@@ -31,45 +31,18 @@
 	</div>
 	<div class="wrapper">
 	<h1>Recent Donations</h1>
-		<form method="post" class="date-form" action="/home">
-			<input type="date" value="${startdate}" name="startdate"/>
-			<input type="date" value="${enddate}" name="enddate"/>
+		<form class="date-form" action="/sortdown/?startdate=${startdate}&enddate=${enddate}">
+			<input type="date" value="${dateFormat}" name="startdate"/>
+			<input type="date" value="${dateFormat}" name="enddate"/>
 			<button>Set</button>
 		</form>
 	<table class="table table-hover">
 	    <thead>
 	        <tr>
 	            <th>Donor</th>
-	            <p><th>Amount 		
-		            <form class="pointer" method="post" action="/home/sortdown">
-						<input type="hidden" name="field" value="amount">
-						<input type="hidden" name="startdate" value="${ startdate}">
-						<input type="hidden" name="enddate" value="${ enddate}">
-						<button>^</button>
-					</form>
-					<form class="pointer" method="post" action="/home/sortup">
-						<input type="hidden" name="field" value="amount">
-						<input type="hidden" name="startdate" value="${ startdate}">
-						<input type="hidden" name="enddate" value="${ enddate}">
-						<button>v</button>
-					</form>
-				</th></p>
+	            <th>Amount <a href="/sortdown">^</a><a href="/sortup">v</a></th>
 	            <th>Email given to</th>
-	            <p><th>Date/Time 		
-		            <form class="pointer" method="post" action="/home/sortdown">
-						<input type="hidden" name="field" value="datetime">
-						<input type="hidden" name="startdate" value="${ startdate}">
-						<input type="hidden" name="enddate" value="${ enddate}">
-						<button>^</button>
-					</form>
-					<form class="pointer" method="post" action="/home/sortup">
-						<input type="hidden" name="field" value="datetime">
-						<input type="hidden" name="startdate" value="${ startdate}">
-						<input type="hidden" name="enddate" value="${ enddate}">
-						<button>v</button>
-					</form>
-				</th></p>
-		</div>
+	            <th>Date/Time</th>
 	            <th>Action</th>
 	        </tr>
 	    </thead>
