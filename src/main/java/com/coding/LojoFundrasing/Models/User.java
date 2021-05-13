@@ -40,14 +40,14 @@ public class User {
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
-    /*@OneToMany(fetch=FetchType.LAZY, mappedBy="uploader")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="uploader")
     private List<Donor> donorsUploaded;
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="donation_uploader")
     private List<Donation> donationsUploaded;
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="email_uploader")
-    private List<Emails> emailsUploaded;*/
+    private List<Emails> emailsUploaded;
 	
 	public User() {
 		
@@ -117,30 +117,30 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 	
-	/*public List<Donor> getDonorsUploaded() {
+	public List<Donor> getDonorsUploaded() {
 		return donorsUploaded;
 	}
 
 	public void setDonorsUploaded(List<Donor> donorsUploaded) {
 		this.donorsUploaded = donorsUploaded;
-	}*/
+	}
 	
 
-	/*public List<Donation> getDonationsUploaded() {
+	public List<Donation> getDonationsUploaded() {
 		return donationsUploaded;
 	}
 
 	public void setDonationsUploaded(List<Donation> donationsUploaded) {
 		this.donationsUploaded = donationsUploaded;
-	}*/
+	}
 	
-	/*public List<Emails> getEmailsUploaded() {
+	public List<Emails> getEmailsUploaded() {
 		return emailsUploaded;
 	}
 
 	public void setEmailsUploaded(List<Emails> emailsUploaded) {
 		this.emailsUploaded = emailsUploaded;
-	}*/
+	}
 
 	@PrePersist
 	protected void onCreate(){

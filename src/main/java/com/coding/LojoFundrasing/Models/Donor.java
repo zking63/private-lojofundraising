@@ -43,12 +43,12 @@ public class Donor {
     @JoinColumn(name="user_id")
     private User uploader;
     
-	/*@OneToOne(mappedBy="datadonor", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private DonorData donordata;*/
+	@OneToOne(mappedBy="datadonor", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private DonorData donordata;
 	
-    /*@OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="donation_id")
-    private Donation mostrecentDonationbyDonor;*/
+    private Donation mostrecentDonationbyDonor;
     
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date mostrecentDate;
@@ -144,21 +144,21 @@ public class Donor {
 	    this.updatedAt = new Date();
 	}
 
-	/*public DonorData getDonordata() {
+	public DonorData getDonordata() {
 		return donordata;
 	}
 
 	public void setDonordata(DonorData donordata) {
 		this.donordata = donordata;
-	}*/
+	}
 
-	/*public Donation getMostrecentDonationbyDonor() {
+	public Donation getMostrecentDonationbyDonor() {
 		return mostrecentDonationbyDonor;
 	}
 
 	public void setMostrecentDonationbyDonor(Donation mostrecentDonationbyDonor) {
 		this.mostrecentDonationbyDonor = mostrecentDonationbyDonor;
-	}*/
+	}
 
 	public Date getMostrecentDate() {
 		return mostrecentDate;

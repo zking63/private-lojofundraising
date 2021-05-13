@@ -29,7 +29,7 @@ public class Donation {
 	@DateTimeFormat(pattern ="kk:mm")
 	private Date Dontime;
 	
-    /*@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="donor_id")
     private Donor donor;
     
@@ -39,7 +39,7 @@ public class Donation {
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="email_id")
-    private Emails emailDonation;*/
+    private Emails emailDonation;
     
 	/*@OneToOne(mappedBy="mostrecentDonationbyDonor", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Donor donorRecent;*/
@@ -86,21 +86,21 @@ public class Donation {
 		Dontime = dontime;
 	}
 
-	/*public Donor getDonor() {
+	public Donor getDonor() {
 		return donor;
 	}
 
 	public void setDonor(Donor donor) {
 		this.donor = donor;
-	}*/
+	}
 
-	/*public User getDonation_uploader() {
+	public User getDonation_uploader() {
 		return donation_uploader;
 	}
 
 	public void setDonation_uploader(User donation_uploader) {
 		this.donation_uploader = donation_uploader;
-	}*/
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;
@@ -126,13 +126,13 @@ public class Donation {
     	return df.format(this.Dontime);
     }
 
-	/*public Emails getEmailDonation() {
+	public Emails getEmailDonation() {
 		return emailDonation;
 	}
 
 	public void setEmailDonation(Emails emailDonation) {
 		this.emailDonation = emailDonation;
-	}*/
+	}
 
 	@PrePersist
 	protected void onCreate(){

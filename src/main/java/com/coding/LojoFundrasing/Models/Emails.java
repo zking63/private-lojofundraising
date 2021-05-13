@@ -48,8 +48,8 @@ public class Emails {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="emailDonation")
 	private List<Donation> Emaildonations;
     
-	/*@OneToOne(mappedBy="dataemail", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Data emaildata;*/
+	@OneToOne(mappedBy="dataemail", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Data emaildata;
 	
 	public Emails() {
 		
@@ -139,21 +139,13 @@ public class Emails {
 		this.email_uploader = email_uploader;
 	}
 	
-	/*public Data getEmaildata() {
+	public Data getEmaildata() {
 		return emaildata;
 	}
 
 	public void setEmaildata(Data emaildata) {
 		this.emaildata = emaildata;
-	}*/
-
-	/*public Data getEmailData() {
-		return emaildata;
 	}
-
-	public void setEmailData(Data emaildata) {
-		this.emaildata = emaildata;
-	}*/
 
 	@PrePersist
 	protected void onCreate(){
