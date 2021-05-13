@@ -50,7 +50,7 @@ public class Donor {
     @JoinColumn(name="donation_id")
     private Donation mostrecentDonationbyDonor;
     
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern ="yyyy-MM-dd kk:mm:ss")
     private Date mostrecentDate;
     
 	@DateTimeFormat(pattern ="kk:mm")

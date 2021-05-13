@@ -152,10 +152,9 @@ public class LojoController {
 		 }
 		 if (enddateD == null) {
 			 enddateD = dateFormat();
-			 enddateD = enddateD + " 23:59:00";
 		 }
 		 model.addAttribute("startdateD", startdateD);
-		 model.addAttribute("enddateD", dateFormat());
+		 model.addAttribute("enddateD", enddateD);
 		 model.addAttribute("dateFormat", dateFormat());
 		 //model.addAttribute("donorswithin", this.dservice.DonorsWithinRange(startdateD, enddateD));
 		 dservice.DonorsWithinRange(startdateD, enddateD);
@@ -252,10 +251,9 @@ public class LojoController {
 		 }
 		 if (enddateE == null) {
 			 enddateE = dateFormat();
-			 enddateE = enddateE + " 23:59:00";
 		 }
 		 model.addAttribute("startdateE", startdateE);
-		 model.addAttribute("enddateE", dateFormat());
+		 model.addAttribute("enddateE", enddateE);
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 model.addAttribute("email", this.eservice.EmailTest(startdateE, enddateE));
@@ -486,7 +484,6 @@ public class LojoController {
 		 public String sortdownEmail(Model model, HttpSession session,
 				 @RequestParam("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
 				 @RequestParam("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @RequestParam("field") String field) {
-			 enddateE = enddateE + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -520,7 +517,6 @@ public class LojoController {
 		 public String sortUpEmail(Model model, HttpSession session,
 				 @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
 				 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @Param("field") String field) {
-			 enddateE = enddateE + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -554,7 +550,6 @@ public class LojoController {
 		 public String sortdownDonors(Model model, HttpSession session,
 				 @RequestParam("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @RequestParam("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field) {
-			 enddateD = enddateD + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -589,7 +584,6 @@ public class LojoController {
 		 public String sortUpDonors(Model model, HttpSession session,
 				 @RequestParam("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @RequestParam("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field) {
-			 enddateD = enddateD + " 23:59:00";
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
