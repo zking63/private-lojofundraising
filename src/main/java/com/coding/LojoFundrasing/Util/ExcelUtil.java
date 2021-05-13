@@ -3,6 +3,7 @@ package com.coding.LojoFundrasing.Util;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,13 +20,20 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
+import com.coding.LojoFundrasing.Services.EmailService;
 
 @Component
 public class ExcelUtil {
 	@Autowired
 	private DonorService dservice;
+	@Autowired
+	private EmailService eservice;
+	@Autowired
+	private DonationService donservice;
 	
 	public void getSheetDetails(String excelPath)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -87,10 +95,13 @@ public class ExcelUtil {
 			String emailValue = null;
 			String nameValue = null;
 			String LNValue = null;
-			String date = null;
+			Double amount = null;
+			String refcode = null;
+			Date date = null;
 			Donor donor = null;
 			Date dateValue = new Date();
 			Date timeValue = null;
+			Donation donation  = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -106,48 +117,36 @@ public class ExcelUtil {
 							System.out.println("Header: " + header);
 							headers.add(header);
 							//System.out.println("Header column: " + header.getColumn());
-							System.out.println("Headers: " + headers);
+							
 							String headerValue = dataFormatter.formatCellValue(header);
 							if (headerValue.contentEquals("FirstName")) {
 								NameColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
 							}
 							if (headerValue.contentEquals("firstname")) {
 								NameColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
 							}
 							if (headerValue.contentEquals("LastName")) {
 								LastNameColumn = header.getColumnIndex();
-								System.out.println("DateColumn: " + LastNameColumn);
 							}
 							if (headerValue.contentEquals("lastname")) {
 								LastNameColumn = header.getColumnIndex();
-								System.out.println("DateColumn: " + LastNameColumn);
 							}
 							if (headerValue.contentEquals("email")) {
 								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
 							}
 							if (headerValue.contentEquals("Email")) {
 								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
 							}
 							if (headerValue.contentEquals("Amount")) {
-								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
+								AmountColumn = header.getColumnIndex();
 							}
 							if (headerValue.contentEquals("Date")) {
-								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
-							}
-							if (headerValue.contentEquals("Time")) {
-								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
+								DateColumn = header.getColumnIndex();
 							}
 							if (headerValue.contentEquals("Refcode")) {
-								EmailColumn = header.getColumnIndex();
-								System.out.println("NameColumn: " + NameColumn);
+								RefcodeColumn = header.getColumnIndex();
 							}
+							System.out.println("Headers: " + headers);
 						}
 						else {
 							//for (int j = 0; j < headers.size(); j++) {
@@ -162,6 +161,7 @@ public class ExcelUtil {
 										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
 										nameValue = dataFormatter.formatCellValue(cell);
+										System.out.println(nameValue);
 										/*System.out.print("map: " + userMap);
 								        System.out.print("usermap section");*/
 								        /*Set<String> keys = userMap.keySet();
@@ -172,52 +172,64 @@ public class ExcelUtil {
 								        }*/
 									}
 									if (cell.getColumnIndex() == EmailColumn) {
-										emailValue = dataFormatter.formatCellValue(value);
+										emailValue = dataFormatter.formatCellValue(cell);
 									}
 									if (cell.getColumnIndex() == LastNameColumn) {
-										LNValue = dataFormatter.formatCellValue(value);
+										LNValue = dataFormatter.formatCellValue(cell);
 									}
-									/*if (cell.getColumnIndex() == DateColumn) {
-										date = dataFormatter.formatCellValue(cell);
-										//dateValue = cell.getDateCellValue();
-										//String date1 = new SimpleDateFormat("yyyy-MM-dd").format(dateValue);
-										//timeValue = new SimpleDateFormat("hh:mm").parse(date);
-										System.out.println("STRING DATE: " + date);
-										Date dateValue1 = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").parse(date);
-										System.out.println("DATE SIMPLE: " + dateValue1);
-										SimpleDateFormat dated = new SimpleDateFormat("yyyy-mm-dd");
-										System.out.println(dated.format(dateValue1));
-										String dately = dated.format(dateValue1);
-										System.out.println("Dately: " + dately);
-										dateValue = dated.parse(dately);
-										System.out.println("DateValue: " + dated.parse(dately));
-										SimpleDateFormat time = new SimpleDateFormat("kk:mm");
-										System.out.println(time.format(dateValue1));
-										String timely = time.format(dateValue1);
-										timeValue = time.parse(timely);
-										System.out.println("TimeValue: " + time.format(timeValue));
-										//dateValue = cell.getDateCellValue();
-										//System.out.println("DATE: " + dateValue);
-									}*/
-					        if (dservice.findDonorbyEmail(emailValue) == null) {
-					        	donor = new Donor();
-					        	donor.setDonorFirstName(nameValue);
-					        	donor.setDonorLastName(LNValue);
-					        	donor.setDonorEmail(emailValue);
-					        	dservice.createDonor(donor);
-								System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					        }
-					        else {
-					        	donor = dservice.findDonorbyEmail(emailValue);
-					        	donor.setDonorFirstName(nameValue);
-					        	donor.setDonorLastName(LNValue);
-					        	donor.setDonorEmail(emailValue);
-					        	dservice.updateDonor(donor);
-					        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					        }
+									if (cell.getColumnIndex() == AmountColumn) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										amount = Double.parseDouble(amount1); 
+										System.out.println(amount);
+									}
+									if (cell.getColumnIndex() == DateColumn) {
+										String dateValue1 = dataFormatter.formatCellValue(cell);
+										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										System.out.println(dateValue1);
+										System.out.println("Simple date: " + date);
+									}
+									if (cell.getColumnIndex() == RefcodeColumn) {
+										refcode = dataFormatter.formatCellValue(cell);
+										System.out.println("Refcode: " + refcode);
+									}
 						}
-
 	                }
+					//System.out.println("EMAIL AFTER: " + emailValue);
+					//System.out.println("REFCODE AFTER: " + refcode);
+					//donor = dservice.findDonorbyEmail(emailValue);
+					//System.out.println("DONOR: " + dservice.findDonorbyEmail(emailValue));
+	    	       /* if (dservice.findDonorbyEmail(emailValue) == null) {
+	    	        	donor = new Donor();
+	    	        	//System.out.println("ID: " + id);
+	    	        	donor.setDonorFirstName(nameValue);
+	    	        	donor.setDonorLastName(LNValue);
+	    	        	donor.setDonorEmail(emailValue);
+	    	        	dservice.createDonor(donor);
+	    	        	Long id = donor.getId();
+	    	        	donation = new Donation();
+	    	        	donation.setAmount(amount);
+	    	        	donation.setDondate(date);
+	    	        	donation.setDonor(dservice.findbyId(id));
+	    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+	    	        	donservice.createDonation(donation);
+	    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+	    	        }*/
+	    	        //else {
+	    	        	donor = dservice.findDonorbyEmail(emailValue);
+	    	        	Long id = donor.getId();
+	    	        	System.out.println("ID: " + id);
+	    	        	donor.setDonorFirstName(nameValue);
+	    	        	donor.setDonorLastName(LNValue);
+	    	        	donor.setDonorEmail(emailValue);
+	    	        	dservice.updateDonor(donor);
+	    	        	donation = new Donation();
+	    	        	donation.setAmount(amount);
+	    	        	donation.setDondate(date);
+	    	        	donation.setDonor(dservice.findbyId(id));
+	    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+	    	        	donservice.createDonation(donation);
+	    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+	    	        //}
 
 	            }
 		}

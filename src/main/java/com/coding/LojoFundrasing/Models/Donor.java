@@ -224,4 +224,5 @@ public class Donor {
 	public void setAveragewithinrange(Double averagewithinrange) {
 		this.averagewithinrange = averagewithinrange;
 	}
+
 }

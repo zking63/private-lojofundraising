@@ -30,7 +30,7 @@ public class Donation {
 	private Date Dontime;*/
 	
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="donor_id")
+    @JoinColumn(name="donor_id")  
     private Donor donor;
     
     @ManyToOne(fetch=FetchType.LAZY)

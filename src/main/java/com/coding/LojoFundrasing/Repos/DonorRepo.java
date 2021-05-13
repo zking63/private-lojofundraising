@@ -1,6 +1,7 @@
 package com.coding.LojoFundrasing.Repos;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,7 +17,7 @@ import com.coding.LojoFundrasing.Models.Emails;
 @Repository
 public interface DonorRepo extends CrudRepository<Donor, Long>{
 	List<Donor> findAll();
-	Donor findBydonorEmail(String email);
+	Optional<Donor> findBydonorEmail(String email);
 	
 	//date functions
 	@Query(value = "SELECT * FROM donors where mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecent_date Desc, mostrecenttime Desc", nativeQuery = true)

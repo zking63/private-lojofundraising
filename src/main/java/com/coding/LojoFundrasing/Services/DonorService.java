@@ -37,7 +37,7 @@ public class DonorService {
 		return drepo.save(donor);
 	}
 	public Donor findDonorbyEmail(String email) {
-		return drepo.findBydonorEmail(email);
+		return drepo.findBydonorEmail(email).orElse(null);
 	}
 	public List<Donor> allDonors() {
 		return drepo.findAll();
