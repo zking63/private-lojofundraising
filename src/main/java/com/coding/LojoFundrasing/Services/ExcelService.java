@@ -7,11 +7,17 @@ import java.text.ParseException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.coding.LojoFundrasing.Util.ExcelUtil;
+
 @Service
 public class ExcelService {
+	@Autowired
+	private ExcelUtil excelUtil;
+	
 	public String excelUrl = "D:\\test excel\\";
 	public void readData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
