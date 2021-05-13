@@ -20,15 +20,15 @@ public class ExcelController {
 	
 	@RequestMapping(value="/")
 	public String home() {
-		return "home2.jsp";
+		return "home.jsp";
 	}
 	@RequestMapping(value="/import")
 	public String home2() {
-		return "home2.jsp";
+		return "home.jsp";
 	}
 	@PostMapping("/import")
 	public String readExcel(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 		excelService.readData(file);
-		return "test.jsp";
+		return "import.jsp";
 	}
 }
