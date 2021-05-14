@@ -33,4 +33,18 @@ public class ExcelService {
 		 /*response=*/	excelUtil.readExcelSheet(filepath);
 		 System.out.println("made it through read excel!!!");
 	}
+	public void readEmailData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+
+		String filepath = excelUrl + multipartFile.getOriginalFilename();
+
+		byte[] bytes = multipartFile.getBytes();
+		java.nio.file.Path path = Paths.get(excelUrl + multipartFile.getOriginalFilename());
+		Files.write(path, bytes);
+
+
+		excelUtil.getSheetDetails(filepath);
+		System.out.println("made it past get sheet details");
+	 /*response=*/	excelUtil.readExcelSheetEmails(filepath);
+	 System.out.println("made it through read excel!!!");
+}
 }
