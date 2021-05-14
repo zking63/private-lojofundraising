@@ -32,8 +32,6 @@ public class Emails {
 	private String emailName;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
-	@DateTimeFormat(pattern ="kk:mm")
-	private Date Emailtime;
 	//private Double email_average;
 	@NotNull
 	private String emailRefcode;
@@ -78,16 +76,6 @@ public class Emails {
 	public void setEmaildate(Date emaildate) {
 		Emaildate = emaildate;
 	}
-	
-	
-
-	public Date getEmailtime() {
-		return Emailtime;
-	}
-
-	public void setEmailtime(Date emailtime) {
-		Emailtime = emailtime;
-	}
 
 	public String getEmailRefcode() {
 		return emailRefcode;
@@ -125,10 +113,6 @@ public class Emails {
 	public String getEmailDateFormatted() {
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
     	return df.format(this.Emaildate);
-    }
-    public String getEmailTimeFormatted() {
-    	SimpleDateFormat df = new SimpleDateFormat("kk:mm");
-    	return df.format(this.Emailtime);
     }
     
 	public User getEmail_uploader() {
