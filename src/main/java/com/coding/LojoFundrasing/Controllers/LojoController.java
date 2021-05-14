@@ -202,7 +202,7 @@ public class LojoController {
 			 model.addAttribute("user", user);
 			 model.addAttribute("donor", this.dservice.allDonors());
 			 model.addAttribute("email", this.eservice.allEmails());
-			 model.addAttribute("dateFormat", dateFormat());
+			 model.addAttribute("dateFormat", dateFormat2());
 			 return "newdonation.jsp";
 		 }
 		 Emails email = donation.getEmailDonation();
@@ -220,7 +220,7 @@ public class LojoController {
 		 }
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
-		 model.addAttribute("dateFormat", dateFormat());
+		 model.addAttribute("dateFormat",  dateFormat2());
 		 model.addAttribute("timeFormat", timeFormat());
 		 return "newemail.jsp";
 	 }
@@ -232,7 +232,7 @@ public class LojoController {
 			 model.addAttribute("user", user);
 			 return "newemail.jsp";
 		 }
-		 model.addAttribute("dateFormat", dateFormat());
+		 model.addAttribute("dateFormat", dateFormat2());
 		 model.addAttribute("timeFormat", timeFormat());
 		 eservice.createEmail(email);
 		 this.eservice.getEmailData(email);
@@ -343,7 +343,7 @@ public class LojoController {
 				return "redirect:/";
 			}
 			User user = uservice.findUserbyId(user_id);
-			model.addAttribute("dateFormat", dateFormat());
+			model.addAttribute("dateFormat", dateFormat2());
 			model.addAttribute("timeFormat", timeFormat());
 			model.addAttribute("email", eservice.findEmailbyId(id));
 			model.addAttribute("user", user);
@@ -356,7 +356,7 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
-			 model.addAttribute("dateFormat", dateFormat());
+			 model.addAttribute("dateFormat", dateFormat2());
 			 model.addAttribute("timeFormat", timeFormat());
 			 model.addAttribute("user", user);
 			 List<Donation> donations = email.getEmaildonations();
@@ -405,7 +405,7 @@ public class LojoController {
 			 model.addAttribute("user", user);
 			 model.addAttribute("donor", this.dservice.allDonors());
 			 model.addAttribute("email", this.eservice.allEmails());
-			 model.addAttribute("dateFormat", dateFormat());
+			 model.addAttribute("dateFormat", dateFormat2());
 			 model.addAttribute("timeFormat", timeFormat());
 			 Emails email = donation.getEmailDonation();
 			 Donor donor = donation.getDonor();

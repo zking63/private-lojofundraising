@@ -30,7 +30,7 @@ public class Emails {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String emailName;
-	@DateTimeFormat(pattern ="yyyy-MM-dd")
+	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
 	@DateTimeFormat(pattern ="kk:mm")
 	private Date Emailtime;
@@ -123,7 +123,7 @@ public class Emails {
 	}
 
 	public String getEmailDateFormatted() {
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
     	return df.format(this.Emaildate);
     }
     public String getEmailTimeFormatted() {
