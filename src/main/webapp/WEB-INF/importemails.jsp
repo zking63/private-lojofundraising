@@ -11,7 +11,7 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css"/>
-	<title>Import</title>
+	<title>Import Emails</title>
 </head>
 <body>
      <div class="navbar">
@@ -24,7 +24,7 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
-	<form th:action="@{/import/donations}" method="post"
+	<form th:action="@{/import/emails}" method="post"
 		enctype="multipart/form-data">
 		<input type="file" name="file" /> <input type="submit" value="Import" />
 	</form>

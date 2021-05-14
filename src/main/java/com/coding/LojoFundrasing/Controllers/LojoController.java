@@ -614,12 +614,21 @@ public class LojoController {
 			 model.addAttribute("donor", donors);
 			 return "donors.jsp";
 		 }
-		@RequestMapping(value="/import")
-		public String home2() {
+		@RequestMapping(value="/import/donations")
+		public String importdonations() {
 			return "import.jsp";
 		}
-		@PostMapping("/import")
+		@PostMapping("/import/donations")
 		public String readExcel(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+			excelService.readData(file);
+			return "redirect:/home";
+		}
+		@RequestMapping(value="/import/emails")
+		public String importEmails() {
+			return "importemails.jsp";
+		}
+		@PostMapping("/import/emails")
+		public String readExcelemails(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 			excelService.readData(file);
 			return "redirect:/home";
 		}
