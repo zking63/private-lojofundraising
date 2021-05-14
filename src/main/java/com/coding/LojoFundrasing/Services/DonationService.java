@@ -29,10 +29,10 @@ public class DonationService {
 	private DonorService dservice;
 	
 	public Donation createDonation(Donation d) {
-		Emails email = d.getEmailDonation();
+		/*Emails email = d.getEmailDonation();
 		Donor donor = d.getDonor();
 		eservice.getEmailData(email);
-		dservice.getDonorData(donor);
+		dservice.getDonorData(donor);*/
 		return donrepo.save(d);
 	}
 	

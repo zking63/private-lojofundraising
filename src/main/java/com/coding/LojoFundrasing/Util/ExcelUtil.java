@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
@@ -215,6 +216,9 @@ public class ExcelUtil {
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
 					    	        	donservice.createDonation(donation);
+					    	    		Emails email = donation.getEmailDonation();
+					    	    		eservice.getEmailData(email);
+					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					    	        }
@@ -232,6 +236,9 @@ public class ExcelUtil {
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
 					    	        	donservice.createDonation(donation);
+					    	    		Emails email = donation.getEmailDonation();
+					    	    		eservice.getEmailData(email);
+					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
