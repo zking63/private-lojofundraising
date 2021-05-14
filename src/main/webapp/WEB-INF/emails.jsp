@@ -40,7 +40,6 @@
 	    <thead>
 	        <tr>
 	            <th>Name</th>
-	            <th>Send time</th>
 	            <th>Send date</br> 		
 		            <form class="pointer" method="post" action="/emails/sortdown">
 						<input type="hidden" name="field" value="datetime">
@@ -119,7 +118,6 @@
 			<c:forEach items="${ email }" var="e">
 				<tr>
 					<td><a href="/emails/${e.id}">${ e.emailName }</a></td>
-					<td>${e.getEmailTimeFormatted()}</td>
 					<td>${e.getEmailDateFormatted()}</td>
 					<td>${e.emailRefcode}</td>
 					<td>$${e.emaildata.getEmailsum()}</td>

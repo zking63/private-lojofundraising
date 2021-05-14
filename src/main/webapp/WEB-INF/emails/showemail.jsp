@@ -38,7 +38,6 @@
 			        <tr>
 			            <th>Total number of donors</th>
 			            <th>Send date</th>
-			            <th>Send time</th>
 			            <th>Total Revenue</th>
 			            <th>Average donation</th>
 			        </tr>
@@ -47,7 +46,6 @@
 					<tr>
 						<td>${emails.getEmaildonations().size()}</td>
 						<td>${ emails.getEmailDateFormatted() }</td>
-						<td>${ emails.getEmailTimeFormatted() }</td>
 						<td>$${ emails.emaildata.getEmailsum() }</td>
 						<td>$${ emails.emaildata.getEmailAverageFormatted() }</td>
 					</tr>

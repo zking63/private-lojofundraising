@@ -48,11 +48,6 @@
 	            <form:errors path="Emaildate"></form:errors>
 	            <form:input type="Emaildate" path="Emaildate"/>
 	        </p>
-	        <p>
-	            <form:label path="Emailtime">Time:</form:label>
-	            <form:errors path="Emailtime"></form:errors>
-	            <form:input type="Emailtime" path="Emailtime"/>
-	        </p>
 	        <input type="submit" value="Upload!"/>
 	    </form:form>
 	</div> 
