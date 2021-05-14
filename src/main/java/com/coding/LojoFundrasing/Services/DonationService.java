@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coding.LojoFundrasing.Models.Donation;
+import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 
 
@@ -23,7 +25,14 @@ public class DonationService {
 	@Autowired
 	private EmailService eservice;
 	
+	@Autowired
+	private DonorService dservice;
+	
 	public Donation createDonation(Donation d) {
+		Emails email = d.getEmailDonation();
+		Donor donor = d.getDonor();
+		eservice.getEmailData(email);
+		dservice.getDonorData(donor);
 		return donrepo.save(d);
 	}
 	

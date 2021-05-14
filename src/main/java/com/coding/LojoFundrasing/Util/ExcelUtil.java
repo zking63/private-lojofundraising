@@ -110,7 +110,9 @@ public class ExcelUtil {
 	             Iterator<Cell> cellIterator = row.cellIterator();
 	                while(cellIterator.hasNext()) {
 
-	                    Cell cell = cellIterator.next();
+	                   
+	                	Cell cell = cellIterator.next();
+	                	System.out.println("CELL: " + cell.getAddress());
 						if (row.getRowNum() == 0) {
 							//header = cell.getAddress();
 							header = cell;
@@ -148,15 +150,19 @@ public class ExcelUtil {
 							}
 							System.out.println("Headers: " + headers);
 						}
-						else {
-							//for (int j = 0; j < headers.size(); j++) {
+						else if (row.getRowNum() > 0){
+							//if (refcode == null) {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
-									System.out.println("Value: " + value);
+									/*System.out.println("Value: " + value);
 									values.add(value);
 									System.out.println("Values: " + values);
-									System.out.println("-----header check-----");
-									if (cell.getColumnIndex() == NameColumn) {
+									System.out.println("-----header check-----");*/
+									if (cell.getColumnIndex() == EmailColumn) {
+										emailValue = dataFormatter.formatCellValue(cell);
+										System.out.println(emailValue);
+									}
+									else if (cell.getColumnIndex() == NameColumn) {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
@@ -171,65 +177,111 @@ public class ExcelUtil {
 								            System.out.println(userMap.get(key));    
 								        }*/
 									}
-									if (cell.getColumnIndex() == EmailColumn) {
-										emailValue = dataFormatter.formatCellValue(cell);
-									}
-									if (cell.getColumnIndex() == LastNameColumn) {
+									else if (cell.getColumnIndex() == LastNameColumn) {
 										LNValue = dataFormatter.formatCellValue(cell);
+										System.out.println(LNValue);
 									}
-									if (cell.getColumnIndex() == AmountColumn) {
+									else if (cell.getColumnIndex() == AmountColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										amount = Double.parseDouble(amount1); 
 										System.out.println(amount);
 									}
-									if (cell.getColumnIndex() == DateColumn) {
+									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
 										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										System.out.println(dateValue1);
 										System.out.println("Simple date: " + date);
 									}
-									if (cell.getColumnIndex() == RefcodeColumn) {
+									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
 										System.out.println("Refcode: " + refcode);
+										System.out.println("EMAIL AFTER: " + emailValue);
+										System.out.println("REFCODE AFTER: " + refcode);
+										System.out.println("Name AFTER: " + nameValue);
+										System.out.println("LN AFTER: " + LNValue);
+										System.out.println("AMOUNT AFTER: " + amount);
+										System.out.println("DATE AFTER: " + date);
+							    	    if (dservice.findDonorbyEmail(emailValue) == null) {
+					    	        	donor = new Donor();
+					    	        	//System.out.println("ID: " + id);
+					    	        	donor.setDonorFirstName(nameValue);
+					    	        	donor.setDonorLastName(LNValue);
+					    	        	donor.setDonorEmail(emailValue);
+					    	        	dservice.createDonor(donor);
+					    	        	Long id = donor.getId();
+					    	        	donation = new Donation();
+					    	        	donation.setAmount(amount);
+					    	        	donation.setDondate(date);
+					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donservice.createDonation(donation);
+					    	        	refcode = null;
+					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					    	        }
+					    	        else {
+					    	        	donor = dservice.findDonorbyEmail(emailValue);
+					    	        	Long id = donor.getId();
+					    	        	System.out.println("ID: " + id);
+					    	        	donor.setDonorFirstName(nameValue);
+					    	        	donor.setDonorLastName(LNValue);
+					    	        	donor.setDonorEmail(emailValue);
+					    	        	dservice.updateDonor(donor);
+					    	        	donation = new Donation();
+					    	        	donation.setAmount(amount);
+					    	        	donation.setDondate(date);
+					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donservice.createDonation(donation);
+					    	        	refcode = null;
+					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					                }
 									}
-						}
-	                }
-					//System.out.println("EMAIL AFTER: " + emailValue);
-					//System.out.println("REFCODE AFTER: " + refcode);
-					//donor = dservice.findDonorbyEmail(emailValue);
-					//System.out.println("DONOR: " + dservice.findDonorbyEmail(emailValue));
-	    	       /* if (dservice.findDonorbyEmail(emailValue) == null) {
-	    	        	donor = new Donor();
-	    	        	//System.out.println("ID: " + id);
-	    	        	donor.setDonorFirstName(nameValue);
-	    	        	donor.setDonorLastName(LNValue);
-	    	        	donor.setDonorEmail(emailValue);
-	    	        	dservice.createDonor(donor);
-	    	        	Long id = donor.getId();
-	    	        	donation = new Donation();
-	    	        	donation.setAmount(amount);
-	    	        	donation.setDondate(date);
-	    	        	donation.setDonor(dservice.findbyId(id));
-	    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-	    	        	donservice.createDonation(donation);
-	    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-	    	        }*/
-	    	        //else {
-	    	        	donor = dservice.findDonorbyEmail(emailValue);
-	    	        	Long id = donor.getId();
-	    	        	System.out.println("ID: " + id);
-	    	        	donor.setDonorFirstName(nameValue);
-	    	        	donor.setDonorLastName(LNValue);
-	    	        	donor.setDonorEmail(emailValue);
-	    	        	dservice.updateDonor(donor);
-	    	        	donation = new Donation();
-	    	        	donation.setAmount(amount);
-	    	        	donation.setDondate(date);
-	    	        	donation.setDonor(dservice.findbyId(id));
-	    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-	    	        	donservice.createDonation(donation);
-	    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-	    	        //}
+							//}
+							/*else {
+							System.out.println("-----check-----");
+									System.out.println("EMAIL AFTER: " + emailValue);
+									System.out.println("REFCODE AFTER: " + refcode);
+									System.out.println("Name AFTER: " + nameValue);
+									System.out.println("LN AFTER: " + LNValue);
+									System.out.println("AMOUNT AFTER: " + amount);
+									System.out.println("DATE AFTER: " + date);
+									donor = dservice.findDonorbyEmail(emailValue);
+									System.out.println("DONOR: " + dservice.findDonorbyEmail(emailValue));*/
+					    	       /*if (dservice.findDonorbyEmail(emailValue) == null) {
+					    	        	donor = new Donor();
+					    	        	//System.out.println("ID: " + id);
+					    	        	donor.setDonorFirstName(nameValue);
+					    	        	donor.setDonorLastName(LNValue);
+					    	        	donor.setDonorEmail(emailValue);
+					    	        	dservice.createDonor(donor);
+					    	        	Long id = donor.getId();
+					    	        	donation = new Donation();
+					    	        	donation.setAmount(amount);
+					    	        	donation.setDondate(date);
+					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donservice.createDonation(donation);
+					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					    	        }
+					    	        else {
+					    	        	donor = dservice.findDonorbyEmail(emailValue);
+					    	        	Long id = donor.getId();
+					    	        	System.out.println("ID: " + id);
+					    	        	donor.setDonorFirstName(nameValue);
+					    	        	donor.setDonorLastName(LNValue);
+					    	        	donor.setDonorEmail(emailValue);
+					    	        	dservice.updateDonor(donor);
+					    	        	donation = new Donation();
+					    	        	donation.setAmount(amount);
+					    	        	donation.setDondate(date);
+					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donservice.createDonation(donation);
+					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					                }*/
+								//}
+							}
+		    	        }
 
 	            }
 		}
