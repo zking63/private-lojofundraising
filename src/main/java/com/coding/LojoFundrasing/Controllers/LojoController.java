@@ -614,6 +614,7 @@ public class LojoController {
 			 model.addAttribute("donor", donors);
 			 return "donors.jsp";
 		 }
+		 //imports
 		@RequestMapping(value="/import/donations")
 		public String importdonations() {
 			return "import.jsp";
