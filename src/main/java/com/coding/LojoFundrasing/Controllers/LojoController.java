@@ -630,7 +630,7 @@ public class LojoController {
 		}
 		@PostMapping("/import/emails")
 		public String readExcelemails(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
-			excelService.readData(file);
+			excelService.readEmailData(file);
 			return "redirect:/home";
 		}
 }

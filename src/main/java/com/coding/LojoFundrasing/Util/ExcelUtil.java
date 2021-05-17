@@ -328,22 +328,13 @@ public class ExcelUtil {
 			// Create a DataFormatter to format and get each cell's value as String
 			DataFormatter dataFormatter = new DataFormatter();
 			int NameColumn = 0;
-			int EmailColumn = 0;
-			int LastNameColumn = 0;
-			int AmountColumn = 0;
-			int TimeColumn = 0;
 			int RefcodeColumn = 0;
 			int DateColumn = 0;
-			String emailValue = null;
 			String nameValue = null;
-			String LNValue = null;
-			Double amount = null;
 			String refcode = null;
+			Emails email = null;
 			Date date = null;
-			Donor donor = null;
 			Date dateValue = new Date();
-			Date timeValue = null;
-			Donation donation  = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -363,26 +354,8 @@ public class ExcelUtil {
 							//System.out.println("Header column: " + header.getColumn());
 							
 							String headerValue = dataFormatter.formatCellValue(header);
-							if (headerValue.contentEquals("FirstName")) {
+							if (headerValue.contentEquals("Name")) {
 								NameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("firstname")) {
-								NameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("LastName")) {
-								LastNameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("lastname")) {
-								LastNameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("email")) {
-								EmailColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("Email")) {
-								EmailColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("Amount")) {
-								AmountColumn = header.getColumnIndex();
 							}
 							if (headerValue.contentEquals("Date")) {
 								DateColumn = header.getColumnIndex();
@@ -400,11 +373,7 @@ public class ExcelUtil {
 									values.add(value);
 									System.out.println("Values: " + values);
 									System.out.println("-----header check-----");*/
-									if (cell.getColumnIndex() == EmailColumn) {
-										emailValue = dataFormatter.formatCellValue(cell);
-										System.out.println(emailValue);
-									}
-									else if (cell.getColumnIndex() == NameColumn) {
+									if (cell.getColumnIndex() == NameColumn) {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
@@ -419,15 +388,6 @@ public class ExcelUtil {
 								            System.out.println(userMap.get(key));    
 								        }*/
 									}
-									else if (cell.getColumnIndex() == LastNameColumn) {
-										LNValue = dataFormatter.formatCellValue(cell);
-										System.out.println(LNValue);
-									}
-									else if (cell.getColumnIndex() == AmountColumn) {
-										String amount1 = dataFormatter.formatCellValue(cell);
-										amount = Double.parseDouble(amount1); 
-										System.out.println(amount);
-									}
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
 										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
@@ -436,54 +396,31 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
-										System.out.println("Refcode: " + refcode);
-										System.out.println("EMAIL AFTER: " + emailValue);
 										System.out.println("REFCODE AFTER: " + refcode);
 										System.out.println("Name AFTER: " + nameValue);
-										System.out.println("LN AFTER: " + LNValue);
-										System.out.println("AMOUNT AFTER: " + amount);
 										System.out.println("DATE AFTER: " + date);
-							    	    if (dservice.findDonorbyEmail(emailValue) == null) {
-					    	        	donor = new Donor();
+							    	    if (eservice.findEmailbyRefcode(refcode) == null) {
+					    	        	email = new Emails();
 					    	        	//System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.createDonor(donor);
-					    	        	Long id = donor.getId();
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    	    		Emails email = donation.getEmailDonation();
+					    	        	email.setEmailName(nameValue);
+					    	        	email.setEmaildate(date);
+					    	        	email.setEmailRefcode(refcode);
+					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
-					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
-					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					    	        }
 					    	        else {
-					    	        	donor = dservice.findDonorbyEmail(emailValue);
-					    	        	Long id = donor.getId();
-					    	        	System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.updateDonor(donor);
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    	    		Emails email = donation.getEmailDonation();
+					    	        	email = eservice.findEmailbyRefcode(refcode);
+					    	        	email.setEmailName(nameValue);
+					    	        	email.setEmaildate(date);
+					    	        	email.setEmailRefcode(refcode);
+					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
-					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
-					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					                }
-									}
+								}
 							//}
 							/*else {
 							System.out.println("-----check-----");
