@@ -41,11 +41,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
+import com.coding.LojoFundrasing.Services.CommitteeService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
@@ -73,6 +75,9 @@ public class LojoController {
 	
 	@Autowired
 	private EmailService eservice;
+	
+	@Autowired 
+	private CommitteeService cservice;
 	
 	@Autowired
 	ExcelService excelService;
@@ -114,6 +119,15 @@ public class LojoController {
 	     // redirect to login page
 		 return "redirect:/";
 	 }
+	@RequestMapping("/committees/new")
+	public String newCommittee(@ModelAttribute("committees")Committees committees) {
+		return "newcommittee.jsp";
+	}
+	@PostMapping("/committees/new")
+	public String createCommittee(@ModelAttribute("committees")Committees committees) {
+		cservice.createCommittee(committees);
+		return "home.jsp";
+	}
 	 @RequestMapping("/newdonor")
 	 public String newDonorPage(@ModelAttribute("donor") Donor donor, Model model, HttpSession session) {
 		 Long user_id = (Long)session.getAttribute("user_id");
