@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -48,6 +51,13 @@ public class User {
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="email_uploader")
     private List<Emails> emailsUploaded;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "users_committees", 
+	        joinColumns = @JoinColumn(name = "user_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "committee_id")
+			)
+	private List<Committees> committees;
 	
 	public User() {
 		
@@ -140,6 +150,15 @@ public class User {
 
 	public void setEmailsUploaded(List<Emails> emailsUploaded) {
 		this.emailsUploaded = emailsUploaded;
+	}
+	
+
+	public List<Committees> getCommittees() {
+		return committees;
+	}
+
+	public void setCommittees(List<Committees> committees) {
+		this.committees = committees;
 	}
 
 	@PrePersist
