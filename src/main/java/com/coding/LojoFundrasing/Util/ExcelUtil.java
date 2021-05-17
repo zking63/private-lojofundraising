@@ -207,6 +207,7 @@ public class ExcelUtil {
 										System.out.println("LN AFTER: " + LNValue);
 										System.out.println("AMOUNT AFTER: " + amount);
 										System.out.println("DATE AFTER: " + date);
+										System.out.println("UPLOADER: " + uploader.getId());
 							    	    if (dservice.findDonorbyEmail(emailValue) == null) {
 					    	        	donor = new Donor();
 					    	        	//System.out.println("ID: " + id);
@@ -214,6 +215,7 @@ public class ExcelUtil {
 					    	        	donor.setDonorLastName(LNValue);
 					    	        	donor.setDonorEmail(emailValue);
 					    	        	donor.setUploader(uploader);
+					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
 					    	        	dservice.createDonor(donor);
 					    	        	Long id = donor.getId();
 					    	        	donation = new Donation();
@@ -222,6 +224,7 @@ public class ExcelUtil {
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
 					    	        	donation.setDonation_uploader(uploader);
+					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email);
@@ -236,12 +239,16 @@ public class ExcelUtil {
 					    	        	donor.setDonorFirstName(nameValue);
 					    	        	donor.setDonorLastName(LNValue);
 					    	        	donor.setDonorEmail(emailValue);
+					    	        	donor.setUploader(uploader);
+					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
 					    	        	dservice.updateDonor(donor);
 					    	        	donation = new Donation();
 					    	        	donation.setAmount(amount);
 					    	        	donation.setDondate(date);
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donation.setDonation_uploader(uploader);
+					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email);
