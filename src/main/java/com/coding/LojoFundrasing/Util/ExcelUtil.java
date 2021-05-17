@@ -307,7 +307,7 @@ public class ExcelUtil {
 	            }
 		}
 	}
-	public void readExcelSheetEmails(String excelPath)
+	public void readExcelSheetEmails(String excelPath, Long user_id)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 
 		List<String> list = new ArrayList<String>();
@@ -344,6 +344,7 @@ public class ExcelUtil {
 			int NameColumn = 0;
 			int RefcodeColumn = 0;
 			int DateColumn = 0;
+			User uploader = uservice.findUserbyId(user_id);
 			String nameValue = null;
 			String refcode = null;
 			Emails email = null;
@@ -419,6 +420,7 @@ public class ExcelUtil {
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
+					    	        	email.setEmail_uploader(uploader);
 					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
 					    	        	refcode = null;
@@ -429,6 +431,7 @@ public class ExcelUtil {
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
+					    	        	email.setEmail_uploader(uploader);
 					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
 					    	        	refcode = null;
