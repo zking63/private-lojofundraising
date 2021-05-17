@@ -36,6 +36,14 @@
 	            <form:label path="passwordConfirmation">Confirm Password:</form:label>
 	            <form:password path="passwordConfirmation"/>
 	        </p>
+	        <p>
+		        <label for="donor">Assign a donor:</label>
+				<select id="donor" name="donor">
+				  	<c:forEach items="${ donor }" var="p">
+			        	<option value="${ p.id }">${ p.donorEmail }</option>
+			        </c:forEach>
+				</select>
+	        </p>
 	        <input type="submit" value="Register!"/>
 	    </form:form>
 	    <form class="user-form" method="post" action="/login">

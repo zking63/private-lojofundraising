@@ -83,7 +83,8 @@ public class LojoController {
 	ExcelService excelService;
 	
 	@RequestMapping("/")
-	public String index(@ModelAttribute("user")User user) {
+	public String index(@ModelAttribute("user")User user, Model model) {
+		model.addAttribute(cservice.findAllCommittees());
 		return "loginreg.jsp";
 	}
 	@RequestMapping(value="/", method=RequestMethod.POST)
