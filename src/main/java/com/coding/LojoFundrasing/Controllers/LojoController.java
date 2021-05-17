@@ -616,12 +616,20 @@ public class LojoController {
 		 }
 		 //imports
 		@RequestMapping(value="/import/donations")
-		public String importdonations() {
+		public String importdonations(HttpSession session) {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
 			return "import.jsp";
 		}
 		@PostMapping("/import/donations")
-		public String readExcel(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
-			excelService.readData(file);
+		public String readExcel(HttpSession session, MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			excelService.readData(user_id, file);
 			return "redirect:/home";
 		}
 		@RequestMapping(value="/import/emails")

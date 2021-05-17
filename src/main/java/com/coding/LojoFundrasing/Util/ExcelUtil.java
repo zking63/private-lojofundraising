@@ -23,9 +23,11 @@ import org.springframework.stereotype.Component;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
+import com.coding.LojoFundrasing.Services.UserService;
 
 @Component
 public class ExcelUtil {
@@ -35,6 +37,8 @@ public class ExcelUtil {
 	private EmailService eservice;
 	@Autowired
 	private DonationService donservice;
+	@Autowired
+	private UserService uservice;
 	
 	public void getSheetDetails(String excelPath)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -52,7 +56,7 @@ public class ExcelUtil {
 		}
 	}
 	
-	public void readExcelSheet(String excelPath)
+	public void readExcelSheet(String excelPath, Long user_id)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 
 		List<String> list = new ArrayList<String>();
@@ -93,6 +97,7 @@ public class ExcelUtil {
 			int TimeColumn = 0;
 			int RefcodeColumn = 0;
 			int DateColumn = 0;
+			User uploader = uservice.findUserbyId(user_id);
 			String emailValue = null;
 			String nameValue = null;
 			String LNValue = null;
@@ -208,6 +213,7 @@ public class ExcelUtil {
 					    	        	donor.setDonorFirstName(nameValue);
 					    	        	donor.setDonorLastName(LNValue);
 					    	        	donor.setDonorEmail(emailValue);
+					    	        	donor.setUploader(uploader);
 					    	        	dservice.createDonor(donor);
 					    	        	Long id = donor.getId();
 					    	        	donation = new Donation();
@@ -215,6 +221,7 @@ public class ExcelUtil {
 					    	        	donation.setDondate(date);
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donation.setDonation_uploader(uploader);
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email);

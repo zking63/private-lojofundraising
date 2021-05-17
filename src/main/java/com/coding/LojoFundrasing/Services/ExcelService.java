@@ -19,7 +19,7 @@ public class ExcelService {
 	private ExcelUtil excelUtil;
 	
 	public String excelUrl = "D:\\test excel\\";
-	public void readData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+	public void readData(Long user_id, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
 			String filepath = excelUrl + multipartFile.getOriginalFilename();
 
@@ -30,7 +30,7 @@ public class ExcelService {
 
 			excelUtil.getSheetDetails(filepath);
 			System.out.println("made it past get sheet details");
-		 /*response=*/	excelUtil.readExcelSheet(filepath);
+		 /*response=*/	excelUtil.readExcelSheet(filepath, user_id);
 		 System.out.println("made it through read excel!!!");
 	}
 	public void readEmailData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
