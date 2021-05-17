@@ -633,12 +633,20 @@ public class LojoController {
 			return "redirect:/home";
 		}
 		@RequestMapping(value="/import/emails")
-		public String importEmails() {
+		public String importEmails(HttpSession session) {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
 			return "importemails.jsp";
 		}
 		@PostMapping("/import/emails")
-		public String readExcelemails(MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
-			excelService.readEmailData(file);
+		public String readExcelemails(HttpSession session, MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			excelService.readEmailData(user_id, file);
 			return "redirect:/home";
 		}
 }
