@@ -378,7 +378,7 @@ public class LojoController {
 		 model.addAttribute("user", uservice.findUserbyId(user_id));
 		 model.addAttribute("startdate", startdate);
 		 model.addAttribute("enddate", enddate);
-		 model.addAttribute("donations", donservice.DonTest(startdate, enddate));
+		 model.addAttribute("donations", donservice.DonTest(startdate, enddate, committee_id));
 		 return "home.jsp";
 	 }
 		@RequestMapping("/emails/delete/{id}")
@@ -478,6 +478,9 @@ public class LojoController {
 				 @RequestParam("startdate") @DateTimeFormat(iso = ISO.DATE) String startdate, 
 				 @RequestParam("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate, @RequestParam("field") String field) throws ParseException {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
@@ -493,7 +496,7 @@ public class LojoController {
 				 donations = this.donservice.orderAmounts2(startdate, enddate);
 			 }
 			 if (field.equals("datetime")) {
-				 donations = this.donservice.DonTest(startdate, enddate);
+				 donations = this.donservice.DonTest(startdate, enddate, committee_id);
 			 }
 			 model.addAttribute("donations", donations);
 			 return "home.jsp";

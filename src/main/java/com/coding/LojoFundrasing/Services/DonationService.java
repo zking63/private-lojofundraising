@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.Emails;
@@ -57,8 +58,8 @@ public class DonationService {
 		donrepo.deleteById(id);
 	}
 	public List<Donation> DonTest(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, @Param("enddate") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return donrepo.findAllWithDondateAfter(startdate, enddate);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return donrepo.findAllWithDondateAfter(startdate, enddate, committee_id);
 	}
 	public List<Donation> DonTestAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, @Param("enddate") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
