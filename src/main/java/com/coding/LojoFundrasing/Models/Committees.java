@@ -26,6 +26,15 @@ public class Committees {
 	        inverseJoinColumns = @JoinColumn(name = "user_id")
 			)
 	private List<User> users;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "committees_donations", 
+	        joinColumns = @JoinColumn(name = "committees_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "donation_id")
+			)
+	private List<Donation> donations;
+	
 	public Committees() {
 		
 	}
@@ -47,4 +56,11 @@ public class Committees {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+	public List<Donation> getDonations() {
+		return donations;
+	}
+	public void setDonations(List<Donation> donations) {
+		this.donations = donations;
+	}
+	
 }

@@ -2,6 +2,7 @@ package com.coding.LojoFundrasing.Models;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -40,6 +43,14 @@ public class Donation {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="email_id")
     private Emails emailDonation;
+    
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "committees_donations", 
+	        joinColumns = @JoinColumn(name = "donation_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "committees_id")
+			)
+	private List<Committees> committees;
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -129,6 +140,16 @@ public class Donation {
 
 	public void setEmailDonation(Emails emailDonation) {
 		this.emailDonation = emailDonation;
+	}
+	
+	
+
+	public List<Committees> getCommittees() {
+		return committees;
+	}
+
+	public void setCommittees(List<Committees> committees) {
+		this.committees = committees;
 	}
 
 	@PrePersist
