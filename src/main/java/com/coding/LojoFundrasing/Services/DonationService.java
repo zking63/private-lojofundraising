@@ -47,12 +47,12 @@ public class DonationService {
 		return donrepo.findByemailDonation(email_id);
 	}
 	public List<Donation> orderAmounts2(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return donrepo.findByOrderByAmountDesc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return donrepo.findByOrderByAmountDesc(startdate, enddate, committee_id);
 	}
 	public List<Donation> orderAmounts(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return donrepo.findByOrderByAmountAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return donrepo.findByOrderByAmountAsc(startdate, enddate, committee_id);
 	}
 	public void delete(long id) {
 		donrepo.deleteById(id);
@@ -62,7 +62,7 @@ public class DonationService {
 		return donrepo.findAllWithDondateAfter(startdate, enddate, committee_id);
 	}
 	public List<Donation> DonTestAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, @Param("enddate") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return donrepo.findAllWithDondateAfterAsc(startdate, enddate);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return donrepo.findAllWithDondateAfterAsc(startdate, enddate, committee_id);
 	}
 }
