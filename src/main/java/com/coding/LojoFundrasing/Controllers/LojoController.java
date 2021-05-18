@@ -96,14 +96,7 @@ public class LojoController {
 		}
 		User newUser = uservice.registerUser(user);
 		session.setAttribute("user_id", newUser.getId());
-		/*Committees committee = cservice.findbyId(id);
-		List<Committees> committees = user.getCommittees();
-		List<User> users = committee.getUsers();
-		committees.add(committee);
-		users.add(newUser);
-		user.setCommittees(committees);
-		committee.setUsers(users);*/
-		return "redirect:/home";
+		return "redirect:/committees/select";
 	}
 	 @RequestMapping(value="/login", method=RequestMethod.POST)
 	 public String loginUser(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session, RedirectAttributes redirs) {
@@ -112,7 +105,7 @@ public class LojoController {
 		 if(isAuthenticated) {
 			 User u = uservice.findUserbyEmail(email);
 			 session.setAttribute("user_id", u.getId());
-			 return "redirect:/home";
+			 return "redirect:/committees/select";
 		 }
 	     // else, add error messages and return the login page
 		 else {
@@ -127,6 +120,27 @@ public class LojoController {
 		 session.invalidate();
 	     // redirect to login page
 		 return "redirect:/";
+	 }
+	 @RequestMapping("/committees/select")
+	 public String selectCommittee(HttpSession session, Model model) {
+		 Long user_id = (Long)session.getAttribute("user_id");
+		 if (user_id == null) {
+			 return "redirect:/";
+		 }
+		 User user = uservice.findUserbyId(user_id);
+		 model.addAttribute("user", user);
+		 return "selectcommittees.jsp";
+	 }
+	 @PostMapping("/committees/select")
+	 public String selectCommitteepost(HttpSession session, Model model, @RequestParam("committee")Committees committee) {
+		 Long user_id = (Long)session.getAttribute("user_id");
+		 if (user_id == null) {
+			 return "redirect:/";
+		 }
+		 User user = uservice.findUserbyId(user_id);
+		 model.addAttribute("user", user);
+		 session.setAttribute("committee_id", committee.getId());
+		 return "redirect:/home";
 	 }
 	@RequestMapping("/committees/new")
 	public String newCommittee(Model model, @ModelAttribute("committees")Committees committees) {
@@ -337,11 +351,14 @@ public class LojoController {
 			 @Param("startdate") @DateTimeFormat(iso = ISO.DATE) String startdate, 
 			 @Param("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate) {
 		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 if (user_id == null) {
 			 return "redirect:/";
 		 }
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 if (startdate == null) {
 			 startdate = dateFormat();
 		 }
