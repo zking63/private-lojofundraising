@@ -10,6 +10,13 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css" />
     <title>Login Page</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#committees").CreateMultiCheckBox({ width: '230px', defaultText : 'Select Below', height:'250px' });
+        });
+    </script>
 </head>
 <body>
 	<div class="container">
@@ -37,10 +44,11 @@
 	            <form:password path="passwordConfirmation"/>
 	        </p>
 	        <p>
-		        <label for="donor">Assign a donor:</label>
-				<select id="donor" name="donor">
-				  	<c:forEach items="${ donor }" var="p">
-			        	<option value="${ p.id }">${ p.donorEmail }</option>
+				<label for="committees">Choose committees:</label>
+				
+				<select name="committees" id="committees" multiple="multiple">
+					<c:forEach items="${ committees }" var="e">
+			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
 			        </c:forEach>
 				</select>
 	        </p>

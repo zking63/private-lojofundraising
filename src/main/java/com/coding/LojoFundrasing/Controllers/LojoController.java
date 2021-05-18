@@ -84,13 +84,14 @@ public class LojoController {
 	
 	@RequestMapping("/")
 	public String index(@ModelAttribute("user")User user, Model model) {
-		model.addAttribute(cservice.findAllCommittees());
+		model.addAttribute("committees", this.cservice.findAllCommittees());
 		return "loginreg.jsp";
 	}
 	@RequestMapping(value="/", method=RequestMethod.POST)
-	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+	public String registerUser(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
 		uvalidation.validate(user, result);
 		if (result.hasErrors()) {
+			model.addAttribute("committees", this.cservice.findAllCommittees());
 			return "loginreg.jsp";
 		}
 		User newUser = uservice.registerUser(user);
@@ -121,7 +122,7 @@ public class LojoController {
 		 return "redirect:/";
 	 }
 	@RequestMapping("/committees/new")
-	public String newCommittee(@ModelAttribute("committees")Committees committees) {
+	public String newCommittee(Model model, @ModelAttribute("committees")Committees committees) {
 		return "newcommittee.jsp";
 	}
 	@PostMapping("/committees/new")
