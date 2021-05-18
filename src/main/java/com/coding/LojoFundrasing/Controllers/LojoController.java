@@ -493,7 +493,7 @@ public class LojoController {
 			 List<Donation> donations = null;
 			 enddate = enddate + " 23:59:00";
 			 if (field.equals("amount")) {
-				 donations = this.donservice.orderAmounts2(startdate, enddate);
+				 donations = this.donservice.orderAmounts2(startdate, enddate, committee_id);
 			 }
 			 if (field.equals("datetime")) {
 				 donations = this.donservice.DonTest(startdate, enddate, committee_id);
@@ -506,6 +506,9 @@ public class LojoController {
 				 @RequestParam("startdate") @DateTimeFormat(iso = ISO.DATE) String startdate, 
 				 @RequestParam("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate, @RequestParam("field") String field) {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
@@ -518,21 +521,15 @@ public class LojoController {
 			 List<Donation> donations = null;
 			 enddate = enddate + " 23:59:00";
 			 if (field.equals("amount")) {
-				 donations = this.donservice.orderAmounts(startdate, enddate);
+				 donations = this.donservice.orderAmounts(startdate, enddate, committee_id);
 			 }
 			 if (field.equals("datetime")) {
-				 donations = this.donservice.DonTestAsc(startdate, enddate);
+				 donations = this.donservice.DonTestAsc(startdate, enddate, committee_id);
 			 }
 			 model.addAttribute("donations", donations);
 			 return "home.jsp";
 		 }
 		 //sorting emails page
-		 @RequestMapping(value="/test")
-		 public String test(Model model) {
-			 List <Data> data = this.eservice.getEmailDatatest();
-			 model.addAttribute("data", data);
-			 return "test.jsp";
-		 }
 		 @RequestMapping(value="/emails/sortdown")
 		 public String sortdownEmail(Model model, HttpSession session,
 				 @RequestParam("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
