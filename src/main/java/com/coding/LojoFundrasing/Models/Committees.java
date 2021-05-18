@@ -22,7 +22,7 @@ public class Committees {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 	        name = "committees_users", 
-	        joinColumns = @JoinColumn(name = "committee_id"), 
+	        joinColumns = @JoinColumn(name = "committees_id"), 
 	        inverseJoinColumns = @JoinColumn(name = "user_id")
 			)
 	private List<User> users;

@@ -53,9 +53,9 @@ public class User {
     private List<Emails> emailsUploaded;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
-	        name = "users_committees", 
+	        name = "committees_users", 
 	        joinColumns = @JoinColumn(name = "user_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "committee_id")
+	        inverseJoinColumns = @JoinColumn(name = "committees_id")
 			)
 	private List<Committees> committees;
 	

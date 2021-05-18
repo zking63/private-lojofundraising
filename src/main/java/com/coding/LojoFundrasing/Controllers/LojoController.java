@@ -96,6 +96,13 @@ public class LojoController {
 		}
 		User newUser = uservice.registerUser(user);
 		session.setAttribute("user_id", newUser.getId());
+		/*Committees committee = cservice.findbyId(id);
+		List<Committees> committees = user.getCommittees();
+		List<User> users = committee.getUsers();
+		committees.add(committee);
+		users.add(newUser);
+		user.setCommittees(committees);
+		committee.setUsers(users);*/
 		return "redirect:/home";
 	}
 	 @RequestMapping(value="/login", method=RequestMethod.POST)
@@ -342,6 +349,7 @@ public class LojoController {
 			 enddate = dateFormat();
 		 }
 		 model.addAttribute("dateFormat", dateFormat());
+		 model.addAttribute("user", uservice.findUserbyId(user_id));
 		 model.addAttribute("startdate", startdate);
 		 model.addAttribute("enddate", enddate);
 		 model.addAttribute("donations", donservice.DonTest(startdate, enddate));
@@ -664,5 +672,10 @@ public class LojoController {
 			 }
 			excelService.readEmailData(user_id, file);
 			return "redirect:/home";
+		}
+		@RequestMapping("/tester")
+		public String tester(Model model) {
+			model.addAttribute("committees", cservice.findAllCommittees());
+			return "test.jsp";
 		}
 }

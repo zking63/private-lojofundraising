@@ -16,6 +16,7 @@
 <body>
      <div class="navbar">
      	<h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
+     	<p>${ user.firstName } ${ user.getCommittees()}</p>
         <ul class="navbarmenu">
             <li class="main"><a href="/home">Home</a>
             </li>

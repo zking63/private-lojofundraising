@@ -35,18 +35,18 @@
 	<table class="table table-hover">
 	    <thead>
 	        <tr>
-	            <th>Donor</th>
-	            <th>Amount <a href="/sortdown">^</a><a href="/sortup">v</a></th>
-	            <th>Email given to</th>
-	            <th>Date/time</th>
-	            <th>Action</th>
+	            <th>User</th>
+	            <th>Committee</th>
 	        </tr>
 	    </thead>
 		<tbody>
-			<c:forEach items="${ data }" var="d">
+			<c:forEach items="${ committees }" var="d">
 				<tr>
-					<td>${ d.emails.id }</a></td>
-					<td>$${d.emails.id}</td>
+					<td>${ d.getCommitteeName()}</td>
+					<td><c:forEach items="${ d.users }" var="u">
+					${ u.email }
+					</c:forEach>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
