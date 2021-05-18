@@ -109,6 +109,8 @@ public class ExcelUtil {
 			Date dateValue = new Date();
 			Date timeValue = null;
 			Donation donation  = null;
+        	List<Committees> committees = null;
+        	List<Donation> donations = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -209,7 +211,7 @@ public class ExcelUtil {
 										System.out.println("AMOUNT AFTER: " + amount);
 										System.out.println("DATE AFTER: " + date);
 										System.out.println("UPLOADER: " + uploader.getId());
-							    	    if (dservice.findDonorbyEmail(emailValue) == null) {
+							    	   if (dservice.findDonorbyEmail(emailValue) == null) {
 					    	        	donor = new Donor();
 					    	        	//System.out.println("ID: " + id);
 					    	        	donor.setDonorFirstName(nameValue);
@@ -225,6 +227,10 @@ public class ExcelUtil {
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
 					    	        	donation.setDonation_uploader(uploader);
+					    	        	System.out.println("committee after: " + committee.getCommitteeName());
+					    	        	committees.add(committee);
+					    	        	donation.setCommittee(committee);
+					    	        	committee.setDonations(donations);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
@@ -240,15 +246,33 @@ public class ExcelUtil {
 					    	        	donor.setDonorFirstName(nameValue);
 					    	        	donor.setDonorLastName(LNValue);
 					    	        	donor.setDonorEmail(emailValue);
+					    	        	System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	donor.setUploader(uploader);
 					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
 					    	        	dservice.updateDonor(donor);
 					    	        	donation = new Donation();
 					    	        	donation.setAmount(amount);
+					    	        	System.out.println("amount");
 					    	        	donation.setDondate(date);
+					    	        	System.out.println("date");
 					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	System.out.println("donor");
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	System.out.println("refcode");
 					    	        	donation.setDonation_uploader(uploader);
+					    	        	System.out.println("uploader");
+					    	        	System.out.println("get committees " + committees);
+					    	        	donations = committee.getDonations();
+					    	        	System.out.println("get donations " + donations);
+					    	        	donations.add(donation);
+					    	        	System.out.println("add donation");
+					    	        	committee.setDonations(donations);
+					    	        	System.out.println("set donations " + donations);
+					    	        	donation.setCommittee(committee);
+					    	        	/*committees.add(committee);
+					    	        	System.out.println("add committee");
+					    	        	donation.setCommittees(committees);
+					    	        	System.out.println("set committees" + committees);*/
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();

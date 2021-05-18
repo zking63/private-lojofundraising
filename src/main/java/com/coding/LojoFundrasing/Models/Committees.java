@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,12 +28,7 @@ public class Committees {
 			)
 	private List<User> users;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	        name = "committees_donations", 
-	        joinColumns = @JoinColumn(name = "committees_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "donation_id")
-			)
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
 	private List<Donation> donations;
 	
 	public Committees() {

@@ -37,6 +37,7 @@
 	        <tr>
 	            <th>User</th>
 	            <th>Committee</th>
+	            <th>donation</th>
 	        </tr>
 	    </thead>
 		<tbody>
@@ -45,6 +46,10 @@
 					<td>${ d.getCommitteeName()}</td>
 					<td><c:forEach items="${ d.users }" var="u">
 					${ u.email }
+					</c:forEach>
+					</td>
+					<td><c:forEach items="${ d.donations }" var="a">
+					${ a.getAmount() }
 					</c:forEach>
 					</td>
 				</tr>

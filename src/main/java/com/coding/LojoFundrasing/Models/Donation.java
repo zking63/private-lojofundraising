@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -44,13 +43,9 @@ public class Donation {
     @JoinColumn(name="email_id")
     private Emails emailDonation;
     
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	        name = "committees_donations", 
-	        joinColumns = @JoinColumn(name = "donation_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "committees_id")
-			)
-	private List<Committees> committees;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="committees_id")
+    private Committees committee;
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -144,12 +139,12 @@ public class Donation {
 	
 	
 
-	public List<Committees> getCommittees() {
-		return committees;
+	public Committees getCommittee() {
+		return committee;
 	}
 
-	public void setCommittees(List<Committees> committees) {
-		this.committees = committees;
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
 	}
 
 	@PrePersist
