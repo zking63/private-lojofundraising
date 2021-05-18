@@ -671,6 +671,8 @@ public class LojoController {
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
 			return "import.jsp";
 		}
 		@PostMapping("/import/donations")
@@ -679,7 +681,9 @@ public class LojoController {
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
-			excelService.readData(user_id, file);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			excelService.readData(user_id, committee, file);
 			return "redirect:/home";
 		}
 		@RequestMapping(value="/import/emails")

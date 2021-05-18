@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
 
 @Service
@@ -19,7 +20,7 @@ public class ExcelService {
 	private ExcelUtil excelUtil;
 	
 	public String excelUrl = "D:\\test excel\\";
-	public void readData(Long user_id, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+	public void readData(Long user_id, Committees committee, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
 			String filepath = excelUrl + multipartFile.getOriginalFilename();
 
@@ -30,7 +31,7 @@ public class ExcelService {
 
 			excelUtil.getSheetDetails(filepath);
 			System.out.println("made it past get sheet details");
-		 /*response=*/	excelUtil.readExcelSheet(filepath, user_id);
+		 /*response=*/	excelUtil.readExcelSheet(filepath, user_id, committee);
 		 System.out.println("made it through read excel!!!");
 	}
 	public void readEmailData(Long user_id, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {

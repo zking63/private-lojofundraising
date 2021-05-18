@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.Emails;
@@ -56,7 +57,7 @@ public class ExcelUtil {
 		}
 	}
 	
-	public void readExcelSheet(String excelPath, Long user_id)
+	public void readExcelSheet(String excelPath, Long user_id, Committees committee)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 
 		List<String> list = new ArrayList<String>();
