@@ -224,6 +224,9 @@ public class LojoController {
 			 return "redirect:/";
 		 }
 		 User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
 		 model.addAttribute("donor", this.dservice.allDonors());
 		 model.addAttribute("email", this.eservice.allEmails());
@@ -236,12 +239,18 @@ public class LojoController {
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 if (result.hasErrors()) {
 			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("donor", this.dservice.allDonors());
 			 model.addAttribute("email", this.eservice.allEmails());
 			 model.addAttribute("dateFormat", dateFormat2());
 			 return "newdonation.jsp";
 		 }
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 Emails email = donation.getEmailDonation();
 		 Donor donor = dservice.findDonorbyEmail(donation.getDonor().getDonorEmail());
 		 donservice.createDonation(donation);
