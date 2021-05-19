@@ -329,15 +329,34 @@ public class LojoController {
 		 if (user_id == null) {
 			 return "redirect:/";
 		 }
-		 User user = uservice.findUserbyId(user_id);
-		 model.addAttribute("user", user);
-		 model.addAttribute("donor", this.dservice.findbyId(id));
-		 return "/donors/showdonor.jsp";
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 if (committee == this.dservice.findbyId(id).getCommittee()) {
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 model.addAttribute("donor", this.dservice.findbyId(id));
+			 model.addAttribute("committee", committee);
+			 return "/donors/showdonor.jsp";
+		 }
+		 else {
+			 return "redirect:/committees/select";
+		 }
 	 }
 	@RequestMapping("/donors/delete/{id}")
 	public String DeleteDonor(@PathVariable("id") Long id, HttpSession session, Model model) {
-		this.dservice.delete(id);
-		return "redirect:/donors";
+		Long user_id = (Long)session.getAttribute("user_id");
+		if (user_id == null) {
+			return "redirect:/";
+		}
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 if (committee == this.dservice.findbyId(id).getCommittee()) {
+			 this.dservice.delete(id);
+			 return "redirect:/donors";
+		 }
+		 else {
+			 return "redirect:/committees/select";
+		 }
 	}
 	@RequestMapping(value="/donors/edit/{id}")
 	public String EditDonor(@PathVariable("id") long id, HttpSession session, Model model) {
@@ -345,13 +364,18 @@ public class LojoController {
 		if (user_id == null) {
 			return "redirect:/";
 		}
-		User user = uservice.findUserbyId(user_id);
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 Committees committee = cservice.findbyId(committee_id);
-		 model.addAttribute("committee", committee);
-		model.addAttribute("donor", dservice.findbyId(id));
-		model.addAttribute("user", user);
-		return "/donors/editdonor.jsp";
+		 if (committee == this.dservice.findbyId(id).getCommittee()) {
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 model.addAttribute("donor", this.dservice.findbyId(id));
+			 model.addAttribute("committee", committee);
+			return "/donors/editdonor.jsp";
+		 }
+		 else {
+			 return "redirect:/committees/select";
+		 }
 	}
 	 @RequestMapping(value="/donors/edit/{id}", method=RequestMethod.POST)
 	 public String UpdateDonor(@Valid @ModelAttribute("donor") Donor donor, BindingResult result, Model model, HttpSession session) {
@@ -359,13 +383,19 @@ public class LojoController {
 		 if (result.hasErrors()) {
 			 return "redirect:/";
 		 }
-		 User user = uservice.findUserbyId(user_id);
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 Committees committee = cservice.findbyId(committee_id);
-		 model.addAttribute("committee", committee);
-		 model.addAttribute("user", user);
-		 this.dservice.updateDonor(donor);
-		 return "redirect:/donors";
+		 if (committee == this.dservice.findbyId(donor.getId()).getCommittee()) {
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 model.addAttribute("donor", donor);
+			 model.addAttribute("committee", committee);
+			 this.dservice.updateDonor(donor);
+			 return "redirect:/donors";
+		 }
+		 else {
+			 return "redirect:/committees/select";
+		 }
 	 }
 	 @RequestMapping("/emails/{id}")
 	 public String showEmail(@PathVariable("id") long id, Model model, HttpSession session, @ModelAttribute("email")Emails email) {
