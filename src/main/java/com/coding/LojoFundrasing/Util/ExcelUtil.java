@@ -234,7 +234,7 @@ public class ExcelUtil {
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
-					    	    		eservice.getEmailData(email);
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
@@ -276,7 +276,7 @@ public class ExcelUtil {
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
-					    	    		eservice.getEmailData(email);
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor);
 					    	        	refcode = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
@@ -452,7 +452,7 @@ public class ExcelUtil {
 					    	        	emails.add(email);
 					    	        	committee.setEmails(emails);
 					    	        	eservice.createEmail(email);
-					    	    		eservice.getEmailData(email);
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					    	        }
@@ -467,7 +467,7 @@ public class ExcelUtil {
 					    	        	emails.add(email);
 					    	        	committee.setEmails(emails);
 					    	        	eservice.createEmail(email);
-					    	    		eservice.getEmailData(email);
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					                }

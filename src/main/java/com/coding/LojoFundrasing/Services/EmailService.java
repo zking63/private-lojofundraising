@@ -58,7 +58,7 @@ public class EmailService {
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
 	}
-	public Data getEmailData(Emails email) {
+	public Data getEmailData(Emails email, Long committee_id) {
 		Data emaildata = email.getEmaildata();
 		Long id = email.getId();
 		Double esum = 0.00;
@@ -76,44 +76,10 @@ public class EmailService {
 					Long edid = emaildata.getId();
 					edid = alldata.get(i).getId();
 					emaildata = datarepo.findById(edid).orElse(null);
-					esum = erepo.sums(id);
-					eaverage = erepo.averages(id);
-					donationscount = erepo.donationscount(id);
-					donorscount = erepo.donorscount(id);
-					emaildata.setEmailsum(esum);
-					emaildata.setDonationcount(donationscount);
-					emaildata.setDonorcount(donorscount);
-					emaildata.setEmailAverage(eaverage);
-					return datarepo.save(emaildata);
-				}
-			}
-			return datarepo.save(emaildata);
-		}
-	}
-	public Data getEmailDatafromDonation(Donation donation) {
-		Emails email = donation.getEmailDonation();
-		Data emaildata = email.getEmaildata();
-		Long id = email.getId();
-		Double esum = 0.00;
-		Double eaverage = 0.00;
-		Integer donationscount = 0;
-		Integer donorscount = 0;
-		List<Data> alldata = datarepo.findAll();
-		if (emaildata == null) {
-			emaildata = new Data(email, eaverage, esum, donationscount, donorscount);
-			return datarepo.save(emaildata);
-		}
-		else {
-			for (int i = 0; i < alldata.size(); i++) {
-				System.out.println(alldata.get(i).getDataEmail().getEmailName());
-				if (id == alldata.get(i).getDataEmail().getId()) {
-					Long edid = emaildata.getId();
-					edid = alldata.get(i).getId();
-					emaildata = datarepo.findById(edid).orElse(null);
-					esum = erepo.sums(id);
-					eaverage = erepo.averages(id);
-					donationscount = erepo.donationscount(id);
-					donorscount = erepo.donorscount(id);
+					esum = erepo.sums(id, committee_id);
+					eaverage = erepo.averages(id, committee_id);
+					donationscount = erepo.donationscount(id, committee_id);
+					donorscount = erepo.donorscount(id, committee_id);
 					emaildata.setEmailsum(esum);
 					emaildata.setDonationcount(donationscount);
 					emaildata.setDonorcount(donorscount);
@@ -127,47 +93,47 @@ public class EmailService {
 	//sorting
 	//date/time
 	public List<Emails> EmailTest(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByOrderByDesc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByOrderByDesc(startdateE, enddateE, committee_id);
 	}
 	public List<Emails> EmailTestAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByOrderByAsc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByOrderByAsc(startdateE, enddateE, committee_id);
 	}
 	//averages
 	public List<Emails> AvDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByAverageOrderByDesc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByAverageOrderByDesc(startdateE, enddateE, committee_id);
 	}
 	public List<Emails> AverageAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByAverageOrderByAsc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByAverageOrderByAsc(startdateE, enddateE, committee_id);
 	}
 	//sums
 	public List<Emails> SumDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findBySumOrderByDesc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findBySumOrderByDesc(startdateE, enddateE, committee_id);
 	}
 	public List<Emails> SumAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findBySumOrderByAsc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findBySumOrderByAsc(startdateE, enddateE, committee_id);
 	}
 	//donation count
 	public List<Emails> DonationsCountDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByDonationsCountOrderByDesc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByDonationsCountOrderByDesc(startdateE, enddateE, committee_id);
 	}
 	public List<Emails> DonationsCountAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByDonationsCountOrderByAsc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByDonationsCountOrderByAsc(startdateE, enddateE, committee_id);
 	}
 	//donor count 
 	public List<Emails> DonorCountDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByDonorCountOrderByDesc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByDonorCountOrderByDesc(startdateE, enddateE, committee_id);
 	}
 	public List<Emails> DonorCountAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
-	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE){
-		return erepo.findByDonorCountOrderByAsc(startdateE, enddateE);
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findByDonorCountOrderByAsc(startdateE, enddateE, committee_id);
 	}
 }
