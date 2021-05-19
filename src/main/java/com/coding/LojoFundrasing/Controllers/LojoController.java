@@ -729,7 +729,7 @@ public class LojoController {
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
-			excelService.readEmailData(user_id, file);
+			excelService.readEmailData(user_id, file, committee);
 			return "redirect:/home";
 		}
 		@RequestMapping("/tester")

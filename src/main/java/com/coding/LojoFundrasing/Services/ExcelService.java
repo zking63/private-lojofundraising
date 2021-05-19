@@ -34,7 +34,7 @@ public class ExcelService {
 		 /*response=*/	excelUtil.readExcelSheet(filepath, user_id, committee);
 		 System.out.println("made it through read excel!!!");
 	}
-	public void readEmailData(Long user_id, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+	public void readEmailData(Long user_id, MultipartFile multipartFile, Committees committee) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
 		String filepath = excelUrl + multipartFile.getOriginalFilename();
 
@@ -45,7 +45,7 @@ public class ExcelService {
 
 		excelUtil.getSheetDetails(filepath);
 		System.out.println("made it past get sheet details");
-	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id);
+	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
 }
 }
