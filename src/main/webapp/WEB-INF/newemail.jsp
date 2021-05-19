@@ -33,6 +33,7 @@
 		<h2>Upload a new email</h2>
 	    <form:form method="POST" action="/newemail" modelAttribute="email">
 	    	<form:hidden value="${ user.id }" path="email_uploader"/>
+	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>
 	            <form:label path="emailName">Name:</form:label>
 	            <form:errors path="emailName"></form:errors>

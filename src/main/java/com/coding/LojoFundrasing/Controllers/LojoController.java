@@ -710,19 +710,25 @@ public class LojoController {
 			return "redirect:/home";
 		}
 		@RequestMapping(value="/import/emails")
-		public String importEmails(HttpSession session) {
+		public String importEmails(HttpSession session, Model model) {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			return "importemails.jsp";
 		}
 		@PostMapping("/import/emails")
-		public String readExcelemails(HttpSession session, MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+		public String readExcelemails(HttpSession session, MultipartFile file, Model model) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			excelService.readEmailData(user_id, file);
 			return "redirect:/home";
 		}
