@@ -159,19 +159,27 @@ public class LojoController {
 		 }
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 return "createDonor.jsp";
 	 }
 	 @PostMapping(value="/newdonor")
 	 public String CreateDonor(@Valid @ModelAttribute("donor") Donor donor, BindingResult result, Model model, HttpSession session) {
 		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 //System.out.println(donor.getDonorEmail());
 		 dvalidation.validate(donor, result);
 		 if (result.hasErrors()) {
+			 System.out.println("past validate");
 			 User user = uservice.findUserbyId(user_id);
 			 model.addAttribute("user", user);
+			 model.addAttribute("committee", committee);
+			 System.out.println(result);
 			 return "createDonor.jsp";
 		 }
 		 dservice.createDonor(donor);
-		 //this.dservice.getDonorData(donor);
 		 return "redirect:/donors";
 	 }
 	 @RequestMapping("/donors")
@@ -338,6 +346,9 @@ public class LojoController {
 			return "redirect:/";
 		}
 		User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		model.addAttribute("donor", dservice.findbyId(id));
 		model.addAttribute("user", user);
 		return "/donors/editdonor.jsp";
@@ -349,6 +360,9 @@ public class LojoController {
 			 return "redirect:/";
 		 }
 		 User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
 		 this.dservice.updateDonor(donor);
 		 return "redirect:/donors";

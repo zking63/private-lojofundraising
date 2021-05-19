@@ -31,6 +31,7 @@ public class DonorService {
 	private DonationRepo donationrepo;
 	
 	public Donor createDonor(Donor donor) {
+		System.out.println("new donor created");
 		return drepo.save(donor);
 	}
 	public Donor updateDonor(Donor donor) {
@@ -39,6 +40,9 @@ public class DonorService {
 	public Donor findDonorbyEmail(String email) {
 		return drepo.findBydonorEmail(email).orElse(null);
 	}
+	/*public Donor findDonorByEmailandCommittee(String email, Long committee_id) {
+		return drepo.findByemailandCommittee(email, committee_id);
+	}*/
 	public List<Donor> allDonors() {
 		return drepo.findAll();
 	}

@@ -47,7 +47,7 @@
 	        <p>
 		        <label for="donor">Assign a donor:</label>
 				<select id="donor" name="donor">
-				  	<c:forEach items="${ donor }" var="p">
+				  	<c:forEach items="${ committee.getDonors() }" var="p">
 			        	<option value="${ p.id }">${ p.donorEmail }</option>
 			        </c:forEach>
 				</select>

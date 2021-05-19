@@ -18,6 +18,8 @@ import com.coding.LojoFundrasing.Models.Emails;
 public interface DonorRepo extends CrudRepository<Donor, Long>{
 	List<Donor> findAll();
 	Optional<Donor> findBydonorEmail(String email);
+	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.donor_email = :email", nativeQuery = true)
+	Donor findByemailandCommittee(String email, Long committee_id);
 	
 	//date functions
 	@Query(value = "SELECT * FROM donors where mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecent_date Desc, mostrecenttime Desc", nativeQuery = true)

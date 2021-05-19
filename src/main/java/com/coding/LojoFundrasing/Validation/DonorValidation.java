@@ -21,8 +21,10 @@ public class DonorValidation implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
         Donor donor = (Donor) target;
+        Long id = donor.getCommittee().getId();
         
-        if(this.drepo.findBydonorEmail(donor.getDonorEmail()) != null) {
+        if(this.drepo.findByemailandCommittee(donor.getDonorEmail(), id) != null) {
+        	System.out.println(drepo.findBydonorEmail(donor.getDonorEmail()));
         	errors.rejectValue("donorEmail", "Unique");
         }
 	}

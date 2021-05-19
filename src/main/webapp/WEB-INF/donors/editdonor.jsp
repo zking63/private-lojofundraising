@@ -33,6 +33,7 @@
 		<h2>Edit donor</h2>
 	    <form:form method="POST" action="/donors/edit/${donor.id }" modelAttribute="donor">
 	    	<form:hidden value="${ user.id }" path="uploader"/>
+	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>
 	            <form:label path="donorFirstName">First Name:</form:label>
 	            <form:errors path="donorFirstName"></form:errors>
