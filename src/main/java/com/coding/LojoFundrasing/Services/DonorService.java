@@ -93,7 +93,7 @@ public class DonorService {
 						daverage = drepo.donoraverages(id, committee_id);
 						donorsum = drepo.donorsums(id, committee_id);
 						donationcount = drepo.donordoncount(id, committee_id);
-						donordata.setDonoraverage(daverage, committee_id);
+						donordata.setDonoraverage(daverage);
 						System.out.println("average " + daverage);
 						donordata.setDonor_contributioncount(donationcount);
 						System.out.println("contribution " + donationcount);
