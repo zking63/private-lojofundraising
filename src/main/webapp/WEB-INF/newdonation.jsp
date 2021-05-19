@@ -33,7 +33,7 @@
 	<h2>New donation</h2>
 	    <form:form method="POST" action="/newdonation" modelAttribute="donation">
 	    	<form:hidden value="${ user.id }" path="donation_uploader"/>
-	    	<form:hidden value="${ committee.id }" path="committees"/>
+	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>
 	            <form:label path="amount">Amount:</form:label>
 	            <form:errors path="amount"></form:errors>
@@ -55,7 +55,7 @@
 	        <p>
 		        <label for="emailDonation">Assign an email:</label>
 				<select id="emailDonation" name="emailDonation">
-				  	<c:forEach items="${ email }" var="e">
+				  	<c:forEach items="${ committee.getEmails() }" var="e">
 			        	<option value="${ e.id }">${ e.emailRefcode }</option>
 			        </c:forEach>
 				</select>

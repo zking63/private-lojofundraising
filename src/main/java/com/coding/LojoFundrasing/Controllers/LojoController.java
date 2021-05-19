@@ -237,10 +237,10 @@ public class LojoController {
 	 @PostMapping(value="/newdonation")
 	 public String CreateDonation(@Valid @ModelAttribute("donation") Donation donation, BindingResult result, Model model, HttpSession session) {
 		 Long user_id = (Long)session.getAttribute("user_id");
+		 User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
 		 if (result.hasErrors()) {
-			 User user = uservice.findUserbyId(user_id);
-			 Long committee_id = (Long)session.getAttribute("committee_id");
-			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("donor", this.dservice.allDonors());
@@ -248,9 +248,7 @@ public class LojoController {
 			 model.addAttribute("dateFormat", dateFormat2());
 			 return "newdonation.jsp";
 		 }
-		 Long committee_id = (Long)session.getAttribute("committee_id");
-		 Committees committee = cservice.findbyId(committee_id);
-		 model.addAttribute("committee", committee);
+		 //model.addAttribute("committee", committee);
 		 Emails email = donation.getEmailDonation();
 		 Donor donor = dservice.findDonorbyEmail(donation.getDonor().getDonorEmail());
 		 donservice.createDonation(donation);
@@ -365,8 +363,13 @@ public class LojoController {
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 Committees committee = cservice.findbyId(committee_id);
 		 model.addAttribute("committee", committee);
-		 model.addAttribute("user", user);
-		 model.addAttribute("emails", this.eservice.findEmailbyId(id));
+		 if (committee == this.eservice.findEmailbyId(id).getCommittee()) {
+			 model.addAttribute("user", user);
+			 model.addAttribute("emails", this.eservice.findEmailbyId(id));
+		 }
+		 else {
+			 return "redirect:/committees/select";
+		 }
 		 return "/emails/showemail.jsp";
 	 }
 	 @RequestMapping("/home")
@@ -397,10 +400,22 @@ public class LojoController {
 	 }
 		@RequestMapping("/emails/delete/{id}")
 		public String DeleteEmail(@PathVariable("id") Long id, HttpSession session, Model model) {
-			this.eservice.delete(id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 User user = uservice.findUserbyId(user_id);
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			if (committee == this.eservice.findEmailbyId(id).getCommittee()) {
+				 model.addAttribute("user", user);
+				 model.addAttribute("emails", this.eservice.findEmailbyId(id));
+				 this.eservice.delete(id);
+			 }
+			 else {
+				 return "redirect:/committees/select";
+			 }
 			return "redirect:/emails";
 		}
 		@RequestMapping(value="/emails/edit/{id}")
@@ -412,11 +427,17 @@ public class LojoController {
 			User user = uservice.findUserbyId(user_id);
 			Long committee_id = (Long)session.getAttribute("committee_id");
 			Committees committee = cservice.findbyId(committee_id);
-			model.addAttribute("committee", committee);
-			model.addAttribute("dateFormat", dateFormat2());
-			model.addAttribute("timeFormat", timeFormat());
-			model.addAttribute("email", eservice.findEmailbyId(id));
-			model.addAttribute("user", user);
+			if (committee == this.eservice.findEmailbyId(id).getCommittee()) {
+				 model.addAttribute("user", user);
+				 model.addAttribute("emails", this.eservice.findEmailbyId(id));
+					model.addAttribute("committee", committee);
+					model.addAttribute("dateFormat", dateFormat2());
+					model.addAttribute("timeFormat", timeFormat());
+					model.addAttribute("email", eservice.findEmailbyId(id));
+			 }
+			 else {
+				 return "redirect:/committees/select";
+			 }
 			return "/emails/editemail.jsp";
 		}
 		 @RequestMapping(value="/emails/edit/{id}", method=RequestMethod.POST)
@@ -426,14 +447,21 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
-			 model.addAttribute("dateFormat", dateFormat2());
-			 model.addAttribute("timeFormat", timeFormat());
-			 model.addAttribute("user", user);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
-			 List<Donation> donations = email.getEmaildonations();
-			 eservice.updateEmail(email);
+			 Long id = email.getId();
+				if (committee == this.eservice.findEmailbyId(id).getCommittee()) {
+					 model.addAttribute("user", user);
+					 model.addAttribute("emails", this.eservice.findEmailbyId(id));
+						model.addAttribute("committee", committee);
+						model.addAttribute("dateFormat", dateFormat2());
+						model.addAttribute("timeFormat", timeFormat());
+						 eservice.updateEmail(email);
+				 }
+				 else {
+					 return "redirect:/committees/select";
+				 }
 			 return "redirect:/emails";
 		 }
 		 //edit and delete donations homepage
@@ -443,12 +471,17 @@ public class LojoController {
 				 Long committee_id = (Long)session.getAttribute("committee_id");
 				 Committees committee = cservice.findbyId(committee_id);
 				 model.addAttribute("committee", committee);
-				Donation donation = this.donservice.findDonationbyId(id);
-				this.donservice.delete(id);
-				Emails email = donation.getEmailDonation();
-				Donor donor = donation.getDonor();
-				this.eservice.getEmailData(email, committee_id);
-				this.dservice.getDonorData(donor);
+					if (committee == this.donservice.findDonationbyId(id).getCommittee()) {
+						Donation donation = this.donservice.findDonationbyId(id);
+						this.donservice.delete(id);
+						Emails email = donation.getEmailDonation();
+						Donor donor = donation.getDonor();
+						this.eservice.getEmailData(email, committee_id);
+						this.dservice.getDonorData(donor);
+					 }
+					 else {
+						 return "redirect:/committees/select";
+					 }
 				return "redirect:/home";
 			}
 			@RequestMapping(value="/donations/edit/{id}")
@@ -459,12 +492,20 @@ public class LojoController {
 				}
 				User user = uservice.findUserbyId(user_id);
 				Donation donation = this.donservice.findDonationbyId(id);
-				model.addAttribute("donation", donation);
-				model.addAttribute("user", user);
-				model.addAttribute("donor", this.dservice.allDonors());
-				model.addAttribute("email", this.eservice.allEmails());
-				model.addAttribute("dateFormat", dateFormat2());
-				model.addAttribute("timeFormat", timeFormat());
+				 Long committee_id = (Long)session.getAttribute("committee_id");
+				 Committees committee = cservice.findbyId(committee_id);
+				 model.addAttribute("committee", committee);
+				if (committee == donation.getCommittee()) {
+					model.addAttribute("donation", donation);
+					model.addAttribute("user", user);
+					model.addAttribute("donor", this.dservice.allDonors());
+					model.addAttribute("email", this.eservice.allEmails());
+					model.addAttribute("dateFormat", dateFormat2());
+					model.addAttribute("timeFormat", timeFormat());
+				 }
+				 else {
+					 return "redirect:/committees/select";
+				 }
 				return "/donations/editdonation.jsp";
 			}
 		 @RequestMapping(value="/donations/edit/{id}", method=RequestMethod.POST)
@@ -477,16 +518,23 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
-			 model.addAttribute("user", user);
-			 model.addAttribute("donor", this.dservice.allDonors());
-			 model.addAttribute("email", this.eservice.allEmails());
-			 model.addAttribute("dateFormat", dateFormat2());
-			 model.addAttribute("timeFormat", timeFormat());
-			 Emails email = donation.getEmailDonation();
-			 Donor donor = donation.getDonor();
-			 donservice.createDonation(donation);
-			 this.eservice.getEmailData(email, committee_id);
-			 this.dservice.getDonorData(donor);
+			 model.addAttribute("committee", committee);
+			if (committee == donation.getCommittee()) {
+				model.addAttribute("committee", committee);
+				 model.addAttribute("user", user);
+				 model.addAttribute("donor", this.dservice.allDonors());
+				 model.addAttribute("email", this.eservice.allEmails());
+				 model.addAttribute("dateFormat", dateFormat2());
+				 model.addAttribute("timeFormat", timeFormat());
+				 Emails email = donation.getEmailDonation();
+				 Donor donor = donation.getDonor();
+				 donservice.createDonation(donation);
+				 this.eservice.getEmailData(email, committee_id);
+				 this.dservice.getDonorData(donor);
+			 }
+			 else {
+				 return "redirect:/committees/select";
+			 }
 			 return "redirect:/home";
 		 }
 		 //edit and delete donations donor page
