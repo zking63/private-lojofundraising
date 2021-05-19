@@ -192,6 +192,9 @@ public class LojoController {
 		 }
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 if (startdateD == null) {
 			 startdateD = dateFormat();
 		 }
@@ -202,8 +205,8 @@ public class LojoController {
 		 model.addAttribute("enddateD", enddateD);
 		 model.addAttribute("dateFormat", dateFormat());
 		 //model.addAttribute("donorswithin", this.dservice.DonorsWithinRange(startdateD, enddateD));
-		 dservice.DonorsWithinRange(startdateD, enddateD);
-		 model.addAttribute("donor", this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD));
+		 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+		 model.addAttribute("donor", this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id));
 		 return "donors.jsp";
 	 }
 	private String dateFormat() {
@@ -728,6 +731,9 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
 			 model.addAttribute("startdateD", startdateD);
@@ -735,21 +741,21 @@ public class LojoController {
 			 model.addAttribute("field", field);
 			 List<Donor> donors = null;
 			 if (field.equals("latestdonation")) {
-				 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD);
+				 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donationcount")) {
-				 donors = this.dservice.orderDonorCountDesc(startdateD, enddateD);
+				 donors = this.dservice.orderDonorCountDesc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donoraverage")) {
-				 donors = this.dservice.orderAverageDesc(startdateD, enddateD);
+				 donors = this.dservice.orderAverageDesc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donorsum")) {
-				 donors = this.dservice.orderDonorsumDesc(startdateD, enddateD);
+				 donors = this.dservice.orderDonorsumDesc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("mostrecentamount")) {
-				 donors = this.dservice.orderMostrecentAmountDesc(startdateD, enddateD);
+				 donors = this.dservice.orderMostrecentAmountDesc(startdateD, enddateD, committee_id);
 			 }
-			 dservice.DonorsWithinRange(startdateD, enddateD);
+			 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
 			 model.addAttribute("donor", donors);
 			 return "donors.jsp";
 		 }
@@ -762,6 +768,9 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
 			 model.addAttribute("startdateD", startdateD);
@@ -769,21 +778,21 @@ public class LojoController {
 			 model.addAttribute("field", field);
 			 List<Donor> donors = null;
 			 if (field.equals("latestdonation")) {
-				 donors = this.dservice.orderMostRecentbyDonorAsc(startdateD, enddateD);
+				 donors = this.dservice.orderMostRecentbyDonorAsc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donationcount")) {
-				 donors = this.dservice.orderDonorCountAsc(startdateD, enddateD);
+				 donors = this.dservice.orderDonorCountAsc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donoraverage")) {
-				 donors = this.dservice.orderAverageAsc(startdateD, enddateD);
+				 donors = this.dservice.orderAverageAsc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("donorsum")) {
-				 donors = this.dservice.orderDonorsumAsc(startdateD, enddateD);
+				 donors = this.dservice.orderDonorsumAsc(startdateD, enddateD, committee_id);
 			 }
 			 if (field.equals("mostrecentamount")) {
-				 donors = this.dservice.orderMostrecentAmountAsc(startdateD, enddateD);
+				 donors = this.dservice.orderMostrecentAmountAsc(startdateD, enddateD, committee_id);
 			 }
-			 dservice.DonorsWithinRange(startdateD, enddateD);
+			 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
 			 model.addAttribute("donor", donors);
 			 return "donors.jsp";
 		 }
