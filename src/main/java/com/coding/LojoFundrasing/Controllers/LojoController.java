@@ -264,7 +264,7 @@ public class LojoController {
 		 Donor donor = dservice.findDonorbyEmail(donation.getDonor().getDonorEmail());
 		 donservice.createDonation(donation);
 		 this.eservice.getEmailData(email, committee_id);
-		 this.dservice.getDonorData(donor);
+		 this.dservice.getDonorData(donor, committee_id);
 		 return "redirect:/home";
 	 }
 	 @RequestMapping("/newemail")
@@ -524,7 +524,7 @@ public class LojoController {
 						Emails email = donation.getEmailDonation();
 						Donor donor = donation.getDonor();
 						this.eservice.getEmailData(email, committee_id);
-						this.dservice.getDonorData(donor);
+						this.dservice.getDonorData(donor, committee_id);
 					 }
 					 else {
 						 return "redirect:/committees/select";
@@ -577,7 +577,7 @@ public class LojoController {
 				 Donor donor = donation.getDonor();
 				 donservice.createDonation(donation);
 				 this.eservice.getEmailData(email, committee_id);
-				 this.dservice.getDonorData(donor);
+				 this.dservice.getDonorData(donor, committee_id);
 			 }
 			 else {
 				 return "redirect:/committees/select";

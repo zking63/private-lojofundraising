@@ -40,9 +40,9 @@ public class DonorService {
 	public Donor findDonorbyEmail(String email) {
 		return drepo.findBydonorEmail(email).orElse(null);
 	}
-	/*public Donor findDonorByEmailandCommittee(String email, Long committee_id) {
+	public Donor findDonorByEmailandCommittee(String email, Long committee_id) {
 		return drepo.findByemailandCommittee(email, committee_id);
-	}*/
+	}
 	public List<Donor> allDonors() {
 		return drepo.findAll();
 	}
@@ -70,7 +70,7 @@ public class DonorService {
 		return contributions;
 	}
 	
-	public DonorData getDonorData(Donor donor) {
+	public DonorData getDonorData(Donor donor, Long committee_id) {
 		DonorData donordata = donor.getDonordata();
 		Long id = donor.getId();
 		Double daverage = 0.0;
@@ -90,16 +90,16 @@ public class DonorService {
 						System.out.println("donordata id " + ddid);
 						ddid = allDonordata.get(i).getId();
 						donordata = dondrepo.findById(ddid).orElse(null);
-						daverage = drepo.donoraverages(id);
-						donorsum = drepo.donorsums(id);
-						donationcount = drepo.donordoncount(id);
-						donordata.setDonoraverage(daverage);
+						daverage = drepo.donoraverages(id, committee_id);
+						donorsum = drepo.donorsums(id, committee_id);
+						donationcount = drepo.donordoncount(id, committee_id);
+						donordata.setDonoraverage(daverage, committee_id);
 						System.out.println("average " + daverage);
 						donordata.setDonor_contributioncount(donationcount);
 						System.out.println("contribution " + donationcount);
 						donordata.setDonorsum(donorsum);
 						System.out.println("sum " + donorsum);
-						mostrecent_donation_id = drepo.mostRecentDonationDate(id);
+						mostrecent_donation_id = drepo.mostRecentDonationDate(id, committee_id);
 						Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 						mostrecentDate = mostrecent.getDondate();
 						//mostrecenttime = mostrecent.getDontime();
@@ -118,10 +118,10 @@ public class DonorService {
 		}
 		else {
 			System.out.println("new");
-			daverage = drepo.donoraverages(id);
-			donorsum = drepo.donorsums(id);
-			donationcount = drepo.donordoncount(id);
-			mostrecent_donation_id = drepo.mostRecentDonationDate(id);
+			daverage = drepo.donoraverages(id, committee_id);
+			donorsum = drepo.donorsums(id, committee_id);
+			donationcount = drepo.donordoncount(id, committee_id);
+			mostrecent_donation_id = drepo.mostRecentDonationDate(id, committee_id);
 			Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 			mostrecentDate = mostrecent.getDondate();
 			//mostrecenttime = mostrecent.getDontime();
@@ -136,53 +136,53 @@ public class DonorService {
 		}
 	}
 	public List<Donor> orderMostRecentbyDonorDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findAllWithMostRecent(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findAllWithMostRecent(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderMostRecentbyDonorAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findAllWithMostRecentDondateAfterAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findAllWithMostRecentDondateAfterAsc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderDonorCountDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByContributionCountByDesc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByContributionCountByDesc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderDonorCountAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByContributionCountByAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByContributionCountByAsc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderAverageAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByDonorAverageByAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByDonorAverageByAsc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderAverageDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByDonorAverageByDesc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByDonorAverageByDesc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderDonorsumDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByDonorsumByDesc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByDonorsumByDesc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderDonorsumAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.findByDonorsumByAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findByDonorsumByAsc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderMostrecentAmountDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.MostrecentamountSortDesc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.MostrecentamountSortDesc(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderMostrecentAmountAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
-		return drepo.MostrecentamountSortAsc(startdate, enddate);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.MostrecentamountSortAsc(startdate, enddate, committee_id);
 	}
 	public void DonorsWithinRange(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate){
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
 		List<Donor> donors = drepo.findAll();
 		for (int i= 0; i < donors.size(); i++) {
 			Long id = donors.get(i).getId();
-			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate);
-			Double suminrange = drepo.donorsumRange(id, startdate, enddate);
-			Double avginrange = drepo.donoravgRange(id, startdate, enddate);
+			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);
+			Double suminrange = drepo.donorsumRange(id, startdate, enddate, committee_id);
+			Double avginrange = drepo.donoravgRange(id, startdate, enddate, committee_id);
 			Donor donor = drepo.findById(id).orElse(null);
 			donor.setCountwithinrange(countinrange);
 			donor.setSumwithinrange(suminrange);
