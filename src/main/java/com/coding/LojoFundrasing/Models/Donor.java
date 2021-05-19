@@ -43,6 +43,10 @@ public class Donor {
     @JoinColumn(name="user_id")
     private User uploader;
     
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="committees_id")
+    private Committees committee;
+    
 	@OneToOne(mappedBy="datadonor", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private DonorData donordata;
 	
@@ -225,4 +229,13 @@ public class Donor {
 		this.averagewithinrange = averagewithinrange;
 	}
 
+	public Committees getCommittee() {
+		return committee;
+	}
+
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
+	}
+	
+	
 }

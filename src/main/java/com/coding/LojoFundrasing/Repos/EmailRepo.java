@@ -9,8 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import com.coding.LojoFundrasing.Models.Emails;
-import com.coding.LojoFundrasing.Models.Committees;
-import com.coding.LojoFundrasing.Models.Data;
 
 
 @Repository

@@ -33,6 +33,9 @@ public class Committees {
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
 	private List<Emails> emails;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
+	private List<Donor> donors;
 	
 	public Committees() {
 		
@@ -67,4 +70,11 @@ public class Committees {
 	public void setEmails(List<Emails> emails) {
 		this.emails = emails;
 	}
+	public List<Donor> getDonors() {
+		return donors;
+	}
+	public void setDonors(List<Donor> donors) {
+		this.donors = donors;
+	}
+	
 }
