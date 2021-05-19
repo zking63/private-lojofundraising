@@ -265,6 +265,9 @@ public class LojoController {
 			 return "redirect:/";
 		 }
 		 User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
 		 model.addAttribute("dateFormat",  dateFormat2());
 		 model.addAttribute("timeFormat", timeFormat());
@@ -273,13 +276,17 @@ public class LojoController {
 	 @PostMapping(value="/newemail")
 	 public String CreateEmail(@Valid @ModelAttribute("email") Emails email, BindingResult result, Model model, HttpSession session) {
 		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
 		 if (result.hasErrors()) {
 			 User user = uservice.findUserbyId(user_id);
 			 model.addAttribute("user", user);
+			 model.addAttribute("committee", committee);
 			 return "newemail.jsp";
 		 }
 		 model.addAttribute("dateFormat", dateFormat2());
 		 model.addAttribute("timeFormat", timeFormat());
+		 model.addAttribute("committee", committee);
 		 eservice.createEmail(email);
 		 this.eservice.getEmailData(email);
 		 return "redirect:/emails";
@@ -298,6 +305,9 @@ public class LojoController {
 		 if (enddateE == null) {
 			 enddateE = dateFormat();
 		 }
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 model.addAttribute("startdateE", startdateE);
 		 model.addAttribute("enddateE", enddateE);
 		 User user = uservice.findUserbyId(user_id);
@@ -351,6 +361,9 @@ public class LojoController {
 			 return "redirect:/";
 		 }
 		 User user = uservice.findUserbyId(user_id);
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 Committees committee = cservice.findbyId(committee_id);
+		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
 		 model.addAttribute("emails", this.eservice.findEmailbyId(id));
 		 return "/emails/showemail.jsp";
@@ -384,6 +397,9 @@ public class LojoController {
 		@RequestMapping("/emails/delete/{id}")
 		public String DeleteEmail(@PathVariable("id") Long id, HttpSession session, Model model) {
 			this.eservice.delete(id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			return "redirect:/emails";
 		}
 		@RequestMapping(value="/emails/edit/{id}")
@@ -393,6 +409,9 @@ public class LojoController {
 				return "redirect:/";
 			}
 			User user = uservice.findUserbyId(user_id);
+			Long committee_id = (Long)session.getAttribute("committee_id");
+			Committees committee = cservice.findbyId(committee_id);
+			model.addAttribute("committee", committee);
 			model.addAttribute("dateFormat", dateFormat2());
 			model.addAttribute("timeFormat", timeFormat());
 			model.addAttribute("email", eservice.findEmailbyId(id));
@@ -409,13 +428,11 @@ public class LojoController {
 			 model.addAttribute("dateFormat", dateFormat2());
 			 model.addAttribute("timeFormat", timeFormat());
 			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 List<Donation> donations = email.getEmaildonations();
 			 eservice.updateEmail(email);
-			 //this.eservice.getEmailData(email);
-			 /*for (int i = 0; i < donations.size(); i++) {
-				 Donor donor = donations.get(i).getDonor();
-				 this.dservice.getDonorData(donor);
-			 }*/
 			 return "redirect:/emails";
 		 }
 		 //edit and delete donations homepage
@@ -539,6 +556,9 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
 			 model.addAttribute("startdateE", startdateE);
@@ -572,6 +592,9 @@ public class LojoController {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
 			 model.addAttribute("startdateE", startdateE);

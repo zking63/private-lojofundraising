@@ -67,7 +67,4 @@ public class Committees {
 	public void setEmails(List<Emails> emails) {
 		this.emails = emails;
 	}
-	
-	
-	
 }
