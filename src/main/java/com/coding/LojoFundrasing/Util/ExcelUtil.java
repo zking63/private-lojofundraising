@@ -440,7 +440,7 @@ public class ExcelUtil {
 										System.out.println("REFCODE AFTER: " + refcode);
 										System.out.println("Name AFTER: " + nameValue);
 										System.out.println("DATE AFTER: " + date);
-							    	if (eservice.findEmailbyRefcode(refcode) == null) {
+							    	if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
 					    	        	email = new Emails();
 					    	        	//System.out.println("ID: " + id);
 					    	        	email.setEmailName(nameValue);
@@ -457,7 +457,7 @@ public class ExcelUtil {
 					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					    	        }
 					    	        else {
-					    	        	email = eservice.findEmailbyRefcode(refcode);
+					    	        	email = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);

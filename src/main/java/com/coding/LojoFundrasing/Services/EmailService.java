@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.DonorData;
@@ -45,6 +46,10 @@ public class EmailService {
 	
 	public Emails findEmailbyRefcode(String emailRefcode) {
 		return erepo.findByemailRefcode(emailRefcode);
+	}
+	public Emails findEmailbyRefcodeandCommittee(String emailRefcode, Committees committee) {
+		Long committee_id = committee.getId();
+		return erepo.findByemailRefcodeandCommittee(emailRefcode, committee_id);
 	}
 	public void delete(long id) {
 		erepo.deleteById(id);

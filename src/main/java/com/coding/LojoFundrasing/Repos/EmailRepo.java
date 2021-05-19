@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Data;
 
 
@@ -16,6 +17,8 @@ import com.coding.LojoFundrasing.Models.Data;
 public interface EmailRepo extends CrudRepository<Emails, Long>{
 	List<Emails> findAll();
 	Emails findByemailRefcode(String emailRefcode);
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode = :emailRefcode", nativeQuery = true)
+	Emails findByemailRefcodeandCommittee(String emailRefcode, Long committee_id);
 	@Query(value = "SELECT * FROM emails where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Desc, emails.Emailtime Desc", nativeQuery = true)
 	List<Emails> findByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE);
