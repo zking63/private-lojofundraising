@@ -332,7 +332,7 @@ public class ExcelUtil {
 	            }
 		}
 	}
-	public void readExcelSheetEmails(String excelPath, Long user_id)
+	public void readExcelSheetEmails(String excelPath, Long user_id, Committees committee)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 
 		List<String> list = new ArrayList<String>();
@@ -375,6 +375,7 @@ public class ExcelUtil {
 			Emails email = null;
 			Date date = null;
 			Date dateValue = new Date();
+			List<Emails> emails = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -439,13 +440,17 @@ public class ExcelUtil {
 										System.out.println("REFCODE AFTER: " + refcode);
 										System.out.println("Name AFTER: " + nameValue);
 										System.out.println("DATE AFTER: " + date);
-							    	    if (eservice.findEmailbyRefcode(refcode) == null) {
+							    	if (eservice.findEmailbyRefcode(refcode) == null) {
 					    	        	email = new Emails();
 					    	        	//System.out.println("ID: " + id);
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
 					    	        	email.setEmail_uploader(uploader);
+					    	        	email.setCommittee(committee);
+					    	        	emails = committee.getEmails();
+					    	        	emails.add(email);
+					    	        	committee.setEmails(emails);
 					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
 					    	        	refcode = null;
@@ -457,6 +462,10 @@ public class ExcelUtil {
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
 					    	        	email.setEmail_uploader(uploader);
+					    	        	email.setCommittee(committee);
+					    	        	emails = committee.getEmails();
+					    	        	emails.add(email);
+					    	        	committee.setEmails(emails);
 					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email);
 					    	        	refcode = null;
