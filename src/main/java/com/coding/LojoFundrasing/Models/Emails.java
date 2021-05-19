@@ -43,6 +43,10 @@ public class Emails {
     @JoinColumn(name="user_id")
     private User email_uploader;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="committees_id")
+    private Committees committee;
+	
     @OneToMany(fetch=FetchType.LAZY, mappedBy="emailDonation")
 	private List<Donation> Emaildonations;
     
@@ -129,6 +133,16 @@ public class Emails {
 
 	public void setEmaildata(Data emaildata) {
 		this.emaildata = emaildata;
+	}
+	
+	
+
+	public Committees getCommittee() {
+		return committee;
+	}
+
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
 	}
 
 	@PrePersist
