@@ -33,6 +33,7 @@
 	<h1>Edit an email</h1>
 	    <form:form method="POST" action="/emails/edit/${email.id}" modelAttribute="email">
 	    	<form:hidden value="${ user.id }" path="email_uploader"/>
+	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>
 	            <form:label path="emailName">Name:</form:label>
 	            <form:errors path="emailName"></form:errors>
