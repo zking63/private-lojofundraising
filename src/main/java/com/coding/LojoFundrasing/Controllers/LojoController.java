@@ -261,7 +261,7 @@ public class LojoController {
 		 }
 		 //model.addAttribute("committee", committee);
 		 Emails email = donation.getEmailDonation();
-		 Donor donor = dservice.findDonorbyEmail(donation.getDonor().getDonorEmail());
+		 Donor donor = dservice.findbyId(donation.getDonor().getId());
 		 donservice.createDonation(donation);
 		 this.eservice.getEmailData(email, committee_id);
 		 this.dservice.getDonorData(donor, committee_id);

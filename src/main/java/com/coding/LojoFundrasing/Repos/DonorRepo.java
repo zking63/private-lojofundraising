@@ -19,9 +19,9 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	List<Donor> findAll();
 	Optional<Donor> findBydonorEmail(String email);
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.donor_email = :email", nativeQuery = true)
-	Donor findByemailandCommittee(String email, Long committee_id);
+	Optional<Donor> findByemailandCommittee(String email, Long committee_id);
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :id", nativeQuery = true)
-	Optional<Donor> findByIDandCommittee(Long id, Long committee_id);
+	Donor findByIDandCommittee(Long id, Long committee_id);
 	
 	//date functions
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecent_date Desc", nativeQuery = true)
@@ -33,8 +33,8 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//average functions
-	@Query(value = "SELECT AVG(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid", nativeQuery = true)
-	Double donoraverages(@Param("donorid") Long id, Long committee_id);
+	@Query(value = "SELECT AVG(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid", nativeQuery = true)
+	Double donoraverages(@Param("donorid") Long id);
 
 	@Query(value = "SELECT * FROM donors LEFT JOIN data_donors ON donors.id = data_donors.donor_id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ORDER BY data_donors.donoraverage DESC", nativeQuery = true)
 	List<Donor> findByDonorAverageByDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
@@ -50,8 +50,8 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//sum functions
-	@Query(value = "SELECT SUM(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid", nativeQuery = true)
-	Double donorsums(@Param("donorid") Long id, Long committee_id);
+	@Query(value = "SELECT SUM(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid", nativeQuery = true)
+	Double donorsums(@Param("donorid") Long id);
 	
 	@Query(value = "SELECT * FROM donors LEFT JOIN data_donors ON donors.id = data_donors.donor_id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ORDER BY data_donors.donorsum ASC", nativeQuery = true)
 	List<Donor> findByDonorsumByAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
@@ -61,14 +61,14 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	List<Donor> findByDonorsumByDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
-	//sum within rage functions
+	//sum within range functions
 	@Query(value = "SELECT SUM(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid AND donations.dondate >= :startdate and donations.dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY)", nativeQuery = true)
 	Double donorsumRange(@Param("donorid") Long id, @Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//donation count functions
-	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid", nativeQuery = true)
-	Integer donordoncount(@Param("donorid") Long id, Long committee_id);
+	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid", nativeQuery = true)
+	Integer donordoncount(@Param("donorid") Long id);
 	
 	@Query(value = "SELECT * FROM donors LEFT JOIN data_donors ON donors.id = data_donors.donor_id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ORDER BY data_donors.donor_contributioncount DESC", nativeQuery = true)
 	List<Donor> findByContributionCountByDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
@@ -84,8 +84,8 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//most recent donation function
-	@Query(value = "SELECT donations.id FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid ORDER BY donations.Dondate DESC LIMIT 1", nativeQuery = true)
-	Long mostRecentDonationDate(@Param("donorid") Long id, Long committee_id);
+	@Query(value = "SELECT donations.id FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid ORDER BY donations.Dondate DESC LIMIT 1", nativeQuery = true)
+	Long mostRecentDonationDate(@Param("donorid") Long id);
 	
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecentamount Desc", nativeQuery = true)
 	List <Donor> MostrecentamountSortDesc(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 

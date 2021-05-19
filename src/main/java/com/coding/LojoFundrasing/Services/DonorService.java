@@ -41,10 +41,10 @@ public class DonorService {
 		return drepo.findBydonorEmail(email).orElse(null);
 	}
 	public Donor findDonorByEmailandCommittee(String email, Long committee_id) {
-		return drepo.findByemailandCommittee(email, committee_id);
+		return drepo.findByemailandCommittee(email, committee_id).orElse(null);
 	}
 	public Donor findDonorByIdandCommittee(Long id, Long committee_id) {
-		return drepo.findByIDandCommittee(id, committee_id).orElse(null);
+		return drepo.findByIDandCommittee(id, committee_id);
 	}
 	public List<Donor> allDonors() {
 		return drepo.findAll();
@@ -86,23 +86,26 @@ public class DonorService {
 		Double mostrecentamount = 0.0;
 		List<DonorData> allDonordata = dondrepo.findAll();
 		if (donordata != null) {
-			 for (int i = 0; i < allDonordata.size(); i++) {
-				 System.out.println(allDonordata.get(i).getDatadonor().getDonorFirstName());
-					if (id == allDonordata.get(i).getDatadonor().getId()) {
+			if (dondrepo.findById(donordata.getId()) != null) {
+			 //for (int i = 0; i < allDonordata.size(); i++) {
+				 System.out.println(donordata.getDatadonor().getDonorFirstName());
+					//if (id == allDonordata.get(i).getDatadonor().getId()) {
+						System.out.println("donor id " + id);
+						donordata = dondrepo.findById(donordata.getId()).orElse(null);
 						Long ddid = donordata.getId();
 						System.out.println("donordata id " + ddid);
-						ddid = allDonordata.get(i).getId();
+						//ddid = allDonordata.get(i).getId();
 						donordata = dondrepo.findById(ddid).orElse(null);
-						daverage = drepo.donoraverages(id, committee_id);
-						donorsum = drepo.donorsums(id, committee_id);
-						donationcount = drepo.donordoncount(id, committee_id);
+						daverage = drepo.donoraverages(id);
+						donorsum = drepo.donorsums(id);
+						donationcount = drepo.donordoncount(id);
 						donordata.setDonoraverage(daverage);
 						System.out.println("average " + daverage);
 						donordata.setDonor_contributioncount(donationcount);
 						System.out.println("contribution " + donationcount);
 						donordata.setDonorsum(donorsum);
 						System.out.println("sum " + donorsum);
-						mostrecent_donation_id = drepo.mostRecentDonationDate(id, committee_id);
+						mostrecent_donation_id = drepo.mostRecentDonationDate(id);
 						Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 						mostrecentDate = mostrecent.getDondate();
 						//mostrecenttime = mostrecent.getDontime();
@@ -114,17 +117,17 @@ public class DonorService {
 						//donor.setMostrecentDonationbyDonor(mostrecent);
 						System.out.println("date " + mostrecent_donation_id);
 						return dondrepo.save(donordata);
-					}
+					//}
 				}
 			    System.out.println("make");
 				return dondrepo.save(donordata);
 		}
 		else {
 			System.out.println("new");
-			daverage = drepo.donoraverages(id, committee_id);
-			donorsum = drepo.donorsums(id, committee_id);
-			donationcount = drepo.donordoncount(id, committee_id);
-			mostrecent_donation_id = drepo.mostRecentDonationDate(id, committee_id);
+			daverage = drepo.donoraverages(id);
+			donorsum = drepo.donorsums(id);
+			donationcount = drepo.donordoncount(id);
+			mostrecent_donation_id = drepo.mostRecentDonationDate(id);
 			Donation mostrecent = donationrepo.findById(mostrecent_donation_id).orElse(null);
 			mostrecentDate = mostrecent.getDondate();
 			//mostrecenttime = mostrecent.getDontime();
@@ -186,7 +189,7 @@ public class DonorService {
 			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);
 			Double suminrange = drepo.donorsumRange(id, startdate, enddate, committee_id);
 			Double avginrange = drepo.donoravgRange(id, startdate, enddate, committee_id);
-			Donor donor = drepo.findByIDandCommittee(id, committee_id).orElse(null);
+			Donor donor = drepo.findByIDandCommittee(id, committee_id);
 			donor.setCountwithinrange(countinrange);
 			donor.setSumwithinrange(suminrange);
 			donor.setAveragewithinrange(avginrange);
