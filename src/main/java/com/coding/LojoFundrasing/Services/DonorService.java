@@ -43,6 +43,9 @@ public class DonorService {
 	public Donor findDonorByEmailandCommittee(String email, Long committee_id) {
 		return drepo.findByemailandCommittee(email, committee_id);
 	}
+	public Donor findDonorByIdandCommittee(Long id, Long committee_id) {
+		return drepo.findByIDandCommittee(id, committee_id).orElse(null);
+	}
 	public List<Donor> allDonors() {
 		return drepo.findAll();
 	}
@@ -183,7 +186,7 @@ public class DonorService {
 			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);
 			Double suminrange = drepo.donorsumRange(id, startdate, enddate, committee_id);
 			Double avginrange = drepo.donoravgRange(id, startdate, enddate, committee_id);
-			Donor donor = drepo.findById(id).orElse(null);
+			Donor donor = drepo.findByIDandCommittee(id, committee_id).orElse(null);
 			donor.setCountwithinrange(countinrange);
 			donor.setSumwithinrange(suminrange);
 			donor.setAveragewithinrange(avginrange);
