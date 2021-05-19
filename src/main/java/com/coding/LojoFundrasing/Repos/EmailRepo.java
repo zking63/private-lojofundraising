@@ -19,10 +19,10 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 	Emails findByemailRefcode(String emailRefcode);
 	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode = :emailRefcode", nativeQuery = true)
 	Emails findByemailRefcodeandCommittee(String emailRefcode, Long committee_id);
-	@Query(value = "SELECT * FROM emails where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Desc, emails.Emailtime Desc", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Desc", nativeQuery = true)
 	List<Emails> findByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE);
-	@Query(value = "SELECT * FROM emails where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Asc, emails.Emailtime Asc", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Asc", nativeQuery = true)
 	List<Emails> findByOrderByAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE);
 	@Query(value = "SELECT * FROM emails LEFT JOIN data_funds ON data_funds.email_id = emails.id where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by data_funds.emailaverage Desc", nativeQuery = true)
@@ -31,8 +31,6 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 	@Query(value = "SELECT * FROM emails LEFT JOIN data_funds ON data_funds.email_id = emails.id where emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by data_funds.emailaverage Asc", nativeQuery = true)
 	List<Emails> findByAverageOrderByAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE);
-	@Query(value = "SELECT *, AVG(donations.amount) FROM emails LEFT JOIN donations ON donations.email_id = emails.id GROUP BY emails.id", nativeQuery = true)
-	List<Data> averagestest();
 	@Query(value = "SELECT AVG(donations.amount) FROM emails LEFT JOIN donations ON donations.email_id = emails.id WHERE emails.id = :emailid", nativeQuery = true)
 	Double averages(@Param("emailid") Long id);
 	//sum functions

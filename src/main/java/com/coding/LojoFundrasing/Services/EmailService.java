@@ -58,10 +58,6 @@ public class EmailService {
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
 	}
-	public List<Data> getEmailDatatest() {
-		List <Data> averages = erepo.averagestest();
-		return averages;
-	}
 	public Data getEmailData(Emails email) {
 		Data emaildata = email.getEmaildata();
 		Long id = email.getId();

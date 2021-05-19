@@ -225,7 +225,7 @@ public class ExcelUtil {
 					    	        	donation.setAmount(amount);
 					    	        	donation.setDondate(date);
 					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	committees.add(committee);
@@ -257,7 +257,7 @@ public class ExcelUtil {
 					    	        	System.out.println("date");
 					    	        	donation.setDonor(dservice.findbyId(id));
 					    	        	System.out.println("donor");
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
+					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	System.out.println("refcode");
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	System.out.println("uploader");
