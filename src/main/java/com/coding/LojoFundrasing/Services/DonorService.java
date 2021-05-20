@@ -183,7 +183,7 @@ public class DonorService {
 	}
 	public void DonorsWithinRange(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
-		List<Donor> donors = drepo.findAll();
+		List<Donor> donors = drepo.findDonorsWithinRangeandCommittee(startdate, enddate, committee_id);
 		for (int i= 0; i < donors.size(); i++) {
 			Long id = donors.get(i).getId();
 			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);

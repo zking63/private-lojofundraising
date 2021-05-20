@@ -22,6 +22,9 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	Optional<Donor> findByemailandCommittee(String email, Long committee_id);
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :id", nativeQuery = true)
 	Donor findByIDandCommittee(Long id, Long committee_id);
+	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ", nativeQuery = true)
+	List<Donor> findDonorsWithinRangeandCommittee(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//date functions
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecent_date Desc", nativeQuery = true)
