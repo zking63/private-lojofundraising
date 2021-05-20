@@ -111,6 +111,7 @@ public class ExcelUtil {
 			Donation donation  = null;
         	List<Committees> committees = null;
         	List<Donation> donations = null;
+        	List<Donor> donors = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -211,20 +212,24 @@ public class ExcelUtil {
 										System.out.println("AMOUNT AFTER: " + amount);
 										System.out.println("DATE AFTER: " + date);
 										System.out.println("UPLOADER: " + uploader.getId());
-							    	   if (dservice.findDonorbyEmail(emailValue) == null) {
+							    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
 					    	        	donor = new Donor();
 					    	        	//System.out.println("ID: " + id);
 					    	        	donor.setDonorFirstName(nameValue);
 					    	        	donor.setDonorLastName(LNValue);
 					    	        	donor.setDonorEmail(emailValue);
 					    	        	donor.setUploader(uploader);
+					    	        	donor.setCommittee(committee);
+					    	        	donors = committee.getDonors();
+					    	        	donors.add(donor);
+					    	        	committee.setDonors(donors);
 					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
 					    	        	dservice.createDonor(donor);
 					    	        	Long id = donor.getId();
 					    	        	donation = new Donation();
 					    	        	donation.setAmount(amount);
 					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	System.out.println("committee after: " + committee.getCommitteeName());
@@ -235,12 +240,12 @@ public class ExcelUtil {
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email, committee.getId());
-					    	    		dservice.getDonorData(donor);
+					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					    	        }
 					    	        else {
-					    	        	donor = dservice.findDonorbyEmail(emailValue);
+					    	        	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
 					    	        	Long id = donor.getId();
 					    	        	System.out.println("ID: " + id);
 					    	        	donor.setDonorFirstName(nameValue);
@@ -248,6 +253,10 @@ public class ExcelUtil {
 					    	        	donor.setDonorEmail(emailValue);
 					    	        	System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	donor.setUploader(uploader);
+					    	        	donor.setCommittee(committee);
+					    	        	donors = committee.getDonors();
+					    	        	donors.add(donor);
+					    	        	committee.setDonors(donors);
 					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
 					    	        	dservice.updateDonor(donor);
 					    	        	donation = new Donation();
@@ -255,7 +264,7 @@ public class ExcelUtil {
 					    	        	System.out.println("amount");
 					    	        	donation.setDondate(date);
 					    	        	System.out.println("date");
-					    	        	donation.setDonor(dservice.findbyId(id));
+					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	System.out.println("donor");
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	System.out.println("refcode");
@@ -277,7 +286,7 @@ public class ExcelUtil {
 					    	        	donservice.createDonation(donation);
 					    	    		Emails email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email, committee.getId());
-					    	    		dservice.getDonorData(donor);
+					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
