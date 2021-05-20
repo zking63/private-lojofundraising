@@ -34,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -848,10 +849,41 @@ public class LojoController {
 			model.addAttribute("committees", cservice.findAllCommittees());
 			return "test.jsp";
 		}
-	    @RequestMapping("/users/export/excel")
-	    public String exportToExcel(HttpServletResponse response) throws IOException {
-	    	List<User> listUsers = uservice.listAll();
-	        excelService.exportToExcel(listUsers, response); 
+	    @RequestMapping("/export")
+	    public String exportPage(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("enddateD", enddateD);
+			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
+			 model.addAttribute("user", user);
 	        return "exporter.jsp";
+	    } 
+	    @GetMapping("/export/excel")
+	    public void exportToExcel(@Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
+				 HttpSession session, HttpServletResponse response) throws IOException {
+	    	Long committee_id = (Long)session.getAttribute("committee_id");
+	    	System.out.println("Start: " + startdateD);
+	    	System.out.println("End: " + enddateD);
+	    	System.out.println("Commmittee: " + committee_id);
+		     List<Donor> donors = dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+		     System.out.println("Donors: " + donors);
+		     for (int i = 0; i <donors.size(); i++) {
+		    	 System.out.println("Donor: " + donors.get(i).getDonorEmail());
+		     }
+		     excelService.exportToExcel(donors, response); 
 	    } 
 }

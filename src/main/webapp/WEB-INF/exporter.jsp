@@ -24,6 +24,15 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
-  <a th:href="/@{/users/export/excel}">Export to Excel</a>
+    <form method="get" class="date-form" action="/export/excel">
+		<input type="date" value="${startdateD}" name="startdateD"/>
+		<input type="date" value="${enddateD}" name="enddateD"/>
+		<button>Download Excel</button>
+	</form>
+	<button><a th:href="/@{/export/excel}">Export to Excel</a></button>
+	<button><a th:href="/export/excel">Export to Excel</a></button>
+	 <form method="get" action="/export/excel">
+		<button>Download Excel</button>
+	</form>
 </body>
 </html>

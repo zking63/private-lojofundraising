@@ -49,6 +49,9 @@ public class DonorService {
 	public List<Donor> allDonors() {
 		return drepo.findAll();
 	}
+	public List<Donor> allDonorsinCommittee(Long committee_id) {
+		return drepo.findDonorsinCommittee(committee_id);
+	}
 	public Donor findbyId(long id) {
 		return drepo.findById(id).orElse(null);
 	}

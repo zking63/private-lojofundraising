@@ -189,7 +189,7 @@ public class Donor {
 	}
 	
     public String getRecentDateFormatted() {
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
     	return df.format(this.mostrecentDate);
     }
     /*public String getRecentTimeFormatted() {

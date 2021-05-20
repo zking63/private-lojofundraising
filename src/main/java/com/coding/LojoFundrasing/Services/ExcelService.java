@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coding.LojoFundrasing.Models.Committees;
+import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
 
@@ -55,15 +56,15 @@ public class ExcelService {
 	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
   }
-    public void exportToExcel(List<User> listUsers, HttpServletResponse response) throws IOException {
+    public void exportToExcel(List<Donor> donors, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
          
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=donors_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
         
-        excelUtil.exporter(listUsers, response);
+        excelUtil.exporter(donors, response);
     } 
 }

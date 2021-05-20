@@ -540,7 +540,7 @@ public class ExcelUtil {
   }
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
-    private List<User> listUsers;
+    List<Donor> donors = null;
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
         sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
@@ -554,9 +554,10 @@ public class ExcelUtil {
         cell.setCellStyle(style);
     }
     
-    public void exporter(List<User> listUsers, HttpServletResponse response) throws IOException{
-        this.listUsers = listUsers;
+    public void exporter(List<Donor> donors, HttpServletResponse response) throws IOException{
+        this.donors = donors;
         workbook = new XSSFWorkbook();
+        DataFormatter dataFormatter = new DataFormatter();
         
         //write header lines
         sheet = workbook.createSheet("Users");
@@ -569,20 +570,33 @@ public class ExcelUtil {
         font.setFontHeight(16);
         style.setFont(font);
          
-        createCell(row, 0, "User ID", style);      
-        createCell(row, 1, "E-mail", style); 
+        createCell(row, 0, "Id", style); 
+        createCell(row, 1, "Donor email", style); 
+        createCell(row, 2, "First Name", style); 
+        createCell(row, 3, "Last Name", style); 
+        createCell(row, 4, "Most recent donation date", style); 
+        createCell(row, 5, "Most recent donation amount", style); 
+        createCell(row, 6, "Average", style);
         
         //write data lines
         int rowCount = 1;
-        
-        font.setFontHeight(14);
-        style.setFont(font);
+        CellStyle bodyStyle = workbook.createCellStyle();
+        XSSFFont bodyfont = workbook.createFont();
+        bodyfont.setBold(false);
+        bodyfont.setFontHeight(14);
+        bodyStyle.setFont(bodyfont);
                  
-        for (User user : listUsers) {
-            Row row2 = sheet.createRow(rowCount++);
+        for (int i = 0; i < donors.size(); i++) {
+            row = sheet.createRow(rowCount++);
             int columnCount = 0;
             
-            createCell(row, columnCount++, user.getEmail(), style);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, donors.get(i).getDonorEmail(), bodyStyle);
+            createCell(row, columnCount++, donors.get(i).getDonorFirstName(), bodyStyle);
+            createCell(row, columnCount++, donors.get(i).getDonorLastName(), bodyStyle);
+            createCell(row, columnCount++, donors.get(i).getRecentDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, donors.get(i).getDonorRecentAmountFormatted(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonoraverage()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
