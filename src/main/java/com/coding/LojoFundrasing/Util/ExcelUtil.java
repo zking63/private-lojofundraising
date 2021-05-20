@@ -9,14 +9,21 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -530,5 +537,58 @@ public class ExcelUtil {
 
 	            }
 		}
+  }
+    private XSSFWorkbook workbook;
+    private XSSFSheet sheet;
+    private List<User> listUsers;
+    private void createCell(Row row, int columnCount, Object value, CellStyle style) {
+        sheet.autoSizeColumn(columnCount);
+        Cell cell = row.createCell(columnCount);
+        if (value instanceof Integer) {
+            cell.setCellValue((Integer) value);
+        } else if (value instanceof Boolean) {
+            cell.setCellValue((Boolean) value);
+        }else {
+            cell.setCellValue((String) value);
+        }
+        cell.setCellStyle(style);
+    }
+    
+    public void exporter(List<User> listUsers, HttpServletResponse response) throws IOException{
+        this.listUsers = listUsers;
+        workbook = new XSSFWorkbook();
+        
+        //write header lines
+        sheet = workbook.createSheet("Users");
+        
+        Row row = sheet.createRow(0);
+         
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+         
+        createCell(row, 0, "User ID", style);      
+        createCell(row, 1, "E-mail", style); 
+        
+        //write data lines
+        int rowCount = 1;
+        
+        font.setFontHeight(14);
+        style.setFont(font);
+                 
+        for (User user : listUsers) {
+            Row row2 = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            
+            createCell(row, columnCount++, user.getEmail(), style);
+        }
+        //export
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+         
+        outputStream.close();
 	}
 }

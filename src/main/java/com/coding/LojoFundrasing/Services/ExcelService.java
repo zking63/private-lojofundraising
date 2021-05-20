@@ -3,7 +3,13 @@ package com.coding.LojoFundrasing.Services;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -12,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coding.LojoFundrasing.Models.Committees;
+import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
 
 @Service
@@ -47,5 +54,16 @@ public class ExcelService {
 		System.out.println("made it past get sheet details");
 	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
-}
+  }
+    public void exportToExcel(List<User> listUsers, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        
+        excelUtil.exporter(listUsers, response);
+    } 
 }

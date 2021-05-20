@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -80,7 +82,7 @@ public class LojoController {
 	private CommitteeService cservice;
 	
 	@Autowired
-	ExcelService excelService;
+	private ExcelService excelService;
 	
 	@RequestMapping("/")
 	public String index(@ModelAttribute("user")User user, Model model) {
@@ -846,4 +848,10 @@ public class LojoController {
 			model.addAttribute("committees", cservice.findAllCommittees());
 			return "test.jsp";
 		}
+	    @RequestMapping("/users/export/excel")
+	    public String exportToExcel(HttpServletResponse response) throws IOException {
+	    	List<User> listUsers = uservice.listAll();
+	        excelService.exportToExcel(listUsers, response); 
+	        return "exporter.jsp";
+	    } 
 }

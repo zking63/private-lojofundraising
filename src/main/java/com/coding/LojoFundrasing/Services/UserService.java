@@ -1,7 +1,16 @@
 package com.coding.LojoFundrasing.Services;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.User;
@@ -11,6 +20,7 @@ import com.coding.LojoFundrasing.Repos.UserRepo;
 public class UserService {
 	@Autowired
 	private UserRepo urepo;
+	
 	
 	//register user
 	public User registerUser(User user) {
@@ -42,4 +52,7 @@ public class UserService {
 			return false;
 		}
 	}
+    public List<User> listAll() {
+        return urepo.findAll();
+    }
 }
