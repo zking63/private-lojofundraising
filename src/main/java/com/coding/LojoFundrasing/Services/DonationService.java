@@ -35,21 +35,23 @@ public class DonationService {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); 
 		String strDate = dateFormat.format(d.getDondate());  
 		List<Donation> recurrences = donrepo.findbyActBlueIdandCommittee_id(d.getActBlueId(), d.getCommittee().getId());
-		Donation recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate());
+		Donation recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate()).orElse(null);
 		System.out.println("donation id: " + d.getId());
-		System.out.println("recurrence id: " + recurrencedated.getId());
+		//System.out.println("recurrence id: " + recurrencedated.getId());
 		if (d.getRecurring() == null) {
 			System.out.println("d recurring number: " + d.getId());
-			System.out.println("recurrence recurring number: " + recurrencedated.getId());
+			//System.out.println("recurrence recurring number: " + recurrencedated.getId());
 			if (recurrencedated != null && d.getDonor().getId() == recurrencedated.getDonor().getId()) {
 				System.out.println("same donation found but not recurring");
+				recurrencedated.setAmount(d.getAmount());
+				recurrencedated.setDonation_uploader(d.getDonation_uploader());
+				recurrencedated.setEmailDonation(d.getEmailDonation());
+				recurrencedated.setRecurring(d.getRecurring());
 				d = recurrencedated;
-				donrepo.save(d);
+				return donrepo.save(d);
 			}
 			else {
-				d = new Donation();
-				d.setRecurrenceNumber(0);
-				d.setRecurring(null);
+				return donrepo.save(d);
 			}
 		}
 		else {
@@ -66,16 +68,16 @@ public class DonationService {
 					d = recurrencedated;
 					System.out.println("d recurring number: " + d.getId());
 					System.out.println("recurrence recurring number: " + recurrencedated.getId());
+					return donrepo.save(d);
 				}
 				else {
-					d = new Donation();
+					return donrepo.save(d);
 				}
 			}
 			else {
-				d = new Donation();
+				return donrepo.save(d);
 			}
 		}
-		return donrepo.save(d);
 	}
 	
 	public List<Donation> findDonations(){
