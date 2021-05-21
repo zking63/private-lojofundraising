@@ -137,32 +137,23 @@ public class ExcelUtil {
 							headers.add(header);
 							//System.out.println("Header column: " + header.getColumn());
 							
-							String headerValue = dataFormatter.formatCellValue(header);
-							if (headerValue.contentEquals("FirstName")) {
+							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
+							if (headerValue.contains("FIRST NAME")) {
 								NameColumn = header.getColumnIndex();
 							}
-							if (headerValue.contentEquals("firstname")) {
-								NameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("LastName")) {
+							if (headerValue.contains("LAST NAME")) {
 								LastNameColumn = header.getColumnIndex();
 							}
-							if (headerValue.contentEquals("lastname")) {
-								LastNameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("email")) {
+							if (headerValue.contains("REFCODE")) {
 								EmailColumn = header.getColumnIndex();
 							}
-							if (headerValue.contentEquals("Email")) {
-								EmailColumn = header.getColumnIndex();
-							}
-							if (headerValue.contentEquals("Amount")) {
+							if (headerValue.contains("AMOUNT")) {
 								AmountColumn = header.getColumnIndex();
 							}
-							if (headerValue.contentEquals("Date")) {
+							if (headerValue.contains("DATE")) {
 								DateColumn = header.getColumnIndex();
 							}
-							if (headerValue.contentEquals("Refcode")) {
+							if (headerValue.contains("Refcode")) {
 								RefcodeColumn = header.getColumnIndex();
 							}
 							System.out.println("Headers: " + headers);
@@ -410,15 +401,18 @@ public class ExcelUtil {
 							headers.add(header);
 							//System.out.println("Header column: " + header.getColumn());
 							
-							String headerValue = dataFormatter.formatCellValue(header);
-							if (headerValue.contentEquals("Name")) {
+							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
+							if (headerValue.contains("NAME")) {
 								NameColumn = header.getColumnIndex();
+								System.out.println(headerValue);
 							}
-							if (headerValue.contentEquals("Date")) {
+							if (headerValue.contains("DATE")) {
 								DateColumn = header.getColumnIndex();
+								System.out.println(headerValue);
 							}
-							if (headerValue.contentEquals("Refcode")) {
+							if (headerValue.contains("REFCODE")) {
 								RefcodeColumn = header.getColumnIndex();
+								System.out.println(headerValue);
 							}
 							System.out.println("Headers: " + headers);
 						}
