@@ -263,9 +263,10 @@ public class LojoController {
 			 return "newdonation.jsp";
 		 }
 		 //model.addAttribute("committee", committee);
+		 System.out.println("donation actblue id: " + donation.getActBlueId());
+		 donservice.createDonation(donation);
 		 Emails email = donation.getEmailDonation();
 		 Donor donor = dservice.findbyId(donation.getDonor().getId());
-		 donservice.createDonation(donation);
 		 this.eservice.getEmailData(email, committee_id);
 		 this.dservice.getDonorData(donor, committee_id);
 		 return "redirect:/home";
@@ -578,6 +579,8 @@ public class LojoController {
 				 model.addAttribute("timeFormat", timeFormat());
 				 Emails email = donation.getEmailDonation();
 				 Donor donor = donation.getDonor();
+				 System.out.println("d recurring number: " + donation.getRecurring());
+				 System.out.println("d AB ID: " + donation.getActBlueId());
 				 donservice.createDonation(donation);
 				 this.eservice.getEmailData(email, committee_id);
 				 this.dservice.getDonorData(donor, committee_id);

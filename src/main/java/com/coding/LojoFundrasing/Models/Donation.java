@@ -29,8 +29,6 @@ public class Donation {
 	private String ActBlueId;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Dondate;
-	/*@DateTimeFormat(pattern ="kk:mm")
-	private Date Dontime;*/
 	
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="donor_id")  
@@ -80,15 +78,6 @@ public class Donation {
 	public void setDondate(Date dondate) {
 		Dondate = dondate;
 	}
-	
-
-	/*public Date getDontime() {
-		return Dontime;
-	}
-
-	public void setDontime(Date dontime) {
-		Dontime = dontime;
-	}*/
 
 	public Donor getDonor() {
 		return donor;
