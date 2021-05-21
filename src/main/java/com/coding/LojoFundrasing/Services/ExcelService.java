@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coding.LojoFundrasing.Models.Committees;
+import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
 
@@ -66,5 +68,27 @@ public class ExcelService {
         response.setHeader(headerKey, headerValue);
         
         excelUtil.exporter(donors, response);
+    } 
+    public void exportEmailsToExcel(List<Emails> emails, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=emails_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        
+        excelUtil.Emailexporter(emails, response);
+    } 
+    public void exportDonationsToExcel(List<Donation> donations, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=donations_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        
+        excelUtil.Donationexporter(donations, response);
     } 
 }

@@ -874,16 +874,25 @@ public class LojoController {
 	    @GetMapping("/export/excel")
 	    public void exportToExcel(@Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
-				 HttpSession session, HttpServletResponse response) throws IOException {
+				 HttpSession session, @RequestParam("field") String field, HttpServletResponse response) throws IOException {
 	    	Long committee_id = (Long)session.getAttribute("committee_id");
 	    	System.out.println("Start: " + startdateD);
 	    	System.out.println("End: " + enddateD);
 	    	System.out.println("Commmittee: " + committee_id);
-		     List<Donor> donors = dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
-		     System.out.println("Donors: " + donors);
-		     for (int i = 0; i <donors.size(); i++) {
-		    	 System.out.println("Donor: " + donors.get(i).getDonorEmail());
-		     }
-		     excelService.exportToExcel(donors, response); 
+			 if (field.equals("Donors")) {
+				 System.out.println("Donors");
+				 List<Donor> donors = dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+				 excelService.exportToExcel(donors, response);
+			 }
+			 if (field.equals("Donations")) {
+				 System.out.println("Donations");
+				 List<Donation> donations = donservice.DonTest(startdateD, enddateD, committee_id);
+				 excelService.exportDonationsToExcel(donations, response);
+			 }
+			 if (field.equals("Emails")) {
+				 System.out.println("Emails");
+				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
+				 excelService.exportEmailsToExcel(emails, response);
+			 }
 	    } 
 }

@@ -541,6 +541,8 @@ public class ExcelUtil {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     List<Donor> donors = null;
+    List<Emails> emails = null;
+    List<Donation> donations = null;
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
         sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
@@ -597,6 +599,112 @@ public class ExcelUtil {
             createCell(row, columnCount++, donors.get(i).getRecentDateFormatted(), bodyStyle);
             createCell(row, columnCount++, donors.get(i).getDonorRecentAmountFormatted(), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonoraverage()), bodyStyle);
+        }
+        //export
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+         
+        outputStream.close();
+	}
+    public void Emailexporter(List<Emails> emails, HttpServletResponse response) throws IOException{
+        this.emails = emails;
+        workbook = new XSSFWorkbook();
+        DataFormatter dataFormatter = new DataFormatter();
+        
+        //write header lines
+        sheet = workbook.createSheet("Emails");
+        
+        Row row = sheet.createRow(0);
+         
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+         
+        createCell(row, 0, "Id", style); 
+        createCell(row, 1, "Email", style); 
+        createCell(row, 2, "Refcode", style); 
+        createCell(row, 3, "Send Date", style); 
+        createCell(row, 4, "Revenue", style); 
+        createCell(row, 5, "Average donation", style); 
+        createCell(row, 6, "Number of donations", style);
+        createCell(row, 7, "Number of donors", style);
+        
+        //write data lines
+        int rowCount = 1;
+        CellStyle bodyStyle = workbook.createCellStyle();
+        XSSFFont bodyfont = workbook.createFont();
+        bodyfont.setBold(false);
+        bodyfont.setFontHeight(14);
+        bodyStyle.setFont(bodyfont);
+                 
+        for (int i = 0; i < emails.size(); i++) {
+            row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailsum()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationcount()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorcount()), bodyStyle);
+        }
+        //export
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+         
+        outputStream.close();
+	}
+    public void Donationexporter(List<Donation> donations, HttpServletResponse response) throws IOException{
+        this.donations = donations;
+        workbook = new XSSFWorkbook();
+        DataFormatter dataFormatter = new DataFormatter();
+        
+        //write header lines
+        sheet = workbook.createSheet("Emails");
+        
+        Row row = sheet.createRow(0);
+         
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+         
+        createCell(row, 0, "Donation Id", style); 
+        createCell(row, 1, "Amount", style); 
+        createCell(row, 2, "Date", style); 
+        createCell(row, 3, "Donor Email", style); 
+        createCell(row, 4, "Donor First Name", style); 
+        createCell(row, 5, "Donor Last Name", style); 
+        createCell(row, 6, "Donor Id", style);
+        createCell(row, 7, "Refcode", style);
+        
+        //write data lines
+        int rowCount = 1;
+        CellStyle bodyStyle = workbook.createCellStyle();
+        XSSFFont bodyfont = workbook.createFont();
+        bodyfont.setBold(false);
+        bodyfont.setFontHeight(14);
+        bodyStyle.setFont(bodyfont);
+                 
+        for (int i = 0; i < donations.size(); i++) {
+            row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getAmount(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorLastName(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getDonor().getId()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();

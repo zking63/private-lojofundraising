@@ -27,6 +27,14 @@
     <form method="get" class="date-form" action="/export/excel">
 		<input type="date" value="${startdateD}" name="startdateD"/>
 		<input type="date" value="${enddateD}" name="enddateD"/>
+		<p>
+	        <label for="field">What are you exporting?</label>
+			<select id="field" name="field">
+		        <option name="field" value="Emails">Emails</option>
+		        <option name="field" value="Donations">Donations</option>
+		        <option name="field" value="Donors">Donors</option>
+			</select>
+	    </p>
 		<button>Download Excel</button>
 	</form>
 	<button><a th:href="/@{/export/excel}">Export to Excel</a></button>
