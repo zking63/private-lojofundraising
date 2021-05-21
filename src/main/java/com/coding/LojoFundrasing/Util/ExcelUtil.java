@@ -698,7 +698,7 @@ public class ExcelUtil {
             int columnCount = 0;
             
             createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getAmount(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getAmount()), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
