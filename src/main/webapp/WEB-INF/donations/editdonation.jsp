@@ -45,6 +45,21 @@
 	            <form:input type="Dondate" path="Dondate"/>
 	        </p>
 	        <p>
+	            <form:label path="recurring">Recurring:</form:label>
+	            <form:errors path="recurring"></form:errors>
+	            <form:input type="recurring" path="recurring"/>
+	        </p>
+	        <p>
+	            <form:label path="recurrenceNumber">Recurrence Number:</form:label>
+	            <form:errors path="recurrenceNumber"></form:errors>
+	            <form:input type="recurrenceNumber" path="recurrenceNumber"/>
+	        </p>
+	        <p>
+	            <form:label path="ActBlueId">ActBlue Recipient Id:</form:label>
+	            <form:errors path="ActBlueId"></form:errors>
+	            <form:input type="ActBlueId" path="ActBlueId"/>
+	        </p>
+	        <p>
 		        <label for="donor">Assign a donor:</label>
 				<select id="donor" name="donor">
 				  	<c:forEach items="${ committee.getDonors() }" var="p">

@@ -37,10 +37,5 @@
 	    </p>
 		<button>Download Excel</button>
 	</form>
-	<button><a th:href="/@{/export/excel}">Export to Excel</a></button>
-	<button><a th:href="/export/excel">Export to Excel</a></button>
-	 <form method="get" action="/export/excel">
-		<button>Download Excel</button>
-	</form>
 </body>
 </html>

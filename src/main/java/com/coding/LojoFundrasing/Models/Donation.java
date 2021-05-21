@@ -24,6 +24,9 @@ public class Donation {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private Double amount;
+	private String recurring;
+	private Integer recurrenceNumber;
+	private String ActBlueId;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Dondate;
 	/*@DateTimeFormat(pattern ="kk:mm")
@@ -136,6 +139,31 @@ public class Donation {
 	}
 	
 	
+
+	public String getRecurring() {
+		return recurring;
+	}
+
+	public void setRecurring(String recurring) {
+		this.recurring = recurring;
+	}
+
+	public Integer getRecurrenceNumber() {
+		return recurrenceNumber;
+	}
+
+	public void setRecurrenceNumber(Integer recurrenceNumber) {
+		this.recurrenceNumber = recurrenceNumber;
+	}
+	
+
+	public String getActBlueId() {
+		return ActBlueId;
+	}
+
+	public void setActBlueId(String actBlueId) {
+		ActBlueId = actBlueId;
+	}
 
 	public Committees getCommittee() {
 		return committee;
