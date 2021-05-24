@@ -134,6 +134,8 @@ public class ExcelUtil {
 			Date dateValue = new Date();
 			Date timeValue = null;
 			Donation donation  = null;
+			Emails email = null;
+			List<Emails> emails = null;
         	List<Committees> committees = null;
         	List<Donation> donations = null;
         	List<Donor> donors = null;
@@ -334,16 +336,45 @@ public class ExcelUtil {
 					    	        	donation.setRecurring(Recurring);
 					    	        	System.out.println("donation recurring " + donation.getRecurring());
 					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	donation.setDonation_uploader(uploader);
-					    	        	System.out.println("committee after: " + committee.getCommitteeName());
-					    	        	//committees.add(committee);
+					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	donation.setCommittee(committee);
 					    	        	committee.setDonations(donations);
+					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+					    	        	if (emaildonation == null){
+					    	        		String undate1 = "0000-00-00 00:00";
+					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
+					    	        		email = new Emails();
+						    	        	email.setEmailName(null);
+						    	        	email.setEmaildate(undate);
+						    	        	email.setEmailRefcode(refcode);
+						    	        	email.setBounces(null);
+						    	        	email.setClicks(null);
+						    	        	email.setOpeners(null);
+						    	        	email.setRecipients(null);
+						    	        	email.setUnsubscribers(null);
+						    	        	email.setExcludedList(null);
+						    	        	email.setList(null);
+						    	        	email.setEmail_uploader(uploader);
+						    	        	email.setCommittee(committee);
+						    	        	emails = committee.getEmails();
+						    	        	emails.add(email);
+						    	        	committee.setEmails(emails);
+						    	        	eservice.createEmail(email);
+						    	        	String tempname = "Null" + email.getId();
+						    	        	email.setEmailName(tempname);
+						    	        	System.out.println("TEMP NAME: " + tempname);
+						    	        	eservice.createEmail(email);
+						    	        	donation.setEmailDonation(email);
+					    	        	}
+					    	        	else {
+					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+					    	        	}
+					    	        	System.out.println("committee after: " + committee.getCommitteeName());
+					    	        	//committees.add(committee);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
-					    	    		Emails email = donation.getEmailDonation();
+					    	    		email = donation.getEmailDonation();
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;
@@ -374,21 +405,12 @@ public class ExcelUtil {
 					    	        	donation.setActBlueId(ActBlueId);
 					    	        	donation.setRecurrenceNumber(Recurrence);
 					    	        	donation.setRecurring(Recurring);
-					    	        	if (donation.getRecurring() == null) {
-					    	        		System.out.println("donation recurring: " + donation.getRecurring());
-					    	        	}
-					    	        	else {
-					    	        		System.out.println("HELLO: " + donation.getRecurring());
-					    	        	}
 					    	        	donation.setAmount(amount);
 					    	        	System.out.println("amount");
 					    	        	donation.setDondate(date);
 					    	        	System.out.println("date");
 					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	System.out.println("donor");
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        	System.out.println("refcode: " + refcode);
-					    	        	System.out.println("email: " + eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	System.out.println("uploader");
 					    	        	System.out.println("get committees " + committees);
@@ -402,8 +424,38 @@ public class ExcelUtil {
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	        	System.out.println("create donation");
-					    	    		Emails email = donation.getEmailDonation();
-					    	    		System.out.println("Email: " + email);
+					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+					    	        	if (emaildonation == null){
+					    	        		String undate1 = "0000-00-00 00:00";
+					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
+					    	        		email = new Emails();
+						    	        	email.setEmailName(null);
+						    	        	email.setEmaildate(undate);
+						    	        	email.setEmailRefcode(refcode);
+						    	        	email.setBounces(null);
+						    	        	email.setClicks(null);
+						    	        	email.setOpeners(null);
+						    	        	email.setRecipients(null);
+						    	        	email.setUnsubscribers(null);
+						    	        	email.setExcludedList(null);
+						    	        	email.setList(null);
+						    	        	email.setEmail_uploader(uploader);
+						    	        	email.setCommittee(committee);
+						    	        	eservice.createEmail(email);
+						    	        	String tempname = "Null" + email.getId();
+						    	        	email.setEmailName(tempname);
+						    	        	System.out.println("TEMP NAME: " + tempname);
+						    	        	eservice.createEmail(email);
+						    	        	emails = committee.getEmails();
+						    	        	emails.add(email);
+						    	        	committee.setEmails(emails);
+						    	        	donation.setEmailDonation(email);
+					    	        	}
+					    	        	else {
+					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+					    	        	}
+					    	    		email = donation.getEmailDonation();
+					    	    		System.out.println("Email: " + email.getEmailName());
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;
