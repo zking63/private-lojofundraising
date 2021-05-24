@@ -166,7 +166,7 @@ public class ExcelUtil {
 								EmailColumn = header.getColumnIndex();
 								System.out.println("refcode: " + headerValue);
 							}
-							if (headerValue.contains("REFCODE")) {
+							if (headerValue.contains("REFERENCE CODE")) {
 								RefcodeColumn = header.getColumnIndex();
 								System.out.println("refcode: " + headerValue);
 							}
