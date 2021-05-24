@@ -55,6 +55,11 @@
 	            <form:input type="address" path="address"/>
 	        </p>
 	        <p>
+	            <form:label path="city">City:</form:label>
+	            <form:errors path="city"></form:errors>
+	            <form:input type="city" path="city"/>
+	        </p>
+	        <p>
 	            <form:label path="state">State:</form:label>
 	            <form:errors path="state"></form:errors>
 	            <form:input type="state" path="state"/>

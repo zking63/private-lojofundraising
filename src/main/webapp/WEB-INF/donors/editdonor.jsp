@@ -49,10 +49,15 @@
 	            <form:errors path="donorEmail"></form:errors>
 	            <form:input type="donorEmail" path="donorEmail"/>
 	        </p>
-	        	        <p>
+	        <p>
 	            <form:label path="address">Address:</form:label>
 	            <form:errors path="address"></form:errors>
 	            <form:input type="address" path="address"/>
+	        </p>
+	        <p>
+	            <form:label path="city">City:</form:label>
+	            <form:errors path="city"></form:errors>
+	            <form:input type="city" path="city"/>
 	        </p>
 	        <p>
 	            <form:label path="state">State:</form:label>
