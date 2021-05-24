@@ -111,6 +111,13 @@
 						<button>v</button>
 					</form>
 	            </th>
+	            <th>Recipient list</th>
+	            <th>Excluded list</th>
+	            <th>Recipients</th>
+	            <th>Opens</th>
+	            <th>Clicks</th>
+	            <th>Bounces</th>
+	            <th>Unsubscribers</th>
 	            <th>Action</th>
 	        </tr>
 	    </thead>
@@ -124,6 +131,13 @@
 					<td>$${e.emaildata.getEmailAverageFormatted()}</td>
 					<td>${e.emaildata.getDonationcount()}</td>
 					<td>${e.emaildata.getDonorcount()}</td>
+					<td>${e.getList()}</td>
+					<td>${e.getExcludedList()}</td>
+					<td>${e.getRecipients()}</td>
+					<td>${e.getOpeners()}</td>
+					<td>${e.getClicks()}</td>
+					<td>${e.getBounces()}</td>
+					<td>${e.getUnsubscribers()}</td>
 					<td>
 						<p><a href="/emails/edit/${e.id}">Edit</a></p>
 						<p><a href="/emails/delete/${e.id}">Delete</a></p>
