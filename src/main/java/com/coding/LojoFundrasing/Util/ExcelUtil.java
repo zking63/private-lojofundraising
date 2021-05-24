@@ -784,11 +784,17 @@ public class ExcelUtil {
         createCell(row, 0, "Donation Id", style); 
         createCell(row, 1, "Amount", style); 
         createCell(row, 2, "Date", style); 
-        createCell(row, 3, "Donor Email", style); 
-        createCell(row, 4, "Donor First Name", style); 
-        createCell(row, 5, "Donor Last Name", style); 
-        createCell(row, 6, "Donor Id", style);
-        createCell(row, 7, "Refcode", style);
+        createCell(row, 3, "Refcode", style);
+        createCell(row, 4, "Donor Email", style); 
+        createCell(row, 5, "Donor First Name", style); 
+        createCell(row, 6, "Donor Last Name", style); 
+        createCell(row, 7, "Donor Id", style);
+        createCell(row, 8, "Donor Address", style); 
+        createCell(row, 9, "Donor City", style);
+        createCell(row, 10, "Donor State", style); 
+        createCell(row, 11, "Donor Zipcode", style); 
+        createCell(row, 12, "Donor Country", style); 
+        createCell(row, 13, "Donor Phone", style);
         
         //write data lines
         int rowCount = 1;
@@ -805,11 +811,17 @@ public class ExcelUtil {
             createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donations.get(i).getAmount()), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorLastName(), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donations.get(i).getDonor().getId()), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getAddress(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getCity(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getState(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getZipcode(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getCountry(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getPhone(), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
