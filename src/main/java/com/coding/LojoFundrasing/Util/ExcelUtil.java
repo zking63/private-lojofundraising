@@ -108,7 +108,19 @@ public class ExcelUtil {
 			int AbIdColumn = 0;
 			int RecurringColumn = 0;
 			int RecurrenceColumn = 0;
+			int addressColumn = 0;
+			int cityColumn = 0;
+			int zipColumn = 0;
+			int stateColumn = 0; 
+			int countryColumn = 0;
+			int phoneColumn = 0;
 			User uploader = uservice.findUserbyId(user_id);
+			String address = null;
+			String city = null;
+			String state = null;
+			String Zipcode = null;
+			String country = null;
+			String phone = null;
 			String emailValue = null;
 			String nameValue = null;
 			String LNValue = null;
@@ -150,7 +162,7 @@ public class ExcelUtil {
 							if (headerValue.contains("LAST NAME")) {
 								LastNameColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("Email")) {
+							if (headerValue.contains("EMAIL")) {
 								EmailColumn = header.getColumnIndex();
 								System.out.println("refcode: " + headerValue);
 							}
@@ -173,6 +185,24 @@ public class ExcelUtil {
 							if (headerValue.contains("RECURRENCE")) {
 								RecurrenceColumn = header.getColumnIndex();
 							}
+							if (headerValue.contains("ADDR")) {
+								addressColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("CITY")) {
+								cityColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("STATE")) {
+								stateColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("ZIP")) {
+								zipColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("COUNTRY")) {
+								countryColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("PHONE")) {
+								phoneColumn = header.getColumnIndex();
+							}
 							System.out.println("Headers: " + headers);
 						}
 						else if (row.getRowNum() > 0){
@@ -185,7 +215,7 @@ public class ExcelUtil {
 									System.out.println("-----header check-----");*/
 									if (cell.getColumnIndex() == EmailColumn) {
 										emailValue = dataFormatter.formatCellValue(cell);
-										System.out.println(emailValue);
+										System.out.println("Email:" + emailValue);
 									}
 									else if (cell.getColumnIndex() == NameColumn) {
 										System.out.println("Values: " + values);
@@ -229,6 +259,30 @@ public class ExcelUtil {
 										Recurrence = Integer.parseInt(dataFormatter.formatCellValue(cell));
 										System.out.println("Recurrence: " + Recurrence);
 									}
+									else if (cell.getColumnIndex() == addressColumn) {
+										address = dataFormatter.formatCellValue(cell);
+										System.out.println("Address: " + address);
+									}
+									else if (cell.getColumnIndex() == cityColumn) {
+										city = dataFormatter.formatCellValue(cell);
+										System.out.println("City: " + city);
+									}
+									else if (cell.getColumnIndex() == stateColumn) {
+										state = dataFormatter.formatCellValue(cell);
+										System.out.println("State: " + state);
+									}
+									else if (cell.getColumnIndex() == zipColumn) {
+										Zipcode = dataFormatter.formatCellValue(cell);
+										System.out.println("Zip: " + Zipcode);
+									}
+									else if (cell.getColumnIndex() == countryColumn) {
+										country = dataFormatter.formatCellValue(cell);
+										System.out.println("Country: " + country);
+									}
+									else if (cell.getColumnIndex() == phoneColumn) {
+										phone = dataFormatter.formatCellValue(cell);
+										System.out.println("Phone: " + phone);
+									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
 										System.out.println("Refcode: " + refcode);
@@ -242,6 +296,12 @@ public class ExcelUtil {
 										System.out.println("AB ID: " + ActBlueId);
 										System.out.println("Recurring: " + Recurring);
 										System.out.println("Recurrence: " + Recurrence);
+										System.out.println("ADDRESS AFTER: " + address);
+										System.out.println("CITY AFTER: " + city);
+										System.out.println("STATE AFTER: " + state);
+										System.out.println("COUNTRY AFTER: " + country);
+										System.out.println("PHONE AFTER: " + phone);
+										System.out.println("ZIP AFTER: " + Zipcode);
 							    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
 					    	        	donor = new Donor();
 					    	        	//System.out.println("ID: " + id);
@@ -250,6 +310,12 @@ public class ExcelUtil {
 					    	        	donor.setDonorEmail(emailValue);
 					    	        	donor.setUploader(uploader);
 					    	        	donor.setCommittee(committee);
+					    	        	donor.setAddress(address);
+					    	        	donor.setCity(city);
+					    	        	donor.setCountry(country);
+					    	        	donor.setPhone(phone);
+					    	        	donor.setZipcode(Zipcode);
+					    	        	donor.setState(state);
 					    	        	donors = committee.getDonors();
 					    	        	donors.add(donor);
 					    	        	committee.setDonors(donors);
@@ -287,6 +353,12 @@ public class ExcelUtil {
 					    	        	System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	donor.setUploader(uploader);
 					    	        	donor.setCommittee(committee);
+					    	        	donor.setAddress(address);
+					    	        	donor.setCity(city);
+					    	        	donor.setCountry(country);
+					    	        	donor.setPhone(phone);
+					    	        	donor.setZipcode(Zipcode);
+					    	        	donor.setState(state);
 					    	        	donors = committee.getDonors();
 					    	        	donors.add(donor);
 					    	        	committee.setDonors(donors);
