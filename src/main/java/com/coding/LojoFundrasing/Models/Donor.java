@@ -37,6 +37,7 @@ public class Donor {
 	private String country;
 	private String Zipcode;
 	private String phone;
+	private String city;
 	@NotEmpty
 	@Email(message="Must be a valid email.")
 	private String donorEmail;
@@ -268,6 +269,14 @@ public class Donor {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 	
 	
