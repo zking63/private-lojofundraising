@@ -31,6 +31,10 @@
 	</div>
 	<div class="wrapper">
 		<h2><b>Donor history:</b> ${ donor.donorFirstName } ${ donor.donorLastName }</h2>
+		<p>Address: ${ donor.address }</p>
+		<p>City: ${ donor.city }, State: ${ donor.state } Zip:${ donor.Zipcode}</p>
+		<p>Country: ${ donor.country }</p>
+		<p>Country: ${ donor.phone }</p>
 
 			<table class="table table-hover">
 			    <thead>
