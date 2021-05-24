@@ -49,6 +49,41 @@
 	            <form:errors path="Emaildate"></form:errors>
 	            <form:input type="Emaildate" value="${dateFormat}" path="Emaildate"/>
 	        </p>
+	        <p>
+	            <form:label path="openers">Number of openers:</form:label>
+	            <form:errors path="openers"></form:errors>
+	            <form:input type="openers" path="openers"/>
+	        </p>
+	        <p>
+	            <form:label path="recipients">Number of recipients:</form:label>
+	            <form:errors path="recipients"></form:errors>
+	            <form:input type="recipients" path="recipients"/>
+	        </p>
+	        <p>
+	            <form:label path="list">Recipient list:</form:label>
+	            <form:errors path="list"></form:errors>
+	            <form:input type="list" path="list"/>
+	        </p>
+	        <p>
+	            <form:label path="excludedList">Excluded list:</form:label>
+	            <form:errors path="excludedList"></form:errors>
+	            <form:input type="excludedList" path="excludedList"/>
+	        </p>
+	        <p>
+	            <form:label path="clicks">Number of clicks:</form:label>
+	            <form:errors path="clicks"></form:errors>
+	            <form:input type="clicks" path="clicks"/>
+	        </p>
+	        <p>
+	            <form:label path="bounces">Number of bounces:</form:label>
+	            <form:errors path="bounces"></form:errors>
+	            <form:input type="bounces" path="bounces"/>
+	        </p>
+	        <p>
+	            <form:label path="unsubscribers">Number of unsubscribers:</form:label>
+	            <form:errors path="unsubscribers"></form:errors>
+	            <form:input type="unsubscribers" path="unsubscribers"/>
+	        </p>
 	        <input type="submit" value="Upload!"/>
 	    </form:form>
 	</div>  
