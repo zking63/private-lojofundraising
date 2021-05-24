@@ -252,7 +252,12 @@ public class ExcelUtil {
 										System.out.println("Simple date: " + date);
 									}
 									else if (cell.getColumnIndex() == RecurringColumn) {
-										Recurring = dataFormatter.formatCellValue(cell);
+										if (cell == null) {
+											Recurring = null;
+										}
+										else {
+											Recurring = dataFormatter.formatCellValue(cell);
+										}
 										System.out.println("Recurring: " + Recurring);
 									}
 									else if (cell.getColumnIndex() == RecurrenceColumn) {
@@ -327,6 +332,7 @@ public class ExcelUtil {
 					    	        	donation.setActBlueId(ActBlueId);
 					    	        	donation.setRecurrenceNumber(Recurrence);
 					    	        	donation.setRecurring(Recurring);
+					    	        	System.out.println("donation recurring " + donation.getRecurring());
 					    	        	donation.setDondate(date);
 					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
@@ -368,6 +374,12 @@ public class ExcelUtil {
 					    	        	donation.setActBlueId(ActBlueId);
 					    	        	donation.setRecurrenceNumber(Recurrence);
 					    	        	donation.setRecurring(Recurring);
+					    	        	if (donation.getRecurring() == null) {
+					    	        		System.out.println("donation recurring: " + donation.getRecurring());
+					    	        	}
+					    	        	else {
+					    	        		System.out.println("HELLO: " + donation.getRecurring());
+					    	        	}
 					    	        	donation.setAmount(amount);
 					    	        	System.out.println("amount");
 					    	        	donation.setDondate(date);
@@ -375,7 +387,8 @@ public class ExcelUtil {
 					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	System.out.println("donor");
 					    	        	donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        	System.out.println("refcode");
+					    	        	System.out.println("refcode: " + refcode);
+					    	        	System.out.println("email: " + eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	System.out.println("uploader");
 					    	        	System.out.println("get committees " + committees);
@@ -386,64 +399,17 @@ public class ExcelUtil {
 					    	        	committee.setDonations(donations);
 					    	        	System.out.println("set donations " + donations);
 					    	        	donation.setCommittee(committee);
-					    	        	/*committees.add(committee);
-					    	        	System.out.println("add committee");
-					    	        	donation.setCommittees(committees);
-					    	        	System.out.println("set committees" + committees);*/
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	        	System.out.println("create donation");
 					    	    		Emails email = donation.getEmailDonation();
+					    	    		System.out.println("Email: " + email);
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
 									}
-							//}
-							/*else {
-							System.out.println("-----check-----");
-									System.out.println("EMAIL AFTER: " + emailValue);
-									System.out.println("REFCODE AFTER: " + refcode);
-									System.out.println("Name AFTER: " + nameValue);
-									System.out.println("LN AFTER: " + LNValue);
-									System.out.println("AMOUNT AFTER: " + amount);
-									System.out.println("DATE AFTER: " + date);
-									donor = dservice.findDonorbyEmail(emailValue);
-									System.out.println("DONOR: " + dservice.findDonorbyEmail(emailValue));*/
-					    	       /*if (dservice.findDonorbyEmail(emailValue) == null) {
-					    	        	donor = new Donor();
-					    	        	//System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.createDonor(donor);
-					    	        	Long id = donor.getId();
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					    	        }
-					    	        else {
-					    	        	donor = dservice.findDonorbyEmail(emailValue);
-					    	        	Long id = donor.getId();
-					    	        	System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.updateDonor(donor);
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					                }*/
-								//}
 							}
 		    	        }
 
@@ -487,6 +453,20 @@ public class ExcelUtil {
 			int NameColumn = 0;
 			int RefcodeColumn = 0;
 			int DateColumn = 0;
+			int listColumn = 0;
+			int excludeColumn = 0;
+			int openersColumn = 0;
+			int bouncesColumn = 0;
+			int unsubscribersColumn = 0;
+			int clicksColumn = 0;
+			int recipientsColumn = 0;
+			String recipientList = null;
+			String excludedList = null;
+			Long openers = null;
+			Long bounces = null;
+			Long unsubscribers = null;
+			Long clicks = null;
+			Long recipients = null;
 			User uploader = uservice.findUserbyId(user_id);
 			String nameValue = null;
 			String refcode = null;
@@ -525,35 +505,92 @@ public class ExcelUtil {
 								RefcodeColumn = header.getColumnIndex();
 								System.out.println(headerValue);
 							}
+							if (headerValue.contains("RECIPIENT LIST")) {
+								listColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("EXCLUDED LIST")) {
+								excludeColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("OPEN")) {
+								openersColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("UNSUBSCRIBE")) {
+								unsubscribersColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("CLICK")) {
+								clicksColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("RECIPIENTS")) {
+								recipientsColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
+							if (headerValue.contains("BOUNCE")) {
+								bouncesColumn = header.getColumnIndex();
+								System.out.println(headerValue);
+							}
 							System.out.println("Headers: " + headers);
 						}
 						else if (row.getRowNum() > 0){
 							//if (refcode == null) {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
-									/*System.out.println("Value: " + value);
-									values.add(value);
-									System.out.println("Values: " + values);
-									System.out.println("-----header check-----");*/
 									if (cell.getColumnIndex() == NameColumn) {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
 										nameValue = dataFormatter.formatCellValue(cell);
 										System.out.println(nameValue);
-										/*System.out.print("map: " + userMap);
-								        System.out.print("usermap section");*/
-								        /*Set<String> keys = userMap.keySet();
-								        System.out.print(keys);
-								        for(String key : keys) {
-								            System.out.println(key);
-								            System.out.println(userMap.get(key));    
-								        }*/
+									}
+									if (cell.getColumnIndex() == clicksColumn) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										clicks = Long.parseLong(amount1); 
+										System.out.println(clicks);
+									}
+									if (cell.getColumnIndex() == recipientsColumn ) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										recipients = Long.parseLong(amount1); 
+										System.out.println(recipients);
+									}
+									if (cell.getColumnIndex() == unsubscribersColumn) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										unsubscribers = Long.parseLong(amount1); 
+										System.out.println(unsubscribers);
+									}
+									if (cell.getColumnIndex() == openersColumn) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										openers = Long.parseLong(amount1); 
+										System.out.println(openers);
+									}
+									if (cell.getColumnIndex() == bouncesColumn) {
+										String amount1 = dataFormatter.formatCellValue(cell);
+										bounces = Long.parseLong(amount1); 
+										System.out.println(bounces);
+									}
+									if (cell.getColumnIndex() == excludeColumn) {
+										System.out.println("Values: " + values);
+										//userMap.put(headerValue, valValue);
+										excludedList = dataFormatter.formatCellValue(cell);
+										System.out.println(recipientList);
+									}
+									if (cell.getColumnIndex() == listColumn) {
+										System.out.println("Values: " + values);
+										//userMap.put(headerValue, valValue);
+										recipientList = dataFormatter.formatCellValue(cell);
+										System.out.println(recipientList);
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
+										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										//date = new SimpleDateFormat("MM/dd//YY").parse(dateValue1);
+										//String date = 
 										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										System.out.println(dateValue1);
+										//System.out.println("Simple date: " + date);
 										System.out.println("Simple date: " + date);
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
@@ -567,6 +604,13 @@ public class ExcelUtil {
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
+					    	        	email.setBounces(bounces);
+					    	        	email.setClicks(clicks);
+					    	        	email.setOpeners(openers);
+					    	        	email.setRecipients(recipients);
+					    	        	email.setUnsubscribers(unsubscribers);
+					    	        	email.setExcludedList(excludedList);
+					    	        	email.setList(recipientList);
 					    	        	email.setEmail_uploader(uploader);
 					    	        	email.setCommittee(committee);
 					    	        	emails = committee.getEmails();
@@ -582,6 +626,13 @@ public class ExcelUtil {
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
+					    	        	email.setBounces(bounces);
+					    	        	email.setClicks(clicks);
+					    	        	email.setOpeners(openers);
+					    	        	email.setRecipients(recipients);
+					    	        	email.setUnsubscribers(unsubscribers);
+					    	        	email.setExcludedList(excludedList);
+					    	        	email.setList(recipientList);
 					    	        	email.setEmail_uploader(uploader);
 					    	        	email.setCommittee(committee);
 					    	        	emails = committee.getEmails();
@@ -593,50 +644,6 @@ public class ExcelUtil {
 					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					                }
 								}
-							//}
-							/*else {
-							System.out.println("-----check-----");
-									System.out.println("EMAIL AFTER: " + emailValue);
-									System.out.println("REFCODE AFTER: " + refcode);
-									System.out.println("Name AFTER: " + nameValue);
-									System.out.println("LN AFTER: " + LNValue);
-									System.out.println("AMOUNT AFTER: " + amount);
-									System.out.println("DATE AFTER: " + date);
-									donor = dservice.findDonorbyEmail(emailValue);
-									System.out.println("DONOR: " + dservice.findDonorbyEmail(emailValue));*/
-					    	       /*if (dservice.findDonorbyEmail(emailValue) == null) {
-					    	        	donor = new Donor();
-					    	        	//System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.createDonor(donor);
-					    	        	Long id = donor.getId();
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					    	        }
-					    	        else {
-					    	        	donor = dservice.findDonorbyEmail(emailValue);
-					    	        	Long id = donor.getId();
-					    	        	System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	dservice.updateDonor(donor);
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonor(dservice.findbyId(id));
-					    	        	donation.setEmailDonation(eservice.findEmailbyRefcode(refcode));
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					                }*/
-								//}
 							}
 		    	        }
 
