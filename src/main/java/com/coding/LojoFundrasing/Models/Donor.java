@@ -32,6 +32,11 @@ public class Donor {
 	private long id;
 	private String donorFirstName;
 	private String donorLastName;
+	private String address;
+	private String state;
+	private String country;
+	private String Zipcode;
+	private String phone;
 	@NotEmpty
 	@Email(message="Must be a valid email.")
 	private String donorEmail;
@@ -172,14 +177,6 @@ public class Donor {
 		this.mostrecentDate = mostrecentDate;
 	}
 
-	/*public Date getMostrecenttime() {
-		return mostrecenttime;
-	}
-
-	public void setMostrecenttime(Date mostrecenttime) {
-		this.mostrecenttime = mostrecenttime;
-	}*/
-
 	public Double getMostrecentamount() {
 		return mostrecentamount;
 	}
@@ -192,10 +189,6 @@ public class Donor {
     	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
     	return df.format(this.mostrecentDate);
     }
-    /*public String getRecentTimeFormatted() {
-    	SimpleDateFormat df = new SimpleDateFormat("kk:mm");
-    	return df.format(this.mostrecenttime);
-    }*/
 	public String getDonorRecentAmountFormatted() {
 		if (this.mostrecentamount == null) {
 			this.mostrecentamount = 0.0;
@@ -235,6 +228,46 @@ public class Donor {
 
 	public void setCommittee(Committees committee) {
 		this.committee = committee;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getZipcode() {
+		return Zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		Zipcode = zipcode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	
