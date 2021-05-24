@@ -49,6 +49,31 @@
 	            <form:errors path="donorEmail"></form:errors>
 	            <form:input type="donorEmail" path="donorEmail"/>
 	        </p>
+	        	        <p>
+	            <form:label path="address">Address:</form:label>
+	            <form:errors path="address"></form:errors>
+	            <form:input type="address" path="address"/>
+	        </p>
+	        <p>
+	            <form:label path="state">State:</form:label>
+	            <form:errors path="state"></form:errors>
+	            <form:input type="state" path="state"/>
+	        </p>
+	        <p>
+	            <form:label path="country">Country:</form:label>
+	            <form:errors path="country"></form:errors>
+	            <form:input type="country" path="country"/>
+	        </p>
+	        <p>
+	            <form:label path="Zipcode">Zip:</form:label>
+	            <form:errors path="Zipcode"></form:errors>
+	            <form:input type="Zipcode" path="Zipcode"/>
+	        </p>
+	        <p>
+	            <form:label path="phone">Phone number:</form:label>
+	            <form:errors path="phone"></form:errors>
+	            <form:input type="phone" path="phone"/>
+	        </p>
 	        <input type="submit" value="Upload!"/>
 	    </form:form>
 	</div>  
