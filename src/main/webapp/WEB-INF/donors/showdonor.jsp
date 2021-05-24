@@ -31,10 +31,10 @@
 	</div>
 	<div class="wrapper">
 		<h2><b>Donor history:</b> ${ donor.donorFirstName } ${ donor.donorLastName }</h2>
-		<p>Address: ${ donor.address }</p>
-		<p>City: ${ donor.city }, State: ${ donor.state } Zip:${ donor.Zipcode}</p>
-		<p>Country: ${ donor.country }</p>
-		<p>Country: ${ donor.phone }</p>
+		<p><b>Address:</b> ${ donor.address }</p>
+		<p><b>City:</b> ${ donor.city }   <b>State:</b> ${ donor.state }   <b>Zip:</b> ${ donor.getZipcode()}</p>
+		<p><b>Country:</b> ${ donor.country }</p>
+		<p><b>Phone number:</b> ${ donor.phone }</p>
 
 			<table class="table table-hover">
 			    <thead>
