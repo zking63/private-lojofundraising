@@ -30,6 +30,13 @@ public class Emails {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String emailName;
+	private Long openers;
+	private Long recipients;
+	private String list;
+	private String excludedList;
+	private Long clicks;
+	private Long bounces;
+	private Long unsubscribers;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
 	//private Double email_average;
@@ -152,6 +159,62 @@ public class Emails {
 	@PreUpdate
 	protected void onUpdate(){
 	    this.updatedAt = new Date();
+	}
+
+	public Long getOpeners() {
+		return openers;
+	}
+
+	public void setOpeners(Long openers) {
+		this.openers = openers;
+	}
+
+	public Long getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(Long recipients) {
+		this.recipients = recipients;
+	}
+
+	public String getList() {
+		return list;
+	}
+
+	public void setList(String list) {
+		this.list = list;
+	}
+
+	public String getExcludedList() {
+		return excludedList;
+	}
+
+	public void setExcludedList(String excludedList) {
+		this.excludedList = excludedList;
+	}
+
+	public Long getClicks() {
+		return clicks;
+	}
+
+	public void setClicks(Long clicks) {
+		this.clicks = clicks;
+	}
+
+	public Long getBounces() {
+		return bounces;
+	}
+
+	public void setBounces(Long bounces) {
+		this.bounces = bounces;
+	}
+
+	public Long getUnsubscribers() {
+		return unsubscribers;
+	}
+
+	public void setUnsubscribers(Long unsubscribers) {
+		this.unsubscribers = unsubscribers;
 	}
 	
 }
