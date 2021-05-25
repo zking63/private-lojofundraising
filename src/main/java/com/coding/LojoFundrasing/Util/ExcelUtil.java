@@ -342,7 +342,7 @@ public class ExcelUtil {
 					    	        	committee.setDonations(donations);
 					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
 					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0000-00-00 00:00";
+					    	        		String undate1 = "0001-01-01 01:01";
 					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
 					    	        		email = new Emails();
 						    	        	email.setEmailName(null);
@@ -426,7 +426,7 @@ public class ExcelUtil {
 					    	        	System.out.println("create donation");
 					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
 					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0000-00-00 00:00";
+					    	        		String undate1 = "0001-01-01 01:01";
 					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
 					    	        		email = new Emails();
 						    	        	email.setEmailName(null);
@@ -456,6 +456,7 @@ public class ExcelUtil {
 					    	        	}
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("Email: " + email.getEmailName());
+					    	    		System.out.println("Donation 0: " + email.getEmaildonations().size());
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor, committee.getId());
 					    	        	refcode = null;

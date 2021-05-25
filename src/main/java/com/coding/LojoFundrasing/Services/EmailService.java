@@ -67,7 +67,16 @@ public class EmailService {
 		Integer donorscount = 0;
 		List<Data> alldata = datarepo.findAll();
 		if (emaildata == null) {
+			esum = erepo.sums(id, committee_id);
+			System.out.println("esum:" + esum);
+			eaverage = erepo.averages(id, committee_id);
+			donationscount = erepo.donationscount(id, committee_id);
+			donorscount = erepo.donorscount(id, committee_id);
 			emaildata = new Data(email, eaverage, esum, donationscount, donorscount);
+			if (emaildata.getDataEmail().getEmaildonations().size() > 0) {
+				System.out.println("donations size > 0");
+				return datarepo.save(emaildata);
+			}
 			return datarepo.save(emaildata);
 		}
 		else {
