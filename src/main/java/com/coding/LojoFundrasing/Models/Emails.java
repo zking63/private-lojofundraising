@@ -37,6 +37,9 @@ public class Emails {
 	private Long clicks;
 	private Long bounces;
 	private Long unsubscribers;
+	private Integer recurringDonorCount;
+	private Integer recurringDonationCount;
+	private Double recurringRevenue;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
 	//private Double email_average;
