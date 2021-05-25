@@ -138,6 +138,7 @@ public class ExcelUtil {
 			List<Emails> emails = null;
         	List<Committees> committees = null;
         	List<Donation> donations = null;
+        	List<Donation> emaildonations = new ArrayList<Donation>();
         	List<Donor> donors = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
@@ -429,6 +430,7 @@ public class ExcelUtil {
 					    	        		String undate1 = "0001-01-01 01:01";
 					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
 					    	        		email = new Emails();
+					    	        		emaildonations = email.getEmaildonations();
 						    	        	email.setEmailName(null);
 						    	        	email.setEmaildate(undate);
 						    	        	email.setEmailRefcode(refcode);
@@ -441,6 +443,8 @@ public class ExcelUtil {
 						    	        	email.setList(null);
 						    	        	email.setEmail_uploader(uploader);
 						    	        	email.setCommittee(committee);
+						    	        	emaildonations.add(donation);
+						    	        	email.setEmaildonations(emaildonations);
 						    	        	eservice.createEmail(email);
 						    	        	String tempname = "Null" + email.getId();
 						    	        	email.setEmailName(tempname);
