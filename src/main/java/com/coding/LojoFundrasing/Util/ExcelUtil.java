@@ -797,10 +797,17 @@ public class ExcelUtil {
         createCell(row, 1, "Email", style); 
         createCell(row, 2, "Refcode", style); 
         createCell(row, 3, "Send Date", style); 
-        createCell(row, 4, "Revenue", style); 
-        createCell(row, 5, "Average donation", style); 
-        createCell(row, 6, "Number of donations", style);
-        createCell(row, 7, "Number of donors", style);
+        createCell(row, 4, "List", style); 
+        createCell(row, 5, "Excluded List", style); 
+        createCell(row, 6, "Recipients", style);
+        createCell(row, 7, "Opens", style);
+        createCell(row, 8, "Clicks", style); 
+        createCell(row, 9, "Bounces", style); 
+        createCell(row, 10, "Unsubscribes", style); 
+        createCell(row, 11, "Revenue", style); 
+        createCell(row, 12, "Number of donations", style); 
+        createCell(row, 13, "Number of donors", style); 
+        createCell(row, 14, "Average donation", style);
         
         //write data lines
         int rowCount = 1;
@@ -813,15 +820,21 @@ public class ExcelUtil {
         for (int i = 0; i < emails.size(); i++) {
             row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            
             createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getList(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getExcludedList(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getRecipients()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getOpeners()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getClicks()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getBounces()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailsum()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationcount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorcount()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
