@@ -65,6 +65,9 @@ public class EmailService {
 		Double eaverage = 0.00;
 		Integer donationscount = 0;
 		Integer donorscount = 0;
+		Integer recurringDonorCount = 0;
+		Integer recurringDonationCount = 0;
+		Double recurringRevenue = 0.00;
 		List<Data> alldata = datarepo.findAll();
 		if (emaildata == null) {
 			esum = erepo.sums(id, committee_id);
@@ -72,6 +75,15 @@ public class EmailService {
 			eaverage = erepo.averages(id, committee_id);
 			donationscount = erepo.donationscount(id, committee_id);
 			donorscount = erepo.donorscount(id, committee_id);
+			//recurring functions
+			recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
+			recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
+			recurringRevenue = erepo.RecurringDonationSum(id, committee_id);
+			//set recurring functions
+			email.setRecurringDonorCount(recurringDonorCount);
+			email.setRecurringDonationCount(recurringDonationCount);
+			email.setRecurringRevenue(recurringRevenue);
+			erepo.save(email);
 			emaildata = new Data(email, eaverage, esum, donationscount, donorscount);
 			return datarepo.save(emaildata);
 		}
@@ -89,6 +101,15 @@ public class EmailService {
 					emaildata.setDonationcount(donationscount);
 					emaildata.setDonorcount(donorscount);
 					emaildata.setEmailAverage(eaverage);
+					//recurring functions
+					recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
+					recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
+					recurringRevenue = erepo.RecurringDonationSum(id, committee_id);
+					//set recurring functions
+					email.setRecurringDonorCount(recurringDonorCount);
+					email.setRecurringDonationCount(recurringDonationCount);
+					email.setRecurringRevenue(recurringRevenue);
+					erepo.save(email);
 					return datarepo.save(emaildata);
 				}
 			}

@@ -58,4 +58,11 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 	@Query(value = "SELECT * FROM emails LEFT JOIN data_funds ON data_funds.email_id = emails.id RIGHT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by data_funds.donorcount Desc", nativeQuery = true)
 	List<Emails> findByDonorCountOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	//recurring functions
+	@Query(value = "SELECT COUNT(DISTINCT(donations.act_blue_id)) FROM emails LEFT JOIN donations ON donations.email_id = emails.id WHERE emails.committees_id = :committee_id AND emails.id = :emailid AND (recurring = 'unlimited' OR recurring >= 1)", nativeQuery = true)
+	Integer RecurringDonorCount(@Param("emailid") Long id, Long committee_id);
+	@Query(value = "SELECT COUNT(donations.id) FROM emails LEFT JOIN donations ON donations.email_id = emails.id WHERE emails.committees_id = :committee_id AND emails.id = :emailid AND (recurring = 'unlimited' OR recurring >= 1)", nativeQuery = true)
+	Integer RecurringDonationCount(@Param("emailid") Long id, Long committee_id);
+	@Query(value = "SELECT SUM(donations.amount) FROM emails LEFT JOIN donations ON donations.email_id = emails.id WHERE emails.committees_id = :committee_id AND emails.id = :emailid AND (recurring = 'unlimited' OR recurring >= 1)", nativeQuery = true)
+	Double RecurringDonationSum(@Param("emailid") Long id, Long committee_id);
 }

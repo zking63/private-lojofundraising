@@ -219,5 +219,30 @@ public class Emails {
 	public void setUnsubscribers(Long unsubscribers) {
 		this.unsubscribers = unsubscribers;
 	}
+
+	public Integer getRecurringDonorCount() {
+		return recurringDonorCount;
+	}
+
+	public void setRecurringDonorCount(Integer recurringDonorCount) {
+		this.recurringDonorCount = recurringDonorCount;
+	}
+
+	public Integer getRecurringDonationCount() {
+		return recurringDonationCount;
+	}
+
+	public void setRecurringDonationCount(Integer recurringDonationCount) {
+		this.recurringDonationCount = recurringDonationCount;
+	}
+
+	public Double getRecurringRevenue() {
+		return recurringRevenue;
+	}
+
+	public void setRecurringRevenue(Double recurringRevenue) {
+		this.recurringRevenue = recurringRevenue;
+	}
+	
 	
 }
