@@ -68,6 +68,11 @@ public class EmailService {
 		Integer recurringDonorCount = 0;
 		Integer recurringDonationCount = 0;
 		Double recurringRevenue = 0.00;
+		Double unsubscribeRate = 0.00;
+		Double clickRate = 0.00;
+		Double bounceRate = 0.00;
+		Double donationsOpens = 0.00;
+		Double donationsClicks = 0.00;
 		List<Data> alldata = datarepo.findAll();
 		if (emaildata == null) {
 			esum = erepo.sums(id, committee_id);

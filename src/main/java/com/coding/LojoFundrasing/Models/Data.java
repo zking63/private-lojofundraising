@@ -21,6 +21,11 @@ public class Data {
 	private Double emailsum;
 	private Integer donationcount;
 	private Integer donorcount;
+	private Double unsubscribeRate;
+	private Double clickRate;
+	private Double bounceRate;
+	private Double donationsOpens;
+	private Double donationsClicks;
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="email_id")
     private Emails dataemail;
@@ -92,4 +97,61 @@ public class Data {
 	public void setDonorcount(Integer donorcount) {
 		this.donorcount = donorcount;
 	}
+
+	public Double getEmailaverage() {
+		return emailaverage;
+	}
+
+	public void setEmailaverage(Double emailaverage) {
+		this.emailaverage = emailaverage;
+	}
+
+	public Double getUnsubscribeRate() {
+		return unsubscribeRate;
+	}
+
+	public void setUnsubscribeRate(Double unsubscribeRate) {
+		this.unsubscribeRate = unsubscribeRate;
+	}
+
+	public Double getClickRate() {
+		return clickRate;
+	}
+
+	public void setClickRate(Double clickRate) {
+		this.clickRate = clickRate;
+	}
+
+	public Double getBounceRate() {
+		return bounceRate;
+	}
+
+	public void setBounceRate(Double bounceRate) {
+		this.bounceRate = bounceRate;
+	}
+
+	public Double getDonationsOpens() {
+		return donationsOpens;
+	}
+
+	public void setDonationsOpens(Double donationsOpens) {
+		this.donationsOpens = donationsOpens;
+	}
+
+	public Double getDonationsClicks() {
+		return donationsClicks;
+	}
+
+	public void setDonationsClicks(Double donationsClicks) {
+		this.donationsClicks = donationsClicks;
+	}
+
+	public Emails getDataemail() {
+		return dataemail;
+	}
+
+	public void setDataemail(Emails dataemail) {
+		this.dataemail = dataemail;
+	}
+	
 }
