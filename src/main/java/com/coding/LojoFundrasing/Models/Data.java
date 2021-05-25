@@ -23,9 +23,13 @@ public class Data {
 	private Integer donorcount;
 	private Double unsubscribeRate;
 	private Double clickRate;
+	private Double openRate;
 	private Double bounceRate;
 	private Double donationsOpens;
 	private Double donationsClicks;
+	private Double clicksOpens;
+	private Double donorsOpens;
+	private Double donorsClicks;
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="email_id")
     private Emails dataemail;
@@ -34,16 +38,25 @@ public class Data {
 
 	}
 	
-	public Data(Emails email, Double eaverage, Double emailsum, Integer donationcount, Integer donorcount) {
-		this.dataemail = email;
-		this.emailaverage = eaverage;
+	public Data(Double emailaverage, Double emailsum, Integer donationcount, Integer donorcount, Double unsubscribeRate,
+			Double clickRate, Double openRate, Double bounceRate, Double donationsOpens, Double donationsClicks,
+			Double clicksOpens, Double donorsOpens, Double donorsClicks, Emails dataemail) {
+		this.emailaverage = emailaverage;
 		this.emailsum = emailsum;
 		this.donationcount = donationcount;
 		this.donorcount = donorcount;
+		this.unsubscribeRate = unsubscribeRate;
+		this.clickRate = clickRate;
+		this.openRate = openRate;
+		this.bounceRate = bounceRate;
+		this.donationsOpens = donationsOpens;
+		this.donationsClicks = donationsClicks;
+		this.clicksOpens = clicksOpens;
+		this.donorsOpens = donorsOpens;
+		this.donorsClicks = donorsClicks;
+		this.dataemail = dataemail;
 	}
-	
-	
-	
+
 	public Double getEmailAverage() {
 		return emailaverage;
 	}
@@ -153,5 +166,38 @@ public class Data {
 	public void setDataemail(Emails dataemail) {
 		this.dataemail = dataemail;
 	}
+
+	public Double getOpenRate() {
+		return openRate;
+	}
+
+	public void setOpenRate(Double openRate) {
+		this.openRate = openRate;
+	}
+
+	public Double getClicksOpens() {
+		return clicksOpens;
+	}
+
+	public void setClicksOpens(Double clicksOpens) {
+		this.clicksOpens = clicksOpens;
+	}
+
+	public Double getDonorsOpens() {
+		return donorsOpens;
+	}
+
+	public void setDonorsOpens(Double donorsOpens) {
+		this.donorsOpens = donorsOpens;
+	}
+
+	public Double getDonorsClicks() {
+		return donorsClicks;
+	}
+
+	public void setDonorsClicks(Double donorsClicks) {
+		this.donorsClicks = donorsClicks;
+	}
+	
 	
 }
