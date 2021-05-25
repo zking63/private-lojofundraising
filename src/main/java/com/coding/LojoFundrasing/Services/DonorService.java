@@ -139,8 +139,9 @@ public class DonorService {
 			donor.setMostrecentamount(mostrecentamount);
 			//donor.setMostrecenttime(mostrecenttime);
 			//donor.setMostrecentDonationbyDonor(mostrecent);
+			System.out.println("donor average:" + daverage);
 			donordata = new DonorData(donor, daverage, donorsum, donationcount);
-			System.out.println(donordata.getId());
+			System.out.println("donordata id: " + donordata.getId());
 			return dondrepo.save(donordata);
 		}
 	}

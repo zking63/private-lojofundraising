@@ -138,7 +138,7 @@ public class ExcelUtil {
 			List<Emails> emails = null;
         	List<Committees> committees = null;
         	List<Donation> donations = null;
-        	List<Donation> emaildonations = new ArrayList<Donation>();
+        	List<Donation> emaildonations = null;
         	List<Donor> donors = null;
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
@@ -340,6 +340,8 @@ public class ExcelUtil {
 					    	        	donation.setDonation_uploader(uploader);
 					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
 					    	        	donation.setCommittee(committee);
+					    	        	donations = committee.getDonations();
+					    	        	donations.add(donation);
 					    	        	committee.setDonations(donations);
 					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
 					    	        	if (emaildonation == null){
@@ -376,8 +378,9 @@ public class ExcelUtil {
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	    		email = donation.getEmailDonation();
-					    	    		eservice.getEmailData(email, committee.getId());
+					    	    		System.out.println("email: " + email);
 					    	    		dservice.getDonorData(donor, committee.getId());
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
 					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					    	        }
@@ -430,7 +433,6 @@ public class ExcelUtil {
 					    	        		String undate1 = "0001-01-01 01:01";
 					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
 					    	        		email = new Emails();
-					    	        		emaildonations = email.getEmaildonations();
 						    	        	email.setEmailName(null);
 						    	        	email.setEmaildate(undate);
 						    	        	email.setEmailRefcode(refcode);
@@ -443,26 +445,24 @@ public class ExcelUtil {
 						    	        	email.setList(null);
 						    	        	email.setEmail_uploader(uploader);
 						    	        	email.setCommittee(committee);
-						    	        	emaildonations.add(donation);
-						    	        	email.setEmaildonations(emaildonations);
+						    	        	emails = committee.getEmails();
+						    	        	emails.add(email);
+						    	        	committee.setEmails(emails);
 						    	        	eservice.createEmail(email);
 						    	        	String tempname = "Null" + email.getId();
 						    	        	email.setEmailName(tempname);
 						    	        	System.out.println("TEMP NAME: " + tempname);
 						    	        	eservice.createEmail(email);
-						    	        	emails = committee.getEmails();
-						    	        	emails.add(email);
-						    	        	committee.setEmails(emails);
 						    	        	donation.setEmailDonation(email);
 					    	        	}
 					    	        	else {
 					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
 					    	        	}
+					    	        	donservice.createDonation(donation);
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("Email: " + email.getEmailName());
-					    	    		System.out.println("Donation 0: " + email.getEmaildonations().size());
-					    	    		eservice.getEmailData(email, committee.getId());
 					    	    		dservice.getDonorData(donor, committee.getId());
+					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
@@ -680,6 +680,7 @@ public class ExcelUtil {
 					    	        }
 					    	        else {
 					    	        	email = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+					    	        	System.out.println("found email");
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
@@ -698,7 +699,7 @@ public class ExcelUtil {
 					    	        	eservice.createEmail(email);
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
-					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
+					    				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 					                }
 								}
 							}
