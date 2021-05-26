@@ -1,5 +1,6 @@
 package com.coding.LojoFundrasing.Services;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -58,15 +59,20 @@ public class EmailService {
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
 	}
-	public Double getDoubleFormatted(Double number) {
+	/*public Double getDoubleFormatted(Double number) {
 		if (number == null) {
 			number = 0.0;
 		}
 		double number1 = (double) number;
-		DecimalFormat df = new DecimalFormat("0.00000");
-		Double numberfinal = Double.parseDouble(df.format(number1));
+		DecimalFormat df = new DecimalFormat("0.00000000");
+		System.out.println("number1: " + df.format(number1));
+		BigDecimal bd = new BigDecimal(number1);
+		//Double numberfinal = Double.parseDouble(df.format(number1));
+		Double numberfinal = Double.parseDouble(df.format(bd));
+		System.out.println("number2: " + numberfinal);
+		System.out.println("double:\t\t\t\t\t" + bd.doubleValue());
 		return numberfinal;
-	}
+	}*/
 	public Data getEmailData(Emails email, Long committee_id) {
 		Data emaildata = email.getEmaildata();
 		Long id = email.getId();
@@ -100,15 +106,15 @@ public class EmailService {
 			donationscount = erepo.donationscount(id, committee_id);
 			donorscount = erepo.donorscount(id, committee_id);
 			//aggregate functions
-			unsubscribeRate = getDoubleFormatted(unsubs/receps);
-			openRate = getDoubleFormatted(opens/receps);
-			clickRate = getDoubleFormatted(clicks/receps);
-			bounceRate = getDoubleFormatted(bounces/receps);
-			clicksOpens = getDoubleFormatted(clicks/opens);
-			donationsOpens = getDoubleFormatted(donationscount/opens);
-			donationsClicks = getDoubleFormatted(donationscount/clicks);
-			donorsOpens = getDoubleFormatted(donorscount/opens);
-			donorsClicks = getDoubleFormatted(donorscount/clicks);
+			unsubscribeRate = unsubs/receps;
+			openRate = opens/receps;
+			clickRate = clicks/receps;
+			bounceRate = bounces/receps;
+			clicksOpens = clicks/opens;
+			donationsOpens = donationscount/opens;
+			donationsClicks = donationscount/clicks;
+			donorsOpens = donorscount/opens;
+			donorsClicks = donorscount/clicks;
 			//recurring functions
 			recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
 			recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
@@ -137,15 +143,15 @@ public class EmailService {
 					emaildata.setDonorcount(donorscount);
 					emaildata.setEmailAverage(eaverage);
 					//aggregate functions
-					unsubscribeRate = getDoubleFormatted(unsubs/receps);
-					openRate = getDoubleFormatted(opens/receps);
-					clickRate = getDoubleFormatted(clicks/receps);
-					bounceRate = getDoubleFormatted(bounces/receps);
-					clicksOpens = getDoubleFormatted(clicks/opens);
-					donationsOpens = getDoubleFormatted(donationscount/opens);
-					donationsClicks = getDoubleFormatted(donationscount/clicks);
-					donorsOpens = getDoubleFormatted(donorscount/opens);
-					donorsClicks = getDoubleFormatted(donorscount/clicks);
+					unsubscribeRate = unsubs/receps;
+					openRate = opens/receps;
+					clickRate = clicks/receps;
+					bounceRate = bounces/receps;
+					clicksOpens = clicks/opens;
+					donationsOpens = donationscount/opens;
+					donationsClicks = donationscount/clicks;
+					donorsOpens = donorscount/opens;
+					donorsClicks = donorscount/clicks;
 					//setting aggregate functions
 					emaildata.setUnsubscribeRate(unsubscribeRate);
 					emaildata.setOpenRate(openRate);

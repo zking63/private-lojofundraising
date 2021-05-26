@@ -2,6 +2,8 @@ package com.coding.LojoFundrasing.Util;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +49,16 @@ public class ExcelUtil {
 	private DonationService donservice;
 	@Autowired
 	private UserService uservice;
+	
+	public String getRateFormatted(Double number) {
+		if (number == null) {
+			number = 0.0;
+		}
+		double number1 = (double) number;
+		DecimalFormat df = new DecimalFormat("0.00000");
+		String numberfinal = df.format(number1); 
+		return numberfinal;
+	}
 	
 	public void getSheetDetails(String excelPath)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -847,15 +859,15 @@ public class ExcelUtil {
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationcount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorcount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getOpenRate()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getUnsubscribeRate()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getBounceRate()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getClicksOpens()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationsOpens()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationsClicks()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorsOpens()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getOpenRate()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getUnsubscribeRate()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getBounceRate()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClicksOpens()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsOpens()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsClicks()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsOpens()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonationCount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonorCount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringRevenue()), bodyStyle);
