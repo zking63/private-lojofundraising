@@ -262,8 +262,9 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
-										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										System.out.println(dateValue1);
+										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										//date = new SimpleDateFormat("MM/dd/YY").parse(dateValue1);
 										System.out.println("Simple date: " + date);
 									}
 									else if (cell.getColumnIndex() == RecurringColumn) {
@@ -653,14 +654,17 @@ public class ExcelUtil {
 										System.out.println(recipientList);
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
-										String dateValue1 = dataFormatter.formatCellValue(cell);
 										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										//date = new SimpleDateFormat("MM/dd//YY").parse(dateValue1);
 										//String date = 
-										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										String dateValue1 = dataFormatter.formatCellValue(cell);
 										System.out.println(dateValue1);
-										//System.out.println("Simple date: " + date);
+										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										date = new SimpleDateFormat("MM/dd/yy").parse(dateValue1);
 										System.out.println("Simple date: " + date);
+										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										//System.out.println(dateValue1);
+										//System.out.println("Simple date: " + date);
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
