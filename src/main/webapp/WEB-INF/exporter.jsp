@@ -35,6 +35,14 @@
 		        <option name="field" value="Donors">Donors</option>
 			</select>
 	    </p>
+	    <p>
+		    <input type="checkbox" id="input" name="input" value="Clicks">
+			<label for="input"> Clicks</label><br>
+			<input type="checkbox" id="input" name="input" value="Opens">
+			<label for="input"> Opens</label><br>
+			<input type="checkbox" id="input" name="input" value="Bounces">
+			<label for="input"> Bounces</label><br>
+	    </p>
 		<button>Download Excel</button>
 	</form>
 </body>

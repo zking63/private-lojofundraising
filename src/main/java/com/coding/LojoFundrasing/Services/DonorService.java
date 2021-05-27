@@ -77,8 +77,11 @@ public class DonorService {
 	}
 	
 	public DonorData getDonorData(Donor donor, Long committee_id) {
-		DonorData donordata = donor.getDonordata();
+		//DonorData donordata = donor.getDonordata();
 		Long id = donor.getId();
+		DonorData donordata = dondrepo.findByDonorId(id).orElse(null);
+		System.out.println("Donor id: " + id);
+		//System.out.println("Donor data id: " + donordata.getId());
 		Double daverage = 0.0;
 		Double donorsum = 0.0;
 		Integer donationcount = 0;
@@ -89,9 +92,10 @@ public class DonorService {
 		Double mostrecentamount = 0.0;
 		List<DonorData> allDonordata = dondrepo.findAll();
 		if (donordata != null) {
-			if (dondrepo.findById(donordata.getId()) != null) {
+			if (dondrepo.findByDonorId(donor.getId()) != null) {
 			 //for (int i = 0; i < allDonordata.size(); i++) {
-				 System.out.println(donordata.getDatadonor().getDonorFirstName());
+				 //System.out.println(donordata.getDatadonor().getDonorFirstName());
+				 System.out.println("donor data found: " + donordata.getId());
 					//if (id == allDonordata.get(i).getDatadonor().getId()) {
 						System.out.println("donor id " + id);
 						donordata = dondrepo.findById(donordata.getId()).orElse(null);
@@ -141,7 +145,7 @@ public class DonorService {
 			//donor.setMostrecentDonationbyDonor(mostrecent);
 			System.out.println("donor average:" + daverage);
 			donordata = new DonorData(donor, daverage, donorsum, donationcount);
-			System.out.println("donordata id: " + donordata.getId());
+			//System.out.println("donordata id: " + donordata.getId());
 			return dondrepo.save(donordata);
 		}
 	}

@@ -268,12 +268,7 @@ public class ExcelUtil {
 										System.out.println("Simple date: " + date);
 									}
 									else if (cell.getColumnIndex() == RecurringColumn) {
-										if (cell == null) {
-											Recurring = null;
-										}
-										else {
-											Recurring = dataFormatter.formatCellValue(cell);
-										}
+										Recurring = dataFormatter.formatCellValue(cell);
 										System.out.println("Recurring: " + Recurring);
 									}
 									else if (cell.getColumnIndex() == RecurrenceColumn) {
@@ -315,7 +310,7 @@ public class ExcelUtil {
 										System.out.println("DATE AFTER: " + date);
 										System.out.println("UPLOADER: " + uploader.getId());
 										System.out.println("AB ID: " + ActBlueId);
-										System.out.println("Recurring: " + Recurring);
+										System.out.println("RECURRING AFTER: " + Recurring);
 										System.out.println("Recurrence: " + Recurrence);
 										System.out.println("ADDRESS AFTER: " + address);
 										System.out.println("CITY AFTER: " + city);
@@ -393,8 +388,10 @@ public class ExcelUtil {
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("email: " + email);
 					    	    		dservice.getDonorData(donor, committee.getId());
+					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
+					    	        	Recurring = null;
 					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					    	        }
 					    	        else {
@@ -421,6 +418,7 @@ public class ExcelUtil {
 					    	        	donation = new Donation();
 					    	        	donation.setActBlueId(ActBlueId);
 					    	        	donation.setRecurrenceNumber(Recurrence);
+					    	        	System.out.println("RECURRING SET: " + Recurring);
 					    	        	donation.setRecurring(Recurring);
 					    	        	donation.setAmount(amount);
 					    	        	System.out.println("amount");
@@ -441,6 +439,7 @@ public class ExcelUtil {
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
 					    	        	System.out.println("create donation");
+					    	        	System.out.println("RECURRING END: " + donation.getRecurring());
 					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
 					    	        	if (emaildonation == null){
 					    	        		String undate1 = "0001-01-01 01:01";
@@ -475,8 +474,10 @@ public class ExcelUtil {
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("Email: " + email.getEmailName());
 					    	    		dservice.getDonorData(donor, committee.getId());
+					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
+					    	        	Recurring = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
 									}

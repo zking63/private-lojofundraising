@@ -877,7 +877,8 @@ public class LojoController {
 	    @GetMapping("/export/excel")
 	    public void exportToExcel(@Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
-				 HttpSession session, @RequestParam("field") String field, HttpServletResponse response) throws IOException {
+				 HttpSession session, @RequestParam("field") String field, @RequestParam(value = "input", required = false) List<String> input, 
+				 HttpServletResponse response) throws IOException {
 	    	Long committee_id = (Long)session.getAttribute("committee_id");
 	    	System.out.println("Start: " + startdateD);
 	    	System.out.println("End: " + enddateD);
@@ -894,6 +895,18 @@ public class LojoController {
 			 }
 			 if (field.equals("Emails")) {
 				 System.out.println("Emails");
+				 for (int i = 0; i < input.size(); i++) {
+					 System.out.println("input.length: " + input.size());
+					 if (input.get(i).equals("Clicks")) {
+						 System.out.println("Clicks");
+					 }
+					 if (input.get(i).equals("Opens")) {
+						 System.out.println("Opens");
+					 }
+					 if (input.get(i).equals("Bounces")) {
+						 System.out.println("Bounces");
+					 }
+				 }
 				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
 				 excelService.exportEmailsToExcel(emails, response);
 			 }
