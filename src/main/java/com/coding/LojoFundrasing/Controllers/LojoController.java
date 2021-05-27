@@ -874,6 +874,33 @@ public class LojoController {
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
+	    @GetMapping("/export/select")
+	    public String exportType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field, 
+				 HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 /*if (field == null) {
+				 field = "Emails";
+			 }*/
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("enddateD", enddateD);
+			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
+			 model.addAttribute("user", user);
+	        return "exporter.jsp";
+	    } 
 	    @GetMapping("/export/excel")
 	    public void exportToExcel(@Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 

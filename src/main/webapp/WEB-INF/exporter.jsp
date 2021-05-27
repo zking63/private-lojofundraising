@@ -7,11 +7,19 @@
 <html>   
 <head>
 	<meta charset="ISO-8859-1">
+	<script src="jquery-1.7.1.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" 
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css"/>
 	<title>Import</title>
+	<script>
+		$(document).ready(function(){
+		  $("#input-form").change(function() {
+		     $("#field").submit();
+		  });
+		});
+	</script>
 </head>
 <body>
      <div class="navbar">
@@ -24,25 +32,44 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
+    <form method="get" class="date-form" id="input-form" action="/export/select">
+   	<p>
+        <label for="field">What are you exporting?</label>
+		<select onchange="this.form.submit()" id="field" name="field">
+			<option name="field" value="${field}">${field}</option>
+	        <option name="field" value="emails">Emails</option>
+	        <option name="field" value="donations">Donations</option>
+	        <option name="field" value="donors">Donors</option>
+		</select>
+		<button>Select</button>
+    </p>
+    </form>
     <form method="get" class="date-form" action="/export/excel">
+
 		<input type="date" value="${startdateD}" name="startdateD"/>
 		<input type="date" value="${enddateD}" name="enddateD"/>
-		<p>
-	        <label for="field">What are you exporting?</label>
-			<select id="field" name="field">
-		        <option name="field" value="Emails">Emails</option>
-		        <option name="field" value="Donations">Donations</option>
-		        <option name="field" value="Donors">Donors</option>
-			</select>
-	    </p>
-	    <p>
-		    <input type="checkbox" id="input" name="input" value="Clicks">
-			<label for="input"> Clicks</label><br>
-			<input type="checkbox" id="input" name="input" value="Opens">
-			<label for="input"> Opens</label><br>
-			<input type="checkbox" id="input" name="input" value="Bounces">
-			<label for="input"> Bounces</label><br>
-	    </p>
+		<c:choose>
+			<c:when test="${ field.equals(emails)}">
+				<input type="checkbox" id="input" name="input" value="Clicks">
+				<label for="input"> Clicks</label><br>
+				<input type="checkbox" id="input" name="input" value="Opens">
+				<label for="input"> Opens</label><br>
+				<input type="checkbox" id="input" name="input" value="Bounces">
+				<label for="input"> Bounces</label><br>						
+			</c:when>
+			<c:when test="${ field == donations}">
+			    <input type="checkbox" id="input" name="input" value="Amount">
+				<label for="input"> Amount</label><br>
+				<input type="checkbox" id="input" name="input" value="Date">
+				<label for="input"> Date</label><br>
+			</c:when>
+			<c:when test="${ field == donors}">
+			    <input type="checkbox" id="input" name="input" value="FirstName">
+				<label for="input"> Name</label><br>
+				<input type="checkbox" id="input" name="input" value="LastName">
+				<label for="input"> Last</label><br>
+			</c:when>
+		</c:choose>
 		<button>Download Excel</button>
 	</form>
 </body>
