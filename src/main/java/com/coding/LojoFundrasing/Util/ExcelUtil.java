@@ -794,8 +794,14 @@ public class ExcelUtil {
          
         outputStream.close();
 	}
-    public void Emailexporter(List<Emails> emails, HttpServletResponse response) throws IOException{
-        this.emails = emails;
+    public void Emailexporter(List<Emails> emails, List<String> input, HttpServletResponse response) throws IOException{
+        //column values
+    	int ClickCol = 0;
+    	int OpenCol = 0;
+    	int BounceCol = 0;
+    	
+    	
+    	this.emails = emails;
         workbook = new XSSFWorkbook();
         DataFormatter dataFormatter = new DataFormatter();
         
@@ -814,7 +820,7 @@ public class ExcelUtil {
         createCell(row, 1, "Email", style); 
         createCell(row, 2, "Refcode", style); 
         createCell(row, 3, "Send Date", style); 
-        createCell(row, 4, "List", style); 
+        /*createCell(row, 4, "List", style); 
         createCell(row, 5, "Excluded List", style); 
         createCell(row, 6, "Recipients", style);
         createCell(row, 7, "Opens", style);
@@ -836,7 +842,34 @@ public class ExcelUtil {
         createCell(row, 23, "Donors per click", style); 
         createCell(row, 24, "Recurring donations count", style);
         createCell(row, 25, "Recurring donors count", style);
-        createCell(row, 26, "Recurring revenue", style); 
+        createCell(row, 26, "Recurring revenue", style); */
+        
+        //for (int j = 0; j < input.size(); j++) {
+        int columnCount = 4;
+        Cell cell = row.createCell(columnCount);
+        
+            for (int i = 0; i < input.size(); i++) {
+            	System.out.println("Input: " + input.get(i));
+            	if (input.get(i).equals("Clicks")) {
+                    ClickCol = columnCount;
+                    createCell(row, columnCount++, "Clicks", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + ClickCol);
+            	}
+            	if (input.get(i).equals("Opens")) {
+            		OpenCol = columnCount;
+                    createCell(row, columnCount++, "Opens", style);
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + OpenCol);
+            	}
+            	if (input.get(i).equals("Bounces")) {
+                    BounceCol = columnCount;
+                    createCell(row, columnCount++, "Bounces", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + BounceCol);
+            	}
+            }
+        //}
         
         //write data lines
         int rowCount = 1;
@@ -848,8 +881,21 @@ public class ExcelUtil {
                  
         for (int i = 0; i < emails.size(); i++) {
             row = sheet.createRow(rowCount++);
-            int columnCount = 0;
+            columnCount = 0;
             createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
+            if (columnCount == ClickCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getClicks()), bodyStyle);
+            }
+            if (columnCount == OpenCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getOpeners()), bodyStyle);
+            }
+            if (columnCount == BounceCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getBounces()), bodyStyle);
+            }
+            /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
@@ -875,7 +921,7 @@ public class ExcelUtil {
             createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonationCount()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonorCount()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringRevenue()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringRevenue()), bodyStyle);*/
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();

@@ -908,7 +908,7 @@ public class LojoController {
 					 }
 				 }
 				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
-				 excelService.exportEmailsToExcel(emails, response);
+				 excelService.exportEmailsToExcel(emails, input, response);
 			 }
 	    } 
 }

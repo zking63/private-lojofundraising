@@ -69,7 +69,7 @@ public class ExcelService {
         
         excelUtil.exporter(donors, response);
     } 
-    public void exportEmailsToExcel(List<Emails> emails, HttpServletResponse response) throws IOException {
+    public void exportEmailsToExcel(List<Emails> emails, List<String> input, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -78,7 +78,7 @@ public class ExcelService {
         String headerValue = "attachment; filename=emails_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
         
-        excelUtil.Emailexporter(emails, response);
+        excelUtil.Emailexporter(emails, input, response);
     } 
     public void exportDonationsToExcel(List<Donation> donations, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
