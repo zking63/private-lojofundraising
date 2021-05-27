@@ -854,7 +854,8 @@ public class LojoController {
 		}
 	    @RequestMapping("/export")
 	    public String exportPage(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, HttpServletResponse response) throws IOException {
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD,  
+				 HttpServletResponse response) throws IOException {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
@@ -865,8 +866,12 @@ public class LojoController {
 			 if (enddateD == null) {
 				 enddateD = dateFormat();
 			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
+			 Integer field = 4;
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("field", field);
 			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
@@ -876,9 +881,10 @@ public class LojoController {
 	    } 
 	    @GetMapping("/export/select")
 	    public String exportType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") String field, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, 
 				 HttpServletResponse response) throws IOException {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
@@ -888,39 +894,55 @@ public class LojoController {
 			 if (enddateD == null) {
 				 enddateD = dateFormat();
 			 }
-			 /*if (field == null) {
-				 field = "Emails";
-			 }*/
+			 if(field == 4) {
+				 String message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 return "exporter.jsp";
+			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("field", field);
 			 model.addAttribute("enddateD", enddateD);
 			 User user = uservice.findUserbyId(user_id);
-			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
 	    @GetMapping("/export/excel")
-	    public void exportToExcel(@Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+	    public String exportToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
-				 HttpSession session, @RequestParam("field") String field, @RequestParam(value = "input", required = false) List<String> input, 
+				 HttpSession session, @RequestParam("field") Integer field, @RequestParam(value = "input", required = false) List<String> input, 
 				 HttpServletResponse response) throws IOException {
+			Long user_id = (Long)session.getAttribute("user_id");
 	    	Long committee_id = (Long)session.getAttribute("committee_id");
 	    	System.out.println("Start: " + startdateD);
 	    	System.out.println("End: " + enddateD);
 	    	System.out.println("Commmittee: " + committee_id);
-			 if (field.equals("Donors")) {
+			 if (field == 4) {
+				 String message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 model.addAttribute("startdateD", startdateD);
+				 model.addAttribute("field", field);
+				 model.addAttribute("enddateD", enddateD);
+				 User user = uservice.findUserbyId(user_id);
+				 Committees committee = cservice.findbyId(committee_id);
+				 model.addAttribute("committee", committee);
+				 model.addAttribute("user", user);
+				 return "exporter.jsp";
+			 }
+	    	if (field == 3) {
 				 System.out.println("Donors");
 				 List<Donor> donors = dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
 				 excelService.exportToExcel(donors, response);
 			 }
-			 if (field.equals("Donations")) {
+			 if (field == 2) {
 				 System.out.println("Donations");
 				 List<Donation> donations = donservice.DonTest(startdateD, enddateD, committee_id);
 				 excelService.exportDonationsToExcel(donations, response);
 			 }
-			 if (field.equals("Emails")) {
+			 if (field == 1) {
 				 System.out.println("Emails");
 				 for (int i = 0; i < input.size(); i++) {
 					 System.out.println("input.length: " + input.size());
@@ -937,5 +959,15 @@ public class LojoController {
 				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
 				 excelService.exportEmailsToExcel(emails, input, response);
 			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("enddateD", enddateD);
+			 User user = uservice.findUserbyId(user_id);
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
+			 model.addAttribute("user", user);
+			 return "exporter.jsp";
 	    } 
 }

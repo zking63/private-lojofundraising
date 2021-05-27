@@ -13,7 +13,7 @@
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css"/>
 	<title>Import</title>
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function(){
 		  $("#input-form").change(function() {
 		     $("#field").submit();
@@ -34,22 +34,42 @@
     </div>
     <form method="get" class="date-form" id="input-form" action="/export/select">
    	<p>
-        <label for="field">What are you exporting?</label>
+        <label for="field">${message}</label>
 		<select onchange="this.form.submit()" id="field" name="field">
-			<option name="field" value="${field}">${field}</option>
-	        <option name="field" value="emails">Emails</option>
-	        <option name="field" value="donations">Donations</option>
-	        <option name="field" value="donors">Donors</option>
+		<c:choose>
+			<c:when test="${ field == 1}">
+				<option name="field" value="1">Emails</option>
+		        <option name="field" value="2">Donations</option>
+		        <option name="field" value="3">Donors</option>
+			</c:when>
+			<c:when test="${ field == 2}">
+				<option name="field" value="2">Donations</option>
+				<option name="field" value="1">Emails</option>
+		        <option name="field" value="3">Donors</option>
+			</c:when>
+			<c:when test="${ field == 3}">
+				<option name="field" value="3">Donors</option>
+				<option name="field" value="2">Donations</option>
+				<option name="field" value="1">Emails</option>
+			</c:when>
+			<c:otherwise>
+				<option name="field" value="4">Select</option>
+				<option name="field" value="1">Emails</option>
+		        <option name="field" value="2">Donations</option>
+		        <option name="field" value="3">Donors</option>
+			</c:otherwise>
+		</c:choose>
 		</select>
-		<button>Select</button>
     </p>
     </form>
-    <form method="get" class="date-form" action="/export/excel">
-
+    <div id="export-form">
+    <form method="get" class="date-form" id="export-form" action="/export/excel">
+		<input type="hidden" value="${field}" name="field"/>
 		<input type="date" value="${startdateD}" name="startdateD"/>
 		<input type="date" value="${enddateD}" name="enddateD"/>
+		<p>
 		<c:choose>
-			<c:when test="${ field.equals(emails)}">
+			<c:when test="${ field == 1}">
 				<input type="checkbox" id="input" name="input" value="Clicks">
 				<label for="input"> Clicks</label><br>
 				<input type="checkbox" id="input" name="input" value="Opens">
@@ -57,20 +77,22 @@
 				<input type="checkbox" id="input" name="input" value="Bounces">
 				<label for="input"> Bounces</label><br>						
 			</c:when>
-			<c:when test="${ field == donations}">
+			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
 				<label for="input"> Amount</label><br>
 				<input type="checkbox" id="input" name="input" value="Date">
 				<label for="input"> Date</label><br>
 			</c:when>
-			<c:when test="${ field == donors}">
+			<c:when test="${ field == 3}">
 			    <input type="checkbox" id="input" name="input" value="FirstName">
 				<label for="input"> Name</label><br>
 				<input type="checkbox" id="input" name="input" value="LastName">
 				<label for="input"> Last</label><br>
 			</c:when>
 		</c:choose>
+		</p>
 		<button>Download Excel</button>
 	</form>
+	</div>
 </body>
 </html>
