@@ -22,7 +22,7 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	Optional<Donor> findByemailandCommittee(String email, Long committee_id);
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :id", nativeQuery = true)
 	Donor findByIDandCommittee(Long id, Long committee_id);
-	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.mostrecent_date >= DATE(:startdate) and donors.mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ", nativeQuery = true)
+	@Query(value = "SELECT * FROM donors LEFT JOIN donations ON donations.id = donors.donation_id WHERE donors.committees_id = :committee_id AND donations.dondate >= DATE(:startdate) and donations.dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ", nativeQuery = true)
 	List<Donor> findDonorsWithinRangeandCommittee(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id", nativeQuery = true)
@@ -94,8 +94,13 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	
 	//hpc within range functions
 	@Query(value = "SELECT MAX(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid AND donations.dondate >= DATE(:startdate) and donations.dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY))", nativeQuery = true)
-	Integer hpcwithinrange(@Param("donorid") Long id, @Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+	Double hpcwithinrange(@Param("donorid") Long id, @Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
+	
+	//dondate within range functions
+	@Query(value = "SELECT donors.id FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.committees_id = :committee_id AND donations.dondate >= DATE(:startdate) and donations.dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) ORDER BY donations.dondate DESC LIMIT 1", nativeQuery = true)
+	<Optional> Long donorswithinrange(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	//most recent donation function
 	@Query(value = "SELECT donations.id FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid ORDER BY donations.Dondate DESC LIMIT 1", nativeQuery = true)

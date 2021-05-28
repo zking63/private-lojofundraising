@@ -749,7 +749,7 @@ public class ExcelUtil {
         DataFormatter dataFormatter = new DataFormatter();
         
         //write header lines
-        sheet = workbook.createSheet("Users");
+        sheet = workbook.createSheet("Donors");
         
         Row row = sheet.createRow(0);
          
@@ -766,6 +766,7 @@ public class ExcelUtil {
         createCell(row, 4, "Most recent donation date", style); 
         createCell(row, 5, "Most recent donation amount", style); 
         createCell(row, 6, "Average", style);
+        createCell(row, 7, "Highest previous contribution", style);
         
         //write data lines
         int rowCount = 1;
@@ -786,6 +787,7 @@ public class ExcelUtil {
             createCell(row, columnCount++, donors.get(i).getRecentDateFormatted(), bodyStyle);
             createCell(row, columnCount++, donors.get(i).getDonorRecentAmountFormatted(), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonoraverage()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getHpc()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
