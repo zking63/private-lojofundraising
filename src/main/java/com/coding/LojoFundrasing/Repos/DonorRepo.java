@@ -88,6 +88,15 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	Integer donordoncountRange(@Param("donorid") Long id, @Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
 	
+	//hpc functions
+	@Query(value = "SELECT MAX(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid AND donations.committees_id = :committee_id AND donors.committees_id = :committee_id", nativeQuery = true)
+	Double hpcvalues(@Param("donorid") Long id, Long committee_id);
+	
+	//hpc within range functions
+	@Query(value = "SELECT MAX(donations.amount) FROM donors LEFT JOIN donations ON donations.donor_id = donors.id RIGHT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND donors.id = :donorid AND donations.dondate >= DATE(:startdate) and donations.dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY))", nativeQuery = true)
+	Integer hpcwithinrange(@Param("donorid") Long id, @Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id);
+	
 	//most recent donation function
 	@Query(value = "SELECT donations.id FROM donors LEFT JOIN donations ON donations.donor_id = donors.id WHERE donors.id = :donorid ORDER BY donations.Dondate DESC LIMIT 1", nativeQuery = true)
 	Long mostRecentDonationDate(@Param("donorid") Long id);
