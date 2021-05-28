@@ -72,6 +72,7 @@ public class Donor {
 	private Integer countwithinrange;
 	private Double sumwithinrange;
 	private Double averagewithinrange;
+	private Double hpcwithinrange;
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -277,6 +278,14 @@ public class Donor {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public Double getHpcwithinrange() {
+		return hpcwithinrange;
+	}
+
+	public void setHpcwithinrange(Double hpcwithinrange) {
+		this.hpcwithinrange = hpcwithinrange;
 	}
 	
 	
