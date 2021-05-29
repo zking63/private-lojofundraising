@@ -801,6 +801,8 @@ public class ExcelUtil {
     	int ClickCol = 0;
     	int OpenCol = 0;
     	int BounceCol = 0;
+    	int UnsubCol = 0;
+    	int ClickrateCol = 0;
     	
     	
     	this.emails = emails;
@@ -822,10 +824,10 @@ public class ExcelUtil {
         createCell(row, 1, "Email", style); 
         createCell(row, 2, "Refcode", style); 
         createCell(row, 3, "Send Date", style); 
-        /*createCell(row, 4, "List", style); 
+        createCell(row, 4, "List", style); 
         createCell(row, 5, "Excluded List", style); 
         createCell(row, 6, "Recipients", style);
-        createCell(row, 7, "Opens", style);
+        /*createCell(row, 7, "Opens", style);
         createCell(row, 8, "Clicks", style); 
         createCell(row, 9, "Bounces", style); 
         createCell(row, 10, "Unsubscribes", style); 
@@ -847,7 +849,7 @@ public class ExcelUtil {
         createCell(row, 26, "Recurring revenue", style); */
         
         //for (int j = 0; j < input.size(); j++) {
-        int columnCount = 4;
+        int columnCount = 7;
         Cell cell = row.createCell(columnCount);
         
             for (int i = 0; i < input.size(); i++) {
@@ -869,6 +871,12 @@ public class ExcelUtil {
                     createCell(row, columnCount++, "Bounces", style); 
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + BounceCol);
+            	}
+            	if (input.get(i).equals("Unsubscribes")) {
+                    BounceCol = columnCount;
+                    createCell(row, columnCount++, "Unsubscribes", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + UnsubCol);
             	}
             }
         //}

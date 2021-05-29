@@ -75,7 +75,11 @@
 				<input type="checkbox" id="input" name="input" value="Opens">
 				<label for="input"> Opens</label><br>
 				<input type="checkbox" id="input" name="input" value="Bounces">
-				<label for="input"> Bounces</label><br>						
+				<label for="input"> Bounces</label><br>	
+				<input type="checkbox" id="input" name="input" value="Unsubscribes">
+				<label for="input"> Unsubscribes</label><br>	
+				<input type="checkbox" id="input" name="input" value="Click rate">
+				<label for="input"> Click rate</label><br>					
 			</c:when>
 			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
