@@ -746,6 +746,7 @@ public class LojoController {
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("field", field);
 			 List<Donor> donors = null;
+			 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
 			 if (field.equals("latestdonation")) {
 				 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
 			 }
@@ -761,7 +762,7 @@ public class LojoController {
 			 if (field.equals("mostrecentamount")) {
 				 donors = this.dservice.orderMostrecentAmountDesc(startdateD, enddateD, committee_id);
 			 }
-			 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+			 //dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
 			 model.addAttribute("donor", donors);
 			 return "donors.jsp";
 		 }

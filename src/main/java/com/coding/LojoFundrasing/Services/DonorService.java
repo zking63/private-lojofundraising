@@ -11,9 +11,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.DonorData;
+import com.coding.LojoFundrasing.Repos.CommitteesRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.DonorDataRepo;
 import com.coding.LojoFundrasing.Repos.DonorRepo;
@@ -29,6 +31,9 @@ public class DonorService {
 	
 	@Autowired
 	private DonationRepo donationrepo;
+	
+	@Autowired
+	private CommitteesRepo comrepo;
 	
 	public Donor createDonor(Donor donor) {
 		System.out.println("new donor created");
@@ -181,9 +186,30 @@ public class DonorService {
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
 		return drepo.MostrecentamountSortAsc(startdate, enddate, committee_id);
 	}
+	public List<Donor> DonorsWithinRangeList(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-d;d") String enddate, Long committee_id){
+		Committees committee = comrepo.findById(committee_id).orElse(null);
+		List <Donor> donors = new ArrayList<Donor>();
+		for (int j = 0; j < committee.getDonors().size(); j++) {
+			Donor donor = committee.getDonors().get(j);
+			Long donorid = donor.getId();
+			Long mostRecentinRangeId = drepo.donationswithinrange(startdate, enddate, committee_id, donorid);
+			if (mostRecentinRangeId != null) {
+				donors.add(donor);
+				Donation mostrecent = donationrepo.findById(mostRecentinRangeId).orElse(null);
+				Date mostrecentDateinRange = mostrecent.getDondate();
+				Double mostrecentamountinRange = mostrecent.getAmount();
+				donor.setMostRecentDateinRange(mostrecentDateinRange);
+				donor.setMostrecentInrangeAmount(mostrecentamountinRange);
+				System.out.println(" mostrecentDateinRange " + mostrecentDateinRange);
+			}
+		}
+		System.out.println("Donors " + donors.size());
+		return donors;
+	}
 	public void DonorsWithinRange(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
-			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
-		List<Donor> donors = drepo.findDonorsWithinRangeandCommittee(startdate, enddate, committee_id);
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-d;d") String enddate, Long committee_id){
+		List<Donor> donors = DonorsWithinRangeList(startdate, enddate, committee_id);
 		for (int i= 0; i < donors.size(); i++) {
 			Long id = donors.get(i).getId();
 			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);

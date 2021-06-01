@@ -73,6 +73,9 @@ public class Donor {
 	private Double sumwithinrange;
 	private Double averagewithinrange;
 	private Double hpcwithinrange;
+	private Double mostrecentInrangeAmount;
+	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm:ss")
+	private Date mostRecentDateinRange;
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -287,6 +290,21 @@ public class Donor {
 	public void setHpcwithinrange(Double hpcwithinrange) {
 		this.hpcwithinrange = hpcwithinrange;
 	}
-	
+
+	public Double getMostrecentInrangeAmount() {
+		return mostrecentInrangeAmount;
+	}
+
+	public void setMostrecentInrangeAmount(Double mostrecentInrangeAmount) {
+		this.mostrecentInrangeAmount = mostrecentInrangeAmount;
+	}
+
+	public Date getMostRecentDateinRange() {
+		return mostRecentDateinRange;
+	}
+
+	public void setMostRecentDateinRange(Date mostRecentDateinRange) {
+		this.mostRecentDateinRange = mostRecentDateinRange;
+	}
 	
 }
