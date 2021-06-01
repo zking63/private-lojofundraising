@@ -33,8 +33,13 @@ public class DonationService {
 	
 	public Donation createDonation(Donation d) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); 
-		String strDate = dateFormat.format(d.getDondate());  
+		String strDate = dateFormat.format(d.getDondate()); 
+		System.out.println("reccurences query");
 		List<Donation> recurrences = donrepo.findbyActBlueIdandCommittee_id(d.getActBlueId(), d.getCommittee().getId());
+		System.out.println("reccurences query: " + recurrences.size());
+		System.out.println("  " + recurrences.get(0).getId());
+		//System.out.println("  " + recurrences.get(1).getId());
+		System.out.println("reccurencedated query");
 		Donation recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate()).orElse(null);
 		System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());
@@ -48,7 +53,7 @@ public class DonationService {
 				recurrencedated.setEmailDonation(d.getEmailDonation());
 				recurrencedated.setRecurring(d.getRecurring());
 				d = recurrencedated;
-				return donrepo.save(d);
+				return donrepo.save(recurrencedated);
 			}
 			else {
 				return donrepo.save(d);
@@ -58,7 +63,8 @@ public class DonationService {
 			System.out.println("recurring");
 			if (recurrences != null) {
 				if (recurrencedated != null && recurrencedated.getDonor().getId() == d.getDonor().getId()
-						&& recurrencedated.getRecurrenceNumber() == d.getRecurrenceNumber()) {
+						&& recurrencedated.getRecurrenceNumber() == d.getRecurrenceNumber() && 
+						recurrencedated.getAmount() == d.getAmount()) {
 					System.out.println("d recurring number: " + d.getId());
 					System.out.println("recurrence recurring number: " + recurrencedated.getId());
 					recurrencedated.setAmount(d.getAmount());

@@ -385,6 +385,7 @@ public class ExcelUtil {
 					    	        	//committees.add(committee);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
+					    	        	System.out.println("CREATE DONATION 2: ");
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("email: " + email);
 					    	    		dservice.getDonorData(donor, committee.getId());
@@ -437,6 +438,7 @@ public class ExcelUtil {
 					    	        	System.out.println("set donations " + donations);
 					    	        	donation.setCommittee(committee);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
+					    	        	System.out.println("create donation");
 					    	        	donservice.createDonation(donation);
 					    	        	System.out.println("create donation");
 					    	        	System.out.println("RECURRING END: " + donation.getRecurring());
@@ -469,7 +471,10 @@ public class ExcelUtil {
 					    	        	}
 					    	        	else {
 					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+					    	        		dservice.getDonorData(donor, committee.getId());
+					    	        		eservice.getEmailData(eservice.findEmailbyRefcodeandCommittee(refcode, committee), committee.getId());
 					    	        	}
+					    	        	System.out.println("CREATE DONATION 2: ");
 					    	        	donservice.createDonation(donation);
 					    	    		email = donation.getEmailDonation();
 					    	    		System.out.println("Email: " + email.getEmailName());

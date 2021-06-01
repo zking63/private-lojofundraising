@@ -75,6 +75,8 @@ public class EmailService {
 	}*/
 	public Data getEmailData(Emails email, Long committee_id) {
 		Data emaildata = email.getEmaildata();
+		String refcode = email.getEmailRefcode();
+		System.out.println("refcode: " + refcode);
 		Long id = email.getId();
 		Double esum = 0.00;
 		Double eaverage = 0.00;
@@ -92,12 +94,6 @@ public class EmailService {
 		Double donorsOpens = 0.00;
 		Double donorsClicks = 0.00;
 		Double clicksOpens = 0.00;
-		//variables for aggregate functions
-		Double unsubs = (double) email.getUnsubscribers();
-		Double receps = (double) email.getRecipients();
-		Double clicks = (double) email.getClicks();
-		Double opens = (double) email.getOpeners();
-		Double bounces = (double) email.getBounces();
 		List<Data> alldata = datarepo.findAll();
 		if (emaildata == null) {
 			esum = erepo.sums(id, committee_id);
@@ -106,15 +102,24 @@ public class EmailService {
 			donationscount = erepo.donationscount(id, committee_id);
 			donorscount = erepo.donorscount(id, committee_id);
 			//aggregate functions
-			unsubscribeRate = unsubs/receps;
-			openRate = opens/receps;
-			clickRate = clicks/receps;
-			bounceRate = bounces/receps;
-			clicksOpens = clicks/opens;
-			donationsOpens = donationscount/opens;
-			donationsClicks = donationscount/clicks;
-			donorsOpens = donorscount/opens;
-			donorsClicks = donorscount/clicks;
+			if (email.getBounces() != null) {
+				//variables for aggregate functions
+				Double unsubs = (double) email.getUnsubscribers();
+				Double receps = (double) email.getRecipients();
+				Double clicks = (double) email.getClicks();
+				Double opens = (double) email.getOpeners();
+				Double bounces = (double) email.getBounces();
+				//functions
+				unsubscribeRate = unsubs/receps;
+				openRate = opens/receps;
+				clickRate = clicks/receps;
+				bounceRate = bounces/receps;
+				clicksOpens = clicks/opens;
+				donationsOpens = donationscount/opens;
+				donationsClicks = donationscount/clicks;
+				donorsOpens = donorscount/opens;
+				donorsClicks = donorscount/clicks;
+			}
 			//recurring functions
 			recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
 			recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
@@ -143,15 +148,24 @@ public class EmailService {
 					emaildata.setDonorcount(donorscount);
 					emaildata.setEmailAverage(eaverage);
 					//aggregate functions
-					unsubscribeRate = unsubs/receps;
-					openRate = opens/receps;
-					clickRate = clicks/receps;
-					bounceRate = bounces/receps;
-					clicksOpens = clicks/opens;
-					donationsOpens = donationscount/opens;
-					donationsClicks = donationscount/clicks;
-					donorsOpens = donorscount/opens;
-					donorsClicks = donorscount/clicks;
+					if (email.getBounces() != null) {
+						//variables for aggregate functions
+						Double unsubs = (double) email.getUnsubscribers();
+						Double receps = (double) email.getRecipients();
+						Double clicks = (double) email.getClicks();
+						Double opens = (double) email.getOpeners();
+						Double bounces = (double) email.getBounces();
+						//functions
+						unsubscribeRate = unsubs/receps;
+						openRate = opens/receps;
+						clickRate = clicks/receps;
+						bounceRate = bounces/receps;
+						clicksOpens = clicks/opens;
+						donationsOpens = donationscount/opens;
+						donationsClicks = donationscount/clicks;
+						donorsOpens = donorscount/opens;
+						donorsClicks = donorscount/clicks;
+					}
 					//setting aggregate functions
 					emaildata.setUnsubscribeRate(unsubscribeRate);
 					emaildata.setOpenRate(openRate);
