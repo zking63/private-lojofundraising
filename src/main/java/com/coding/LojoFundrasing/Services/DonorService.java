@@ -146,13 +146,17 @@ public class DonorService {
 			return dondrepo.save(donordata);
 		}
 	}
-	public List<Donor> orderMostRecentbyDonorDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+	public List<Donor> orderbyDonorDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
 		return drepo.findAllWithMostRecent(startdate, enddate, committee_id);
 	}
+	public List<Donor> orderMostRecentbyDonorDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
+		return drepo.findAllWithMostRecentinRange(startdate, enddate, committee_id);
+	}
 	public List<Donor> orderMostRecentbyDonorAsc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
-		return drepo.findAllWithMostRecentDondateAfterAsc(startdate, enddate, committee_id);
+		return drepo.findAllWithMostRecentDondateAfterAscinRange(startdate, enddate, committee_id);
 	}
 	public List<Donor> orderDonorCountDesc(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
@@ -186,7 +190,7 @@ public class DonorService {
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddate, Long committee_id){
 		return drepo.MostrecentamountSortAsc(startdate, enddate, committee_id);
 	}
-	public /*List<Donor>*/ void DonorsWithinRangeList(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
+	/*public List<Donor> void DonorsWithinRangeList(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-d;d") String enddate, Long committee_id){
 		Committees committee = comrepo.findById(committee_id).orElse(null);
 		List <Donor> donors = new ArrayList<Donor>();
@@ -207,7 +211,7 @@ public class DonorService {
 		}
 		System.out.println("Donors " + donors.size());
 		//return donors;
-	}
+	}*/
 	public void DonorsWithinRange(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-d;d") String enddate, Long committee_id){
 		//List<Donor> donors = DonorsWithinRangeList(startdate, enddate, committee_id);

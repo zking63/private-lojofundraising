@@ -934,7 +934,8 @@ public class LojoController {
 			 }
 	    	if (field == 3) {
 				 System.out.println("Donors");
-				 List<Donor> donors = dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+				 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+				 List<Donor> donors = dservice.orderbyDonorDesc(startdateD, enddateD, committee_id);
 				 excelService.exportToExcel(donors, response);
 			 }
 			 if (field == 2) {

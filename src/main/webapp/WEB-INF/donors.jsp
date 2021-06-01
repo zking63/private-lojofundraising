@@ -41,7 +41,7 @@
 	        <tr>
 	            <th>Name</th>
 	            <th>Email address</th>
-	            <th>Most recent donation amount</br>
+	            <th>Most recent donation in range amount</br>
 	            	<form class="pointer" method="post" action="/donors/sortdown">
 						<input type="hidden" name="field" value="mostrecentamount">
 						<input type="hidden" name="startdateD" value="${startdateD}">
@@ -55,7 +55,7 @@
 						<button>v</button>
 					</form>
 	            </th>
-	            <th>Most recent donation date</br>
+	            <th>Most recent donation in range date</br>
 	            	<form class="pointer" method="post" action="/donors/sortdown">
 						<input type="hidden" name="field" value="latestdonation">
 						<input type="hidden" name="startdateD" value="${startdateD}">
@@ -122,8 +122,8 @@
 				<tr>
 					<td><a href="/donors/${d.id}">${ d.donorFirstName } ${d.donorLastName}</a></td>
 					<td>${d.donorEmail}</td>
-					<td>$${d.getDonorRecentAmountFormatted()}</td>
-					<td>${d.getMostrecentDate()}</td>
+					<td>$${d.getMostrecentInrangeAmount()}</td>
+					<td>${d.getMostRecentDateinRange()}</td>
 					<td>${d.getDonordata().getDonor_contributioncount()}</td>
 					<td>${d.countwithinrange}</td>
 					<td>$${d.getDonordata().getDonorSumFormatted() }</td>
