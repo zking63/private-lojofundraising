@@ -876,7 +876,7 @@ public class ExcelUtil {
                     System.out.println("Column logged: " + BounceCol);
             	}
             	if (input.get(i).equals("Unsubscribes")) {
-                    BounceCol = columnCount;
+            		UnsubCol = columnCount;
                     createCell(row, columnCount++, "Unsubscribes", style); 
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + UnsubCol);
@@ -899,6 +899,9 @@ public class ExcelUtil {
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getList(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getExcludedList(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(emails.get(i).getRecipients()), bodyStyle);
             if (columnCount == ClickCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getClicks()), bodyStyle);
             }
@@ -907,6 +910,9 @@ public class ExcelUtil {
             }
             if (columnCount == BounceCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getBounces()), bodyStyle);
+            }
+            if (columnCount == UnsubCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
             }
             /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
