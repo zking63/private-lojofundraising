@@ -471,8 +471,6 @@ public class ExcelUtil {
 					    	        	}
 					    	        	else {
 					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        		dservice.getDonorData(donor, committee.getId());
-					    	        		eservice.getEmailData(eservice.findEmailbyRefcodeandCommittee(refcode, committee), committee.getId());
 					    	        	}
 					    	        	System.out.println("CREATE DONATION 2: ");
 					    	        	donservice.createDonation(donation);

@@ -36,54 +36,30 @@ public class DonationService {
 		String strDate = dateFormat.format(d.getDondate()); 
 		System.out.println("reccurences query");
 		List<Donation> recurrences = donrepo.findbyActBlueIdandCommittee_id(d.getActBlueId(), d.getCommittee().getId());
-		System.out.println("reccurences query: " + recurrences.size());
-		System.out.println("  " + recurrences.get(0).getId());
-		//System.out.println("  " + recurrences.get(1).getId());
+		if (recurrences.size() > 0) {
+			System.out.println("reccurences query: " + recurrences.size());
+			for (int i = 0; i < recurrences.size(); i++) {
+				System.out.println("  " + recurrences.get(i).getId());
+			}
+		}
 		System.out.println("reccurencedated query");
-		Donation recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate()).orElse(null);
+		List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate(), d.getDonor().getId());
 		System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());
-		if (d.getRecurring() == null) {
-			System.out.println("d recurring number: " + d.getId());
-			//System.out.println("recurrence recurring number: " + recurrencedated.getId());
-			if (recurrencedated != null && d.getDonor().getId() == recurrencedated.getDonor().getId()) {
-				System.out.println("same donation found but not recurring");
-				recurrencedated.setAmount(d.getAmount());
-				recurrencedated.setDonation_uploader(d.getDonation_uploader());
-				recurrencedated.setEmailDonation(d.getEmailDonation());
-				recurrencedated.setRecurring(d.getRecurring());
-				d = recurrencedated;
-				return donrepo.save(recurrencedated);
-			}
-			else {
-				return donrepo.save(d);
-			}
-		}
-		else {
-			System.out.println("recurring");
-			if (recurrences != null) {
-				if (recurrencedated != null && recurrencedated.getDonor().getId() == d.getDonor().getId()
-						&& recurrencedated.getRecurrenceNumber() == d.getRecurrenceNumber() && 
-						recurrencedated.getAmount() == d.getAmount()) {
-					System.out.println("d recurring number: " + d.getId());
-					System.out.println("recurrence recurring number: " + recurrencedated.getId());
-					recurrencedated.setAmount(d.getAmount());
-					recurrencedated.setDonation_uploader(d.getDonation_uploader());
-					recurrencedated.setEmailDonation(d.getEmailDonation());
-					recurrencedated.setRecurring(d.getRecurring());
-					d = recurrencedated;
-					System.out.println("d recurring number: " + d.getId());
-					System.out.println("recurrence recurring number: " + recurrencedated.getId());
+		if (recurrencedated.size() > 0) {
+				System.out.println("d recurring number: " + d.getId());
+				//System.out.println("recurrence recurring number: " + recurrencedated.getId());
+				for (int j = 0; j < recurrencedated.size(); j++) {
+					System.out.println("same donation found but not recurring");
+					recurrencedated.get(j).setAmount(d.getAmount());
+					recurrencedated.get(j).setDonation_uploader(d.getDonation_uploader());
+					recurrencedated.get(j).setEmailDonation(d.getEmailDonation());
+					recurrencedated.get(j).setRecurring(d.getRecurring());
+					d = recurrencedated.get(j);
 					return donrepo.save(d);
 				}
-				else {
-					return donrepo.save(d);
-				}
-			}
-			else {
-				return donrepo.save(d);
-			}
 		}
+		return donrepo.save(d);
 	}
 	
 	public List<Donation> findDonations(){

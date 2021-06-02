@@ -25,8 +25,8 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 	List<Donation> findAllByOrderByAmountDesc();
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid", nativeQuery = true)
 	List<Donation> findbyActBlueIdandCommittee_id(String actblueid, Long committee_id);
-	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate", nativeQuery = true)
-	Optional<Donation> findbyActBlueIdandCommittee_idandDate(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate);
+	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
+	List<Donation> findbyActBlueIdandCommittee_idandDate(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.Dondate >= DATE(:startdate) and donations.Dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by donations.Dondate DESC", nativeQuery = true)
 	List <Donation> findAllWithDondateAfter(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate, Long committee_id);
