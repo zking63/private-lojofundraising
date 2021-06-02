@@ -215,7 +215,9 @@ public class DonorService {
 	public void DonorsWithinRange(@Param("startdate") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern ="yyyy-MM-d;d") String enddate, Long committee_id){
 		//List<Donor> donors = DonorsWithinRangeList(startdate, enddate, committee_id);
-		List<Donor> donors = drepo.findAllWithMostRecent(startdate, enddate, committee_id);
+		System.out.println(" donors within range called ");
+		List<Donor> donors = drepo.findAllWithinRange(startdate, enddate, committee_id);
+		System.out.println(" size of donor query " + donors.size());
 		for (int i= 0; i < donors.size(); i++) {
 			Long id = donors.get(i).getId();
 			Donor donor = drepo.findByIDandCommittee(id, committee_id);
@@ -228,7 +230,6 @@ public class DonorService {
 			donor.setMostrecentInrangeAmount(mostrecentamountinRange);
 			System.out.println(" mostrecentDateinRange " + mostrecentDateinRange);
 			System.out.println(" mostrecentDateinRange FROM donor " + donor.getMostRecentDateinRange());
-			drepo.save(donor);
 			
 			Integer countinrange = drepo.donordoncountRange(id, startdate, enddate, committee_id);
 			Double suminrange = drepo.donorsumRange(id, startdate, enddate, committee_id);
@@ -250,7 +251,6 @@ public class DonorService {
 			System.out.println(" Average from donor " + average);
 			System.out.println(" Average " + avginrange);
 			System.out.println(" ID " + donor.getId());
-			drepo.save(donor);
 		}
 	}
 }

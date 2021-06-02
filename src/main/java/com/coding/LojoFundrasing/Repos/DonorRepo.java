@@ -35,6 +35,9 @@ public interface DonorRepo extends CrudRepository<Donor, Long>{
 	/*@Query(value = "SELECT * FROM donors LEFT JOIN committees ON committees.id = donors.committees_id WHERE committees.id = :committee_id AND mostrecent_date >= DATE(:startdate) and mostrecent_date < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by mostrecent_date Asc", nativeQuery = true)
 	List <Donor> findAllWithMostRecentDondateAfterAsc(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
 			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate, Long committee_id);*/
+	@Query(value = "SELECT donors.* FROM (select DISTINCT donations.donor_id FROM donations where dondate >= DATE(:startdate) and dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY)) as donations LEFT JOIN donors ON donors.id = donations.donor_id WHERE donors.committees_id = :committee_id", nativeQuery = true)
+	List <Donor> findAllWithinRange(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
+			@Param("enddate") @DateTimeFormat(pattern="yyyy-MM-dd") String enddate, Long committee_id);
 	
 	@Query(value = "SELECT donors.* FROM (select DISTINCT donations.donor_id FROM donations where dondate >= DATE(:startdate) and dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY)) as donations LEFT JOIN donors ON donors.id = donations.donor_id WHERE donors.committees_id = :committee_id ORDER BY donors.most_recent_datein_range DESC", nativeQuery = true)
 	List <Donor> findAllWithMostRecentinRange(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 
