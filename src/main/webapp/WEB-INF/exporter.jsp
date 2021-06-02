@@ -78,6 +78,8 @@
 				<label for="input"> Bounces</label><br>	
 				<input type="checkbox" id="input" name="input" value="Unsubscribes">
 				<label for="input"> Unsubscribes</label><br>	
+				<input type="checkbox" id="input" name="input" value="Open rate">
+				<label for="input"> Open rate</label><br>	
 				<input type="checkbox" id="input" name="input" value="Click rate">
 				<label for="input"> Click rate</label><br>					
 			</c:when>

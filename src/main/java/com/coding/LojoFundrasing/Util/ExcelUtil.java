@@ -881,6 +881,12 @@ public class ExcelUtil {
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + UnsubCol);
             	}
+            	if (input.get(i).equals("Click rate")) {
+            		ClickrateCol = columnCount;
+                    createCell(row, columnCount++, "Click rate", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + ClickrateCol);
+            	}
             }
         //}
         
@@ -913,6 +919,9 @@ public class ExcelUtil {
             }
             if (columnCount == UnsubCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
+            }
+            if (columnCount == ClickrateCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
             }
             /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
