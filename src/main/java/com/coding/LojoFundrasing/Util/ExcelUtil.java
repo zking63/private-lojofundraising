@@ -806,6 +806,7 @@ public class ExcelUtil {
     	int BounceCol = 0;
     	int UnsubCol = 0;
     	int ClickrateCol = 0;
+    	int OpenrateCol = 0;
     	
     	
     	this.emails = emails;
@@ -881,6 +882,12 @@ public class ExcelUtil {
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + UnsubCol);
             	}
+            	if (input.get(i).equals("Open rate")) {
+            		OpenrateCol = columnCount;
+                    createCell(row, columnCount++, "Open rate", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + OpenrateCol);
+            	}
             	if (input.get(i).equals("Click rate")) {
             		ClickrateCol = columnCount;
                     createCell(row, columnCount++, "Click rate", style); 
@@ -919,6 +926,9 @@ public class ExcelUtil {
             }
             if (columnCount == UnsubCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
+            }
+            if (columnCount == OpenrateCol) {
+                createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getOpenRate()), bodyStyle);
             }
             if (columnCount == ClickrateCol) {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
