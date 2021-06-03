@@ -94,6 +94,16 @@
 				<label for="input"> Donations</label><br>	
 				<input type="checkbox" id="input" name="input" value="Donors">
 				<label for="input"> Donors</label><br>	
+				<input type="checkbox" id="input" name="input" value="Average donation">
+				<label for="input"> Average donation</label><br>	
+				<input type="checkbox" id="input" name="input" value="Donations/open">
+				<label for="input"> Donations per open</label><br>
+				<input type="checkbox" id="input" name="input" value="Donations/click">
+				<label for="input"> Donations per click</label><br>
+				<input type="checkbox" id="input" name="input" value="Donors/open">
+				<label for="input"> Donors per open</label><br>
+				<input type="checkbox" id="input" name="input" value="Donors/click">
+				<label for="input"> Donors per click</label><br>
 			</c:when>
 			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
