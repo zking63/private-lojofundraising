@@ -104,6 +104,12 @@
 				<label for="input"> Donors per open</label><br>
 				<input type="checkbox" id="input" name="input" value="Donors/click">
 				<label for="input"> Donors per click</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring donations">
+				<label for="input"> Recurring donations</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring donors">
+				<label for="input"> Recurring donors</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring revenue">
+				<label for="input"> Recurring revenue</label><br>
 			</c:when>
 			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
