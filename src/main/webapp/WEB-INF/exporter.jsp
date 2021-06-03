@@ -85,7 +85,15 @@
 				<input type="checkbox" id="input" name="input" value="Unsubscribe rate">	
 				<label for="input"> Unsubscribe rate</label><br>	
 				<input type="checkbox" id="input" name="input" value="Bounce rate">
-				<label for="input"> Bounce rate</label><br>		
+				<label for="input"> Bounce rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Clicks/opens">	
+				<label for="input"> Clicks per open</label><br>	
+				<input type="checkbox" id="input" name="input" value="Revenue">
+				<label for="input"> Revenue</label><br>		
+				<input type="checkbox" id="input" name="input" value="Donations">	
+				<label for="input"> Donations</label><br>	
+				<input type="checkbox" id="input" name="input" value="Donors">
+				<label for="input"> Donors</label><br>	
 			</c:when>
 			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
