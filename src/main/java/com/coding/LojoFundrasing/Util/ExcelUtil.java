@@ -1028,6 +1028,21 @@ public class ExcelUtil {
             if (columnCount == DonorsCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorcount()), bodyStyle);
             }
+            if (columnCount == AvCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
+            }
+            if (columnCount == DonOpenCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsOpens()), bodyStyle);
+            }
+            if (columnCount == DonClickCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsClicks()), bodyStyle);
+            }
+            if (columnCount == DonorsOpenCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsOpens()), bodyStyle);
+            }
+            if (columnCount == DonorsClickCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
+            }
             /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
