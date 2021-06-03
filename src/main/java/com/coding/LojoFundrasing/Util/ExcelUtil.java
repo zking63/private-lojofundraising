@@ -818,6 +818,9 @@ public class ExcelUtil {
     	int DonClickCol = 0;
     	int DonorsOpenCol =0;
     	int DonorsClickCol = 0;
+    	int DonRecurCol = 0;
+    	int DonorsRecurCol =0;
+    	int RevRecurCol = 0;
     	
     	
     	this.emails = emails;
@@ -970,6 +973,24 @@ public class ExcelUtil {
                     createCell(row, columnCount++, "Donors per click", style); 
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + DonorsClickCol);
+            	}
+            	if (input.get(i).equals("Recurring donations")) {
+            		DonRecurCol = columnCount;
+                    createCell(row, columnCount++, "Recurring donations", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonRecurCol);
+            	}
+            	if (input.get(i).equals("Recurring donors")) {
+            		DonorsRecurCol = columnCount;
+                    createCell(row, columnCount++, "Recurring donors", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonorsRecurCol);
+            	}
+            	if (input.get(i).equals("Recurring revenue")) {
+            		RevRecurCol = columnCount;
+                    createCell(row, columnCount++, "Recurring revenue", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + RevRecurCol);
             	}
             }
         //}
