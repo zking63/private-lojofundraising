@@ -63,13 +63,16 @@
     </p>
     </form>
     <div id="export-form">
-    <form method="get" class="date-form" id="export-form" action="/export/excel">
+    <form method="get" class="date-form" action="/export/excel">
+    	<div id="date-choices">
 		<input type="hidden" value="${field}" name="field"/>
 		<input type="date" value="${startdateD}" name="startdateD"/>
 		<input type="date" value="${enddateD}" name="enddateD"/>
-		<p>
+		</div>
+		<p></p>
 		<c:choose>
 			<c:when test="${ field == 1}">
+			<div id="export-choices">
 				<input type="checkbox" id="input" name="input" value="Clicks">
 				<label for="input"> Clicks</label><br>
 				<input type="checkbox" id="input" name="input" value="Opens">
@@ -90,6 +93,8 @@
 				<label for="input"> Clicks per open</label><br>	
 				<input type="checkbox" id="input" name="input" value="Revenue">
 				<label for="input"> Revenue</label><br>		
+				</div>
+				<div id="export-choices">
 				<input type="checkbox" id="input" name="input" value="Donations">	
 				<label for="input"> Donations</label><br>	
 				<input type="checkbox" id="input" name="input" value="Donors">
@@ -110,6 +115,7 @@
 				<label for="input"> Recurring donors</label><br>
 				<input type="checkbox" id="input" name="input" value="Recurring revenue">
 				<label for="input"> Recurring revenue</label><br>
+				</div>
 			</c:when>
 			<c:when test="${ field == 2}">
 			    <input type="checkbox" id="input" name="input" value="Amount">
@@ -124,7 +130,6 @@
 				<label for="input"> Last</label><br>
 			</c:when>
 		</c:choose>
-		</p>
 		<button>Download Excel</button>
 	</form>
 	</div>
