@@ -1064,6 +1064,15 @@ public class ExcelUtil {
             if (columnCount == DonorsClickCol) {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
             }
+            if (columnCount == DonRecurCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonationCount()), bodyStyle);
+            }
+            if (columnCount == DonorsRecurCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonorCount()), bodyStyle);
+            }
+            if (columnCount == RevRecurCol) {
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringRevenue()), bodyStyle);
+            }
             /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
