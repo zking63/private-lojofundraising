@@ -809,6 +809,10 @@ public class ExcelUtil {
     	int OpenrateCol = 0;
     	int UnsubrateCol = 0;
     	int BouncerateCol = 0;
+    	int ClickOpenCol = 0;
+    	int RevCol = 0;
+    	int DonationsCol = 0;
+    	int DonorsCol =0;
     	
     	
     	this.emails = emails;
@@ -907,6 +911,30 @@ public class ExcelUtil {
                     createCell(row, columnCount++, "Bounce rate", style); 
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + BouncerateCol);
+            	}
+            	if (input.get(i).equals("Clicks/opens")) {
+            		ClickOpenCol = columnCount;
+                    createCell(row, columnCount++, "Clicks per open", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + ClickOpenCol);
+            	}
+            	if (input.get(i).equals("Revenue")) {
+            		RevCol = columnCount;
+                    createCell(row, columnCount++, "Revenue", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + RevCol);
+            	}
+            	if (input.get(i).equals("Donations")) {
+            		DonationsCol = columnCount;
+                    createCell(row, columnCount++, "Donations", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonationsCol);
+            	}
+            	if (input.get(i).equals("Donors")) {
+            		DonorsCol = columnCount;
+                    createCell(row, columnCount++, "Donors", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonorsCol);
             	}
             }
         //}
