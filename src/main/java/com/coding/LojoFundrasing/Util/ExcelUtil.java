@@ -947,6 +947,12 @@ public class ExcelUtil {
             if (columnCount == ClickrateCol) {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
             }
+            if (columnCount == UnsubrateCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getUnsubscribeRate()), bodyStyle);
+            }
+            if (columnCount == BouncerateCol) {
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getBounceRate()), bodyStyle);
+            }
             /*createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode(), bodyStyle);
