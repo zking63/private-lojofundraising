@@ -813,6 +813,11 @@ public class ExcelUtil {
     	int RevCol = 0;
     	int DonationsCol = 0;
     	int DonorsCol =0;
+    	int AvCol = 0;
+    	int DonOpenCol = 0;
+    	int DonClickCol = 0;
+    	int DonorsOpenCol =0;
+    	int DonorsClickCol = 0;
     	
     	
     	this.emails = emails;
@@ -935,6 +940,36 @@ public class ExcelUtil {
                     createCell(row, columnCount++, "Donors", style); 
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + DonorsCol);
+            	}
+            	if (input.get(i).equals("Average donation")) {
+            		AvCol = columnCount;
+                    createCell(row, columnCount++, "Average donation", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + AvCol);
+            	}
+            	if (input.get(i).equals("Donations/open")) {
+            		DonOpenCol = columnCount;
+                    createCell(row, columnCount++, "Donations per open", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonOpenCol);
+            	}
+            	if (input.get(i).equals("Donations/click")) {
+            		DonClickCol = columnCount;
+                    createCell(row, columnCount++, "Donations per click", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonClickCol);
+            	}
+            	if (input.get(i).equals("Donors/open")) {
+            		DonorsOpenCol = columnCount;
+                    createCell(row, columnCount++, "Donors per open", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonorsOpenCol);
+            	}
+            	if (input.get(i).equals("Donors/click")) {
+            		DonorsClickCol = columnCount;
+                    createCell(row, columnCount++, "Donors per click", style); 
+                    System.out.println("Input 2: " + input.get(i));
+                    System.out.println("Column logged: " + DonorsClickCol);
             	}
             }
         //}
