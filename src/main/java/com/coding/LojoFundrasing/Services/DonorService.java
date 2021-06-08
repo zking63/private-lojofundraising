@@ -235,6 +235,12 @@ public class DonorService {
 			Double suminrange = drepo.donorsumRange(id, startdate, enddate, committee_id);
 			Double avginrange = drepo.donoravgRange(id, startdate, enddate, committee_id);
 			Double hpcwithinrange = drepo.hpcwithinrange(id, startdate, enddate, committee_id);
+			System.out.println("BEFORE Donor " + donor.getDonorFirstName());
+			System.out.println(" Count " + countinrange);
+			System.out.println(" Sum " + suminrange);
+			System.out.println(" HPC " + hpcwithinrange);
+			System.out.println(" Average " + avginrange);
+			System.out.println(" ID " + id);
 			donor.setCountwithinrange(countinrange);
 			donor.setSumwithinrange(suminrange);
 			donor.setAveragewithinrange(avginrange);
@@ -251,6 +257,7 @@ public class DonorService {
 			System.out.println(" Average from donor " + average);
 			System.out.println(" Average " + avginrange);
 			System.out.println(" ID " + donor.getId());
+			drepo.save(donor);
 		}
 	}
 }

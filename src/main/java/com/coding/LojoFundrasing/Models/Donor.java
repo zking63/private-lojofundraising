@@ -306,5 +306,9 @@ public class Donor {
 	public void setMostRecentDateinRange(Date mostRecentDateinRange) {
 		this.mostRecentDateinRange = mostRecentDateinRange;
 	}
+    public String getRecentDateinRangeFormatted() {
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+    	return df.format(this.mostRecentDateinRange);
+    }
 	
 }

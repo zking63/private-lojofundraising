@@ -945,18 +945,6 @@ public class LojoController {
 			 }
 			 if (field == 1) {
 				 System.out.println("Emails");
-				 for (int i = 0; i < input.size(); i++) {
-					 System.out.println("input.length: " + input.size());
-					 if (input.get(i).equals("Clicks")) {
-						 System.out.println("Clicks");
-					 }
-					 if (input.get(i).equals("Opens")) {
-						 System.out.println("Opens");
-					 }
-					 if (input.get(i).equals("Bounces")) {
-						 System.out.println("Bounces");
-					 }
-				 }
 				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
 				 excelService.exportEmailsToExcel(emails, input, response);
 			 }
