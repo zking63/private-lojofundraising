@@ -770,6 +770,12 @@ public class ExcelUtil {
         createCell(row, 5, "Most recent donation amount", style); 
         createCell(row, 6, "Average", style);
         createCell(row, 7, "Highest previous contribution", style);
+        createCell(row, 8, "Donations", style); 
+        createCell(row, 9, "Total given", style); 
+        createCell(row, 10, "Average within range", style); 
+        createCell(row, 11, "HPC within range", style);
+        createCell(row, 12, "Count within range", style);
+        createCell(row, 13, "Total given within range", style);
         
         //write data lines
         int rowCount = 1;
@@ -791,6 +797,12 @@ public class ExcelUtil {
             createCell(row, columnCount++, donors.get(i).getDonorRecentAmountFormatted(), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonoraverage()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getHpc()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonor_contributioncount()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getDonordata().getDonorsum()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getAveragewithinrange()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getHpcwithinrange()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getCountwithinrange()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donors.get(i).getSumwithinrange()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
