@@ -7,54 +7,54 @@
 <html>   
 <head>
 	<meta charset="ISO-8859-1">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" 
+	    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" 
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css"/>
 	<title>Donors</title>
+	
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+<link rel="stylesheet" href="/css/main.css"/>
 </head>
+
 <body>
      <div class="navbar">
         <ul class="navbarmenu">
             <li class="main"><a href="/home">Home</a>
             </li>
-            <li><a href="/donors">Donors</a></li>
-            <li><a href="/emails">Emails</a></li>
+            <li>
+           		<div class="dropdown">
+				  <p class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Donors
+				  </p>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item" href="/newdonor">New donor</a>
+				    <a class="dropdown-item" href="/donors">Donors page</a>
+				    <a class="dropdown-item" href="/export">Export donors</a>
+				 	</div>
+				</div>
+            </li>
+            <li>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Emails
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item" href="/newemail">New email</a>
+				    <a class="dropdown-item" href="/emails">Emails page</a>
+				    <a class="dropdown-item" href="/export">Export donors</a>
+				 	</div>
+				</div>
+            </li>
             <li><a href="/logout">Logout</a></li>
         </ul>
-    </div>
-    <button><a href="/newdonor">Upload a new donor</a></button>
-	<button><a href="/newdonation">Upload a new donation</a></button>
-	<button><a href="/newemail">Upload a new email</a></button>
-	<h1>Recent Donations</h1>
-			<form action="/test">
-				<input type="date" value="${dateFormat}" name="startdate"/>
-				<input type="date" value="${dateFormat}" name="enddate"/>
-				<button class="btn btn-primary">Set</button>
-			</form>
-	<table class="table table-hover">
-	    <thead>
-	        <tr>
-	            <th>User</th>
-	            <th>Committee</th>
-	            <th>donation</th>
-	        </tr>
-	    </thead>
-		<tbody>
-			<c:forEach items="${ committees }" var="d">
-				<tr>
-					<td>${ d.getCommitteeName()}</td>
-					<td><c:forEach items="${ d.users }" var="u">
-					${ u.email }
-					</c:forEach>
-					</td>
-					<td><c:forEach items="${ d.donations }" var="a">
-					${ a.getAmount() }
-					</c:forEach>
-					</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
 </body>
 </html>
