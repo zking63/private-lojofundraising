@@ -27,14 +27,18 @@
 
 <body>
      <div class="navbar">
+     <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
         <ul class="navbarmenu">
-            <li class="main"><a href="/home">Home</a>
+            <li>
+            <button class="btn btn-secondary main">
+			<a href="/home">Home</a>
+			</button>
             </li>
             <li>
            		<div class="dropdown">
-				  <p class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    Donors
-				  </p>
+				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 				    <a class="dropdown-item" href="/newdonor">New donor</a>
 				    <a class="dropdown-item" href="/donors">Donors page</a>
@@ -54,7 +58,11 @@
 				 	</div>
 				</div>
             </li>
-            <li><a href="/logout">Logout</a></li>
+            <li>
+            <button class="btn btn-secondary">
+			<a href="/logout">Logout</a>
+			</button>
+            </li>
         </ul>
 </body>
 </html>
