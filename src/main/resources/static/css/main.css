@@ -44,7 +44,6 @@ body button:hover{
     opacity: 50%;
 }
 .titles{
-
 	margin: 10px;
 	margin-bottom: 60px;
 	vertical-align: middle;
@@ -97,6 +96,7 @@ body button:hover{
 }
 .btn-secondary:hover{
 	opacity: 70%;
+	border: 0px;
 }
 .dropdown-menu{
 	opacity: 100%;

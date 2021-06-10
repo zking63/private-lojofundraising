@@ -29,6 +29,18 @@
      <div class="navbar">
      <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
      <p><a href="/committees/select">${ user.firstName } ${ committee.getCommitteeName() }</a></p>
+	    <form:form method="POST" action="/committees/select">
+	        <p>
+		        <label for="committee">Select committee:</label>
+				<select id="committee" name="committee">
+					<option value="${ committee.id }">${ committee.getCommitteeName() }</option>
+				  	<c:forEach items="${ user.getCommittees() }" var="e">
+			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
+			        </c:forEach>
+				</select>
+	        </p>
+	        <input type="submit" value="Select"/>
+	    </form:form>
         <ul class="navbarmenu">
             <li>
             <button class="btn btn-secondary main">
