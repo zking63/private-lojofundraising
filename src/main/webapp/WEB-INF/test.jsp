@@ -23,23 +23,28 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 <link rel="stylesheet" href="/css/main.css"/>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $("#input-form").change(function() {
+		     $("#field").submit();
+		  });
+		});
+	</script>
 </head>
 
 <body>
      <div class="navbar">
      <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
-     <p><a href="/committees/select">${ user.firstName } ${ committee.getCommitteeName() }</a></p>
 	    <form:form method="POST" action="/committees/select">
 	        <p>
 		        <label for="committee">Select committee:</label>
-				<select id="committee" name="committee">
+				<select onchange="this.form.submit()" id="committee" name="committee">
 					<option value="${ committee.id }">${ committee.getCommitteeName() }</option>
 				  	<c:forEach items="${ user.getCommittees() }" var="e">
 			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
 			        </c:forEach>
 				</select>
 	        </p>
-	        <input type="submit" value="Select"/>
 	    </form:form>
         <ul class="navbarmenu">
             <li>
