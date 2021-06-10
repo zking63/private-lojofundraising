@@ -28,6 +28,7 @@
 <body>
      <div class="navbar">
      <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
+     <p><a href="/committees/select">${ user.firstName } ${ committee.getCommitteeName() }</a></p>
         <ul class="navbarmenu">
             <li>
             <button class="btn btn-secondary main">

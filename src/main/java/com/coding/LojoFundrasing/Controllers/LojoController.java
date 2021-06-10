@@ -848,8 +848,17 @@ public class LojoController {
 			return "redirect:/home";
 		}
 		@RequestMapping("/tester")
-		public String tester(Model model) {
+		public String tester(Model model, HttpSession session) {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			model.addAttribute("committees", cservice.findAllCommittees());
+			model.addAttribute("user", user);
 			return "test.jsp";
 		}
 	    @RequestMapping("/export")
