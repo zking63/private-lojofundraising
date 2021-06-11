@@ -40,7 +40,7 @@
 		        <label for="committee">Select committee:</label>
 				<select onchange="this.form.submit()" id="committee" name="committee">
 					<option value="${ committee.id }">${ committee.getCommitteeName() }</option>
-				  	<c:forEach items="${ user.getCommittees() }" var="e">
+				  	<c:forEach items="${ committees }" var="e">
 			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
 			        </c:forEach>
 				</select>

@@ -31,4 +31,7 @@ public class CommitteeService {
 	public List<Committees> findCommitteesbyUser(long user_id){
 		return crepo.findByusers(user_id);
 	}
+	public List<Committees> findAllexcept(Long committee_id, Long user_id){
+		return crepo.findAllexcept(committee_id, user_id);
+	}
 }

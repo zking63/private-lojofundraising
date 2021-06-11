@@ -856,8 +856,12 @@ public class LojoController {
 			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 			 model.addAttribute("committee", committee);
-			model.addAttribute("committees", cservice.findAllCommittees());
+			model.addAttribute("committees", committees);
+			for (int i = 0; i < committees.size(); i++) {
+				System.out.println("committees: " + committees.get(i).getCommitteeName());
+			}
 			model.addAttribute("user", user);
 			return "test.jsp";
 		}
