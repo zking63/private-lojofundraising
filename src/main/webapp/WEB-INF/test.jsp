@@ -40,7 +40,7 @@
 	        <p>
 		        <label for="committee"></label>
 				<select onchange="this.form.submit()" id="committee" name="committee">
-					<option value="${ committee.id }">${ committee.getCommitteeName() }</option>
+					<option class="currentcommittee" value="${ committee.id }">${ committee.getCommitteeName() }</option>
 				  	<c:forEach items="${ committees }" var="e">
 			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
 			        </c:forEach>
@@ -79,7 +79,7 @@
             </li>
             <li>
             <button class="btn btn-secondary">
-			<a href="/logout">Logout</a>
+			<img src="usericon.png" alt="User">
 			</button>
             </li>
         </ul>
