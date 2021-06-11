@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -135,7 +136,9 @@ public class LojoController {
 		 return "selectcommittees.jsp";
 	 }
 	 @PostMapping("/committees/select")
-	 public String selectCommitteepost(HttpSession session, Model model, @RequestParam("committee")Committees committee) {
+	 public String selectCommitteepost(HttpSession session, Model model, @RequestParam("committee")Committees committee, 
+			 String page) {
+		 System.out.println("page: " + page);
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 if (user_id == null) {
 			 return "redirect:/";
@@ -143,7 +146,7 @@ public class LojoController {
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 session.setAttribute("committee_id", committee.getId());
-		 return "redirect:/home";
+		 return "redirect:" + page;
 	 }
 	@RequestMapping("/committees/new")
 	public String newCommittee(Model model, @ModelAttribute("committees")Committees committees) {
@@ -848,8 +851,11 @@ public class LojoController {
 			return "redirect:/home";
 		}
 		@RequestMapping("/tester")
-		public String tester(Model model, HttpSession session) {
+		public String tester(Model model, HttpSession session, HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
