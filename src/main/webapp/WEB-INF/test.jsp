@@ -35,10 +35,10 @@
 <body>
      <div class="navbar">
      <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
-	    <form:form method="POST" action="/committees/select">
+	    <form:form method="POST" action="/committees/select" class="p-4">
 	    <input type="hidden" name="page" value="${page}">
 	        <p>
-		        <label for="committee">Select committee:</label>
+		        <label for="committee"></label>
 				<select onchange="this.form.submit()" id="committee" name="committee">
 					<option value="${ committee.id }">${ committee.getCommitteeName() }</option>
 				  	<c:forEach items="${ committees }" var="e">
