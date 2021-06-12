@@ -78,6 +78,11 @@ body button:hover{
 	color: white;
 	padding: 0px;
 }
+.dropdown-menu p{
+	font-size: 25px;
+	margin-left: 25px;
+	margin-bottom: 0px;
+}
 
 .p-4 select{
 	background: transparent;

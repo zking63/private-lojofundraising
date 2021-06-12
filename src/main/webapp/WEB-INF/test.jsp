@@ -83,10 +83,21 @@
 				    <img src="/images/usericon.png" alt="User">
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="/newemail">New email</a>
-				    <a class="dropdown-item" href="/emails">Emails page</a>
-				    <a class="dropdown-item" href="/export">Export donors</a>
-				 	</div>
+				  	<p>${ user.firstName } ${ user.lastName }</p>
+				    <a class="dropdown-item" href="/logout">Logout</a>
+					<form:form method="POST" action="/committees/select" class="p-4">
+				    <input type="hidden" name="page" value="${page}">
+				        <p>
+					        <label for="committee">Change committee</label>
+							<select onchange="this.form.submit()" id="committee" name="committee">
+								<option class="currentcommittee" value="${ committee.id }">${ committee.getCommitteeName() }</option>
+							  	<c:forEach items="${ committees }" var="e">
+						        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
+						        </c:forEach>
+							</select>
+				        </p>
+				    </form:form>
+				 </div>
 				</div>
             </li>
         </ul>
