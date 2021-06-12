@@ -45,6 +45,7 @@ body button:hover{
 }
 .navbar img{
 	width: 30px;
+	margin-bottom: 3px;
 }
 .titles{
 	margin: 10px;
@@ -52,7 +53,12 @@ body button:hover{
 	vertical-align: middle;
 	color: white;
 }
-
+.navbar select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
 .titles h1{
 	color: white;
 }
