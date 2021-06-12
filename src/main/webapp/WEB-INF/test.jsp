@@ -83,5 +83,6 @@
 			</button>
             </li>
         </ul>
+        <img src="/images/usericon.png" alt="User">
 </body>
 </html>
