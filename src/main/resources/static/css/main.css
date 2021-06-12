@@ -43,6 +43,9 @@ body button:hover{
     width: 100%;
     opacity: 50%;
 }
+.navbar img{
+	width: 30px;
+}
 .titles{
 	margin: 10px;
 	margin-bottom: 60px;

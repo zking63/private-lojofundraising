@@ -78,11 +78,17 @@
 				</div>
             </li>
             <li>
-            <button class="btn btn-secondary">
-			<img src="usericon.png" alt="User">
-			</button>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <img src="/images/usericon.png" alt="User">
+				  </button>
+				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item" href="/newemail">New email</a>
+				    <a class="dropdown-item" href="/emails">Emails page</a>
+				    <a class="dropdown-item" href="/export">Export donors</a>
+				 	</div>
+				</div>
             </li>
         </ul>
-        <img src="/images/usericon.png" alt="User">
 </body>
 </html>
