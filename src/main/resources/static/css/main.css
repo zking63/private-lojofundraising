@@ -93,7 +93,14 @@ body button:hover{
 .formclass select{
 	background: transparent;
 	border: 0px;
-	font-size: 25px;
+	color: white;
+	margin-left: -33px;
+}
+.formclass select:hover{
+	background: transparent;
+	border: 0px;
+	color: #424b52;
+	margin-left: -33px;
 }
 
 .currentcommittee{
