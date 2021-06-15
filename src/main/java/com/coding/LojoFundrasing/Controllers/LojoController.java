@@ -138,11 +138,14 @@ public class LojoController {
 	 @PostMapping("/committees/select")
 	 public String selectCommitteepost(HttpSession session, Model model, @RequestParam("committee")Committees committee, 
 			 String page) {
-		 System.out.println("page: " + page);
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 if (user_id == null) {
 			 return "redirect:/";
 		 }
+		 if (page == null) {
+			 page = "http://localhost:8080/home";
+		 }
+		 System.out.println("page: " + page);
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 session.setAttribute("committee_id", committee.getId());

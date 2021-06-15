@@ -84,7 +84,6 @@
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 				  	<p>${ user.firstName } ${ user.lastName }</p>
-				    <a class="dropdown-item" href="/logout">Logout</a>
 					<form:form method="POST" action="/committees/select" class="dropdown-item formclass">
 				    <input type="hidden" name="page" value="${page}">
 				        <p>
@@ -97,6 +96,7 @@
 							</select>
 				        </p>
 				    </form:form>
+				    <a class="dropdown-item" href="/logout">Logout</a>
 				 </div>
 				</div>
             </li>
