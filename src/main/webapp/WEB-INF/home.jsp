@@ -12,24 +12,108 @@
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css"/>
 	<title>Donors</title>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+<link rel="stylesheet" href="/css/main.css"/>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $("#input-form").change(function() {
+		     $("#field").submit();
+		  });
+		});
+	</script>
 </head>
 <body>
      <div class="navbar">
-     	<h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
-     	<p><a href="/committees/select">${ user.firstName } ${ committee.getCommitteeName() }</a></p>
+     <h1 class="titles"><a href="/home">LoJo Fundraising</a></h1>
+	    <form:form method="POST" action="/committees/select" class="p-4">
+	    <input type="hidden" name="page" value="${page}">
+	        <p>
+		        <label for="committee"></label>
+				<select onchange="this.form.submit()" id="committee" name="committee">
+					<option class="currentcommittee" value="${ committee.id }">${ committee.getCommitteeName() }</option>
+				  	<c:forEach items="${ committees }" var="e">
+			        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
+			        </c:forEach>
+				</select>
+	        </p>
+	    </form:form>
         <ul class="navbarmenu">
-            <li class="main"><a href="/home">Home</a>
+            <li>
+            <button class="btn btn-secondary main">
+			<a href="/home">Home</a>
+			</button>
             </li>
-            <li><a href="/donors">Donors</a></li>
-            <li><a href="/emails">Emails</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Donations
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				  	<a class="dropdown-item" href="/home">Donations</a>
+				    <a class="dropdown-item" href="/newdonation">New donation</a>
+				    <a class="dropdown-item" href="/import/donations">Import donations</a>
+				    <a class="dropdown-item" href="/export">Export donations</a>
+				 	</div>
+				</div>
+            </li>
+            <li>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Donors
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				  	<a class="dropdown-item" href="/donors">Donors page</a>
+				    <a class="dropdown-item" href="/newdonor">New donor</a>
+				    <a class="dropdown-item" href="/import/donations">Import donors by donations</a>
+				    <a class="dropdown-item" href="/export">Export donors</a>
+				 	</div>
+				</div>
+            </li>
+            <li>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Emails
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				 	<a class="dropdown-item" href="/emails">Emails</a>
+				    <a class="dropdown-item" href="/newemail">New email</a>
+				    <a class="dropdown-item" href="/import/emails">Import emails</a>
+				    <a class="dropdown-item" href="/export">Export</a>
+				 	</div>
+				</div>
+            </li>
+            <li>
+           		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <img src="/images/usericon.png" alt="User">
+				  </button>
+				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+				  	<p>${ user.firstName } ${ user.lastName }</p>
+					<form:form method="POST" action="/committees/select" class="dropdown-item formclass">
+				    <input type="hidden" name="page" value="${page}">
+				        <p>
+					        <label for="committee"></label>
+							<select onchange="this.form.submit()" id="committee" name="committee">
+								<option class="currentcommittee" value="${ committee.id }">${ committee.getCommitteeName() }</option>
+							  	<c:forEach items="${ committees }" var="e">
+						        	<option value="${ e.id }">${ e.getCommitteeName() }</option>
+						        </c:forEach>
+							</select>
+				        </p>
+				    </form:form>
+				    <div class="dropdown-divider"></div>
+				    <a class="dropdown-item" href="/logout">Logout</a>
+				 </div>
+				</div>
+            </li>
         </ul>
-    </div>
-    <div class="buttons1">
-    <button><a href="/newdonor">Upload a new donor</a></button>
-	<button><a href="/newdonation">Upload a new donation</a></button>
-	<button><a href="/newemail">Upload a new email</a></button>
-	</div>
 	<div class="wrapper">
 	<h1>Recent Donations</h1>
 		<form method="post" class="date-form" action="/home">
