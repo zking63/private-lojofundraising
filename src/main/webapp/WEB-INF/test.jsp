@@ -56,12 +56,13 @@
             <li>
            		<div class="dropdown">
 				  <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Donors
+				    Donations
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="/newdonor">New donor</a>
-				    <a class="dropdown-item" href="/donors">Donors page</a>
-				    <a class="dropdown-item" href="/export">Export donors</a>
+				  	<a class="dropdown-item" href="/home">Donations</a>
+				    <a class="dropdown-item" href="/newdonation">New donation</a>
+				    <a class="dropdown-item" href="/import/donations">Import donations</a>
+				    <a class="dropdown-item" href="/export">Export donations</a>
 				 	</div>
 				</div>
             </li>
@@ -71,8 +72,9 @@
 				    Donors
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				  	<a class="dropdown-item" href="/donors">Donors page</a>
 				    <a class="dropdown-item" href="/newdonor">New donor</a>
-				    <a class="dropdown-item" href="/donors">Donors page</a>
+				    <a class="dropdown-item" href="/import/donations">Import donors by donations</a>
 				    <a class="dropdown-item" href="/export">Export donors</a>
 				 	</div>
 				</div>
@@ -109,6 +111,7 @@
 							</select>
 				        </p>
 				    </form:form>
+				    <div class="dropdown-divider"></div>
 				    <a class="dropdown-item" href="/logout">Logout</a>
 				 </div>
 				</div>
