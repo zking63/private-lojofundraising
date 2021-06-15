@@ -313,8 +313,11 @@ public class LojoController {
 	 @RequestMapping("/emails")
 	 public String Emailpage(@ModelAttribute("email") Emails email, Model model, HttpSession session,
 			 @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
-			 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE) {
+			 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, HttpServletRequest request, 
+			 @Param("field") String field) {
 		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 List<Emails> emails = null;
 		 if (user_id == null) {
 			 return "redirect:/";
 		 }
@@ -324,16 +327,30 @@ public class LojoController {
 		 if (enddateE == null) {
 			 enddateE = dateFormat();
 		 }
-		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 if (field == null) {
+			 field = "field";
+			 emails = this.eservice.EmailTest(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("sum")) {
+			 emails = eservice.SumAsc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("field")) {
+			 emails = this.eservice.EmailTest(startdateE, enddateE, committee_id);
+		 }
+		 String pagename = request.getRequestURL().toString();
+		 System.out.println("page: " + pagename);
+		 session.setAttribute("page", pagename);
 		 Committees committee = cservice.findbyId(committee_id);
+		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 		 model.addAttribute("committee", committee);
+		 model.addAttribute("committees", committees);
 		 model.addAttribute("startdateE", startdateE);
 		 model.addAttribute("enddateE", enddateE);
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
-		 model.addAttribute("email", this.eservice.EmailTest(startdateE, enddateE, committee_id));
-		 //model.addAttribute("average", this.eservice.getAv(email.getId()));
+		 model.addAttribute("email", emails);
+		 model.addAttribute("field",field);
 		 return "emails.jsp";
 	 }
 	 @RequestMapping("/donors/{id}")
@@ -670,15 +687,21 @@ public class LojoController {
 		 @RequestMapping(value="/emails/sortdown")
 		 public String sortdownEmail(Model model, HttpSession session,
 				 @RequestParam("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
-				 @RequestParam("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @RequestParam("field") String field) {
+				 @RequestParam("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @RequestParam("field") String field, 
+				 HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
 			 Committees committee = cservice.findbyId(committee_id);
+			 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 			 model.addAttribute("committee", committee);
+			 model.addAttribute("committees", committees);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
 			 model.addAttribute("startdateE", startdateE);
@@ -706,14 +729,21 @@ public class LojoController {
 		 @RequestMapping(value="/emails/sortup")
 		 public String sortUpEmail(Model model, HttpSession session,
 				 @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
-				 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @Param("field") String field) {
+				 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, @Param("field") String field, 
+				 HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
 			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
 			 Committees committee = cservice.findbyId(committee_id);
+			 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			 model.addAttribute("committees", committees);
 			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 			 model.addAttribute("dateFormat", dateFormat());
