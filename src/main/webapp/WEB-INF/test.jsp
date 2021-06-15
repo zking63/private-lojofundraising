@@ -67,13 +67,26 @@
             </li>
             <li>
            		<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Donors
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item" href="/newdonor">New donor</a>
+				    <a class="dropdown-item" href="/donors">Donors page</a>
+				    <a class="dropdown-item" href="/export">Export donors</a>
+				 	</div>
+				</div>
+            </li>
+            <li>
+           		<div class="dropdown">
 				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    Emails
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				 	<a class="dropdown-item" href="/emails">Emails</a>
 				    <a class="dropdown-item" href="/newemail">New email</a>
-				    <a class="dropdown-item" href="/emails">Emails page</a>
-				    <a class="dropdown-item" href="/export">Export donors</a>
+				    <a class="dropdown-item" href="/import/emails">Import emails</a>
+				    <a class="dropdown-item" href="/export">Export</a>
 				 	</div>
 				</div>
             </li>
