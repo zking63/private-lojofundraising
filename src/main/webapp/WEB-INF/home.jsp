@@ -114,6 +114,7 @@
 				</div>
             </li>
         </ul>
+        </div>
 	<div class="wrapper">
 	<h1>Recent Donations</h1>
 		<form method="post" class="date-form" action="/home">
