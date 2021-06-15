@@ -90,6 +90,12 @@ body button:hover{
 	font-size: 25px;
 }
 
+.formclass select{
+	background: transparent;
+	border: 0px;
+	font-size: 25px;
+}
+
 .currentcommittee{
 	background: transparent;
 	border: 0px;

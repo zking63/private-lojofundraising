@@ -85,10 +85,10 @@
 				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 				  	<p>${ user.firstName } ${ user.lastName }</p>
 				    <a class="dropdown-item" href="/logout">Logout</a>
-					<form:form method="POST" action="/committees/select" class="p-4">
+					<form:form method="POST" action="/committees/select" class="dropdown-item formclass">
 				    <input type="hidden" name="page" value="${page}">
 				        <p>
-					        <label for="committee">Change committee</label>
+					        <label for="committee"></label>
 							<select onchange="this.form.submit()" id="committee" name="committee">
 								<option class="currentcommittee" value="${ committee.id }">${ committee.getCommitteeName() }</option>
 							  	<c:forEach items="${ committees }" var="e">
