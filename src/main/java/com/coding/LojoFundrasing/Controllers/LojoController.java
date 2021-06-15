@@ -432,7 +432,7 @@ public class LojoController {
 	 @RequestMapping("/home")
 	 public String homePage(Model model, HttpSession session, @ModelAttribute("donations")Donation donation,
 			 @Param("startdate") @DateTimeFormat(iso = ISO.DATE) String startdate, 
-			 @Param("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate) {
+			 @Param("enddate") @DateTimeFormat(iso = ISO.DATE) String enddate, HttpServletRequest request) {
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 if (user_id == null) {
@@ -440,8 +440,13 @@ public class LojoController {
 		 }
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
+		 String pagename = request.getRequestURL().toString();
+		 System.out.println("page: " + pagename);
+		 session.setAttribute("page", pagename);
 		 Committees committee = cservice.findbyId(committee_id);
+		List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 		 model.addAttribute("committee", committee);
+		model.addAttribute("committees", committees);
 		 if (startdate == null) {
 			 startdate = dateFormat();
 		 }
