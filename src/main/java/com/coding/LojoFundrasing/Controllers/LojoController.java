@@ -311,13 +311,13 @@ public class LojoController {
 		 return "redirect:/emails";
 	 }
 	 @RequestMapping("/emails")
-	 public String Emailpage(@ModelAttribute("email") Emails email, Model model, HttpSession session,
+	 public String Emailpage(Model model, HttpSession session,
 			 @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
 			 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, HttpServletRequest request, 
 			 @Param("field") String field) {
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 Long committee_id = (Long)session.getAttribute("committee_id");
-		 List<Emails> emails = null;
+		 List<Emails> email = null;
 		 if (user_id == null) {
 			 return "redirect:/";
 		 }
@@ -329,13 +329,42 @@ public class LojoController {
 		 }
 		 if (field == null) {
 			 field = "field";
-			 emails = this.eservice.EmailTest(startdateE, enddateE, committee_id);
-		 }
-		 if (field.equals("sum")) {
-			 emails = eservice.SumAsc(startdateE, enddateE, committee_id);
+			 email = this.eservice.EmailTest(startdateE, enddateE, committee_id);
 		 }
 		 if (field.equals("field")) {
-			 emails = this.eservice.EmailTest(startdateE, enddateE, committee_id);
+			 email = this.eservice.EmailTest(startdateE, enddateE, committee_id);
+		 }
+		 //desc functions
+		 if (field.equals("datetime")) {
+			 email = eservice.EmailTest(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("average")) {
+			 email = eservice.AvDesc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("sum")) {
+			 email = eservice.SumDesc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("donationscount")) {
+			 email = eservice.DonationsCountDesc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("donorcount")) {
+			 email = eservice.DonorCountDesc(startdateE, enddateE, committee_id);
+		 }
+		 //asc functions
+		 if (field.equals("datetimeup")) {
+			 email = this.eservice.EmailTestAsc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("averageup")) {
+			 email = this.eservice.AverageAsc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("sumup")) {
+			 email = eservice.SumAsc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("donationscountup")) {
+			 email = eservice.DonationsCountAsc(startdateE, enddateE, committee_id);
+		 }
+		 if (field.equals("donorcountup")) {
+			 email = eservice.DonorCountAsc(startdateE, enddateE, committee_id);
 		 }
 		 String pagename = request.getRequestURL().toString();
 		 System.out.println("page: " + pagename);
@@ -349,7 +378,7 @@ public class LojoController {
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
-		 model.addAttribute("email", emails);
+		 model.addAttribute("email", email);
 		 model.addAttribute("field",field);
 		 return "emails.jsp";
 	 }

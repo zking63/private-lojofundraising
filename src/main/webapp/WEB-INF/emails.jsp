@@ -127,14 +127,14 @@
 	        <tr>
 	            <th>Name</th>
 	            <th>Send date</br> 		
-		            <form class="pointer" method="post" action="/emails/sortdown">
+		            <form class="pointer" method="post" action="/emails">
 						<input type="hidden" name="field" value="datetime">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/emails/sortup">
-						<input type="hidden" name="field" value="datetime">
+					<form class="pointer" method="post" action="/emails">
+						<input type="hidden" name="field" value="datetimeup">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>v</button>
@@ -149,49 +149,49 @@
 						<button>^</button>
 					</form>
 					<form class="pointer" method="post" action="/emails">
-						<input type="hidden" name="field" value="sumUp">
+						<input type="hidden" name="field" value="sumup">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>v</button>
 					</form>
 	            </th>
 	            <th>Average Donation</br> 
-	            	<form class="pointer" method="post" action="/emails/sortdown">
+	            	<form class="pointer" method="post" action="/emails">
 						<input type="hidden" name="field" value="average">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/emails/sortup">
-						<input type="hidden" name="field" value="average">
+					<form class="pointer" method="post" action="/emails">
+						<input type="hidden" name="field" value="averageup">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>v</button>
 					</form>
 	            </th>
 	            <th>Number of donations</br> 
-	                <form class="pointer" method="post" action="/emails/sortdown">
+	                <form class="pointer" method="post" action="/emails">
 						<input type="hidden" name="field" value="donationscount">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/emails/sortup">
-						<input type="hidden" name="field" value="donationscount">
+					<form class="pointer" method="post" action="/emails">
+						<input type="hidden" name="field" value="donationscountup">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>v</button>
 					</form>
 	            </th>
 	            <th>Number of donors</br>
-	               <form class="pointer" method="post" action="/emails/sortdown">
+	               <form class="pointer" method="post" action="/emails">
 						<input type="hidden" name="field" value="donorcount">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/emails/sortup">
-						<input type="hidden" name="field" value="donorcount">
+					<form class="pointer" method="post" action="/emails">
+						<input type="hidden" name="field" value="donorcountup">
 						<input type="hidden" name="startdateE" value="${ startdateE}">
 						<input type="hidden" name="enddateE" value="${ enddateE}">
 						<button>v</button>
