@@ -51,6 +51,9 @@ public class User {
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="email_uploader")
     private List<Emails> emailsUploaded;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="group_creator")
+    private List<EmailGroup> emailgroups;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 	        name = "committees_users", 
@@ -159,6 +162,16 @@ public class User {
 
 	public void setCommittees(List<Committees> committees) {
 		this.committees = committees;
+	}
+	
+	
+
+	public List<EmailGroup> getEmailgroups() {
+		return emailgroups;
+	}
+
+	public void setEmailgroups(List<EmailGroup> emailgroups) {
+		this.emailgroups = emailgroups;
 	}
 
 	@PrePersist
