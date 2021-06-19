@@ -48,8 +48,8 @@
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/donors/sortup">
-						<input type="hidden" name="field" value="mostrecentamount">
+					<form class="pointer" method="post" action="/donors">
+						<input type="hidden" name="field" value="mostrecentamountup">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>v</button>
@@ -62,8 +62,8 @@
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/donors/sortup">
-						<input type="hidden" name="field" value="latestdonation">
+					<form class="pointer" method="post" action="/donors">
+						<input type="hidden" name="field" value="latestdonationup">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>v</button>
@@ -76,8 +76,8 @@
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/donors/sortup">
-						<input type="hidden" name="field" value="donationcount">
+					<form class="pointer" method="post" action="/donors">
+						<input type="hidden" name="field" value="donationcountup">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>v</button>
@@ -91,8 +91,8 @@
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/donors/sortup">
-						<input type="hidden" name="field" value="donorsum">
+					<form class="pointer" method="post" action="/donors">
+						<input type="hidden" name="field" value="donorsumup">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>v</button>
@@ -106,8 +106,8 @@
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>^</button>
 					</form>
-					<form class="pointer" method="post" action="/donors/sortup">
-						<input type="hidden" name="field" value="donoraverage">
+					<form class="pointer" method="post" action="/donors">
+						<input type="hidden" name="field" value="donoraverageup">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
 						<button>v</button>
