@@ -118,14 +118,21 @@
         </div>
         <div class="user-form">
 		<h2>Create a new email group</h2>
-	    <form:form method="POST" action="/newemail" modelAttribute="email">
+	    <form:form method="POST" action="/emails/new/group" modelAttribute="emailgroup">
 	    	<form:hidden value="${ user.id }" path="group_creator"/>
 	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>
-	            <form:label path="emailName">Name:</form:label>
-	            <form:errors path="emailName"></form:errors>
-	            <form:input type="emailName" path="emailName"/>
+	            <form:label path="emailgroupName">Name:</form:label>
+	            <form:errors path="emailgroupName"></form:errors>
+	            <form:input type="emailgroupName" path="emailgroupName"/>
 	        </p>
+	        <div id="export-choices">
+	        <c:forEach items="${ committee.getEmails() }" var="e">
+				<input type="checkbox" name="Emails" value="${e.id}">
+				<label for="Emails">${e.getEmailName()}</label><br>
+			</c:forEach>
+			</div>
+		<input type="submit" value="Create group"/>
 	    </form:form>
 </body>
 </html>

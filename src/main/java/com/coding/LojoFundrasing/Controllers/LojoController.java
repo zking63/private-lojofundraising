@@ -452,8 +452,7 @@ public class LojoController {
 		 model.addAttribute("committees", committees);
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
-		 this.egservice.createEmailGroup(emailgroup);
-		 return "newgroup.jsp";
+		 return "/emails/newgroup.jsp";
 	 }
 	 @PostMapping("/emails/new/group")
 	 public String CreateEmailGroup(@ModelAttribute("emailgroup") EmailGroup emailgroup, Model model, 
@@ -472,6 +471,13 @@ public class LojoController {
 		 model.addAttribute("committees", committees);
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
+		 this.egservice.createEmailGroup(emailgroup);
+		 System.out.println("email group size: " + emailgroup.getEmails().size());
+		 for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+			 Emails email = emailgroup.getEmails().get(i);
+			 email.setEmailgroup(emailgroup);
+			 eservice.updateEmail(email);
+		 }
 		 return "redirect:/emails";
 	 }
 	 @RequestMapping("/donors/{id}")
