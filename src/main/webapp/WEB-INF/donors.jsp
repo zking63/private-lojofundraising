@@ -42,7 +42,7 @@
 	            <th>Name</th>
 	            <th>Email address</th>
 	            <th>Most recent donation in range amount</br>
-	            	<form class="pointer" method="post" action="/donors/sortdown">
+	            	<form class="pointer" method="post" action="/donors">
 						<input type="hidden" name="field" value="mostrecentamount">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
@@ -56,7 +56,7 @@
 					</form>
 	            </th>
 	            <th>Most recent donation in range date</br>
-	            	<form class="pointer" method="post" action="/donors/sortdown">
+	            	<form class="pointer" method="post" action="/donors">
 						<input type="hidden" name="field" value="latestdonation">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
@@ -70,7 +70,7 @@
 					</form>
 	            </th>
 	            <th>Times given</br>
-	            	<form class="pointer" method="post" action="/donors/sortdown">
+	            	<form class="pointer" method="post" action="/donors">
 						<input type="hidden" name="field" value="donationcount">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
@@ -85,7 +85,7 @@
 	            </th>
 	            <th>Times given within range</th>
 	            <th>Total given</br>
-	            <form class="pointer" method="post" action="/donors/sortdown">
+	            <form class="pointer" method="post" action="/donors">
 						<input type="hidden" name="field" value="donorsum">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">
@@ -100,7 +100,7 @@
 	            </th>
 	            <th>Total within range</th>
 	            <th>Average donation amount</br>
-	            	<form class="pointer" method="post" action="/donors/sortdown">
+	            	<form class="pointer" method="post" action="/donors">
 						<input type="hidden" name="field" value="donoraverage">
 						<input type="hidden" name="startdateD" value="${startdateD}">
 						<input type="hidden" name="enddateD" value="${enddateD}">

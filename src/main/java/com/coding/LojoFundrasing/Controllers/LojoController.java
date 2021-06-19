@@ -192,9 +192,9 @@ public class LojoController {
 		 return "redirect:/donors";
 	 }
 	 @RequestMapping("/donors")
-	 public String donorsPage(@ModelAttribute("donor") Donor donor, Model model, HttpSession session,
+	 public String donorsPage(Model model, HttpSession session,
 			 @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-			 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD) {
+			 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @Param("field") String field) {
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 if (user_id == null) {
 			 return "redirect:/";
@@ -204,18 +204,46 @@ public class LojoController {
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 Committees committee = cservice.findbyId(committee_id);
 		 model.addAttribute("committee", committee);
+		 List<Donor> donors = null;
 		 if (startdateD == null) {
 			 startdateD = dateFormat();
 		 }
 		 if (enddateD == null) {
 			 enddateD = dateFormat();
 		 }
+		 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+		 if (field == null) {
+			 field = "field";
+			 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("field")) {
+			 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+		 }
+		 System.out.println("field: " + field);
+		 //desc functions
+		 if (field.equals("latestdonation")) {
+			 donors = this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donationcount")) {
+			 donors = this.dservice.orderDonorCountDesc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donoraverage")) {
+			 donors = this.dservice.orderAverageDesc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donorsum")) {
+			 donors = this.dservice.orderDonorsumDesc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("mostrecentamount")) {
+			 donors = this.dservice.orderMostrecentAmountDesc(startdateD, enddateD, committee_id);
+		 }
+		 System.out.println("field: " + field);
+		 model.addAttribute("donor", donors);
 		 model.addAttribute("startdateD", startdateD);
 		 model.addAttribute("enddateD", enddateD);
 		 model.addAttribute("dateFormat", dateFormat());
 		 //model.addAttribute("donorswithin", this.dservice.DonorsWithinRange(startdateD, enddateD));
 		 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
-		 model.addAttribute("donor", this.dservice.orderMostRecentbyDonorDesc(startdateD, enddateD, committee_id));
+		 model.addAttribute("field",field);
 		 return "donors.jsp";
 	 }
 	private String dateFormat() {
@@ -376,7 +404,6 @@ public class LojoController {
 		 model.addAttribute("startdateE", startdateE);
 		 model.addAttribute("enddateE", enddateE);
 		 User user = uservice.findUserbyId(user_id);
-		 model.addAttribute("committee", committee);
 		 model.addAttribute("user", user);
 		 model.addAttribute("email", email);
 		 model.addAttribute("field",field);
