@@ -121,4 +121,17 @@ public class EmailGroup {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	public User getGroup_creator() {
+		return group_creator;
+	}
+	public void setGroup_creator(User group_creator) {
+		this.group_creator = group_creator;
+	}
+	public Committees getCommittee() {
+		return committee;
+	}
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
+	}
+	
 }
