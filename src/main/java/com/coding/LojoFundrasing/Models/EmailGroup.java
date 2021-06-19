@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,6 +34,15 @@ public class EmailGroup {
 	private Date updatedAt;
     @OneToMany(fetch=FetchType.LAZY, mappedBy="emailgroup")
 	private List<Emails> Emails;
+    
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User group_creator;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="committees_id")
+    private Committees committee;
+	
 	public Long getId() {
 		return id;
 	}

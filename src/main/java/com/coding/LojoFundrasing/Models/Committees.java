@@ -36,6 +36,9 @@ public class Committees {
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
 	private List<Donor> donors;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
+	private List<EmailGroup> emailgroups;
 	
 	public Committees() {
 		

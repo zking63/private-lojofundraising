@@ -49,11 +49,13 @@ import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Services.CommitteeService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
+import com.coding.LojoFundrasing.Services.EmailGroupService;
 import com.coding.LojoFundrasing.Services.EmailService;
 import com.coding.LojoFundrasing.Services.ExcelService;
 import com.coding.LojoFundrasing.Services.UserService;
@@ -85,6 +87,9 @@ public class LojoController {
 	
 	@Autowired
 	private ExcelService excelService;
+	
+	@Autowired
+	private EmailGroupService egservice;
 	
 	@RequestMapping("/")
 	public String index(@ModelAttribute("user")User user, Model model) {
@@ -429,6 +434,45 @@ public class LojoController {
 		 model.addAttribute("email", email);
 		 model.addAttribute("field",field);
 		 return "emails.jsp";
+	 }
+	 @RequestMapping("/emails/new/group")
+	 public String NewEmailGroup(@ModelAttribute("emailgroup") EmailGroup emailgroup, Model model, 
+			 HttpSession session, HttpServletRequest request) {
+		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 if (user_id == null) {
+			 return "redirect:/";
+		 }
+		 String pagename = request.getRequestURL().toString();
+		 System.out.println("page: " + pagename);
+		 session.setAttribute("page", pagename);
+		 Committees committee = cservice.findbyId(committee_id);
+		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+		 model.addAttribute("committee", committee);
+		 model.addAttribute("committees", committees);
+		 User user = uservice.findUserbyId(user_id);
+		 model.addAttribute("user", user);
+		 this.egservice.createEmailGroup(emailgroup);
+		 return "newgroup.jsp";
+	 }
+	 @PostMapping("/emails/new/group")
+	 public String CreateEmailGroup(@ModelAttribute("emailgroup") EmailGroup emailgroup, Model model, 
+			 HttpSession session, HttpServletRequest request) {
+		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 if (user_id == null) {
+			 return "redirect:/";
+		 }
+		 String pagename = request.getRequestURL().toString();
+		 System.out.println("page: " + pagename);
+		 session.setAttribute("page", pagename);
+		 Committees committee = cservice.findbyId(committee_id);
+		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+		 model.addAttribute("committee", committee);
+		 model.addAttribute("committees", committees);
+		 User user = uservice.findUserbyId(user_id);
+		 model.addAttribute("user", user);
+		 return "redirect:/emails";
 	 }
 	 @RequestMapping("/donors/{id}")
 	 public String showDonor(@PathVariable("id") long id, Model model, HttpSession session, @ModelAttribute("donor")Donor donor) {
