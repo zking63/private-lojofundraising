@@ -236,6 +236,22 @@ public class LojoController {
 		 if (field.equals("mostrecentamount")) {
 			 donors = this.dservice.orderMostrecentAmountDesc(startdateD, enddateD, committee_id);
 		 }
+		 //asc functions
+		 if (field.equals("latestdonationup")) {
+			 donors = this.dservice.orderMostRecentbyDonorAsc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donationcountup")) {
+			 donors = this.dservice.orderDonorCountAsc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donoraverageup")) {
+			 donors = this.dservice.orderAverageAsc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("donorsumup")) {
+			 donors = this.dservice.orderDonorsumAsc(startdateD, enddateD, committee_id);
+		 }
+		 if (field.equals("mostrecentamountup")) {
+			 donors = this.dservice.orderMostrecentAmountAsc(startdateD, enddateD, committee_id);
+		 }
 		 System.out.println("field: " + field);
 		 model.addAttribute("donor", donors);
 		 model.addAttribute("startdateD", startdateD);
