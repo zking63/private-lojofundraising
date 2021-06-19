@@ -57,6 +57,10 @@ public class Emails {
     @JoinColumn(name="committees_id")
     private Committees committee;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="emailgroup_id")
+    private EmailGroup emailgroup;
+	
     @OneToMany(fetch=FetchType.LAZY, mappedBy="emailDonation")
 	private List<Donation> Emaildonations;
     
