@@ -79,5 +79,11 @@ public class Committees {
 	public void setDonors(List<Donor> donors) {
 		this.donors = donors;
 	}
+	public List<EmailGroup> getEmailgroups() {
+		return emailgroups;
+	}
+	public void setEmailgroups(List<EmailGroup> emailgroups) {
+		this.emailgroups = emailgroups;
+	}
 	
 }

@@ -247,6 +247,14 @@ public class Emails {
 	public void setRecurringRevenue(Double recurringRevenue) {
 		this.recurringRevenue = recurringRevenue;
 	}
+
+	public EmailGroup getEmailgroup() {
+		return emailgroup;
+	}
+
+	public void setEmailgroup(EmailGroup emailgroup) {
+		this.emailgroup = emailgroup;
+	}
 	
 	
 }
