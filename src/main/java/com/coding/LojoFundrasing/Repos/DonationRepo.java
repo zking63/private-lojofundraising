@@ -23,6 +23,8 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 	List<Donation> findByemailDonation(Long email_id);
 	List<Donation> findAllByOrderByAmountAsc();
 	List<Donation> findAllByOrderByAmountDesc();
+	@Query(value = "SELECT COUNT(DISTINCT donations.donor_id) FROM donations LEFT JOIN emails on emails.id = donations.email_id where emails.emailgroup_id = :group_id and committees_id = :committee_id", nativeQuery = true)
+	Long findDonorsinGroup(Long group_id, Long committee_id);
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid", nativeQuery = true)
 	List<Donation> findbyActBlueIdandCommittee_id(String actblueid, Long committee_id);
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
