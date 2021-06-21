@@ -480,6 +480,7 @@ public class LojoController {
 			 email.setEmailgroup(emailgroup);
 			 eservice.updateEmail(email);
 		 }
+		 this.egservice.getEmailGroupData(emailgroup, committee_id);
 		 return "redirect:/emails";
 	 }
 	 @RequestMapping("/donors/{id}")

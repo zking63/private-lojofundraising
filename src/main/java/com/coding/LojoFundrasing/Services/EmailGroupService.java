@@ -18,34 +18,39 @@ public class EmailGroupService {
 	public EmailGroup createEmailGroup(EmailGroup emailgroup) {
 		return egrepo.save(emailgroup);
 	}
-	public Data getEmailGroupData(EmailGroup emailgroup, Long committee_id) {
-		Data emaildata = email.getEmaildata();
-		String refcode = email.getEmailRefcode();
-		System.out.println("refcode: " + refcode);
-		Long id = email.getId();
-		Double esum = 0.00;
-		Double eaverage = 0.00;
-		Integer donationscount = 0;
-		Integer donorscount = 0;
-		Integer recurringDonorCount = 0;
-		Integer recurringDonationCount = 0;
-		Double recurringRevenue = 0.00;
-		Double unsubscribeRate = 0.00;
-		Double clickRate = 0.00;
-		Double openRate = 0.00;
-		Double bounceRate = 0.00;
-		Double donationsOpens = 0.00;
-		Double donationsClicks = 0.00;
-		Double donorsOpens = 0.00;
-		Double donorsClicks = 0.00;
-		Double clicksOpens = 0.00;
-			for (int i = 0; i < alldata.size(); i++) {
-				if (id == alldata.get(i).getDataEmail().getId()) {
-					Long edid = emaildata.getId();
-					edid = alldata.get(i).getId();
-					emaildata = datarepo.findById(edid).orElse(null);
-					esum = erepo.sums(id, committee_id);
-					eaverage = erepo.averages(id, committee_id);
+	public void getEmailGroupData(EmailGroup emailgroup, Long committee_id) {
+		Long id = emailgroup.getId();
+		//email performance
+		Long groupOpeners = null;
+		Long groupRecipients = null;
+		Long groupClicks = null;
+		Long groupBounces = null;
+		Long groupUnsubscribers = null;
+		//donation info
+		Double groupaverage = 0.0;
+		Double groupsum = 0.0;
+		Integer groupdonationcount = 0;
+		Integer groupdonorcount = 0;
+		//recurring
+		Integer groupRecurringDonorCount = 0;
+		Integer groupRecurringDonationCount = 0;
+		Double groupRecurringRevenue = 0.0;
+		//rates
+		Double groupunsubscribeRate = 0.0;
+		Double groupclickRate = 0.0;
+		Double groupopenRate = 0.0;
+		Double groupbounceRate = 0.0;
+		Double groupdonationsOpens = 0.0;
+		Double groupdonationsClicks = 0.0;
+		Double groupclicksOpens = 0.0;
+		Double groupdonorsOpens = 0.0;
+		Double groupdonorsClicks = 0.0;
+			for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+					Emails email = emailgroup.getEmails().get(i);
+					System.out.println(email.getEmailName());
+					groupsum = groupsum + email.getEmaildata().getEmailsum(); 
+					System.out.println(groupsum);
+					/*eaverage = erepo.averages(id, committee_id);
 					donationscount = erepo.donationscount(id, committee_id);
 					donorscount = erepo.donorscount(id, committee_id);
 					emaildata.setEmailsum(esum);
@@ -90,9 +95,7 @@ public class EmailGroupService {
 					email.setRecurringDonationCount(recurringDonationCount);
 					email.setRecurringRevenue(recurringRevenue);
 					erepo.save(email);
-					return datarepo.save(emaildata);
-				}
-			return datarepo.save(emaildata);
+					return datarepo.save(emaildata);*/
 		}
 	}
 }
