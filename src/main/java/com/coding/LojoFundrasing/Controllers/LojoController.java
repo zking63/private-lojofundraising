@@ -469,6 +469,7 @@ public class LojoController {
 		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 		 model.addAttribute("committee", committee);
 		 model.addAttribute("committees", committees);
+		 model.addAttribute("emails", eservice.findEmailswithoutGroup(committee_id));
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 this.egservice.createEmailGroup(emailgroup);
