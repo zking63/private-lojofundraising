@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.EmailGroupRepo;
 
 @Service
 public class EmailGroupService {
 	@Autowired
 	private EmailGroupRepo egrepo;
+	
+	@Autowired
+	private DonationRepo donrepo;
 	
 	public EmailGroup createEmailGroup(EmailGroup emailgroup) {
 		return egrepo.save(emailgroup);
@@ -71,28 +75,19 @@ public class EmailGroupService {
 					//calculate donation info
 					groupsum = groupsum + email.getEmaildata().getEmailsum(); 
 					System.out.println(groupsum);
-					/*groupaverage = groupaverage + email.getEmaildata().getEmailAverage();
-					System.out.println(groupaverage);*/
 					groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
 					System.out.println(groupdonationcount);
-					//fix donor count to only count unique
-					groupdonorcount = groupdonorcount + email.getEmaildata().getDonorcount();
-					System.out.println(groupdonorcount);
 					//set donation info
 					emailgroup.setGroupsum(groupsum);
 					emailgroup.setGroupdonationcount(groupdonationcount);
-					emailgroup.setGroupdonorcount(groupdonorcount);
 					//calculate recurring info
 					//set an if statement if this exists
-					groupRecurringDonorCount = groupRecurringDonorCount + email.getRecurringDonorCount();
-					System.out.println(groupRecurringDonorCount);
 					groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
 					System.out.println(groupRecurringDonationCount);
 					groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
 					System.out.println(groupRecurringRevenue);
 					//set recurring info
 					//fix donor count to only count unique
-					emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
 					emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 					emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
 					/*eaverage = erepo.averages(id, committee_id);
@@ -147,6 +142,15 @@ public class EmailGroupService {
 			groupaverage = groupsum/emailgroup.getGroupdonationcount();
 			emailgroup.setGroupaverage(groupaverage);
 			System.out.println(groupaverage);
+			//donor count
+			System.out.println("groupdonorcount");
+			groupdonorcount = donrepo.findDonorsinGroup(committee_id, id);
+			emailgroup.setGroupdonorcount(groupdonorcount);
+			System.out.println(groupdonorcount);
+			//recurring donor count
+			groupRecurringDonorCount = donrepo.findRecurringDonorsinGroup(committee_id, id);
+			emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
+			System.out.println(groupRecurringDonorCount);
 			//variables for aggregate functions
 			Double unsubs = (double) emailgroup.getGroupUnsubscribers();
 			Double receps = (double) emailgroup.getGroupRecipients();
