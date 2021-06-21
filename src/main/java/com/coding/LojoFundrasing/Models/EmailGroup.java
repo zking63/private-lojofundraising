@@ -29,6 +29,19 @@ public class EmailGroup {
 	private Integer groupRecurringDonorCount;
 	private Integer groupRecurringDonationCount;
 	private Double groupRecurringRevenue;
+	private Double groupaverage;
+	private Double groupsum;
+	private Integer groupdonationcount;
+	private Integer groupdonorcount;
+	private Double groupunsubscribeRate;
+	private Double groupclickRate;
+	private Double groupopenRate;
+	private Double groupbounceRate;
+	private Double groupdonationsOpens;
+	private Double groupdonationsClicks;
+	private Double groupclicksOpens;
+	private Double groupdonorsOpens;
+	private Double groupdonorsClicks;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
