@@ -15,7 +15,7 @@ import com.coding.LojoFundrasing.Models.Emails;
 public interface EmailRepo extends CrudRepository<Emails, Long>{
 	List<Emails> findAll();
 	Emails findByemailRefcode(String emailRefcode);
-	@Query(value = "SElECT * FROM emails where committees_id = committee_id and emailgroup_id is NULL", nativeQuery = true)
+	@Query(value = "SElECT * FROM emails where committees_id = :committee_id and emailgroup_id is NULL", nativeQuery = true)
 	List <Emails> findemailswithoutGroup(Long committee_id);
 	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode = :emailRefcode", nativeQuery = true)
 	Emails findByemailRefcodeandCommittee(String emailRefcode, Long committee_id);

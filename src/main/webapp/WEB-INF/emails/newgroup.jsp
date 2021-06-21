@@ -127,7 +127,7 @@
 	            <form:input type="emailgroupName" path="emailgroupName"/>
 	        </p>
 	        <div id="export-choices">
-	        <c:forEach items="${ committee.getEmails() }" var="e">
+	        <c:forEach items="${ emails }" var="e">
 				<input type="checkbox" name="Emails" value="${e.id}">
 				<label for="Emails">${e.getEmailName()}</label><br>
 			</c:forEach>
