@@ -45,6 +45,10 @@ public class EmailService {
 		return erepo.findById(id).orElse(null);
 	}
 	
+	public List<Emails> findEmailswithoutGroup(Long committee_id){
+		return erepo.findemailswithoutGroup(committee_id);
+	}
+	
 	public Emails findEmailbyRefcode(String emailRefcode) {
 		return erepo.findByemailRefcode(emailRefcode);
 	}
