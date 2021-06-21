@@ -90,52 +90,6 @@ public class EmailGroupService {
 					//fix donor count to only count unique
 					emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 					emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
-					/*eaverage = erepo.averages(id, committee_id);
-					donationscount = erepo.donationscount(id, committee_id);
-					donorscount = erepo.donorscount(id, committee_id);
-					emaildata.setEmailsum(esum);
-					emaildata.setDonationcount(donationscount);
-					emaildata.setDonorcount(donorscount);
-					emaildata.setEmailAverage(eaverage);
-					//aggregate functions
-					if (email.getBounces() != null) {
-						//variables for aggregate functions
-						Double unsubs = (double) email.getUnsubscribers();
-						Double receps = (double) email.getRecipients();
-						Double clicks = (double) email.getClicks();
-						Double opens = (double) email.getOpeners();
-						Double bounces = (double) email.getBounces();
-						//functions
-						unsubscribeRate = unsubs/receps;
-						openRate = opens/receps;
-						clickRate = clicks/receps;
-						bounceRate = bounces/receps;
-						clicksOpens = clicks/opens;
-						donationsOpens = donationscount/opens;
-						donationsClicks = donationscount/clicks;
-						donorsOpens = donorscount/opens;
-						donorsClicks = donorscount/clicks;
-					}
-					//setting aggregate functions
-					emaildata.setUnsubscribeRate(unsubscribeRate);
-					emaildata.setOpenRate(openRate);
-					emaildata.setClickRate(clickRate);
-					emaildata.setBounceRate(bounceRate);
-					emaildata.setClicksOpens(clicksOpens);
-					emaildata.setDonationsOpens(donationsOpens);
-					emaildata.setDonationsClicks(donationsClicks);
-					emaildata.setDonorsOpens(donorsOpens);
-					emaildata.setDonorsClicks(donorsClicks);
-					//recurring functions
-					recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
-					recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
-					recurringRevenue = erepo.RecurringDonationSum(id, committee_id);
-					//set recurring functions
-					email.setRecurringDonorCount(recurringDonorCount);
-					email.setRecurringDonationCount(recurringDonationCount);
-					email.setRecurringRevenue(recurringRevenue);
-					erepo.save(email);
-					return datarepo.save(emaildata);*/
 		}
 		if (emailgroup.getGroupBounces() != null) {
 			//average
@@ -160,22 +114,31 @@ public class EmailGroupService {
 			//functions
 			groupunsubscribeRate = unsubs/receps;
 			System.out.println("groupunsubscribeRate " + groupunsubscribeRate);
+			emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
 			groupopenRate = opens/receps;
 			System.out.println("groupopenRate " + groupopenRate);
-			groupopenRate= clicks/receps;
-			System.out.println("groupopenRate " + groupopenRate);
+			emailgroup.setGroupopenRate(groupopenRate);
+			groupclickRate= clicks/receps;
+			System.out.println("groupclickRate " + groupclickRate);
+			emailgroup.setGroupclickRate(groupclickRate);
 			groupbounceRate = bounces/receps;
 			System.out.println("groupbounceRate " + groupbounceRate);
+			emailgroup.setGroupbounceRate(groupbounceRate);
 			groupclicksOpens = clicks/opens;
-			System.out.println("groupclicksOpens) " + groupclicksOpens);
+			System.out.println("groupclicksOpens " + groupclicksOpens);
+			emailgroup.setGroupclicksOpens(groupclicksOpens);
 			groupdonationsOpens = groupdonationcount/opens;
-			System.out.println("groupdonationsOpens) " + groupdonationsOpens);
+			System.out.println("groupdonationsOpens " + groupdonationsOpens);
+			emailgroup.setGroupdonationsOpens(groupdonationsOpens);
 			groupdonationsClicks = groupdonationcount/clicks;
 			System.out.println("groupdonationsClicks " + groupdonationsClicks);
+			emailgroup.setGroupdonationsClicks(groupdonationsClicks);
 			groupdonorsOpens = groupdonorcount/opens;
 			System.out.println("groupdonorsOpens " + groupdonorsOpens);
+			emailgroup.setGroupdonorsOpens(groupdonorsOpens);
 			groupdonorsClicks = groupdonorcount/clicks;
 			System.out.println("groupdonorsClicks " + groupdonorsClicks);
+			emailgroup.setGroupdonorsClicks(groupdonorsClicks);
 		}
 		return egrepo.save(emailgroup);
 	}
