@@ -146,5 +146,83 @@ public class EmailGroup {
 	public void setCommittee(Committees committee) {
 		this.committee = committee;
 	}
+	public Double getGroupaverage() {
+		return groupaverage;
+	}
+	public void setGroupaverage(Double groupaverage) {
+		this.groupaverage = groupaverage;
+	}
+	public Double getGroupsum() {
+		return groupsum;
+	}
+	public void setGroupsum(Double groupsum) {
+		this.groupsum = groupsum;
+	}
+	public Integer getGroupdonationcount() {
+		return groupdonationcount;
+	}
+	public void setGroupdonationcount(Integer groupdonationcount) {
+		this.groupdonationcount = groupdonationcount;
+	}
+	public Integer getGroupdonorcount() {
+		return groupdonorcount;
+	}
+	public void setGroupdonorcount(Integer groupdonorcount) {
+		this.groupdonorcount = groupdonorcount;
+	}
+	public Double getGroupunsubscribeRate() {
+		return groupunsubscribeRate;
+	}
+	public void setGroupunsubscribeRate(Double groupunsubscribeRate) {
+		this.groupunsubscribeRate = groupunsubscribeRate;
+	}
+	public Double getGroupclickRate() {
+		return groupclickRate;
+	}
+	public void setGroupclickRate(Double groupclickRate) {
+		this.groupclickRate = groupclickRate;
+	}
+	public Double getGroupopenRate() {
+		return groupopenRate;
+	}
+	public void setGroupopenRate(Double groupopenRate) {
+		this.groupopenRate = groupopenRate;
+	}
+	public Double getGroupbounceRate() {
+		return groupbounceRate;
+	}
+	public void setGroupbounceRate(Double groupbounceRate) {
+		this.groupbounceRate = groupbounceRate;
+	}
+	public Double getGroupdonationsOpens() {
+		return groupdonationsOpens;
+	}
+	public void setGroupdonationsOpens(Double groupdonationsOpens) {
+		this.groupdonationsOpens = groupdonationsOpens;
+	}
+	public Double getGroupdonationsClicks() {
+		return groupdonationsClicks;
+	}
+	public void setGroupdonationsClicks(Double groupdonationsClicks) {
+		this.groupdonationsClicks = groupdonationsClicks;
+	}
+	public Double getGroupclicksOpens() {
+		return groupclicksOpens;
+	}
+	public void setGroupclicksOpens(Double groupclicksOpens) {
+		this.groupclicksOpens = groupclicksOpens;
+	}
+	public Double getGroupdonorsOpens() {
+		return groupdonorsOpens;
+	}
+	public void setGroupdonorsOpens(Double groupdonorsOpens) {
+		this.groupdonorsOpens = groupdonorsOpens;
+	}
+	public Double getGroupdonorsClicks() {
+		return groupdonorsClicks;
+	}
+	public void setGroupdonorsClicks(Double groupdonorsClicks) {
+		this.groupdonorsClicks = groupdonorsClicks;
+	}
 	
 }
