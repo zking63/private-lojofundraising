@@ -68,7 +68,11 @@ public class EmailService {
 		return drepo.findByemailDonation(id);
 	}
 	public Data getEmailData(Emails email, Long committee_id) {
+		//need to make emaildata find by email id OR add email data to email
 		Data emaildata = email.getEmaildata();
+		if (email.getEmaildata() != null) {
+			System.out.println("email data: " + email.getEmaildata().getId());
+		}
 		String refcode = email.getEmailRefcode();
 		System.out.println("refcode: " + refcode);
 		Long id = email.getId();
@@ -125,6 +129,10 @@ public class EmailService {
 			erepo.save(email);
 			emaildata = new Data(eaverage, esum, donationscount, donorscount, unsubscribeRate, clickRate, 
 					openRate, bounceRate, donationsOpens, donationsClicks, clicksOpens, donorsOpens, donorsClicks, email);
+			datarepo.save(emaildata);
+			if (email.getEmailgroup() != null) {
+				egservice.getEmailGroupData(email.getEmailgroup(), committee_id);
+			}
 			return datarepo.save(emaildata);
 		}
 		else {
@@ -179,6 +187,10 @@ public class EmailService {
 					email.setRecurringDonationCount(recurringDonationCount);
 					email.setRecurringRevenue(recurringRevenue);
 					erepo.save(email);
+					datarepo.save(emaildata);
+					if (email.getEmailgroup() != null) {
+						egservice.getEmailGroupData(email.getEmailgroup(), committee_id);
+					}
 					return datarepo.save(emaildata);
 				}
 			}
