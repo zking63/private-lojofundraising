@@ -93,18 +93,42 @@ public class EmailGroupService {
 							}
 						}
 					}
-					//set email performance info
-					emailgroup.setGroupOpeners(groupOpeners);
-					emailgroup.setGroupRecipients(groupRecipients);
-					emailgroup.setGroupClicks(groupClicks);
-					emailgroup.setGroupBounces(groupBounces);
-					emailgroup.setGroupUnsubscribers(groupUnsubscribers);
-					//set donation info
-					emailgroup.setGroupsum(groupsum);
-					emailgroup.setGroupdonationcount(groupdonationcount);
-					//set recurring info
-					emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
-					emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+					else {
+						//set email performance info
+						emailgroup.setGroupOpeners(groupOpeners);
+						emailgroup.setGroupRecipients(groupRecipients);
+						emailgroup.setGroupClicks(groupClicks);
+						emailgroup.setGroupBounces(groupBounces);
+						emailgroup.setGroupUnsubscribers(groupUnsubscribers);
+						if (email.getEmaildata().getEmailsum() != null) {
+							//calculate donation info
+							groupsum = groupsum + email.getEmaildata().getEmailsum(); 
+							System.out.println(groupsum);
+							groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
+							System.out.println(groupdonationcount);
+							//set donation info
+							emailgroup.setGroupsum(groupsum);
+							emailgroup.setGroupdonationcount(groupdonationcount);
+							if (email.getRecurringDonationCount() != null) {
+								//calculate recurring info
+								groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
+								System.out.println(groupRecurringDonationCount);
+								groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
+								System.out.println(groupRecurringRevenue);
+								//set recurring info
+								emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
+								emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+							}
+						}
+						else {
+							//set donation info
+							emailgroup.setGroupsum(groupsum);
+							emailgroup.setGroupdonationcount(groupdonationcount);
+							//set recurring info
+							emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
+							emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+						}
+					}
 		}
 		if (emailgroup.getGroupdonationcount() != 0) {
 			//average

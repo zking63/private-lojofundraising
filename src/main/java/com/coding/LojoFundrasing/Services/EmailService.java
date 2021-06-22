@@ -69,9 +69,9 @@ public class EmailService {
 	}
 	public Data getEmailData(Emails email, Long committee_id) {
 		//need to make emaildata find by email id OR add email data to email
-		Data emaildata = email.getEmaildata();
-		if (email.getEmaildata() != null) {
-			System.out.println("email data: " + email.getEmaildata().getId());
+		Data emaildata = datarepo.findEmailData(email.getId());
+		if (emaildata != null) {
+			System.out.println("email data: " + emaildata.getId());
 		}
 		String refcode = email.getEmailRefcode();
 		System.out.println("refcode: " + refcode);
