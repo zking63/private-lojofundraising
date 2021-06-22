@@ -52,46 +52,61 @@ public class EmailGroupService {
 			for (int i = 0; i < emailgroup.getEmails().size(); i++) {
 					Emails email = emailgroup.getEmails().get(i);
 					System.out.println(email.getEmailName());
-					//calculate email performance info
-					//need if these aren't null statement
-					System.out.println(groupOpeners);
-					System.out.println(email.getOpeners());
-					groupOpeners = groupOpeners + email.getOpeners();
-					System.out.println(groupOpeners);
-					groupRecipients = groupRecipients + email.getRecipients();
-					System.out.println(groupRecipients);
-					groupClicks = groupClicks + email.getClicks();
-					System.out.println(groupClicks);
-					groupBounces = groupBounces + email.getBounces();
-					System.out.println(groupBounces);
-					groupUnsubscribers = groupUnsubscribers + email.getUnsubscribers();
-					System.out.println(groupUnsubscribers);
+					if (email.getOpeners() != null) {
+						//calculate email performance info
+						System.out.println(groupOpeners);
+						System.out.println(email.getOpeners());
+						groupOpeners = groupOpeners + email.getOpeners();
+						System.out.println(groupOpeners);
+						groupRecipients = groupRecipients + email.getRecipients();
+						System.out.println(groupRecipients);
+						groupClicks = groupClicks + email.getClicks();
+						System.out.println(groupClicks);
+						groupBounces = groupBounces + email.getBounces();
+						System.out.println(groupBounces);
+						groupUnsubscribers = groupUnsubscribers + email.getUnsubscribers();
+						System.out.println(groupUnsubscribers);
+						//set email performance info
+						emailgroup.setGroupOpeners(groupOpeners);
+						emailgroup.setGroupRecipients(groupRecipients);
+						emailgroup.setGroupClicks(groupClicks);
+						emailgroup.setGroupBounces(groupBounces);
+						emailgroup.setGroupUnsubscribers(groupUnsubscribers);
+						if (email.getEmaildata().getEmailsum() != null) {
+							//calculate donation info
+							groupsum = groupsum + email.getEmaildata().getEmailsum(); 
+							System.out.println(groupsum);
+							groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
+							System.out.println(groupdonationcount);
+							//set donation info
+							emailgroup.setGroupsum(groupsum);
+							emailgroup.setGroupdonationcount(groupdonationcount);
+							if (email.getRecurringDonationCount() != null) {
+								//calculate recurring info
+								groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
+								System.out.println(groupRecurringDonationCount);
+								groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
+								System.out.println(groupRecurringRevenue);
+								//set recurring info
+								emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
+								emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+							}
+						}
+					}
 					//set email performance info
 					emailgroup.setGroupOpeners(groupOpeners);
 					emailgroup.setGroupRecipients(groupRecipients);
 					emailgroup.setGroupClicks(groupClicks);
 					emailgroup.setGroupBounces(groupBounces);
 					emailgroup.setGroupUnsubscribers(groupUnsubscribers);
-					//calculate donation info
-					groupsum = groupsum + email.getEmaildata().getEmailsum(); 
-					System.out.println(groupsum);
-					groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
-					System.out.println(groupdonationcount);
 					//set donation info
 					emailgroup.setGroupsum(groupsum);
 					emailgroup.setGroupdonationcount(groupdonationcount);
-					//calculate recurring info
-					//set an if statement if this exists
-					groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
-					System.out.println(groupRecurringDonationCount);
-					groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
-					System.out.println(groupRecurringRevenue);
 					//set recurring info
-					//fix donor count to only count unique
 					emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 					emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
 		}
-		if (emailgroup.getGroupBounces() != null) {
+		if (emailgroup.getGroupdonationcount() != null) {
 			//average
 			groupaverage = groupsum/emailgroup.getGroupdonationcount();
 			emailgroup.setGroupaverage(groupaverage);
@@ -105,40 +120,89 @@ public class EmailGroupService {
 			groupRecurringDonorCount = donrepo.findRecurringDonorsinGroup(committee_id, id);
 			emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
 			System.out.println(groupRecurringDonorCount);
-			//variables for aggregate functions
-			Double unsubs = (double) emailgroup.getGroupUnsubscribers();
-			Double receps = (double) emailgroup.getGroupRecipients();
-			Double clicks = (double) emailgroup.getGroupClicks();
-			Double opens = (double) emailgroup.getGroupOpeners();
-			Double bounces = (double) emailgroup.getGroupBounces();
-			//functions
-			groupunsubscribeRate = unsubs/receps;
-			System.out.println("groupunsubscribeRate " + groupunsubscribeRate);
-			emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
-			groupopenRate = opens/receps;
-			System.out.println("groupopenRate " + groupopenRate);
+			//rate functions 
+			//variables for rate functions
+			Double unsubs = 0.0;
+			Double receps = 0.0;
+			Double clicks = 0.0;
+			Double opens = 0.0;
+			Double bounces = 0.0;
+			if (emailgroup.getGroupRecipients() != null) {
+				receps = (double) emailgroup.getGroupRecipients();
+				if (emailgroup.getGroupOpeners() != null) {
+					//open rate
+					opens = (double) emailgroup.getGroupOpeners();
+					groupopenRate = opens/receps;
+					System.out.println("groupopenRate " + groupopenRate);
+					emailgroup.setGroupopenRate(groupopenRate);
+					//donations/opens
+					groupdonationsOpens = groupdonationcount/opens;
+					System.out.println("groupdonationsOpens " + groupdonationsOpens);
+					emailgroup.setGroupdonationsOpens(groupdonationsOpens);
+					//donors/opens
+					groupdonorsOpens = groupdonorcount/opens;
+					System.out.println("groupdonorsOpens " + groupdonorsOpens);
+					emailgroup.setGroupdonorsOpens(groupdonorsOpens);
+					if (emailgroup.getGroupClicks() != null) {
+						//click rate
+						clicks = (double) emailgroup.getGroupClicks();
+						groupclickRate= clicks/receps;
+						System.out.println("groupclickRate " + groupclickRate);
+						emailgroup.setGroupclickRate(groupclickRate);
+						//clicks/opens
+						groupclicksOpens = clicks/opens;
+						System.out.println("groupclicksOpens " + groupclicksOpens);
+						emailgroup.setGroupclicksOpens(groupclicksOpens);
+						//donations/clicks
+						groupdonationsClicks = groupdonationcount/clicks;
+						System.out.println("groupdonationsClicks " + groupdonationsClicks);
+						emailgroup.setGroupdonationsClicks(groupdonationsClicks);
+						//donors/clicks
+						groupdonorsClicks = groupdonorcount/clicks;
+						System.out.println("groupdonorsClicks " + groupdonorsClicks);
+						emailgroup.setGroupdonorsClicks(groupdonorsClicks);
+						if (emailgroup.getGroupUnsubscribers() != null) {
+							//unsubscribe rate
+							unsubs = (double) emailgroup.getGroupUnsubscribers();
+							groupunsubscribeRate = unsubs/receps;
+							System.out.println("groupunsubscribeRate " + groupunsubscribeRate);
+							emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
+							if (emailgroup.getGroupBounces() != null) {
+								//bounce rate
+								bounces = (double) emailgroup.getGroupBounces();
+								groupbounceRate = bounces/receps;
+								System.out.println("groupbounceRate " + groupbounceRate);
+								emailgroup.setGroupbounceRate(groupbounceRate);
+							}
+						}
+					}
+				}
+			}
+			else {
+				emailgroup.setGroupopenRate(groupopenRate);
+				emailgroup.setGroupdonationsOpens(groupdonationsOpens);
+				emailgroup.setGroupdonorsOpens(groupdonorsOpens);
+				emailgroup.setGroupclickRate(groupclickRate);
+				emailgroup.setGroupclicksOpens(groupclicksOpens);
+				emailgroup.setGroupdonationsClicks(groupdonationsClicks);
+				emailgroup.setGroupdonorsClicks(groupdonorsClicks);
+				emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
+				emailgroup.setGroupbounceRate(groupbounceRate);
+			}
+		}
+		else {
+			emailgroup.setGroupaverage(groupaverage);
+			emailgroup.setGroupdonorcount(groupdonorcount);
+			emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
 			emailgroup.setGroupopenRate(groupopenRate);
-			groupclickRate= clicks/receps;
-			System.out.println("groupclickRate " + groupclickRate);
-			emailgroup.setGroupclickRate(groupclickRate);
-			groupbounceRate = bounces/receps;
-			System.out.println("groupbounceRate " + groupbounceRate);
-			emailgroup.setGroupbounceRate(groupbounceRate);
-			groupclicksOpens = clicks/opens;
-			System.out.println("groupclicksOpens " + groupclicksOpens);
-			emailgroup.setGroupclicksOpens(groupclicksOpens);
-			groupdonationsOpens = groupdonationcount/opens;
-			System.out.println("groupdonationsOpens " + groupdonationsOpens);
 			emailgroup.setGroupdonationsOpens(groupdonationsOpens);
-			groupdonationsClicks = groupdonationcount/clicks;
-			System.out.println("groupdonationsClicks " + groupdonationsClicks);
-			emailgroup.setGroupdonationsClicks(groupdonationsClicks);
-			groupdonorsOpens = groupdonorcount/opens;
-			System.out.println("groupdonorsOpens " + groupdonorsOpens);
 			emailgroup.setGroupdonorsOpens(groupdonorsOpens);
-			groupdonorsClicks = groupdonorcount/clicks;
-			System.out.println("groupdonorsClicks " + groupdonorsClicks);
+			emailgroup.setGroupclickRate(groupclickRate);
+			emailgroup.setGroupclicksOpens(groupclicksOpens);
+			emailgroup.setGroupdonationsClicks(groupdonationsClicks);
 			emailgroup.setGroupdonorsClicks(groupdonorsClicks);
+			emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
+			emailgroup.setGroupbounceRate(groupbounceRate);
 		}
 		return egrepo.save(emailgroup);
 	}
