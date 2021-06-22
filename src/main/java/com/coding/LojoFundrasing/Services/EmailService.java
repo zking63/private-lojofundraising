@@ -13,6 +13,7 @@ import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.DonorData;
+import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Repos.DataRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
@@ -28,6 +29,9 @@ public class EmailService {
 	
 	@Autowired
 	private DonationRepo drepo;
+	
+	@Autowired
+	private EmailGroupService egservice;
 	
 	public Emails createEmail(Emails email) {
 		return erepo.save(email);
@@ -63,20 +67,6 @@ public class EmailService {
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
 	}
-	/*public Double getDoubleFormatted(Double number) {
-		if (number == null) {
-			number = 0.0;
-		}
-		double number1 = (double) number;
-		DecimalFormat df = new DecimalFormat("0.00000000");
-		System.out.println("number1: " + df.format(number1));
-		BigDecimal bd = new BigDecimal(number1);
-		//Double numberfinal = Double.parseDouble(df.format(number1));
-		Double numberfinal = Double.parseDouble(df.format(bd));
-		System.out.println("number2: " + numberfinal);
-		System.out.println("double:\t\t\t\t\t" + bd.doubleValue());
-		return numberfinal;
-	}*/
 	public Data getEmailData(Emails email, Long committee_id) {
 		Data emaildata = email.getEmaildata();
 		String refcode = email.getEmailRefcode();
@@ -191,6 +181,10 @@ public class EmailService {
 					erepo.save(email);
 					return datarepo.save(emaildata);
 				}
+			}
+			datarepo.save(emaildata);
+			if (email.getEmailgroup() != null) {
+				egservice.getEmailGroupData(email.getEmailgroup(), committee_id);
 			}
 			return datarepo.save(emaildata);
 		}
