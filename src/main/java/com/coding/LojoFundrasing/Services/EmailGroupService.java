@@ -106,7 +106,7 @@ public class EmailGroupService {
 					emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 					emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
 		}
-		if (emailgroup.getGroupdonationcount() != null) {
+		if (emailgroup.getGroupdonationcount() != 0) {
 			//average
 			groupaverage = groupsum/emailgroup.getGroupdonationcount();
 			emailgroup.setGroupaverage(groupaverage);
@@ -127,9 +127,11 @@ public class EmailGroupService {
 			Double clicks = 0.0;
 			Double opens = 0.0;
 			Double bounces = 0.0;
-			if (emailgroup.getGroupRecipients() != null) {
+			if (emailgroup.getGroupRecipients() != 0) {
+				System.out.println("recipients");
 				receps = (double) emailgroup.getGroupRecipients();
-				if (emailgroup.getGroupOpeners() != null) {
+				System.out.println("recipients: " + receps);
+				if (emailgroup.getGroupOpeners() != 0) {
 					//open rate
 					opens = (double) emailgroup.getGroupOpeners();
 					groupopenRate = opens/receps;
@@ -143,7 +145,7 @@ public class EmailGroupService {
 					groupdonorsOpens = groupdonorcount/opens;
 					System.out.println("groupdonorsOpens " + groupdonorsOpens);
 					emailgroup.setGroupdonorsOpens(groupdonorsOpens);
-					if (emailgroup.getGroupClicks() != null) {
+					if (emailgroup.getGroupClicks() != 0) {
 						//click rate
 						clicks = (double) emailgroup.getGroupClicks();
 						groupclickRate= clicks/receps;
@@ -161,13 +163,13 @@ public class EmailGroupService {
 						groupdonorsClicks = groupdonorcount/clicks;
 						System.out.println("groupdonorsClicks " + groupdonorsClicks);
 						emailgroup.setGroupdonorsClicks(groupdonorsClicks);
-						if (emailgroup.getGroupUnsubscribers() != null) {
+						if (emailgroup.getGroupUnsubscribers() != 0) {
 							//unsubscribe rate
 							unsubs = (double) emailgroup.getGroupUnsubscribers();
 							groupunsubscribeRate = unsubs/receps;
 							System.out.println("groupunsubscribeRate " + groupunsubscribeRate);
 							emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
-							if (emailgroup.getGroupBounces() != null) {
+							if (emailgroup.getGroupBounces() != 0) {
 								//bounce rate
 								bounces = (double) emailgroup.getGroupBounces();
 								groupbounceRate = bounces/receps;
