@@ -116,9 +116,13 @@
             </li>
         </ul>
         </div>
-        <div class="user-form">
 		<h2>Create a new email group</h2>
-	    <form:form method="POST" action="/emails/new/group" modelAttribute="emailgroup">
+		<form method="post" class="date-form" action="/emails/new/group">
+			<input type="date" value="${startdateE}" name="startdateE"/>
+			<input type="date" value="${enddateE}" name="enddateE"/>
+			<button>Set</button>
+		</form>
+	    <form:form method="POST" action="/emails/new/group/post" modelAttribute="emailgroup">
 	    	<form:hidden value="${ user.id }" path="group_creator"/>
 	    	<form:hidden value="${ committee.id }" path="committee"/>
 	    	<p>

@@ -49,8 +49,9 @@ public class EmailService {
 		return erepo.findById(id).orElse(null);
 	}
 	
-	public List<Emails> findEmailswithoutGroup(Long committee_id){
-		return erepo.findemailswithoutGroup(committee_id);
+	public List<Emails> findEmailswithoutGroup(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return erepo.findemailswithoutGroup(startdateE, enddateE, committee_id);
 	}
 	
 	public Emails findEmailbyRefcode(String emailRefcode) {

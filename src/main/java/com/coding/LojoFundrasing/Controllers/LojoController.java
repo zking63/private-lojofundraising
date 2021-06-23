@@ -459,14 +459,44 @@ public class LojoController {
 		 model.addAttribute("enddateE", enddateE);
 		 model.addAttribute("committee", committee);
 		 model.addAttribute("committees", committees);
-		 model.addAttribute("emails", eservice.findEmailswithoutGroup(committee_id));
+		 model.addAttribute("emails", eservice.findEmailswithoutGroup(startdateE, enddateE, committee_id));
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 return "/emails/newgroup.jsp";
 	 }
-	 @PostMapping("/emails/new/group")
+	 @RequestMapping("/emails/new/group/select")
+	 public String SelectDatesNewEmailGroup(@ModelAttribute("emailgroup") EmailGroup emailgroup, Model model, 
+			 HttpSession session, @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
+			 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, HttpServletRequest request) {
+		 Long user_id = (Long)session.getAttribute("user_id");
+		 Long committee_id = (Long)session.getAttribute("committee_id");
+		 if (user_id == null) {
+			 return "redirect:/";
+		 }
+		 String pagename = request.getRequestURL().toString();
+		 System.out.println("page: " + pagename);
+		 session.setAttribute("page", pagename);
+		 if (startdateE == null) {
+			 startdateE = dateFormat7daysAgo();
+		 }
+		 if (enddateE == null) {
+			 enddateE = dateFormat();
+		 }
+		 Committees committee = cservice.findbyId(committee_id);
+		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+		 model.addAttribute("startdateE", startdateE);
+		 model.addAttribute("enddateE", enddateE);
+		 model.addAttribute("committee", committee);
+		 model.addAttribute("committees", committees);
+		 model.addAttribute("emails", eservice.findEmailswithoutGroup(startdateE, enddateE, committee_id));
+		 User user = uservice.findUserbyId(user_id);
+		 model.addAttribute("user", user);
+		 return "/emails/newgroup.jsp";
+	 }
+	 @PostMapping("/emails/new/group/post")
 	 public String CreateEmailGroup(@ModelAttribute("emailgroup") EmailGroup emailgroup, Model model, 
-			 HttpSession session, HttpServletRequest request) {
+			 HttpSession session, @Param("startdateE") @DateTimeFormat(iso = ISO.DATE) String startdateE, 
+			 @Param("enddateE") @DateTimeFormat(iso = ISO.DATE) String enddateE, HttpServletRequest request) {
 		 Long user_id = (Long)session.getAttribute("user_id");
 		 Long committee_id = (Long)session.getAttribute("committee_id");
 		 if (user_id == null) {
@@ -479,7 +509,7 @@ public class LojoController {
 		 List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 		 model.addAttribute("committee", committee);
 		 model.addAttribute("committees", committees);
-		 model.addAttribute("emails", eservice.findEmailswithoutGroup(committee_id));
+		 model.addAttribute("emails", eservice.findEmailswithoutGroup(startdateE, enddateE, committee_id));
 		 User user = uservice.findUserbyId(user_id);
 		 model.addAttribute("user", user);
 		 this.egservice.createEmailGroup(emailgroup);

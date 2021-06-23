@@ -92,6 +92,14 @@ public class EmailGroupService {
 								emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
 							}
 						}
+						else {
+							//set donation info
+							emailgroup.setGroupsum(groupsum);
+							emailgroup.setGroupdonationcount(groupdonationcount);
+							//set recurring info
+							emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
+							emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+						}
 					}
 					else {
 						//set email performance info
