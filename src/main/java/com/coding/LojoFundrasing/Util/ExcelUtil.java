@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -263,7 +264,13 @@ public class ExcelUtil {
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
 										System.out.println(dateValue1);
-										date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										if (dateValue1.contains("/")) {
+											date = new SimpleDateFormat("MM/dd/yy HH:mm:ss a").parse(dateValue1);
+											date.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+										}
+										else if(dateValue1.contains("-")) {
+											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
+										}
 										//date = new SimpleDateFormat("MM/dd/YY").parse(dateValue1);
 										System.out.println("Simple date: " + date);
 									}
