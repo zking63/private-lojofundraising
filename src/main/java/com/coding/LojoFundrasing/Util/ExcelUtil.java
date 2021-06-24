@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -263,10 +265,14 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
-										System.out.println(dateValue1);
+										System.out.println("date value " + dateValue1);
 										if (dateValue1.contains("/")) {
-											date = new SimpleDateFormat("MM/dd/yy HH:mm:ss a").parse(dateValue1);
-											date.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+											date = new SimpleDateFormat("MM/dd/yy HH:mm").parse(dateValue1);
+											DateTimeFormatter formatterNew = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+											SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+											String strDate = dt.format(date);
+											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
+											System.out.println("Simple date: " + date);
 										}
 										else if(dateValue1.contains("-")) {
 											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
