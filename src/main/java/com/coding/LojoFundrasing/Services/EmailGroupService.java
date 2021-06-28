@@ -75,9 +75,9 @@ public class EmailGroupService {
 						if (email.getEmaildata().getEmailsum() != null) {
 							//calculate donation info
 							groupsum = groupsum + email.getEmaildata().getEmailsum(); 
-							System.out.println(groupsum);
+							System.out.println("group sum: " + groupsum);
 							groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
-							System.out.println(groupdonationcount);
+							System.out.println("group donation count: " + groupdonationcount);
 							//set donation info
 							emailgroup.setGroupsum(groupsum);
 							emailgroup.setGroupdonationcount(groupdonationcount);

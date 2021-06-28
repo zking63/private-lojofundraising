@@ -124,6 +124,9 @@ public class EmailService {
 			recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
 			recurringRevenue = erepo.RecurringDonationSum(id, committee_id);
 			//set recurring functions
+			if (recurringDonationCount == null) {
+				System.out.println("recurringDonationCount: " + "null");
+			}
 			email.setRecurringDonorCount(recurringDonorCount);
 			email.setRecurringDonationCount(recurringDonationCount);
 			email.setRecurringRevenue(recurringRevenue);
@@ -180,6 +183,12 @@ public class EmailService {
 					emaildata.setDonorsOpens(donorsOpens);
 					emaildata.setDonorsClicks(donorsClicks);
 					//recurring functions
+					if (recurringDonationCount == null) {
+						System.out.println("recurringDonationCount: " + "null");
+					}
+					else {
+						System.out.println("recurringDonationCount: " + recurringDonationCount);
+					}
 					recurringDonorCount = erepo.RecurringDonorCount(id, committee_id);
 					recurringDonationCount = erepo.RecurringDonationCount(id, committee_id);
 					recurringRevenue = erepo.RecurringDonationSum(id, committee_id);
