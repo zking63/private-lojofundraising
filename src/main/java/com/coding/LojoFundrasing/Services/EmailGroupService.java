@@ -85,8 +85,13 @@ public class EmailGroupService {
 								//calculate recurring info
 								groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
 								System.out.println(groupRecurringDonationCount);
-								groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
-								System.out.println(groupRecurringRevenue);
+								if (email.getRecurringRevenue() != null) {
+									groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
+									System.out.println("r revenue" + groupRecurringRevenue);
+								}
+								else {
+									groupRecurringRevenue = groupRecurringRevenue + 0.0;
+								}
 								//set recurring info
 								emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 								emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
@@ -121,8 +126,13 @@ public class EmailGroupService {
 								//calculate recurring info
 								groupRecurringDonationCount = groupRecurringDonationCount + email.getRecurringDonationCount();
 								System.out.println(groupRecurringDonationCount);
-								groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
-								System.out.println(groupRecurringRevenue);
+								if (email.getRecurringRevenue() != null) {
+									groupRecurringRevenue = groupRecurringRevenue + email.getRecurringRevenue();
+									System.out.println("r revenue" + groupRecurringRevenue);
+								}
+								else {
+									groupRecurringRevenue = groupRecurringRevenue + 0.0;
+								}
 								//set recurring info
 								emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
 								emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
