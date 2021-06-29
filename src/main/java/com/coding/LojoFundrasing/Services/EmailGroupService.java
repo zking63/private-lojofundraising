@@ -3,6 +3,8 @@ package com.coding.LojoFundrasing.Services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Data;
@@ -249,5 +251,9 @@ public class EmailGroupService {
 			emailgroup.setGroupbounceRate(groupbounceRate);
 		}
 		return egrepo.save(emailgroup);
+	}
+	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return egrepo.findGroupByOrderByDesc(startdateE, enddateE, committee_id);
 	}
 }

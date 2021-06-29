@@ -1145,6 +1145,11 @@ public class LojoController {
 				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
 				 excelService.exportEmailsToExcel(emails, input, response);
 			 }
+			 if (field == 0) {
+				 System.out.println("Emails Groups");
+				 List<EmailGroup> emailgroups = egservice.EmailGroupList(startdateD, enddateD, committee_id);
+				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
+			 }
 			 String message = "What are you exporting?";
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
