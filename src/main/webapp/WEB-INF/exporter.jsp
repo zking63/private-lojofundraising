@@ -37,23 +37,33 @@
         <label for="field">${message}</label>
 		<select onchange="this.form.submit()" id="field" name="field">
 		<c:choose>
-			<c:when test="${ field == 1}">
+			<c:when test="${ field == 0}">
+				<option name="field" value="0">Email groups</option>
 				<option name="field" value="1">Emails</option>
 		        <option name="field" value="2">Donations</option>
 		        <option name="field" value="3">Donors</option>
 			</c:when>
+			<c:when test="${ field == 1}">
+				<option name="field" value="1">Emails</option>
+		        <option name="field" value="2">Donations</option>
+		        <option name="field" value="3">Donors</option>
+		        <option name="field" value="0">Email groups</option>
+			</c:when>
 			<c:when test="${ field == 2}">
 				<option name="field" value="2">Donations</option>
 				<option name="field" value="1">Emails</option>
+				<option name="field" value="0">Email groups</option>
 		        <option name="field" value="3">Donors</option>
 			</c:when>
 			<c:when test="${ field == 3}">
 				<option name="field" value="3">Donors</option>
-				<option name="field" value="2">Donations</option>
+				<option name="field" value="0">Email groups</option>
 				<option name="field" value="1">Emails</option>
+				<option name="field" value="2">Donations</option>
 			</c:when>
 			<c:otherwise>
 				<option name="field" value="4">Select</option>
+				<option name="field" value="0">Email groups</option>
 				<option name="field" value="1">Emails</option>
 		        <option name="field" value="2">Donations</option>
 		        <option name="field" value="3">Donors</option>
@@ -71,6 +81,52 @@
 		</div>
 		<p></p>
 		<c:choose>
+			<c:when test="${ field == 0}">
+			<div id="export-choices">
+				<input type="checkbox" id="input" name="input" value="Clicks">
+				<label for="input"> Clicks</label><br>
+				<input type="checkbox" id="input" name="input" value="Opens">
+				<label for="input"> Opens</label><br>
+				<input type="checkbox" id="input" name="input" value="Bounces">
+				<label for="input"> Bounces</label><br>	
+				<input type="checkbox" id="input" name="input" value="Unsubscribes">
+				<label for="input"> Unsubscribes</label><br>	
+				<input type="checkbox" id="input" name="input" value="Open rate">
+				<label for="input"> Open rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Click rate">
+				<label for="input"> Click rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Unsubscribe rate">	
+				<label for="input"> Unsubscribe rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Bounce rate">
+				<label for="input"> Bounce rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Clicks/opens">	
+				<label for="input"> Clicks per open</label><br>	
+				<input type="checkbox" id="input" name="input" value="Revenue">
+				<label for="input"> Revenue</label><br>		
+				</div>
+				<div id="export-choices">
+				<input type="checkbox" id="input" name="input" value="Donations">	
+				<label for="input"> Donations</label><br>	
+				<input type="checkbox" id="input" name="input" value="Donors">
+				<label for="input"> Donors</label><br>	
+				<input type="checkbox" id="input" name="input" value="Average donation">
+				<label for="input"> Average donation</label><br>	
+				<input type="checkbox" id="input" name="input" value="Donations/open">
+				<label for="input"> Donations per open</label><br>
+				<input type="checkbox" id="input" name="input" value="Donations/click">
+				<label for="input"> Donations per click</label><br>
+				<input type="checkbox" id="input" name="input" value="Donors/open">
+				<label for="input"> Donors per open</label><br>
+				<input type="checkbox" id="input" name="input" value="Donors/click">
+				<label for="input"> Donors per click</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring donations">
+				<label for="input"> Recurring donations</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring donors">
+				<label for="input"> Recurring donors</label><br>
+				<input type="checkbox" id="input" name="input" value="Recurring revenue">
+				<label for="input"> Recurring revenue</label><br>
+				</div>
+			</c:when>
 			<c:when test="${ field == 1}">
 			<div id="export-choices">
 				<input type="checkbox" id="input" name="input" value="Clicks">
