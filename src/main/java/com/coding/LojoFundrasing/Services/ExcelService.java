@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
+import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
@@ -79,6 +80,17 @@ public class ExcelService {
         response.setHeader(headerKey, headerValue);
         
         excelUtil.Emailexporter(emails, input, response);
+    } 
+    public void exportEmailGroupsToExcel(List<EmailGroup> emailgroups, List<String> input, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=emailgroups_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        
+        excelUtil.EmailGroupexporter(emailgroups, input, response);
     } 
     public void exportDonationsToExcel(List<Donation> donations, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");

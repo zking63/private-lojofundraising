@@ -1118,7 +1118,7 @@ public class ExcelUtil {
         DataFormatter dataFormatter = new DataFormatter();
         
         //write header lines
-        sheet = workbook.createSheet("Emails");
+        sheet = workbook.createSheet("Email Groups");
         
         Row row = sheet.createRow(0);
          
