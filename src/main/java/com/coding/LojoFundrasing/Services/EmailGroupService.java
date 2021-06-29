@@ -1,5 +1,6 @@
 package com.coding.LojoFundrasing.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -254,6 +255,14 @@ public class EmailGroupService {
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
-		return egrepo.findGroupByOrderByDesc(startdateE, enddateE, committee_id);
+		List <EmailGroup> emails = new ArrayList <EmailGroup>();
+		System.out.println("made it to service ");
+		List<Long> Ids = egrepo.findGroupByOrderByDesc(startdateE, enddateE, committee_id);
+		System.out.println("ids size " + Ids.size());
+		for (int i = 0; i < Ids.size(); i++) {
+			emails.add(egrepo.findbyIdandCommittee(Ids.get(i), committee_id));
+		}
+		System.out.println("emails size " + emails.size());
+		return emails;
 	}
 }

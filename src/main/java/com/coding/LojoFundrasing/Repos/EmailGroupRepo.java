@@ -13,7 +13,9 @@ import com.coding.LojoFundrasing.Models.EmailGroup;
 @Repository
 public interface EmailGroupRepo extends CrudRepository<EmailGroup, Long>{
 	List<EmailGroup> findAll();
-	@Query(value = "SELECT * FROM emailgroups LEFT JOIN emails ON emails.emailgroup_id = emailgroups.id WHERE emailgroups.committees_id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Desc", nativeQuery = true)
-	List<EmailGroup> findGroupByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+	@Query(value = "SELECT * FROM emailgroups WHERE emailgroups.id = :id and emailgroups.committees_id = :committee_id", nativeQuery = true)
+	EmailGroup findbyIdandCommittee(Long id, Long committee_id);
+	@Query(value = "SELECT DISTINCT(emailgroups.id) FROM emailgroups LEFT JOIN emails ON emails.emailgroup_id = emailgroups.id WHERE emailgroups.committees_id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY)", nativeQuery = true)
+	List<Long> findGroupByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
 }
