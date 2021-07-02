@@ -1006,14 +1006,21 @@ public class LojoController {
 			return "redirect:/home";
 		}
 		@RequestMapping(value="/import/emails")
-		public String importEmails(HttpSession session, Model model) {
+		public String importEmails(HttpSession session, Model model, HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
 			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			model.addAttribute("user", user);
 			return "importemails.jsp";
 		}
 		@PostMapping("/import/emails")
@@ -1176,6 +1183,6 @@ public class LojoController {
 			 Committees committee = cservice.findbyId(committee_id);
 			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
-			 return "exporter.jsp";
+			 return "export.jsp";
 	    } 
 }
