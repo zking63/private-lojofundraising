@@ -1051,12 +1051,22 @@ public class LojoController {
 		}
 	    @RequestMapping("/export")
 	    public String exportPage(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD,  
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, HttpServletRequest request,   
 				 HttpServletResponse response) throws IOException {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
 			 if (startdateD == null) {
 				 startdateD = dateFormat();
 			 }
@@ -1069,22 +1079,27 @@ public class LojoController {
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("field", field);
-			 User user = uservice.findUserbyId(user_id);
-			 Long committee_id = (Long)session.getAttribute("committee_id");
-			 Committees committee = cservice.findbyId(committee_id);
-			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
 	    @GetMapping("/export/select")
 	    public String exportType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, HttpServletRequest request,  
 				 HttpServletResponse response) throws IOException {
 			 Long user_id = (Long)session.getAttribute("user_id");
-			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
 			 if (startdateD == null) {
 				 startdateD = dateFormat();
 			 }
@@ -1101,9 +1116,6 @@ public class LojoController {
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("field", field);
 			 model.addAttribute("enddateD", enddateD);
-			 User user = uservice.findUserbyId(user_id);
-			 Committees committee = cservice.findbyId(committee_id);
-			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
