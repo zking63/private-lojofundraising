@@ -1132,7 +1132,7 @@ public class ExcelUtil {
         createCell(row, 1, "Email Group", style); 
         createCell(row, 2, "Recipients", style);
         
-        int columnCount = 7;
+        int columnCount = 3;
         Cell cell = row.createCell(columnCount);
         
             for (int i = 0; i < input.size(); i++) {
@@ -1267,7 +1267,7 @@ public class ExcelUtil {
         bodyfont.setFontHeight(14);
         bodyStyle.setFont(bodyfont);
                  
-        for (int i = 0; i < emails.size(); i++) {
+        for (int i = 0; i < emailgroup.size(); i++) {
             row = sheet.createRow(rowCount++);
             columnCount = 0;
             createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getId()), bodyStyle);

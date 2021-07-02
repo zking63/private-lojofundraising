@@ -1149,6 +1149,10 @@ public class LojoController {
 				 System.out.println("Emails Groups");
 				 List<EmailGroup> emailgroups = egservice.EmailGroupList(startdateD, enddateD, committee_id);
 				 System.out.println("Emails Groups size " + emailgroups.size());
+				 for (int i = 0; i < emailgroups.size(); i++) {
+					 EmailGroup emailgroup = emailgroups.get(i);
+					 this.egservice.getEmailGroupData(emailgroup, committee_id);
+				 }
 				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
 			 }
 			 String message = "What are you exporting?";
