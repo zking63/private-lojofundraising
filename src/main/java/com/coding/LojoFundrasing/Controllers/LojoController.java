@@ -985,13 +985,21 @@ public class LojoController {
 		 }
 		 //imports
 		@RequestMapping(value="/import/donations")
-		public String importdonations(HttpSession session) {
+		public String importdonations(HttpSession session, Model model, HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
 			 if (user_id == null) {
 				 return "redirect:/";
 			 }
+			 User user = uservice.findUserbyId(user_id);
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			model.addAttribute("user", user);
 			return "import.jsp";
 		}
 		@PostMapping("/import/donations")
