@@ -48,6 +48,9 @@ public class Contenttest {
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="test_id")
+    private test bigtest;
 	
 	public Contenttest() {
 		
@@ -251,6 +254,14 @@ public class Contenttest {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public test getBigtest() {
+		return bigtest;
+	}
+
+	public void setBigtest(test bigtest) {
+		this.bigtest = bigtest;
 	}
 	
 	
