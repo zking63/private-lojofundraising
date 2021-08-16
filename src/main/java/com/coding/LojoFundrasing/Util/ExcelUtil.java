@@ -1497,14 +1497,11 @@ public class ExcelUtil {
 	            Row row = rowIterator.next();
 	             Iterator<Cell> cellIterator = row.cellIterator();
 	                while(cellIterator.hasNext()) {
-
-	                   
 	                	Cell cell = cellIterator.next();
-	                	System.out.println("CELL: " + cell.getAddress());
+	                	//System.out.println("CELL: " + cell.getAddress());
 						if (row.getRowNum() == 0) {
 							//header = cell.getAddress();
 							header = cell;
-							System.out.println("Header: " + header);
 							headers.add(header);
 							//System.out.println("Header column: " + header.getColumn());
 							
@@ -1581,7 +1578,6 @@ public class ExcelUtil {
 								variantBGOColumn  = header.getColumnIndex();
 								System.out.println("VARIANT B GIFT/OPEN: " + headerValue);
 							}
-							System.out.println("Headers: " + headers);
 						}
 						/*else if (row.getRowNum() > 0){
 							//if (refcode == null) {
