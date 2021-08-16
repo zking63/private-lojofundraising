@@ -59,6 +59,20 @@ public class ExcelService {
 	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
   }
+	public void readTestData(Long user_id, MultipartFile multipartFile, Committees committee) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+
+		String filepath = excelUrl + multipartFile.getOriginalFilename();
+
+		byte[] bytes = multipartFile.getBytes();
+		java.nio.file.Path path = Paths.get(excelUrl + multipartFile.getOriginalFilename());
+		Files.write(path, bytes);
+
+
+		excelUtil.getSheetDetails(filepath);
+		System.out.println("made it past get sheet details");
+	 /*response=*/	excelUtil.readExcelSheetTest(filepath, user_id, committee);
+	 System.out.println("made it through read excel!!!");
+  }
     public void exportToExcel(List<Donor> donors, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
