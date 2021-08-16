@@ -1430,7 +1430,7 @@ public class ExcelUtil {
 	
 		
 		// Getting the Sheet at index zero
-		/*for (int i = 0; i < x; i++) {
+		for (int i = 0; i < x; i++) {
 
 			Sheet sheet1 = workbook.getSheetAt(i);
 			
@@ -1444,48 +1444,52 @@ public class ExcelUtil {
 
 			// Create a DataFormatter to format and get each cell's value as String
 			DataFormatter dataFormatter = new DataFormatter();
-			int NameColumn = 0;
-			int EmailColumn = 0;
-			int LastNameColumn = 0;
-			int AmountColumn = 0;
-			int TimeColumn = 0;
-			int RefcodeColumn = 0;
-			int DateColumn = 0;
-			int AbIdColumn = 0;
-			int RecurringColumn = 0;
-			int RecurrenceColumn = 0;
-			int addressColumn = 0;
-			int cityColumn = 0;
-			int zipColumn = 0;
-			int stateColumn = 0; 
-			int countryColumn = 0;
-			int phoneColumn = 0;
+			int dateColumn = 0;
+			int typeColumn = 0;
+			int listColumn = 0;
+			int recipientNumberColumn = 0;
+			int nameColumn = 0;
+			int jtkColumn = 0;
+			int topicColumn = 0;
+			int testColumn = 0;
+			int fulllistColumn = 0;
+			int goWinnerColumn = 0;
+			int clickrcvColumn = 0;
+			int variantAColumn = 0;
+			int variantARecipientNumberColumn = 0;
+			int variantAOpenRateColumn = 0; 
+			int variantAClickRateColumn = 0;
+			int variantAOpensColumn = 0;
+			int variantAGOColumn = 0;
+			int variantBColumn = 0;
+			int variantBRecipientNumberColumn = 0;
+			int variantBOpenRateColumn = 0; 
+			int variantBClickRateColumn = 0;
+			int variantBOpensColumn = 0;
+			int variantBGOColumn = 0;
 			User uploader = uservice.findUserbyId(user_id);
-			String address = null;
-			String city = null;
-			String state = null;
-			String Zipcode = null;
-			String country = null;
-			String phone = null;
-			String emailValue = null;
-			String nameValue = null;
-			String LNValue = null;
-			Double amount = null;
-			String refcode = null;
-			String ActBlueId = null;
-			String Recurring = null;
-			Integer Recurrence = null;
-			Date date = null;
-			Donor donor = null;
-			Date dateValue = new Date();
-			Date timeValue = null;
-			Donation donation  = null;
-			Emails email = null;
-			List<Emails> emails = null;
-        	List<Committees> committees = null;
-        	List<Donation> donations = null;
-        	List<Donation> emaildonations = null;
-        	List<Donor> donors = null;
+			Date senddate = null;
+			String type = null;
+			String RecipientsList = null;
+			Long recipients = null;
+			String name = null;
+			String jtk = null;
+			String topic = null;
+			String test = null;
+			String fullistWinner = null;
+			String GoWinner = null;
+			String ClickRcvWinner = null;
+			String VariantA = null;
+			Long ARecipientNumber = null;
+			Double AClickRate = null;
+			Long AOpens = null;
+			Double AGiftOpens = null;
+			String VariantB = null;
+			Long BRecipientNumber = null;
+			Double BClickRate = null;
+			Long BOpens = null;
+			Double BGiftOpens = null;
+
 			System.out.println("The sheet number is " + i + 1);
 			// 2. Or you can use a for-each loop to iterate over the rows and columns
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
@@ -1505,56 +1509,81 @@ public class ExcelUtil {
 							//System.out.println("Header column: " + header.getColumn());
 							
 							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
-							if (headerValue.contains("FIRST NAME")) {
-								NameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("LAST NAME")) {
-								LastNameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("EMAIL")) {
-								EmailColumn = header.getColumnIndex();
-								System.out.println("refcode: " + headerValue);
-							}
-							if (headerValue.contains("REFERENCE CODE")) {
-								RefcodeColumn = header.getColumnIndex();
-								System.out.println("refcode: " + headerValue);
-							}
-							if (headerValue.contains("AMOUNT")) {
-								AmountColumn = header.getColumnIndex();
-							}
 							if (headerValue.contains("DATE")) {
-								DateColumn = header.getColumnIndex();
+								dateColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("RECEIPT")) {
-								AbIdColumn = header.getColumnIndex();
+							if (headerValue.contains("RS")) {
+								typeColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("RECURRING")) {
-								RecurringColumn = header.getColumnIndex();
+							if (headerValue.contains("RECIPIENTS LIST")) {
+								listColumn  = header.getColumnIndex();
+								System.out.println("RECIPIENTS LIST: " + headerValue);
 							}
-							if (headerValue.contains("RECURRENCE")) {
-								RecurrenceColumn = header.getColumnIndex();
+							if (headerValue.contains("TOTAL NUMBER OF RECIPIENTS")) {
+								recipientNumberColumn = header.getColumnIndex();
+								System.out.println("RECIPIENTS NUMBER: " + headerValue);
 							}
-							if (headerValue.contains("ADDR")) {
-								addressColumn = header.getColumnIndex();
+							if (headerValue.contains("(ACOUSTIC NAME)")) {
+								nameColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("CITY")) {
-								cityColumn = header.getColumnIndex();
+							if (headerValue.contains("JTK")) {
+								jtkColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("STATE")) {
-								stateColumn = header.getColumnIndex();
+							if (headerValue.contains("TOPIC")) {
+								topicColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("ZIP")) {
-								zipColumn = header.getColumnIndex();
+							if (headerValue.contains("TESTING FACTOR")) {
+								testColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("COUNTRY")) {
-								countryColumn = header.getColumnIndex();
+							if (headerValue.contains("FULL LIST")) {
+								fulllistColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("PHONE")) {
-								phoneColumn = header.getColumnIndex();
+							if (headerValue.contains("G/O WINNER")) {
+								goWinnerColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("CLK/RCV WINNER")) {
+								clickrcvColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A")) {
+								variantAColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A RECIPIENT NUMBER")) {
+								variantARecipientNumberColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A OPEN RATE (OPN/RCV)")) {
+								variantAOpenRateColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A CLICK RATE")) {
+								variantAClickRateColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A OPENS")) {
+								variantAOpensColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT A GIFT/OPEN")) {
+								variantAGOColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B")) {
+								variantBColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B RECIPIENT NUMBER")) {
+								variantBRecipientNumberColumn = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B OPEN RATE (OPN/RCV)")) {
+								variantBOpenRateColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B CLICK RATE")) {
+								variantBClickRateColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B OPENS")) {
+								variantBOpensColumn  = header.getColumnIndex();
+							}
+							if (headerValue.contains("VARIANT B GIFT/OPEN")) {
+								variantBGOColumn  = header.getColumnIndex();
+								System.out.println("VARIANT B GIFT/OPEN: " + headerValue);
 							}
 							System.out.println("Headers: " + headers);
 						}
-						else if (row.getRowNum() > 0){
+						/*else if (row.getRowNum() > 0){
 							//if (refcode == null) {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
@@ -1815,11 +1844,11 @@ public class ExcelUtil {
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
 									}
-							}
+							}*/
 		    	        }
 
 	            }
-		}*/
+		}
 	}
     
 }
