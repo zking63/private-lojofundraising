@@ -35,6 +35,7 @@ public class Contenttest {
 	private String VariantA;
 	private Long ARecipientNumber;
 	private Double AClickRate;
+	private Double AOpenRate;
 	private Long AOpens;
 	private Double AGiftOpens;
 	private String VariantB;
@@ -42,6 +43,7 @@ public class Contenttest {
 	private Double BClickRate;
 	private Long BOpens;
 	private Double BGiftOpens;
+	private Double BOpenRate;
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="committees_id")
     private Committees committee;
@@ -262,6 +264,22 @@ public class Contenttest {
 
 	public void setBigtest(test bigtest) {
 		this.bigtest = bigtest;
+	}
+
+	public Double getAOpenRate() {
+		return AOpenRate;
+	}
+
+	public void setAOpenRate(Double aOpenRate) {
+		AOpenRate = aOpenRate;
+	}
+
+	public Double getBOpenRate() {
+		return BOpenRate;
+	}
+
+	public void setBOpenRate(Double bOpenRate) {
+		BOpenRate = bOpenRate;
 	}
 	
 	
