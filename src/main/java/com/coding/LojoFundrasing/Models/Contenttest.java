@@ -20,7 +20,7 @@ public class Contenttest {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@DateTimeFormat(pattern ="dd/MM/yyyy")
+	@DateTimeFormat(pattern ="MM/dd/yyyy")
 	private Date senddate;
 	private String type;
 	private String RecipientsList;

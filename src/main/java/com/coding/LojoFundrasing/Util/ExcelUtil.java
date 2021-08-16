@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -1510,6 +1511,7 @@ public class ExcelUtil {
 							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
 							if (headerValue.contains("DATE")) {
 								dateColumn = header.getColumnIndex();
+								System.out.println("date column: " + dateColumn);
 							}
 							if (headerValue.contains("RS")) {
 								typeColumn = header.getColumnIndex();
@@ -1543,8 +1545,9 @@ public class ExcelUtil {
 							if (headerValue.contains("CLK/RCV WINNER")) {
 								clickrcvColumn = header.getColumnIndex();
 							}
-							if (headerValue.contains("VARIANT A")) {
+							if (headerValue.contains("VARIANT A TEST")) {
 								variantAColumn = header.getColumnIndex();
+								System.out.println("VARIANT A: " + variantAColumn);
 							}
 							if (headerValue.contains("VARIANT A RECIPIENT NUMBER")) {
 								variantARecipientNumberColumn  = header.getColumnIndex();
@@ -1554,6 +1557,7 @@ public class ExcelUtil {
 							}
 							if (headerValue.contains("VARIANT A CLICK RATE")) {
 								variantAClickRateColumn  = header.getColumnIndex();
+								System.out.println("variantAClickRateColumn: " + variantAClickRateColumn );
 							}
 							if (headerValue.contains("VARIANT A OPENS")) {
 								variantAOpensColumn = header.getColumnIndex();
@@ -1561,7 +1565,7 @@ public class ExcelUtil {
 							if (headerValue.contains("VARIANT A GIFT/OPEN")) {
 								variantAGOColumn  = header.getColumnIndex();
 							}
-							if (headerValue.contains("VARIANT B")) {
+							if (headerValue.contains("VARIANT B TEST")) {
 								variantBColumn = header.getColumnIndex();
 							}
 							if (headerValue.contains("VARIANT B RECIPIENT NUMBER")) {
@@ -1569,6 +1573,7 @@ public class ExcelUtil {
 							}
 							if (headerValue.contains("VARIANT B OPEN RATE (OPN/RCV)")) {
 								variantBOpenRateColumn  = header.getColumnIndex();
+								System.out.println("variantBOpenRateColumn: " + variantBOpenRateColumn);
 							}
 							if (headerValue.contains("VARIANT B CLICK RATE")) {
 								variantBClickRateColumn  = header.getColumnIndex();
@@ -1585,14 +1590,11 @@ public class ExcelUtil {
 							//if (refcode == null) {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
+									System.out.println("CELL: " + cell);
+									System.out.println("CELL COLUMN: " + cell.getColumnIndex());
 									if (cell.getColumnIndex() == jtkColumn) {
 										jtk = dataFormatter.formatCellValue(cell);
 										System.out.println("jtk:" + jtk);
-									}
-									else if (cell.getColumnIndex() == typeColumn) {
-										System.out.println("type TWO: " + type);
-										type = dataFormatter.formatCellValue(cell);
-										System.out.println(type);
 									}
 									else if (cell.getColumnIndex() == listColumn) {
 										RecipientsList = dataFormatter.formatCellValue(cell);
@@ -1600,7 +1602,6 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == recipientNumberColumn) {
 										String recipients1 = dataFormatter.formatCellValue(cell);
-										//recipients = Double.parseDouble(recipients);
 										System.out.println(recipients1);
 									}
 									else if (cell.getColumnIndex() == nameColumn) {
@@ -1608,20 +1609,14 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == dateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
-										System.out.println("date value " + dateValue1);
-										if (dateValue1.contains("/")) {
-											senddate = new SimpleDateFormat("MM/dd/yy HH:mm").parse(dateValue1);
-											DateTimeFormatter formatterNew = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-											SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-											String strDate = dt.format(senddate);
-											senddate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
-											System.out.println("Simple date: " + senddate);
-										}
-										else if(dateValue1.contains("-")) {
-											senddate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
-										}
-										//date = new SimpleDateFormat("MM/dd/YY").parse(dateValue1);
-										System.out.println("Simple date: " + senddate);
+										System.out.println("dateValue1: " + dateValue1);
+										SimpleDateFormat form = new SimpleDateFormat("MMM.dd.yyyy", Locale.US);
+										Date date = form.parse(dateValue1);
+										System.out.println("date: " + date);
+										SimpleDateFormat dt = new SimpleDateFormat("MM/dd/yyyy");
+										String strDate = dt.format(date);
+										senddate = new SimpleDateFormat("MM/dd/yyyy").parse(strDate);
+										System.out.println("send date: " + senddate);
 									}
 									else if (cell.getColumnIndex() == topicColumn) {
 										topic = dataFormatter.formatCellValue(cell);
@@ -1648,7 +1643,8 @@ public class ExcelUtil {
 										System.out.println("VariantA : " + VariantA);
 									}
 									else if (cell.getColumnIndex() == variantARecipientNumberColumn) {
-										ARecipientNumber = dataFormatter.formatCellValue(cell);
+										String ARecipientNumber1 = dataFormatter.formatCellValue(cell);
+										ARecipientNumber = Long.parseLong(ARecipientNumber1);
 										System.out.println("ARecipientNumber: " + ARecipientNumber);
 									}
 									else if (cell.getColumnIndex() == variantAOpenRateColumn) {
@@ -1658,11 +1654,13 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == variantAClickRateColumn) {
 										String AClickRate1 = dataFormatter.formatCellValue(cell);
+										System.out.println("AClickRate1: " + AClickRate1);
 										AClickRate = Double.parseDouble(AClickRate1);
 										System.out.println("AClickRate: " + AClickRate);
 									}
 									else if (cell.getColumnIndex() == variantAOpensColumn) {
-										AOpens = dataFormatter.formatCellValue(cell);
+										String AOpens1 = dataFormatter.formatCellValue(cell);
+										AOpens = Long.parseLong(AOpens1);
 										System.out.println("AOpens: " + AOpens);
 									}
 									else if (cell.getColumnIndex() == variantAGOColumn) {
@@ -1675,27 +1673,32 @@ public class ExcelUtil {
 										System.out.println("VariantB: " + VariantB);
 									}
 									else if (cell.getColumnIndex() == variantBRecipientNumberColumn) {
-										BRecipientNumber  = dataFormatter.formatCellValue(cell);
+										String BRecipientNumber1  = dataFormatter.formatCellValue(cell);
+										BRecipientNumber = Long.parseLong(BRecipientNumber1);
 										System.out.println("BRecipientNumber: " + BRecipientNumber);
 									}
 									else if (cell.getColumnIndex() == variantBOpenRateColumn) {
+										System.out.println("cell: " + cell);
 										String BOpenRate1 = dataFormatter.formatCellValue(cell);
+										System.out.println("BOpenRate1: " + BOpenRate1);
 										BOpenRate = Double.parseDouble(BOpenRate1);
 										System.out.println("BOpenRate: " + BOpenRate);
 									}
 									else if (cell.getColumnIndex() == variantBClickRateColumn) {
+										System.out.println("BClickRate: " + cell);
 										String BClickRate1 = dataFormatter.formatCellValue(cell);
 										BClickRate = Double.parseDouble(BClickRate1);
 										System.out.println("BClickRate: " + BClickRate);
 									}
 									else if (cell.getColumnIndex() == variantBOpensColumn) {
-										BOpens = dataFormatter.formatCellValue(cell);
+										String BOpens1 = dataFormatter.formatCellValue(cell);
+										BOpens = Long.parseLong(BOpens1);
 										System.out.println("BOpens: " + BOpens);
 									}
 									else if (cell.getColumnIndex() == variantBGOColumn) {
 										String BGiftOpens1 = dataFormatter.formatCellValue(cell);
 										BGiftOpens  = Double.parseDouble(BGiftOpens1);
-										System.out.println("Refcode: " + refcode);
+										/*System.out.println("Refcode: " + refcode);
 										System.out.println("EMAIL AFTER: " + emailValue);
 										System.out.println("REFCODE AFTER: " + refcode);
 										System.out.println("Name AFTER: " + nameValue);
@@ -1877,8 +1880,8 @@ public class ExcelUtil {
 					    	        	Recurring = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
-									}
-							}*/
+									}*/
+							}
 		    	        }
 
 	            }
@@ -1886,3 +1889,5 @@ public class ExcelUtil {
 	}
     
 }
+}
+	
