@@ -42,6 +42,9 @@ public class Committees {
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
 	private List<Contenttest> contenttest;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
+	private List<test> bigtest;
 	
 	public Committees() {
 		
@@ -87,6 +90,18 @@ public class Committees {
 	}
 	public void setEmailgroups(List<EmailGroup> emailgroups) {
 		this.emailgroups = emailgroups;
+	}
+	public List<Contenttest> getContenttest() {
+		return contenttest;
+	}
+	public void setContenttest(List<Contenttest> contenttest) {
+		this.contenttest = contenttest;
+	}
+	public List<test> getBigtest() {
+		return bigtest;
+	}
+	public void setBigtest(List<test> bigtest) {
+		this.bigtest = bigtest;
 	}
 	
 }
