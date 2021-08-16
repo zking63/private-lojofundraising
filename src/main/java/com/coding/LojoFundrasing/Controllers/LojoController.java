@@ -1193,4 +1193,34 @@ public class LojoController {
 			 model.addAttribute("user", user);
 			 return "export.jsp";
 	    } 
+		@RequestMapping(value="/import/test")
+		public String importTests(HttpSession session, Model model, HttpServletRequest request) {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			model.addAttribute("user", user);
+			return "importemails.jsp";
+		}
+		@PostMapping("/import/test")
+		public String readExceltest(HttpSession session, MultipartFile file, Model model) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
+			excelService.readEmailData(user_id, file, committee);
+			return "redirect:/home";
+		}
 }
