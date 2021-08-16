@@ -1482,11 +1482,13 @@ public class ExcelUtil {
 			String VariantA = null;
 			Long ARecipientNumber = null;
 			Double AClickRate = null;
+			Double AOpenRate = null;
 			Long AOpens = null;
 			Double AGiftOpens = null;
 			String VariantB = null;
 			Long BRecipientNumber = null;
 			Double BClickRate = null;
+			Double BOpenRate = null;
 			Long BOpens = null;
 			Double BGiftOpens = null;
 
@@ -1650,44 +1652,49 @@ public class ExcelUtil {
 										System.out.println("ARecipientNumber: " + ARecipientNumber);
 									}
 									else if (cell.getColumnIndex() == variantAOpenRateColumn) {
+										String AOpenRate1 = dataFormatter.formatCellValue(cell);
+										AOpenRate = Double.parseDouble(AOpenRate1);
+										System.out.println("AOpenRate: " + AOpenRate);
+									}
+									else if (cell.getColumnIndex() == variantAClickRateColumn) {
 										String AClickRate1 = dataFormatter.formatCellValue(cell);
 										AClickRate = Double.parseDouble(AClickRate1);
 										System.out.println("AClickRate: " + AClickRate);
 									}
-									else if (cell.getColumnIndex() == variantAClickRateColumn) {
-										Recurrence = Integer.parseInt(dataFormatter.formatCellValue(cell));
-										System.out.println("Recurrence: " + Recurrence);
-									}
 									else if (cell.getColumnIndex() == variantAOpensColumn) {
-										address = dataFormatter.formatCellValue(cell);
-										System.out.println("Address: " + address);
+										AOpens = dataFormatter.formatCellValue(cell);
+										System.out.println("AOpens: " + AOpens);
 									}
 									else if (cell.getColumnIndex() == variantAGOColumn) {
-										city = dataFormatter.formatCellValue(cell);
-										System.out.println("City: " + city);
+										String AGiftOpens1 = dataFormatter.formatCellValue(cell);
+										AGiftOpens = Double.parseDouble(AGiftOpens1);
+										System.out.println("AGiftOpens: " + AGiftOpens);
 									}
 									else if (cell.getColumnIndex() == variantBColumn) {
-										state = dataFormatter.formatCellValue(cell);
-										System.out.println("State: " + state);
+										VariantB = dataFormatter.formatCellValue(cell);
+										System.out.println("VariantB: " + VariantB);
 									}
 									else if (cell.getColumnIndex() == variantBRecipientNumberColumn) {
-										Zipcode = dataFormatter.formatCellValue(cell);
-										System.out.println("Zip: " + Zipcode);
+										BRecipientNumber  = dataFormatter.formatCellValue(cell);
+										System.out.println("BRecipientNumber: " + BRecipientNumber);
 									}
 									else if (cell.getColumnIndex() == variantBOpenRateColumn) {
-										country = dataFormatter.formatCellValue(cell);
-										System.out.println("Country: " + country);
+										String BOpenRate1 = dataFormatter.formatCellValue(cell);
+										BOpenRate = Double.parseDouble(BOpenRate1);
+										System.out.println("BOpenRate: " + BOpenRate);
 									}
 									else if (cell.getColumnIndex() == variantBClickRateColumn) {
-										phone = dataFormatter.formatCellValue(cell);
-										System.out.println("Phone: " + phone);
+										String BClickRate1 = dataFormatter.formatCellValue(cell);
+										BClickRate = Double.parseDouble(BClickRate1);
+										System.out.println("BClickRate: " + BClickRate);
 									}
 									else if (cell.getColumnIndex() == variantBOpensColumn) {
-										phone = dataFormatter.formatCellValue(cell);
-										System.out.println("Phone: " + phone);
+										BOpens = dataFormatter.formatCellValue(cell);
+										System.out.println("BOpens: " + BOpens);
 									}
 									else if (cell.getColumnIndex() == variantBGOColumn) {
-										refcode = dataFormatter.formatCellValue(cell);
+										String BGiftOpens1 = dataFormatter.formatCellValue(cell);
+										BGiftOpens  = Double.parseDouble(BGiftOpens1);
 										System.out.println("Refcode: " + refcode);
 										System.out.println("EMAIL AFTER: " + emailValue);
 										System.out.println("REFCODE AFTER: " + refcode);
