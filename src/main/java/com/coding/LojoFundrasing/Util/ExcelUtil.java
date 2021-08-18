@@ -1782,18 +1782,21 @@ public class ExcelUtil {
 								    		   if (tservice.findTestByNameandCommittee(test, committee.getId()) == null) {
 								    			   bigtest = new test();
 								    			   bigtest.setTestcategory(test);
-								    			   content = bigtest.getContent();
-								    			   content.add(contenttest);
-								    			   bigtest.setContent(content);
+										    	   tservice.createTest(bigtest);
+										    	   contenttest.setBigtest(bigtest);
 								    		   }
 								    		   else {
 								    			   bigtest = tservice.findTestByNameandCommittee(test, committee.getId()); 
-								    			   content = bigtest.getContent();
-								    			   content.add(contenttest);
-								    			   bigtest.setContent(content);
+								    			   bigtest.setTestcategory(test);
+										    	   tservice.createTest(bigtest);
+										    	   contenttest.setBigtest(bigtest);
 								    		   }
 					    	        	}
 							    	   ctservice.createContentTest(contenttest);
+							    	   content = bigtest.getContent();
+					    			   bigtest.setContent(content);
+					    			   content.add(contenttest);
+					    			   bigtest.setContent(content);
 							    	   tservice.createTest(bigtest);
 					    	        	/*System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	//committees.add(committee);
