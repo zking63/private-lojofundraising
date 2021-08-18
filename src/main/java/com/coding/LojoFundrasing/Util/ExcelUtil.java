@@ -34,11 +34,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.coding.LojoFundrasing.Models.Committees;
+import com.coding.LojoFundrasing.Models.Contenttest;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
+import com.coding.LojoFundrasing.Services.ContentTestService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
@@ -54,6 +56,8 @@ public class ExcelUtil {
 	private DonationService donservice;
 	@Autowired
 	private UserService uservice;
+	@Autowired
+	private ContentTestService ctservice;
 	
 	public String getRateFormatted(Double number) {
 		if (number == null) {
@@ -63,6 +67,11 @@ public class ExcelUtil {
 		DecimalFormat df = new DecimalFormat("0.00000");
 		String numberfinal = df.format(number1); 
 		return numberfinal;
+	}
+	
+	private String dateFormat() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(new Date());
 	}
 	
 	public void getSheetDetails(String excelPath)
@@ -1468,6 +1477,7 @@ public class ExcelUtil {
 			int variantBClickRateColumn = 0;
 			int variantBOpensColumn = 0;
 			int variantBGOColumn = 0;
+			Contenttest contenttest = null;
 			User uploader = uservice.findUserbyId(user_id);
 			String senddate = null;
 			String type = null;
@@ -1602,7 +1612,11 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == recipientNumberColumn) {
 										String recipients1 = dataFormatter.formatCellValue(cell);
+										recipients = Long.parseLong(recipients1);
 										System.out.println(recipients1);
+									}
+									else if (cell.getColumnIndex() == typeColumn) {
+										type = dataFormatter.formatCellValue(cell);
 									}
 									else if (cell.getColumnIndex() == nameColumn) {
 										name = dataFormatter.formatCellValue(cell);
@@ -1690,70 +1704,65 @@ public class ExcelUtil {
 									else if (cell.getColumnIndex() == variantBGOColumn) {
 										String BGiftOpens1 = dataFormatter.formatCellValue(cell);
 										BGiftOpens  = Double.parseDouble(BGiftOpens1);
-							    	   /*if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
-					    	        	donor = new Donor();
-					    	        	//System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	donor.setUploader(uploader);
-					    	        	donor.setCommittee(committee);
-					    	        	donor.setAddress(address);
-					    	        	donor.setCity(city);
-					    	        	donor.setCountry(country);
-					    	        	donor.setPhone(phone);
-					    	        	donor.setZipcode(Zipcode);
-					    	        	donor.setState(state);
-					    	        	donors = committee.getDonors();
-					    	        	donors.add(donor);
-					    	        	committee.setDonors(donors);
-					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-					    	        	dservice.createDonor(donor);
-					    	        	Long id = donor.getId();
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setActBlueId(ActBlueId);
-					    	        	donation.setRecurrenceNumber(Recurrence);
-					    	        	donation.setRecurring(Recurring);
-					    	        	System.out.println("donation recurring " + donation.getRecurring());
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonation_uploader(uploader);
-					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-					    	        	donation.setCommittee(committee);
-					    	        	donations = committee.getDonations();
-					    	        	donations.add(donation);
-					    	        	committee.setDonations(donations);
-					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
-					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0001-01-01 01:01";
-					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-					    	        		email = new Emails();
-						    	        	email.setEmailName(null);
-						    	        	email.setEmaildate(undate);
-						    	        	email.setEmailRefcode(refcode);
-						    	        	email.setBounces(null);
-						    	        	email.setClicks(null);
-						    	        	email.setOpeners(null);
-						    	        	email.setRecipients(null);
-						    	        	email.setUnsubscribers(null);
-						    	        	email.setExcludedList(null);
-						    	        	email.setList(null);
-						    	        	email.setEmail_uploader(uploader);
-						    	        	email.setCommittee(committee);
-						    	        	emails = committee.getEmails();
-						    	        	emails.add(email);
-						    	        	committee.setEmails(emails);
-						    	        	eservice.createEmail(email);
-						    	        	String tempname = "Null" + email.getId();
-						    	        	email.setEmailName(tempname);
-						    	        	System.out.println("TEMP NAME: " + tempname);
-						    	        	eservice.createEmail(email);
-						    	        	donation.setEmailDonation(email);
+							    	   if (ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId()) == null) {
+							    		   contenttest = new Contenttest();
+							    		   contenttest.setAClickRate(AClickRate);
+							    		   contenttest.setSenddate(senddate);
+							    		   contenttest.setType(type);
+							    		   contenttest.setTest(test);
+							    		   contenttest.setTopic(topic);
+							    		   contenttest.setRecipientsList(RecipientsList);
+							    		   contenttest.setRecipients(recipients);
+							    		   contenttest.setName(name);
+							    		   contenttest.setJtk(jtk);
+							    		   contenttest.setFullistWinner(fullistWinner);
+							    		   contenttest.setGoWinner(GoWinner);
+							    		   contenttest.setClickRcvWinner(ClickRcvWinner);
+							    		   contenttest.setVariantA(VariantA);
+							    		   contenttest.setARecipientNumber(ARecipientNumber);
+							    		   contenttest.setAClickRate(AClickRate);
+							    		   contenttest.setAOpenRate(AOpenRate);
+							    		   contenttest.setAOpens(AOpens);
+							    		   contenttest.setAGiftOpens(AGiftOpens);
+							    		   contenttest.setVariantB(VariantB);
+							    		   contenttest.setBRecipientNumber(BRecipientNumber);
+							    		   contenttest.setBClickRate(BClickRate);
+							    		   contenttest.setBOpenRate(BOpenRate);
+							    		   contenttest.setBOpens(BOpens);
+							    		   contenttest.setBGiftOpens(BGiftOpens);
+							    		   contenttest.setCommittee(committee);
 					    	        	}
 					    	        	else {
-					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+								    		   contenttest = ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId());
+								    		   System.out.println("test: " + ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId()).getId());
+								    		   contenttest.setAClickRate(AClickRate);
+								    		   contenttest.setSenddate(senddate);
+								    		   contenttest.setType(type);
+								    		   contenttest.setTest(test);
+								    		   contenttest.setTopic(topic);
+								    		   contenttest.setRecipientsList(RecipientsList);
+								    		   contenttest.setRecipients(recipients);
+								    		   contenttest.setName(name);
+								    		   contenttest.setJtk(jtk);
+								    		   contenttest.setFullistWinner(fullistWinner);
+								    		   contenttest.setGoWinner(GoWinner);
+								    		   contenttest.setClickRcvWinner(ClickRcvWinner);
+								    		   contenttest.setVariantA(VariantA);
+								    		   contenttest.setARecipientNumber(ARecipientNumber);
+								    		   contenttest.setAClickRate(AClickRate);
+								    		   contenttest.setAOpenRate(AOpenRate);
+								    		   contenttest.setAOpens(AOpens);
+								    		   contenttest.setAGiftOpens(AGiftOpens);
+								    		   contenttest.setVariantB(VariantB);
+								    		   contenttest.setBRecipientNumber(BRecipientNumber);
+								    		   contenttest.setBClickRate(BClickRate);
+								    		   contenttest.setBOpenRate(BOpenRate);
+								    		   contenttest.setBOpens(BOpens);
+								    		   contenttest.setBGiftOpens(BGiftOpens);
+								    		   contenttest.setCommittee(committee);
 					    	        	}
-					    	        	System.out.println("committee after: " + committee.getCommitteeName());
+							    	   ctservice.createContentTest(contenttest);
+					    	        	/*System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	//committees.add(committee);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
 					    	        	donservice.createDonation(donation);
