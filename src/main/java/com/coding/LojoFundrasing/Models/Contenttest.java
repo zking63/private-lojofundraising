@@ -20,8 +20,7 @@ public class Contenttest {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@DateTimeFormat(pattern ="MM/dd/yyyy")
-	private Date senddate;
+	private String senddate;
 	private String type;
 	private String RecipientsList;
 	private Long recipients;
@@ -66,11 +65,11 @@ public class Contenttest {
 		this.id = id;
 	}
 
-	public Date getSenddate() {
+	public String getSenddate() {
 		return senddate;
 	}
 
-	public void setSenddate(Date senddate) {
+	public void setSenddate(String senddate) {
 		this.senddate = senddate;
 	}
 

@@ -1469,7 +1469,7 @@ public class ExcelUtil {
 			int variantBOpensColumn = 0;
 			int variantBGOColumn = 0;
 			User uploader = uservice.findUserbyId(user_id);
-			Date senddate = null;
+			String senddate = null;
 			String type = null;
 			String RecipientsList = null;
 			Long recipients = null;
@@ -1590,8 +1590,8 @@ public class ExcelUtil {
 							//if (refcode == null) {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
-									System.out.println("CELL: " + cell);
-									System.out.println("CELL COLUMN: " + cell.getColumnIndex());
+									//System.out.println("CELL: " + cell);
+									//System.out.println("CELL COLUMN: " + cell.getColumnIndex());
 									if (cell.getColumnIndex() == jtkColumn) {
 										jtk = dataFormatter.formatCellValue(cell);
 										System.out.println("jtk:" + jtk);
@@ -1608,15 +1608,7 @@ public class ExcelUtil {
 										name = dataFormatter.formatCellValue(cell);
 									}
 									else if (cell.getColumnIndex() == dateColumn) {
-										String dateValue1 = dataFormatter.formatCellValue(cell);
-										System.out.println("dateValue1: " + dateValue1);
-										SimpleDateFormat form = new SimpleDateFormat("MMM.dd.yyyy", Locale.US);
-										Date date = form.parse(dateValue1);
-										System.out.println("date: " + date);
-										SimpleDateFormat dt = new SimpleDateFormat("MM/dd/yyyy");
-										String strDate = dt.format(date);
-										senddate = new SimpleDateFormat("MM/dd/yyyy").parse(strDate);
-										System.out.println("send date: " + senddate);
+										senddate = dataFormatter.formatCellValue(cell);
 									}
 									else if (cell.getColumnIndex() == topicColumn) {
 										topic = dataFormatter.formatCellValue(cell);
@@ -1698,24 +1690,7 @@ public class ExcelUtil {
 									else if (cell.getColumnIndex() == variantBGOColumn) {
 										String BGiftOpens1 = dataFormatter.formatCellValue(cell);
 										BGiftOpens  = Double.parseDouble(BGiftOpens1);
-										/*System.out.println("Refcode: " + refcode);
-										System.out.println("EMAIL AFTER: " + emailValue);
-										System.out.println("REFCODE AFTER: " + refcode);
-										System.out.println("Name AFTER: " + nameValue);
-										System.out.println("LN AFTER: " + LNValue);
-										System.out.println("AMOUNT AFTER: " + amount);
-										System.out.println("DATE AFTER: " + date);
-										System.out.println("UPLOADER: " + uploader.getId());
-										System.out.println("AB ID: " + ActBlueId);
-										System.out.println("RECURRING AFTER: " + Recurring);
-										System.out.println("Recurrence: " + Recurrence);
-										System.out.println("ADDRESS AFTER: " + address);
-										System.out.println("CITY AFTER: " + city);
-										System.out.println("STATE AFTER: " + state);
-										System.out.println("COUNTRY AFTER: " + country);
-										System.out.println("PHONE AFTER: " + phone);
-										System.out.println("ZIP AFTER: " + Zipcode);
-							    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
+							    	   /*if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
 					    	        	donor = new Donor();
 					    	        	//System.out.println("ID: " + id);
 					    	        	donor.setDonorFirstName(nameValue);
