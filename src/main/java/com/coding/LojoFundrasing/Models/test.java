@@ -31,6 +31,9 @@ public class test {
     private Integer goWinnerCountType2;
     private Integer clickWinnerCountType2;
     private Integer fullsendCountType2;
+    private Integer goWinnerCountType;
+    private Integer clickWinnerCountType;
+    private Integer fullsendCountType;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -103,6 +106,31 @@ public class test {
 	}
 	public void setClickWinnerCountType2(Integer clickWinnerCountType2) {
 		this.clickWinnerCountType2 = clickWinnerCountType2;
+	}
+	
+	public Integer getFullsendCountType2() {
+		return fullsendCountType2;
+	}
+	public void setFullsendCountType2(Integer fullsendCountType2) {
+		this.fullsendCountType2 = fullsendCountType2;
+	}
+	public Integer getGoWinnerCountType() {
+		return goWinnerCountType;
+	}
+	public void setGoWinnerCountType(Integer goWinnerCountType) {
+		this.goWinnerCountType = goWinnerCountType;
+	}
+	public Integer getClickWinnerCountType() {
+		return clickWinnerCountType;
+	}
+	public void setClickWinnerCountType(Integer clickWinnerCountType) {
+		this.clickWinnerCountType = clickWinnerCountType;
+	}
+	public Integer getFullsendCountType() {
+		return fullsendCountType;
+	}
+	public void setFullsendCountType(Integer fullsendCountType) {
+		this.fullsendCountType = fullsendCountType;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
