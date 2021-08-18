@@ -25,9 +25,12 @@ public class test {
     private String testcategory;
     private String VariantA;
     private String VariantB;
-    private Integer goWinnerCount;
-    private Integer clickWinnerCount;
-    private Integer fullsendCount;
+    private Integer goWinnerCountType1;
+    private Integer clickWinnerCountType1;
+    private Integer fullsendCountType1;
+    private Integer goWinnerCountType2;
+    private Integer clickWinnerCountType2;
+    private Integer fullsendCountType2;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -64,23 +67,42 @@ public class test {
 	public void setVariantB(String variantB) {
 		VariantB = variantB;
 	}
-	public Integer getGoWinnerCount() {
-		return goWinnerCount;
+	public Integer getGoWinnerCountType1() {
+		return goWinnerCountType1;
 	}
-	public void setGoWinnerCount(Integer goWinnerCount) {
-		this.goWinnerCount = goWinnerCount;
+	public void setGoWinnerCountType1(Integer goWinnerCountType1) {
+		this.goWinnerCountType1 = goWinnerCountType1;
 	}
-	public Integer getClickWinnerCount() {
-		return clickWinnerCount;
+	public Integer getClickWinnerCountType11() {
+		return clickWinnerCountType1;
 	}
-	public void setClickWinnerCount(Integer clickWinnerCount) {
-		this.clickWinnerCount = clickWinnerCount;
+	public void setClickWinnerCountType1(Integer clickWinnerCountType1) {
+		this.clickWinnerCountType1 = clickWinnerCountType1;
 	}
-	public Integer getFullsendCount() {
-		return fullsendCount;
+	public Integer getFullsendCountType1() {
+		return fullsendCountType1;
 	}
-	public void setFullsendCount(Integer fullsendCount) {
-		this.fullsendCount = fullsendCount;
+	public void setFullsendCountType1(Integer fullsendCountType1) {
+		this.fullsendCountType1 = fullsendCountType1;
+	}
+	
+	public Integer getClickWinnerCountType1() {
+		return clickWinnerCountType1;
+	}
+	public void setClickWinnerCountType11(Integer clickWinnerCountType1) {
+		this.clickWinnerCountType1 = clickWinnerCountType1;
+	}
+	public Integer getGoWinnerCountType2() {
+		return goWinnerCountType2;
+	}
+	public void setGoWinnerCountType2(Integer goWinnerCountType2) {
+		this.goWinnerCountType2 = goWinnerCountType2;
+	}
+	public Integer getClickWinnerCountType2() {
+		return clickWinnerCountType2;
+	}
+	public void setClickWinnerCountType2(Integer clickWinnerCountType2) {
+		this.clickWinnerCountType2 = clickWinnerCountType2;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
