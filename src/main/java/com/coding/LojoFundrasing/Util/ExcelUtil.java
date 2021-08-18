@@ -40,10 +40,12 @@ import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
+import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Services.ContentTestService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
+import com.coding.LojoFundrasing.Services.TestService;
 import com.coding.LojoFundrasing.Services.UserService;
 
 @Component
@@ -58,6 +60,8 @@ public class ExcelUtil {
 	private UserService uservice;
 	@Autowired
 	private ContentTestService ctservice;
+	@Autowired
+	private TestService tservice;
 	
 	public String getRateFormatted(Double number) {
 		if (number == null) {
@@ -1478,6 +1482,8 @@ public class ExcelUtil {
 			int variantBOpensColumn = 0;
 			int variantBGOColumn = 0;
 			Contenttest contenttest = null;
+			test bigtest = null;
+			List<Contenttest> content = null;
 			User uploader = uservice.findUserbyId(user_id);
 			String senddate = null;
 			String type = null;
@@ -1731,6 +1737,19 @@ public class ExcelUtil {
 							    		   contenttest.setBOpens(BOpens);
 							    		   contenttest.setBGiftOpens(BGiftOpens);
 							    		   contenttest.setCommittee(committee);
+							    		   if (tservice.findTestByNameandCommittee(test, committee.getId()) == null) {
+							    			   bigtest = new test();
+							    			   bigtest.setTestcategory(test);
+							    			   content = bigtest.getContent();
+							    			   content.add(contenttest);
+							    			   bigtest.setContent(content);
+							    		   }
+							    		   else {
+							    			   bigtest = tservice.findTestByNameandCommittee(test, committee.getId()); 
+							    			   content = bigtest.getContent();
+							    			   content.add(contenttest);
+							    			   bigtest.setContent(content);
+							    		   }
 					    	        	}
 					    	        	else {
 								    		   contenttest = ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId());
@@ -1760,8 +1779,22 @@ public class ExcelUtil {
 								    		   contenttest.setBOpens(BOpens);
 								    		   contenttest.setBGiftOpens(BGiftOpens);
 								    		   contenttest.setCommittee(committee);
+								    		   if (tservice.findTestByNameandCommittee(test, committee.getId()) == null) {
+								    			   bigtest = new test();
+								    			   bigtest.setTestcategory(test);
+								    			   content = bigtest.getContent();
+								    			   content.add(contenttest);
+								    			   bigtest.setContent(content);
+								    		   }
+								    		   else {
+								    			   bigtest = tservice.findTestByNameandCommittee(test, committee.getId()); 
+								    			   content = bigtest.getContent();
+								    			   content.add(contenttest);
+								    			   bigtest.setContent(content);
+								    		   }
 					    	        	}
 							    	   ctservice.createContentTest(contenttest);
+							    	   tservice.createTest(bigtest);
 					    	        	/*System.out.println("committee after: " + committee.getCommitteeName());
 					    	        	//committees.add(committee);
 					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
