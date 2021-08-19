@@ -72,78 +72,25 @@ public class TestService {
     private Integer fullsendCountType;*/
 	
 	public void TestVariables(Contenttest content) {
-		Integer count = 0;
 		test test = content.getBigtest();
 		AddContenttoTest(content);
 		System.out.println("content size: " + test.getContent().size());
 		test.setFullsendCountType(test.getContent().size());
+		System.out.println("content size: " + test.getFullsendCountType());
 		test.setClickWinnerCountType(test.getContent().size());
 		test.setGoWinnerCountType(test.getContent().size());
 		if (test.getVariantA() == null && test.getVariantB() == null) {
 			test.setVariantA(content.getVariantA());
-			test.setVariantA(content.getVariantB());
-			if (content.getGoWinner() == test.getVariantA()) {
-				count = test.getGoWinnerCountType1();
-				count++;
-				test.setGoWinnerCountType1(count);
-			}
-			if (content.getGoWinner() == test.getVariantB()) {
-				count = test.getGoWinnerCountType2();
-				count++;
-				test.setGoWinnerCountType2(count);
-			}
-			if (content.getClickRcvWinner() == test.getVariantA()) {
-				count = test.getClickWinnerCountType1();
-				count++;
-				test.setClickWinnerCountType1(count);
-			}
-			if (content.getClickRcvWinner() == test.getVariantB()) {
-				count = test.getClickWinnerCountType2();
-				count++;
-				test.setClickWinnerCountType2(count);
-			}
-			if (content.getFullistWinner() == test.getVariantA()) {
-				count = test.getFullsendCountType1();
-				count++;
-				test.setFullsendCountType1(count);
-			}
-			if (content.getFullistWinner() == test.getVariantB()) {
-				count = test.getFullsendCountType2();
-				count++;
-				test.setFullsendCountType2(count);
-			}
+			test.setVariantB(content.getVariantB());
+			System.out.println("variant A: " + test.getVariantA());
+			System.out.println("variant B: " + test.getVariantB());
 		}
-		else {
-			if (content.getGoWinner() == test.getVariantA()) {
-				count = test.getGoWinnerCountType1();
-				count++;
-				test.setGoWinnerCountType1(count);
-			}
-			if (content.getGoWinner() == test.getVariantB()) {
-				count = test.getGoWinnerCountType2();
-				count++;
-				test.setGoWinnerCountType2(count);
-			}
-			if (content.getClickRcvWinner() == test.getVariantA()) {
-				count = test.getClickWinnerCountType1();
-				count++;
-				test.setClickWinnerCountType1(count);
-			}
-			if (content.getClickRcvWinner() == test.getVariantB()) {
-				count = test.getClickWinnerCountType2();
-				count++;
-				test.setClickWinnerCountType2(count);
-			}
-			if (content.getFullistWinner() == test.getVariantA()) {
-				count = test.getFullsendCountType1();
-				count++;
-				test.setFullsendCountType1(count);
-			}
-			if (content.getFullistWinner() == test.getVariantB()) {
-				count = test.getFullsendCountType2();
-				count++;
-				test.setFullsendCountType2(count);
-			}
-		}
+		test.setGoWinnerCountType1(ctrepo.VariantAGoWinnerCount(test.getId(), test.getCommittee().getId(), test.getVariantA()));
+		test.setGoWinnerCountType2(ctrepo.VariantBGoWinnerCount(test.getId(), test.getCommittee().getId(), test.getVariantB()));
+		test.setClickWinnerCountType1(ctrepo.VariantAClickRcvWinner(test.getId(), test.getCommittee().getId(), test.getVariantA()));
+		test.setClickWinnerCountType2(ctrepo.VariantBClickRcvWinner(test.getId(), test.getCommittee().getId(), test.getVariantB()));
+		test.setFullsendCountType1(ctrepo.VariantAFulllistWinner(test.getId(), test.getCommittee().getId(), test.getVariantA()));
+		test.setFullsendCountType2(ctrepo.VariantBFulllistWinner(test.getId(), test.getCommittee().getId(), test.getVariantB()));
+		trepo.save(test);
 	}
 }
