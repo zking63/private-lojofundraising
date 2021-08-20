@@ -29,7 +29,7 @@ public class TestService {
 	
 	public test AddContenttoTest(Contenttest content) {
 		test test = content.getBigtest();
-		if (test.getContent().size() == 0) {
+		if (test.getContent() == null) {
 			List<Contenttest> contentlist = new ArrayList<Contenttest>();
 			contentlist.add(content);
 			System.out.println(content.getId());
@@ -38,7 +38,7 @@ public class TestService {
 			return trepo.save(test);
 		}
 		else {
-			for (int i = 0; i < test.getContent().size() +1; i++) {
+			for (int i = 0; i < test.getContent().size(); i++) {
 				if (test.getContent().get(i).getId() == content.getId()) {
 					System.out.println("Content i:" + test.getContent().get(i).getId());
 					System.out.println("Content test:" + content.getId());
@@ -59,20 +59,11 @@ public class TestService {
 		}
 	}
 	
-	/*private String VariantA;
-    private String VariantB;
-    private Integer goWinnerCountType1;
-    private Integer clickWinnerCountType1;
-    private Integer fullsendCountType1;
-    private Integer goWinnerCountType2;
-    private Integer clickWinnerCountType2;
-    private Integer fullsendCountType2;
-    private Integer goWinnerCountType;
-    private Integer clickWinnerCountType;
-    private Integer fullsendCountType;*/
-	
 	public void TestVariables(Contenttest content) {
 		test test = content.getBigtest();
+		String varianta = "Variant A";
+		String variantb = "Variant B";
+		String tied = "TIED";
 		AddContenttoTest(content);
 		System.out.println("content size: " + test.getContent().size());
 		test.setFullsendCountType(test.getContent().size());
@@ -85,12 +76,12 @@ public class TestService {
 			System.out.println("variant A: " + test.getVariantA());
 			System.out.println("variant B: " + test.getVariantB());
 		}
-		test.setGoWinnerCountType1(ctrepo.VariantAGoWinnerCount(test.getId(), test.getCommittee().getId(), test.getVariantA()));
-		test.setGoWinnerCountType2(ctrepo.VariantBGoWinnerCount(test.getId(), test.getCommittee().getId(), test.getVariantB()));
-		test.setClickWinnerCountType1(ctrepo.VariantAClickRcvWinner(test.getId(), test.getCommittee().getId(), test.getVariantA()));
-		test.setClickWinnerCountType2(ctrepo.VariantBClickRcvWinner(test.getId(), test.getCommittee().getId(), test.getVariantB()));
-		test.setFullsendCountType1(ctrepo.VariantAFulllistWinner(test.getId(), test.getCommittee().getId(), test.getVariantA()));
-		test.setFullsendCountType2(ctrepo.VariantBFulllistWinner(test.getId(), test.getCommittee().getId(), test.getVariantB()));
+		test.setGoWinnerCountType1(ctrepo.VariantAGoWinnerCount(test.getId(), test.getCommittee().getId(), varianta));
+		test.setGoWinnerCountType2(ctrepo.VariantBGoWinnerCount(test.getId(), test.getCommittee().getId(), variantb));
+		test.setClickWinnerCountType1(ctrepo.VariantAClickRcvWinner(test.getId(), test.getCommittee().getId(), varianta));
+		test.setClickWinnerCountType2(ctrepo.VariantBClickRcvWinner(test.getId(), test.getCommittee().getId(), variantb));
+		test.setFullsendCountType1(ctrepo.VariantAFulllistWinner(test.getId(), test.getCommittee().getId(), varianta));
+		test.setFullsendCountType2(ctrepo.VariantBFulllistWinner(test.getId(), test.getCommittee().getId(), variantb));
 		trepo.save(test);
 	}
 }

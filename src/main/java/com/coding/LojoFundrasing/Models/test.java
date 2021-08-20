@@ -31,6 +31,9 @@ public class test {
     private Integer goWinnerCountType2;
     private Integer clickWinnerCountType2;
     private Integer fullsendCountType2;
+    private Integer goWinnerCountTied;
+    private Integer clickWinnerCountTied;
+    private Integer fullsendCountTied;
     private Integer goWinnerCountType;
     private Integer clickWinnerCountType;
     private Integer fullsendCountType;
@@ -149,6 +152,24 @@ public class test {
 	}
 	public void setCommittee(Committees committee) {
 		this.committee = committee;
+	}
+	public Integer getGoWinnerCountTied() {
+		return goWinnerCountTied;
+	}
+	public void setGoWinnerCountTied(Integer goWinnerCountTied) {
+		this.goWinnerCountTied = goWinnerCountTied;
+	}
+	public Integer getClickWinnerCountTied() {
+		return clickWinnerCountTied;
+	}
+	public void setClickWinnerCountTied(Integer clickWinnerCountTied) {
+		this.clickWinnerCountTied = clickWinnerCountTied;
+	}
+	public Integer getFullsendCountTied() {
+		return fullsendCountTied;
+	}
+	public void setFullsendCountTied(Integer fullsendCountTied) {
+		this.fullsendCountTied = fullsendCountTied;
 	}
 	
 	
