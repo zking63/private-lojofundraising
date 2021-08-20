@@ -98,28 +98,44 @@ public class TestService {
 		test.setFullsendCountTied(ctrepo.TiedFulllistWinner(test.getId(), test.getCommittee().getId(), tied));
 		trepo.save(test);
 		
+		//casting to doubles
+		Double gowinnertype1 = (double) test.getGoWinnerCountType1();
+		Double gowinnertype2 = (double) test.getGoWinnerCountType2();
+		Double gowinnertied = (double) test.getGoWinnerCountTied();
+		Double gowinnercount = (double) test.getGoWinnerCountType();
+		
+		Double clickwinnertype1 = (double) test.getClickWinnerCountType1();
+		Double clickwinnertype2 = (double) test.getClickWinnerCountType2();
+		Double clickwinnertied = (double) test.getClickWinnerCountTied();
+		Double clickwinnercount = (double) test.getClickWinnerCountType();
+		
+		Double fullsendwinnertype1 = (double) test.getFullsendCountType1();
+		Double fullsendwinnertype2 = (double) test.getFullsendCountType2();
+		Double fullsendwinnertied = (double) test.getFullsendCountTied();
+		Double fullsendwinnercount = (double) test.getFullsendCountType();
+
 		//GO Percents
-		goWinnerPercentType1 = (double) (test.getGoWinnerCountType1()/test.getGoWinnerCountType());
+		goWinnerPercentType1 = gowinnertype1/gowinnercount;
 		test.setGoWinnerPercentType1(goWinnerPercentType1);
-		goWinnerPercentType2 = (double) (test.getGoWinnerCountType2()/test.getGoWinnerCountType());
+		goWinnerPercentType2 = gowinnertype2/gowinnercount;
 		test.setGoWinnerPercentType2(goWinnerPercentType2);
-		goWinnerPercentTied = (double) (test.getGoWinnerCountTied()/test.getGoWinnerCountType());
+		goWinnerPercentTied = gowinnertied/gowinnercount;
 		test.setGoWinnerPercentTied(goWinnerPercentTied);
 		
 		//Click Percents
-		clickWinnerPercentType1 = (double) (test.getClickWinnerCountType1()/test.getClickWinnerCountType());
+		clickWinnerPercentType1 = clickwinnertype1/clickwinnercount;
 		test.setClickWinnerPercentType1(clickWinnerPercentType1);
-		clickWinnerPercentType2 = (double) (test.getClickWinnerCountType2()/test.getClickWinnerCountType());
+		clickWinnerPercentType2 = clickwinnertype2/clickwinnercount;
 		test.setClickWinnerPercentType2(clickWinnerPercentType2);
-		clickWinnerPercentTied = (double) (test.getClickWinnerCountTied()/test.getClickWinnerCountType());
+		clickWinnerPercentTied = clickwinnertied/clickwinnercount;
 		test.setClickWinnerPercentTied(clickWinnerPercentTied);
 		
 		//Full Send Percents
-		fullsendPercentType1 = (double) (test.getFullsendCountType1()/test.getFullsendCountType());
+		fullsendPercentType1 = fullsendwinnertype1/fullsendwinnercount;
 		test.setFullsendPercentType1(fullsendPercentType1);
-		fullsendPercentType2 = (double) (test.getFullsendCountType2()/test.getFullsendCountType());
+		fullsendPercentType2 = fullsendwinnertype2/fullsendwinnercount;
 		test.setFullsendPercentType2(fullsendPercentType2);
-		fullsendPercentTied = (double) (test.getFullsendCountTied()/test.getFullsendCountType());
+		fullsendPercentTied = fullsendwinnertied/fullsendwinnercount;
 		test.setFullsendPercentTied(fullsendPercentTied);
 		
 		trepo.save(test);
