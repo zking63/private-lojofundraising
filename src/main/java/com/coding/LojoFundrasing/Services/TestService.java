@@ -78,10 +78,13 @@ public class TestService {
 		}
 		test.setGoWinnerCountType1(ctrepo.VariantAGoWinnerCount(test.getId(), test.getCommittee().getId(), varianta));
 		test.setGoWinnerCountType2(ctrepo.VariantBGoWinnerCount(test.getId(), test.getCommittee().getId(), variantb));
+		test.setGoWinnerCountTied(ctrepo.TiedGoWinnerCount(test.getId(), test.getCommittee().getId(), tied));
 		test.setClickWinnerCountType1(ctrepo.VariantAClickRcvWinner(test.getId(), test.getCommittee().getId(), varianta));
 		test.setClickWinnerCountType2(ctrepo.VariantBClickRcvWinner(test.getId(), test.getCommittee().getId(), variantb));
+		test.setClickWinnerCountTied(ctrepo.TiedClickRcvWinner(test.getId(), test.getCommittee().getId(), tied));
 		test.setFullsendCountType1(ctrepo.VariantAFulllistWinner(test.getId(), test.getCommittee().getId(), varianta));
 		test.setFullsendCountType2(ctrepo.VariantBFulllistWinner(test.getId(), test.getCommittee().getId(), variantb));
+		test.setFullsendCountTied(ctrepo.TiedFulllistWinner(test.getId(), test.getCommittee().getId(), tied));
 		trepo.save(test);
 	}
 }

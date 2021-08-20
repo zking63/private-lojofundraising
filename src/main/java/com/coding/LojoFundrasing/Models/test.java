@@ -25,15 +25,28 @@ public class test {
     private String testcategory;
     private String VariantA;
     private String VariantB;
+    
     private Integer goWinnerCountType1;
     private Integer clickWinnerCountType1;
     private Integer fullsendCountType1;
+    private Double goWinnerPercentType1;
+    private Double clickWinnerPercentType1;
+    private Double fullsendPercentType1;
+    
     private Integer goWinnerCountType2;
     private Integer clickWinnerCountType2;
     private Integer fullsendCountType2;
+    private Double goWinnerPercentType2;
+    private Double clickWinnerPercentType2;
+    private Double fullsendPercentType2;
+    
     private Integer goWinnerCountTied;
     private Integer clickWinnerCountTied;
     private Integer fullsendCountTied;
+    private Double goWinnerPercentTied;
+    private Double clickWinnerPercentTied;
+    private Double fullsendPercentTied;
+    
     private Integer goWinnerCountType;
     private Integer clickWinnerCountType;
     private Integer fullsendCountType;
@@ -170,6 +183,60 @@ public class test {
 	}
 	public void setFullsendCountTied(Integer fullsendCountTied) {
 		this.fullsendCountTied = fullsendCountTied;
+	}
+	public Double getGoWinnerPercentType1() {
+		return goWinnerPercentType1;
+	}
+	public void setGoWinnerPercentType1(Double goWinnerPercentType1) {
+		this.goWinnerPercentType1 = goWinnerPercentType1;
+	}
+	public Double getClickWinnerPercentType1() {
+		return clickWinnerPercentType1;
+	}
+	public void setClickWinnerPercentType1(Double clickWinnerPercentType1) {
+		this.clickWinnerPercentType1 = clickWinnerPercentType1;
+	}
+	public Double getFullsendPercentType1() {
+		return fullsendPercentType1;
+	}
+	public void setFullsendPercentType1(Double fullsendPercentType1) {
+		this.fullsendPercentType1 = fullsendPercentType1;
+	}
+	public Double getGoWinnerPercentType2() {
+		return goWinnerPercentType2;
+	}
+	public void setGoWinnerPercentType2(Double goWinnerPercentType2) {
+		this.goWinnerPercentType2 = goWinnerPercentType2;
+	}
+	public Double getClickWinnerPercentType2() {
+		return clickWinnerPercentType2;
+	}
+	public void setClickWinnerPercentType2(Double clickWinnerPercentType2) {
+		this.clickWinnerPercentType2 = clickWinnerPercentType2;
+	}
+	public Double getFullsendPercentType2() {
+		return fullsendPercentType2;
+	}
+	public void setFullsendPercentType2(Double fullsendPercentType2) {
+		this.fullsendPercentType2 = fullsendPercentType2;
+	}
+	public Double getGoWinnerPercentTied() {
+		return goWinnerPercentTied;
+	}
+	public void setGoWinnerPercentTied(Double goWinnerPercentTied) {
+		this.goWinnerPercentTied = goWinnerPercentTied;
+	}
+	public Double getClickWinnerPercentTied() {
+		return clickWinnerPercentTied;
+	}
+	public void setClickWinnerPercentTied(Double clickWinnerPercentTied) {
+		this.clickWinnerPercentTied = clickWinnerPercentTied;
+	}
+	public Double getFullsendPercentTied() {
+		return fullsendPercentTied;
+	}
+	public void setFullsendPercentTied(Double fullsendPercentTied) {
+		this.fullsendPercentTied = fullsendPercentTied;
 	}
 	
 	
