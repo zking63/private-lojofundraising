@@ -64,6 +64,16 @@ public class TestService {
 		String varianta = "Variant A";
 		String variantb = "Variant B";
 		String tied = "TIED";
+	    Double goWinnerPercentType1 = 0.0;
+	    Double clickWinnerPercentType1 = 0.0;
+	    Double fullsendPercentType1 = 0.0;
+	    Double goWinnerPercentType2 = 0.0;
+	    Double clickWinnerPercentType2 = 0.0;
+	    Double fullsendPercentType2 = 0.0;
+	    Double goWinnerPercentTied = 0.0;
+	    Double clickWinnerPercentTied = 0.0;
+	    Double fullsendPercentTied = 0.0;
+	    
 		AddContenttoTest(content);
 		System.out.println("content size: " + test.getContent().size());
 		test.setFullsendCountType(test.getContent().size());
@@ -76,6 +86,7 @@ public class TestService {
 			System.out.println("variant A: " + test.getVariantA());
 			System.out.println("variant B: " + test.getVariantB());
 		}
+		
 		test.setGoWinnerCountType1(ctrepo.VariantAGoWinnerCount(test.getId(), test.getCommittee().getId(), varianta));
 		test.setGoWinnerCountType2(ctrepo.VariantBGoWinnerCount(test.getId(), test.getCommittee().getId(), variantb));
 		test.setGoWinnerCountTied(ctrepo.TiedGoWinnerCount(test.getId(), test.getCommittee().getId(), tied));
@@ -85,6 +96,32 @@ public class TestService {
 		test.setFullsendCountType1(ctrepo.VariantAFulllistWinner(test.getId(), test.getCommittee().getId(), varianta));
 		test.setFullsendCountType2(ctrepo.VariantBFulllistWinner(test.getId(), test.getCommittee().getId(), variantb));
 		test.setFullsendCountTied(ctrepo.TiedFulllistWinner(test.getId(), test.getCommittee().getId(), tied));
+		trepo.save(test);
+		
+		//GO Percents
+		goWinnerPercentType1 = (double) (test.getGoWinnerCountType1()/test.getGoWinnerCountType());
+		test.setGoWinnerPercentType1(goWinnerPercentType1);
+		goWinnerPercentType2 = (double) (test.getGoWinnerCountType2()/test.getGoWinnerCountType());
+		test.setGoWinnerPercentType2(goWinnerPercentType2);
+		goWinnerPercentTied = (double) (test.getGoWinnerCountTied()/test.getGoWinnerCountType());
+		test.setGoWinnerPercentTied(goWinnerPercentTied);
+		
+		//Click Percents
+		clickWinnerPercentType1 = (double) (test.getClickWinnerCountType1()/test.getClickWinnerCountType());
+		test.setClickWinnerPercentType1(clickWinnerPercentType1);
+		clickWinnerPercentType2 = (double) (test.getClickWinnerCountType2()/test.getClickWinnerCountType());
+		test.setClickWinnerPercentType2(clickWinnerPercentType2);
+		clickWinnerPercentTied = (double) (test.getClickWinnerCountTied()/test.getClickWinnerCountType());
+		test.setClickWinnerPercentTied(clickWinnerPercentTied);
+		
+		//Full Send Percents
+		fullsendPercentType1 = (double) (test.getFullsendCountType1()/test.getFullsendCountType());
+		test.setFullsendPercentType1(fullsendPercentType1);
+		fullsendPercentType2 = (double) (test.getFullsendCountType2()/test.getFullsendCountType());
+		test.setFullsendPercentType2(fullsendPercentType2);
+		fullsendPercentTied = (double) (test.getFullsendCountTied()/test.getFullsendCountType());
+		test.setFullsendPercentTied(fullsendPercentTied);
+		
 		trepo.save(test);
 	}
 }
