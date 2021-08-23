@@ -146,7 +146,7 @@ public class TestService {
 		}
 		else if (test.getGoWinnerCountType1() == test.getGoWinnerCountType2()){
 			test.setOverallGoWinner("TIED");
-			test.setOverallGoWinnerPercent(goWinnerPercentTied);
+			test.setOverallGoWinnerPercent(goWinnerPercentType1);
 		}
 		else {
 			test.setOverallGoWinner(test.getVariantB());
@@ -158,7 +158,7 @@ public class TestService {
 		}
 		else if (test.getClickWinnerCountType1() == test.getClickWinnerCountType2()){
 			test.setOverallClickWinner("TIED");
-			test.setOverallClickWinnerPercent(clickWinnerPercentTied);
+			test.setOverallClickWinnerPercent(clickWinnerPercentType1);
 		}
 		else {
 			test.setOverallClickWinner(test.getVariantB());
@@ -170,7 +170,7 @@ public class TestService {
 		}
 		else if (test.getFullsendCountType1() == test.getFullsendCountType2()) {
 			test.setOverallFullSendWinner("TIED");
-			test.setOverallFullSendWinnerPercent(fullsendPercentTied);
+			test.setOverallFullSendWinnerPercent(fullsendPercentType1);
 		}
 		else {
 			test.setOverallFullSendWinner(test.getVariantB());

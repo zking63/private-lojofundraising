@@ -52,12 +52,14 @@ import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
+import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Services.CommitteeService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailGroupService;
 import com.coding.LojoFundrasing.Services.EmailService;
 import com.coding.LojoFundrasing.Services.ExcelService;
+import com.coding.LojoFundrasing.Services.TestService;
 import com.coding.LojoFundrasing.Services.UserService;
 import com.coding.LojoFundrasing.Validation.DonorValidation;
 import com.coding.LojoFundrasing.Validation.UserValidation;
@@ -90,6 +92,9 @@ public class LojoController {
 	
 	@Autowired
 	private EmailGroupService egservice;
+	
+	@Autowired
+	private TestService tservice;
 	
 	@RequestMapping("/")
 	public String index(@ModelAttribute("user")User user, Model model) {
@@ -1224,59 +1229,10 @@ public class LojoController {
 			return "redirect:/home";
 		}
 	    @GetMapping("/export/excel/test")
-	    public String exportTestToExcel(HttpServletResponse response) throws IOException {
-			Long user_id = (Long)session.getAttribute("user_id");
+	    public String exportTestToExcel(HttpSession session, HttpServletResponse response) throws IOException {
 	    	Long committee_id = (Long)session.getAttribute("committee_id");
-	    	System.out.println("Start: " + startdateD);
-	    	System.out.println("End: " + enddateD);
-	    	System.out.println("Commmittee: " + committee_id);
-			 if (field == 4) {
-				 String message = "Please select a category to export.";
-				 model.addAttribute("message", message);
-				 model.addAttribute("startdateD", startdateD);
-				 model.addAttribute("field", field);
-				 model.addAttribute("enddateD", enddateD);
-				 User user = uservice.findUserbyId(user_id);
-				 Committees committee = cservice.findbyId(committee_id);
-				 model.addAttribute("committee", committee);
-				 model.addAttribute("user", user);
-				 return "exporter.jsp";
-			 }
-	    	if (field == 3) {
-				 System.out.println("Donors");
-				 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
-				 List<Donor> donors = dservice.orderbyDonorDesc(startdateD, enddateD, committee_id);
-				 excelService.exportToExcel(donors, response);
-			 }
-			 if (field == 2) {
-				 System.out.println("Donations");
-				 List<Donation> donations = donservice.DonTest(startdateD, enddateD, committee_id);
-				 excelService.exportDonationsToExcel(donations, response);
-			 }
-			 if (field == 1) {
-				 System.out.println("Emails");
-				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
-				 excelService.exportEmailsToExcel(emails, input, response);
-			 }
-			 if (field == 0) {
-				 System.out.println("Emails Groups");
-				 List<EmailGroup> emailgroups = egservice.EmailGroupList(startdateD, enddateD, committee_id);
-				 System.out.println("Emails Groups size " + emailgroups.size());
-				 for (int i = 0; i < emailgroups.size(); i++) {
-					 EmailGroup emailgroup = emailgroups.get(i);
-					 this.egservice.getEmailGroupData(emailgroup, committee_id);
-				 }
-				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
-			 }
-			 String message = "What are you exporting?";
-			 model.addAttribute("message", message);
-			 model.addAttribute("startdateD", startdateD);
-			 model.addAttribute("field", field);
-			 model.addAttribute("enddateD", enddateD);
-			 User user = uservice.findUserbyId(user_id);
-			 Committees committee = cservice.findbyId(committee_id);
-			 model.addAttribute("committee", committee);
-			 model.addAttribute("user", user);
-			 return "export.jsp";
+	    	List<test> tests = tservice.findAllTests(committee_id);
+	    	excelService.exportTestToExcel(tests, response);
+			return "home.jsp";
 	    } 
 }

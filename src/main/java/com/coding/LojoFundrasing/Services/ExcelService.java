@@ -23,6 +23,7 @@ import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
+import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Util.ExcelUtil;
 
 @Service
@@ -116,5 +117,16 @@ public class ExcelService {
         response.setHeader(headerKey, headerValue);
         
         excelUtil.Donationexporter(donations, response);
+    } 
+    public void exportTestToExcel(List<test> tests, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=tests_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        
+        excelUtil.Testexporter(tests, response);
     } 
 }
