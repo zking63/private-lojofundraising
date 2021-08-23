@@ -180,4 +180,8 @@ public class TestService {
 		trepo.save(test);
 		
 	}
+	
+	public List<test> findAllTests(Long committee_id){
+		return trepo.findTestsbyCommittee(committee_id);
+	}
 }

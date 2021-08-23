@@ -1223,4 +1223,60 @@ public class LojoController {
 			excelService.readTestData(user_id, file, committee);
 			return "redirect:/home";
 		}
+	    @GetMapping("/export/excel/test")
+	    public String exportTestToExcel(HttpServletResponse response) throws IOException {
+			Long user_id = (Long)session.getAttribute("user_id");
+	    	Long committee_id = (Long)session.getAttribute("committee_id");
+	    	System.out.println("Start: " + startdateD);
+	    	System.out.println("End: " + enddateD);
+	    	System.out.println("Commmittee: " + committee_id);
+			 if (field == 4) {
+				 String message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 model.addAttribute("startdateD", startdateD);
+				 model.addAttribute("field", field);
+				 model.addAttribute("enddateD", enddateD);
+				 User user = uservice.findUserbyId(user_id);
+				 Committees committee = cservice.findbyId(committee_id);
+				 model.addAttribute("committee", committee);
+				 model.addAttribute("user", user);
+				 return "exporter.jsp";
+			 }
+	    	if (field == 3) {
+				 System.out.println("Donors");
+				 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+				 List<Donor> donors = dservice.orderbyDonorDesc(startdateD, enddateD, committee_id);
+				 excelService.exportToExcel(donors, response);
+			 }
+			 if (field == 2) {
+				 System.out.println("Donations");
+				 List<Donation> donations = donservice.DonTest(startdateD, enddateD, committee_id);
+				 excelService.exportDonationsToExcel(donations, response);
+			 }
+			 if (field == 1) {
+				 System.out.println("Emails");
+				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
+				 excelService.exportEmailsToExcel(emails, input, response);
+			 }
+			 if (field == 0) {
+				 System.out.println("Emails Groups");
+				 List<EmailGroup> emailgroups = egservice.EmailGroupList(startdateD, enddateD, committee_id);
+				 System.out.println("Emails Groups size " + emailgroups.size());
+				 for (int i = 0; i < emailgroups.size(); i++) {
+					 EmailGroup emailgroup = emailgroups.get(i);
+					 this.egservice.getEmailGroupData(emailgroup, committee_id);
+				 }
+				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
+			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("enddateD", enddateD);
+			 User user = uservice.findUserbyId(user_id);
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
+			 model.addAttribute("user", user);
+			 return "export.jsp";
+	    } 
 }

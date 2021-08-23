@@ -14,5 +14,6 @@ public interface testrepo extends CrudRepository<test, Long> {
 	List<test> findAll();
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory", nativeQuery = true)
 	Optional<test> findbyTest(String testcategory, Long committee_id);
-
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id", nativeQuery = true)
+	List<test> findTestsbyCommittee(Long committee_id);
 }
