@@ -1952,20 +1952,13 @@ public class ExcelUtil {
             int columnCount = 0;
             
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getId()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getTestcategory()), bodyStyle);
-            //createCell(row, columnCount++, String.valueOf(bigtest.get(i).getG), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getDonorLastName(), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getDonor().getId()), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getAddress(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getCity(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getState(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getZipcode(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getCountry(), bodyStyle);
-            createCell(row, columnCount++, donations.get(i).getDonor().getPhone(), bodyStyle);
+            createCell(row, columnCount++, bigtest.get(i).getTestcategory(), bodyStyle);
+            createCell(row, columnCount++, bigtest.get(i).getOverallGoWinner(), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallGoWinnerPercent()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallClickWinner()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallClickWinnerPercent()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallFullSendWinner()), bodyStyle);
+            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallFullSendWinnerPercent()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
