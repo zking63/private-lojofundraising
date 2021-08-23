@@ -139,5 +139,26 @@ public class TestService {
 		test.setFullsendPercentTied(fullsendPercentTied);
 		
 		trepo.save(test);
+		
+		if (test.getGoWinnerCountType1() > test.getGoWinnerCountType2()) {
+			test.setOverallGoWinner(test.getVariantA());
+		}
+		else {
+			test.setOverallGoWinner(test.getVariantB());
+		}
+		if (test.getClickWinnerCountType1() > test.getClickWinnerCountType2()) {
+			test.setOverallClickWinner(test.getVariantA());
+		}
+		else {
+			test.setOverallClickWinner(test.getVariantB());
+		}
+		if (test.getFullsendCountType1() > test.getFullsendCountType2()) {
+			test.setOverallFullSendWinner(test.getVariantA());
+		}
+		else {
+			test.setOverallFullSendWinner(test.getVariantB());
+		}
+		
+		trepo.save(test);
 	}
 }
