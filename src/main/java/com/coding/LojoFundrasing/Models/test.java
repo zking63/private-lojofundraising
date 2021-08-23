@@ -50,6 +50,10 @@ public class test {
     private Integer goWinnerCountType;
     private Integer clickWinnerCountType;
     private Integer fullsendCountType;
+    
+    private String OverallGoWinner;
+    private String OverallFullSendWinner;
+    private String OverallClickWinner;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -237,6 +241,24 @@ public class test {
 	}
 	public void setFullsendPercentTied(Double fullsendPercentTied) {
 		this.fullsendPercentTied = fullsendPercentTied;
+	}
+	public String getOverallGoWinner() {
+		return OverallGoWinner;
+	}
+	public void setOverallGoWinner(String overallGoWinner) {
+		OverallGoWinner = overallGoWinner;
+	}
+	public String getOverallFullSendWinner() {
+		return OverallFullSendWinner;
+	}
+	public void setOverallFullSendWinner(String overallFullSendWinner) {
+		OverallFullSendWinner = overallFullSendWinner;
+	}
+	public String getOverallClickWinner() {
+		return OverallClickWinner;
+	}
+	public void setOverallClickWinner(String overallClickWinner) {
+		OverallClickWinner = overallClickWinner;
 	}
 	
 	

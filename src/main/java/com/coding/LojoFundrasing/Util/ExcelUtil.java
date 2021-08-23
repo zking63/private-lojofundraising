@@ -1910,8 +1910,68 @@ public class ExcelUtil {
 
 	            }
 		}
+	        
 	}
     
 }
+	public void Testexporter(List<test> bigtest, HttpServletResponse response) throws IOException{
+        //this.bigtest = bigtest;
+        workbook = new XSSFWorkbook();
+        DataFormatter dataFormatter = new DataFormatter();
+        
+        //write header lines
+        sheet = workbook.createSheet("Emails");
+        
+        Row row = sheet.createRow(0);
+         
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+         
+        createCell(row, 0, "Test Id", style); 
+        createCell(row, 1, "Testing", style); 
+        createCell(row, 2, "Overall G/O Winner", style); 
+        createCell(row, 3, "G/O Winner Percentage", style);
+        createCell(row, 4, "Overall Click/Rcv Winner", style); 
+        createCell(row, 5, "Click/Rcv Winner Percentage", style); 
+        createCell(row, 6, "Overall Full Send Winner", style); 
+        createCell(row, 7, "Full Send Winner Percentage", style);
+        
+        //write data lines
+        int rowCount = 1;
+        CellStyle bodyStyle = workbook.createCellStyle();
+        XSSFFont bodyfont = workbook.createFont();
+        bodyfont.setBold(false);
+        bodyfont.setFontHeight(14);
+        bodyStyle.setFont(bodyfont);
+                 
+        for (int i = 0; i < donations.size(); i++) {
+            row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getAmount()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getDonorLastName(), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(donations.get(i).getDonor().getId()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getAddress(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getCity(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getState(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getZipcode(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getCountry(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getPhone(), bodyStyle);
+        }
+        //export
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+         
+        outputStream.close();
+	}
 }
 	
