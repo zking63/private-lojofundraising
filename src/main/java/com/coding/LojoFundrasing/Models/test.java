@@ -54,6 +54,10 @@ public class test {
     private String OverallGoWinner;
     private String OverallFullSendWinner;
     private String OverallClickWinner;
+    
+    private Double OverallGoWinnerPercent;
+    private Double OverallFullSendWinnerPercent;
+    private Double OverallClickWinnerPercent;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -259,6 +263,24 @@ public class test {
 	}
 	public void setOverallClickWinner(String overallClickWinner) {
 		OverallClickWinner = overallClickWinner;
+	}
+	public Double getOverallGoWinnerPercent() {
+		return OverallGoWinnerPercent;
+	}
+	public void setOverallGoWinnerPercent(Double overallGoWinnerPercent) {
+		OverallGoWinnerPercent = overallGoWinnerPercent;
+	}
+	public Double getOverallFullSendWinnerPercent() {
+		return OverallFullSendWinnerPercent;
+	}
+	public void setOverallFullSendWinnerPercent(Double overallFullSendWinnerPercent) {
+		OverallFullSendWinnerPercent = overallFullSendWinnerPercent;
+	}
+	public Double getOverallClickWinnerPercent() {
+		return OverallClickWinnerPercent;
+	}
+	public void setOverallClickWinnerPercent(Double overallClickWinnerPercent) {
+		OverallClickWinnerPercent = overallClickWinnerPercent;
 	}
 	
 	

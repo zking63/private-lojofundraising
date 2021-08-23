@@ -1947,12 +1947,13 @@ public class ExcelUtil {
         bodyfont.setFontHeight(14);
         bodyStyle.setFont(bodyfont);
                  
-        for (int i = 0; i < donations.size(); i++) {
+        for (int i = 0; i < bigtest.size(); i++) {
             row = sheet.createRow(rowCount++);
             int columnCount = 0;
             
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getAmount()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getTestcategory()), bodyStyle);
+            //createCell(row, columnCount++, String.valueOf(bigtest.get(i).getG), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);

@@ -142,23 +142,42 @@ public class TestService {
 		
 		if (test.getGoWinnerCountType1() > test.getGoWinnerCountType2()) {
 			test.setOverallGoWinner(test.getVariantA());
+			test.setOverallGoWinnerPercent(goWinnerPercentType1);
+		}
+		else if (test.getGoWinnerCountType1() == test.getGoWinnerCountType2()){
+			test.setOverallGoWinner("TIED");
+			test.setOverallGoWinnerPercent(goWinnerPercentTied);
 		}
 		else {
 			test.setOverallGoWinner(test.getVariantB());
+			test.setOverallGoWinnerPercent(goWinnerPercentType2);
 		}
 		if (test.getClickWinnerCountType1() > test.getClickWinnerCountType2()) {
 			test.setOverallClickWinner(test.getVariantA());
+			test.setOverallClickWinnerPercent(clickWinnerPercentType1);
+		}
+		else if (test.getClickWinnerCountType1() == test.getClickWinnerCountType2()){
+			test.setOverallClickWinner("TIED");
+			test.setOverallClickWinnerPercent(clickWinnerPercentTied);
 		}
 		else {
 			test.setOverallClickWinner(test.getVariantB());
+			test.setOverallClickWinnerPercent(clickWinnerPercentType2);
 		}
 		if (test.getFullsendCountType1() > test.getFullsendCountType2()) {
 			test.setOverallFullSendWinner(test.getVariantA());
+			test.setOverallFullSendWinnerPercent(fullsendPercentType1);
+		}
+		else if (test.getFullsendCountType1() == test.getFullsendCountType2()) {
+			test.setOverallFullSendWinner("TIED");
+			test.setOverallFullSendWinnerPercent(fullsendPercentTied);
 		}
 		else {
 			test.setOverallFullSendWinner(test.getVariantB());
+			test.setOverallFullSendWinnerPercent(fullsendPercentType2);
 		}
 		
 		trepo.save(test);
+		
 	}
 }
