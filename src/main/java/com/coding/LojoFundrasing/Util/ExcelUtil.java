@@ -1938,6 +1938,7 @@ public class ExcelUtil {
         createCell(row, 5, "Click/Rcv Winner Percentage", style); 
         createCell(row, 6, "Overall Full Send Winner", style); 
         createCell(row, 7, "Full Send Winner Percentage", style);
+        createCell(row, 8, "Number of tests", style);
         
         //write data lines
         int rowCount = 1;
@@ -1959,6 +1960,7 @@ public class ExcelUtil {
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallClickWinnerPercent()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallFullSendWinner()), bodyStyle);
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallFullSendWinnerPercent()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getClickWinnerCountType()), bodyStyle);
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
