@@ -1,0 +1,200 @@
+body{
+	background-color: #90a4ae;
+	padding-top: 0px;
+	color: #263238;
+}
+body button{
+	border: 0px;
+	background-color: #455a64;
+	opacity: 50%;
+	color: white;
+}
+body button:hover{
+	background-color: white;
+	color: #455a64;
+}
+
+.container {
+	margin-left: 94px;
+	margin-top: 10px;
+}
+.user-form {
+	display: inline-block;
+	width: 45%;
+	vertical-align: middle;
+	margin: 20px;
+	border: 1px solid white;
+	padding: 15px;
+	color: white;
+}
+
+.table-hover a{
+	color: white;
+	font-style: bold;
+	font-size: 17px;
+}
+.navbar {
+    background-color: #455a64;
+    margin-bottom: 15px;
+    padding: 0px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 50%;
+}
+.navbar img{
+	width: 30px;
+	margin-bottom: 3px;
+}
+.titles{
+	margin: 10px;
+	margin-bottom: 60px;
+	vertical-align: middle;
+	color: white;
+}
+.navbar select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+.titles h1{
+	color: white;
+}
+
+.titles a{
+	color: white;
+}
+.titles a:hover{
+	color: white;
+	opacity: 50%
+}
+
+.p-4{
+	margin-left: -111px;
+	margin-bottom: 21px;
+	vertical-align: middle;
+	color: white;
+	padding: 0px;
+}
+.dropdown-menu p{
+	font-size: 25px;
+	margin-left: 25px;
+	margin-bottom: 0px;
+}
+
+.p-4 select{
+	background: transparent;
+	border: 0px;
+	font-size: 20px;
+}
+
+.formclass select{
+	background: transparent;
+	border: 0px;
+	color: white;
+	margin-left: -33px;
+}
+.formclass select:hover{
+	background: transparent;
+	border: 0px;
+	color: #424b52;
+	margin-left: -33px;
+}
+
+.currentcommittee{
+	background: transparent;
+	border: 0px;
+	font-style: bold;
+	font-size: 25px;
+	color: white;
+}
+
+.navbarmenu {
+    width: auto;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+.navbarmenu li {
+	padding: 0px;
+	font-size: 10px;
+    vertical-align: middle;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbarmenu li a {
+	color: white;
+	font-style: bold;
+	font-size: 24px;
+}
+.main {
+	margin-left: 0px;
+}
+.subset li{
+	padding: 0px;
+	margin: 0px;
+	opacity: 0%;
+}
+.btn-secondary{
+	opacity: 100%;
+	background-color: #455a64;
+	color: white;
+	border: 0px;
+	font-style: bold;
+	font-size: 24px;
+}
+.btn-secondary:hover{
+	opacity: 70%;
+	border: 0px;
+}
+.dropdown-menu{
+	opacity: 100%;
+	background-color: #455a64;
+	color: white;
+	border: 0px;
+	font-size: 10px;
+}
+.wrapper{
+	width: 1000px;
+	margin-left: 10%;
+}
+.buttons1{
+	margin-left:30%;
+}
+.user-form{
+	margin-left: 25%;
+	width: 50%;
+}
+.date-form{
+	margin-left: 30%;
+	margin-bottom: 10px;
+	width: 50%;
+	padding-left: 65px;
+}
+#date-choices{
+	width: 88%;
+}
+.pointer{
+	width: 20px;
+	display: inline-block;
+}
+#export-form{
+	display: inline;
+}
+#export-form button{
+	margin-left: 0px;
+	margin-top: 0px;
+}
+#export-choices{
+	display: inline-block;
+	width: 250px;
+	height: 400px;
+	padding: 10px;
+	margin-bottom: -40px;
+}
+.date-form label{
+	display: inline-block;
+}
