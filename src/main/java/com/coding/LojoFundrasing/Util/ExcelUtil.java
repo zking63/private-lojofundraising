@@ -77,6 +77,200 @@ public class ExcelUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		return df.format(new Date());
 	}
+	private void setUpDonation(int noOfColumns, String address, String city, String state,
+			String Zipcode, String country, String phone, String emailValue, String nameValue,
+			String LNValue, Double amount, String refcode, String ActBlueId, String Recurring,
+			Integer Recurrence, Donor donor, Date dateValue, Date timeValue, Donation donation,
+			Emails email, User uploader, Committees committee, Date date) throws ParseException {
+		
+			List<Committees> committees = null;
+			
+			System.out.println("made it to setUpDonation");
+			System.out.println("COLUMN DONE: " + noOfColumns);
+			System.out.println("EMAIL AFTER: " + emailValue);
+			System.out.println("REFCODE AFTER: " + refcode);
+			System.out.println("Name AFTER: " + nameValue);
+			System.out.println("LN AFTER: " + LNValue);
+			System.out.println("AMOUNT AFTER: " + amount);
+			System.out.println("DATE AFTER: " + date);
+			System.out.println("UPLOADER: " + uploader.getId());
+			System.out.println("AB ID: " + ActBlueId);
+			System.out.println("RECURRING AFTER: " + Recurring);
+			System.out.println("Recurrence: " + Recurrence);
+			System.out.println("ADDRESS AFTER: " + address);
+			System.out.println("CITY AFTER: " + city);
+			System.out.println("STATE AFTER: " + state);
+			System.out.println("COUNTRY AFTER: " + country);
+			System.out.println("PHONE AFTER: " + phone);
+			System.out.println("ZIP AFTER: " + Zipcode);
+    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
+        	donor = new Donor();
+        	//System.out.println("ID: " + id);
+        	donor.setDonorFirstName(nameValue);
+        	donor.setDonorLastName(LNValue);
+        	donor.setDonorEmail(emailValue);
+        	donor.setUploader(uploader);
+        	donor.setCommittee(committee);
+        	donor.setAddress(address);
+        	donor.setCity(city);
+        	donor.setCountry(country);
+        	donor.setPhone(phone);
+        	donor.setZipcode(Zipcode);
+        	donor.setState(state);
+        	donors = committee.getDonors();
+        	donors.add(donor);
+        	committee.setDonors(donors);
+        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
+        	dservice.createDonor(donor);
+        	Long id = donor.getId();
+        	donation = new Donation();
+        	donation.setAmount(amount);
+        	donation.setActBlueId(ActBlueId);
+        	donation.setRecurrenceNumber(Recurrence);
+        	donation.setRecurring(Recurring);
+        	System.out.println("donation recurring " + donation.getRecurring());
+        	donation.setDondate(date);
+        	donation.setDonation_uploader(uploader);
+        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
+        	donation.setCommittee(committee);
+        	donations = committee.getDonations();
+        	donations.add(donation);
+        	committee.setDonations(donations);
+        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	if (emaildonation == null){
+        		String undate1 = "0001-01-01 01:01";
+        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
+        		email = new Emails();
+	        	email.setEmailName(null);
+	        	System.out.println("TEMP DATE: " + undate);
+	        	email.setEmaildate(undate);
+	        	email.setEmailRefcode(refcode);
+	        	email.setBounces(null);
+	        	email.setClicks(null);
+	        	email.setOpeners(null);
+	        	email.setRecipients(null);
+	        	email.setUnsubscribers(null);
+	        	email.setExcludedList(null);
+	        	email.setList(null);
+	        	email.setEmail_uploader(uploader);
+	        	email.setCommittee(committee);
+	        	emails = committee.getEmails();
+	        	emails.add(email);
+	        	committee.setEmails(emails);
+	        	eservice.createEmail(email);
+	        	String tempname = "Null" + email.getId();
+	        	email.setEmailName(tempname);
+	        	System.out.println("TEMP NAME: " + tempname);
+	        	eservice.createEmail(email);
+	        	donation.setEmailDonation(email);
+        	}
+        	else {
+        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+        	}
+        	System.out.println("committee after: " + committee.getCommitteeName());
+        	committees.add(committee);
+        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
+        	donservice.createDonation(donation);
+        	System.out.println("CREATE DONATION 2: ");
+    		email = donation.getEmailDonation();
+    		System.out.println("email: " + email);
+    		dservice.getDonorData(donor, committee.getId());
+    		//System.out.println("donordata id: " + donor.getDonordata().getId());
+    		eservice.getEmailData(email, committee.getId());
+        	refcode = null;
+        	Recurring = null;
+			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+        }
+        else {
+        	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
+        	Long id = donor.getId();
+        	System.out.println("ID: " + id);
+        	donor.setDonorFirstName(nameValue);
+        	donor.setDonorLastName(LNValue);
+        	donor.setDonorEmail(emailValue);
+        	System.out.println("committee after: " + committee.getCommitteeName());
+        	donor.setUploader(uploader);
+        	donor.setCommittee(committee);
+        	donor.setAddress(address);
+        	donor.setCity(city);
+        	donor.setCountry(country);
+        	donor.setPhone(phone);
+        	donor.setZipcode(Zipcode);
+        	donor.setState(state);
+        	donors = committee.getDonors();
+        	donors.add(donor);
+        	committee.setDonors(donors);
+        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
+        	dservice.updateDonor(donor);
+        	donation = new Donation();
+        	donation.setActBlueId(ActBlueId);
+        	donation.setRecurrenceNumber(Recurrence);
+        	System.out.println("RECURRING SET: " + Recurring);
+        	donation.setRecurring(Recurring);
+        	donation.setAmount(amount);
+        	System.out.println("amount");
+        	donation.setDondate(date);
+        	System.out.println("date");
+        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
+        	System.out.println("donor");
+        	donation.setDonation_uploader(uploader);
+        	System.out.println("uploader");
+        	System.out.println("get committees " + committees);
+        	donations = committee.getDonations();
+        	System.out.println("get donations " + donations);
+        	donations.add(donation);
+        	System.out.println("add donation");
+        	committee.setDonations(donations);
+        	System.out.println("set donations " + donations);
+        	donation.setCommittee(committee);
+        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
+        	System.out.println("create donation");
+        	donservice.createDonation(donation);
+        	System.out.println("create donation");
+        	System.out.println("RECURRING END: " + donation.getRecurring());
+        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	if (emaildonation == null){
+        		String undate1 = "0001-01-01 01:01";
+        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
+        		email = new Emails();
+	        	email.setEmailName(null);
+	        	System.out.println("TEMP DATE: " + undate);
+	        	email.setEmaildate(undate);
+	        	System.out.println("***TEMP DATE FROM EMAIL: " + email.getEmaildate());
+	        	email.setEmailRefcode(refcode);
+	        	email.setBounces(null);
+	        	email.setClicks(null);
+	        	email.setOpeners(null);
+	        	email.setRecipients(null);
+	        	email.setUnsubscribers(null);
+	        	email.setExcludedList(null);
+	        	email.setList(null);
+	        	email.setEmail_uploader(uploader);
+	        	email.setCommittee(committee);
+	        	emails = committee.getEmails();
+	        	emails.add(email);
+	        	committee.setEmails(emails);
+	        	eservice.createEmail(email);
+	        	String tempname = "Null" + email.getId();
+	        	email.setEmailName(tempname);
+	        	System.out.println("TEMP NAME: " + tempname);
+	        	eservice.createEmail(email);
+	        	donation.setEmailDonation(email);
+        	}
+        	else {
+        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+        	}
+        	System.out.println("CREATE DONATION 2: ");
+        	donservice.createDonation(donation);
+    		email = donation.getEmailDonation();
+    		System.out.println("Email: " + email.getEmailName());
+    		dservice.getDonorData(donor, committee.getId());
+    		eservice.getEmailData(email, committee.getId());
+        	refcode = null;
+        	Recurring = null;
+        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
+		}
+	}
 	
 	public void getSheetDetails(String excelPath)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -180,13 +374,10 @@ public class ExcelUtil {
 
 	                   
 	                	Cell cell = cellIterator.next();
-	                	System.out.println("CELL: " + cell.getAddress());
 						if (row.getRowNum() == 0) {
-							//header = cell.getAddress();
 							header = cell;
 							System.out.println("Header: " + header);
 							headers.add(header);
-							//System.out.println("Header column: " + header.getColumn());
 							
 							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
 							if (headerValue.contains("FIRST NAME")) {
@@ -239,284 +430,272 @@ public class ExcelUtil {
 							System.out.println("Headers: " + headers);
 						}
 						else if (row.getRowNum() > 0){
-							//if (refcode == null) {
-								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
-									/*System.out.println("Value: " + value);
-									values.add(value);
-									System.out.println("Values: " + values);
-									System.out.println("-----header check-----");*/
 									if (cell.getColumnIndex() == EmailColumn) {
 										emailValue = dataFormatter.formatCellValue(cell);
 										System.out.println("Email:" + emailValue);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == NameColumn) {
 										System.out.println("Values: " + values);
-										//userMap.put(headerValue, valValue);
 										System.out.println("NameColumn TWO: " + NameColumn);
 										nameValue = dataFormatter.formatCellValue(cell);
 										System.out.println(nameValue);
-										/*System.out.print("map: " + userMap);
-								        System.out.print("usermap section");*/
-								        /*Set<String> keys = userMap.keySet();
-								        System.out.print(keys);
-								        for(String key : keys) {
-								            System.out.println(key);
-								            System.out.println(userMap.get(key));    
-								        }*/
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == LastNameColumn) {
 										LNValue = dataFormatter.formatCellValue(cell);
 										System.out.println(LNValue);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == AbIdColumn) {
 										ActBlueId = dataFormatter.formatCellValue(cell);
 										System.out.println("ActBlue Id: " + ActBlueId);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == AmountColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										amount = Double.parseDouble(amount1); 
 										System.out.println(amount);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
+										//System.out.println("hit date column");
 										String dateValue1 = dataFormatter.formatCellValue(cell);
-										System.out.println("date value " + dateValue1);
+										//System.out.println("date value " + dateValue1);
 										if (dateValue1.contains("/")) {
 											date = new SimpleDateFormat("MM/dd/yy HH:mm").parse(dateValue1);
 											DateTimeFormatter formatterNew = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 											SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 											String strDate = dt.format(date);
 											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
-											System.out.println("Simple date: " + date);
+											//System.out.println("Simple date: " + date);
 										}
 										else if(dateValue1.contains("-")) {
 											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										}
 										//date = new SimpleDateFormat("MM/dd/YY").parse(dateValue1);
-										System.out.println("Simple date: " + date);
+										//System.out.println("Simple date: " + date);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == RecurringColumn) {
 										Recurring = dataFormatter.formatCellValue(cell);
 										System.out.println("Recurring: " + Recurring);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == RecurrenceColumn) {
 										Recurrence = Integer.parseInt(dataFormatter.formatCellValue(cell));
 										System.out.println("Recurrence: " + Recurrence);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
 									else if (cell.getColumnIndex() == addressColumn) {
 										address = dataFormatter.formatCellValue(cell);
 										System.out.println("Address: " + address);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == cityColumn) {
 										city = dataFormatter.formatCellValue(cell);
 										System.out.println("City: " + city);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == stateColumn) {
 										state = dataFormatter.formatCellValue(cell);
 										System.out.println("State: " + state);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == zipColumn) {
 										Zipcode = dataFormatter.formatCellValue(cell);
 										System.out.println("Zip: " + Zipcode);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == countryColumn) {
 										country = dataFormatter.formatCellValue(cell);
 										System.out.println("Country: " + country);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == phoneColumn) {
 										phone = dataFormatter.formatCellValue(cell);
 										System.out.println("Phone: " + phone);
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+										
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
 										System.out.println("Refcode: " + refcode);
-										System.out.println("EMAIL AFTER: " + emailValue);
-										System.out.println("REFCODE AFTER: " + refcode);
-										System.out.println("Name AFTER: " + nameValue);
-										System.out.println("LN AFTER: " + LNValue);
-										System.out.println("AMOUNT AFTER: " + amount);
-										System.out.println("DATE AFTER: " + date);
-										System.out.println("UPLOADER: " + uploader.getId());
-										System.out.println("AB ID: " + ActBlueId);
-										System.out.println("RECURRING AFTER: " + Recurring);
-										System.out.println("Recurrence: " + Recurrence);
-										System.out.println("ADDRESS AFTER: " + address);
-										System.out.println("CITY AFTER: " + city);
-										System.out.println("STATE AFTER: " + state);
-										System.out.println("COUNTRY AFTER: " + country);
-										System.out.println("PHONE AFTER: " + phone);
-										System.out.println("ZIP AFTER: " + Zipcode);
-							    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
-					    	        	donor = new Donor();
-					    	        	//System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	donor.setUploader(uploader);
-					    	        	donor.setCommittee(committee);
-					    	        	donor.setAddress(address);
-					    	        	donor.setCity(city);
-					    	        	donor.setCountry(country);
-					    	        	donor.setPhone(phone);
-					    	        	donor.setZipcode(Zipcode);
-					    	        	donor.setState(state);
-					    	        	donors = committee.getDonors();
-					    	        	donors.add(donor);
-					    	        	committee.setDonors(donors);
-					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-					    	        	dservice.createDonor(donor);
-					    	        	Long id = donor.getId();
-					    	        	donation = new Donation();
-					    	        	donation.setAmount(amount);
-					    	        	donation.setActBlueId(ActBlueId);
-					    	        	donation.setRecurrenceNumber(Recurrence);
-					    	        	donation.setRecurring(Recurring);
-					    	        	System.out.println("donation recurring " + donation.getRecurring());
-					    	        	donation.setDondate(date);
-					    	        	donation.setDonation_uploader(uploader);
-					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-					    	        	donation.setCommittee(committee);
-					    	        	donations = committee.getDonations();
-					    	        	donations.add(donation);
-					    	        	committee.setDonations(donations);
-					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
-					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0001-01-01 01:01";
-					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-					    	        		email = new Emails();
-						    	        	email.setEmailName(null);
-						    	        	email.setEmaildate(undate);
-						    	        	email.setEmailRefcode(refcode);
-						    	        	email.setBounces(null);
-						    	        	email.setClicks(null);
-						    	        	email.setOpeners(null);
-						    	        	email.setRecipients(null);
-						    	        	email.setUnsubscribers(null);
-						    	        	email.setExcludedList(null);
-						    	        	email.setList(null);
-						    	        	email.setEmail_uploader(uploader);
-						    	        	email.setCommittee(committee);
-						    	        	emails = committee.getEmails();
-						    	        	emails.add(email);
-						    	        	committee.setEmails(emails);
-						    	        	eservice.createEmail(email);
-						    	        	String tempname = "Null" + email.getId();
-						    	        	email.setEmailName(tempname);
-						    	        	System.out.println("TEMP NAME: " + tempname);
-						    	        	eservice.createEmail(email);
-						    	        	donation.setEmailDonation(email);
-					    	        	}
-					    	        	else {
-					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        	}
-					    	        	System.out.println("committee after: " + committee.getCommitteeName());
-					    	        	//committees.add(committee);
-					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("CREATE DONATION 2: ");
-					    	    		email = donation.getEmailDonation();
-					    	    		System.out.println("email: " + email);
-					    	    		dservice.getDonorData(donor, committee.getId());
-					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    	        	Recurring = null;
-					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					    	        }
-					    	        else {
-					    	        	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
-					    	        	Long id = donor.getId();
-					    	        	System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	System.out.println("committee after: " + committee.getCommitteeName());
-					    	        	donor.setUploader(uploader);
-					    	        	donor.setCommittee(committee);
-					    	        	donor.setAddress(address);
-					    	        	donor.setCity(city);
-					    	        	donor.setCountry(country);
-					    	        	donor.setPhone(phone);
-					    	        	donor.setZipcode(Zipcode);
-					    	        	donor.setState(state);
-					    	        	donors = committee.getDonors();
-					    	        	donors.add(donor);
-					    	        	committee.setDonors(donors);
-					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-					    	        	dservice.updateDonor(donor);
-					    	        	donation = new Donation();
-					    	        	donation.setActBlueId(ActBlueId);
-					    	        	donation.setRecurrenceNumber(Recurrence);
-					    	        	System.out.println("RECURRING SET: " + Recurring);
-					    	        	donation.setRecurring(Recurring);
-					    	        	donation.setAmount(amount);
-					    	        	System.out.println("amount");
-					    	        	donation.setDondate(date);
-					    	        	System.out.println("date");
-					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-					    	        	System.out.println("donor");
-					    	        	donation.setDonation_uploader(uploader);
-					    	        	System.out.println("uploader");
-					    	        	System.out.println("get committees " + committees);
-					    	        	donations = committee.getDonations();
-					    	        	System.out.println("get donations " + donations);
-					    	        	donations.add(donation);
-					    	        	System.out.println("add donation");
-					    	        	committee.setDonations(donations);
-					    	        	System.out.println("set donations " + donations);
-					    	        	donation.setCommittee(committee);
-					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
-					    	        	System.out.println("create donation");
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("create donation");
-					    	        	System.out.println("RECURRING END: " + donation.getRecurring());
-					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
-					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0001-01-01 01:01";
-					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-					    	        		email = new Emails();
-						    	        	email.setEmailName(null);
-						    	        	email.setEmaildate(undate);
-						    	        	email.setEmailRefcode(refcode);
-						    	        	email.setBounces(null);
-						    	        	email.setClicks(null);
-						    	        	email.setOpeners(null);
-						    	        	email.setRecipients(null);
-						    	        	email.setUnsubscribers(null);
-						    	        	email.setExcludedList(null);
-						    	        	email.setList(null);
-						    	        	email.setEmail_uploader(uploader);
-						    	        	email.setCommittee(committee);
-						    	        	emails = committee.getEmails();
-						    	        	emails.add(email);
-						    	        	committee.setEmails(emails);
-						    	        	eservice.createEmail(email);
-						    	        	String tempname = "Null" + email.getId();
-						    	        	email.setEmailName(tempname);
-						    	        	System.out.println("TEMP NAME: " + tempname);
-						    	        	eservice.createEmail(email);
-						    	        	donation.setEmailDonation(email);
-					    	        	}
-					    	        	else {
-					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        	}
-					    	        	System.out.println("CREATE DONATION 2: ");
-					    	        	donservice.createDonation(donation);
-					    	    		email = donation.getEmailDonation();
-					    	    		System.out.println("Email: " + email.getEmailName());
-					    	    		dservice.getDonorData(donor, committee.getId());
-					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    	        	Recurring = null;
-					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					                }
+										System.out.println("Column 1: " + cell.getColumnIndex());
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
 									}
+									
+									//row iteration end below
 							}
 		    	        }
 
 	            }
 		}
+	}
+	
+	private void setUpEmails(String recipientList, String excludedList, Long openers, Long bounces, Long unsubscribers, 
+			Long clicks, Long recipients, User uploader, String nameValue, String refcode, Emails email, 
+			Date date, Date dateValue, Committees committee) {
+		
+		List<Emails> emails = null;
+		if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
+        	email = new Emails();
+        	//System.out.println("ID: " + id);
+        	email.setEmailName(nameValue);
+        	email.setEmaildate(date);
+        	email.setEmailRefcode(refcode);
+        	email.setBounces(bounces);
+        	email.setClicks(clicks);
+        	email.setOpeners(openers);
+        	email.setRecipients(recipients);
+        	email.setUnsubscribers(unsubscribers);
+        	email.setExcludedList(excludedList);
+        	email.setList(recipientList);
+        	email.setEmail_uploader(uploader);
+        	email.setCommittee(committee);
+        	emails = committee.getEmails();
+        	emails.add(email);
+        	committee.setEmails(emails);
+        	eservice.createEmail(email);
+    		eservice.getEmailData(email, committee.getId());
+        	refcode = null;
+			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
+        }
+        else {
+        	email = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	System.out.println("found email");
+        	email.setEmailName(nameValue);
+        	email.setEmaildate(date);
+        	email.setEmailRefcode(refcode);
+        	email.setBounces(bounces);
+        	email.setClicks(clicks);
+        	email.setOpeners(openers);
+        	email.setRecipients(recipients);
+        	email.setUnsubscribers(unsubscribers);
+        	email.setExcludedList(excludedList);
+        	email.setList(recipientList);
+        	email.setEmail_uploader(uploader);
+        	email.setCommittee(committee);
+        	emails = committee.getEmails();
+        	emails.add(email);
+        	committee.setEmails(emails);
+        	eservice.createEmail(email);
+    		eservice.getEmailData(email, committee.getId());
+        	refcode = null;
+			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
+        }
 	}
 	public void readExcelSheetEmails(String excelPath, Long user_id, Committees committee)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
@@ -642,70 +821,108 @@ public class ExcelUtil {
 								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
 									value = cell;
 									if (cell.getColumnIndex() == NameColumn) {
-										System.out.println("Values: " + values);
+										//System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
-										System.out.println("NameColumn TWO: " + NameColumn);
+										//System.out.println("NameColumn TWO: " + NameColumn);
 										nameValue = dataFormatter.formatCellValue(cell);
-										System.out.println(nameValue);
+										//System.out.println(nameValue);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == clicksColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										clicks = Long.parseLong(amount1); 
-										System.out.println(clicks);
+										//System.out.println(clicks);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == recipientsColumn ) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										recipients = Long.parseLong(amount1); 
-										System.out.println(recipients);
+										//System.out.println(recipients);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == unsubscribersColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										unsubscribers = Long.parseLong(amount1); 
-										System.out.println(unsubscribers);
+										//System.out.println(unsubscribers);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == openersColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										openers = Long.parseLong(amount1); 
-										System.out.println(openers);
+										//System.out.println(openers);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == bouncesColumn) {
 										String amount1 = dataFormatter.formatCellValue(cell);
 										bounces = Long.parseLong(amount1); 
-										System.out.println(bounces);
+										//System.out.println(bounces);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == excludeColumn) {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										excludedList = dataFormatter.formatCellValue(cell);
-										System.out.println(recipientList);
+										//System.out.println(recipientList);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									if (cell.getColumnIndex() == listColumn) {
 										System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										recipientList = dataFormatter.formatCellValue(cell);
-										System.out.println(recipientList);
+										//System.out.println(recipientList);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
-										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
-										//date = new SimpleDateFormat("MM/dd//YY").parse(dateValue1);
-										//String date = 
 										String dateValue1 = dataFormatter.formatCellValue(cell);
 										System.out.println(dateValue1);
-										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
 										date = new SimpleDateFormat("MM/dd/yy").parse(dateValue1);
-										System.out.println("Simple date: " + date);
-										//date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
-										//System.out.println(dateValue1);
 										//System.out.println("Simple date: " + date);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
-										System.out.println("REFCODE AFTER: " + refcode);
+										/*System.out.println("REFCODE AFTER: " + refcode);
 										System.out.println("Name AFTER: " + nameValue);
-										System.out.println("DATE AFTER: " + date);
-							    	if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
+										System.out.println("DATE AFTER: " + date);*/
+										//start email set up below
+							    /*	if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
 					    	        	email = new Emails();
-					    	        	//System.out.println("ID: " + id);
 					    	        	email.setEmailName(nameValue);
 					    	        	email.setEmaildate(date);
 					    	        	email.setEmailRefcode(refcode);
@@ -748,8 +965,10 @@ public class ExcelUtil {
 					    	    		eservice.getEmailData(email, committee.getId());
 					    	        	refcode = null;
 					    				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-					                }
+					                }*/
+							    	//end email set up above
 								}
+				
 							}
 		    	        }
 

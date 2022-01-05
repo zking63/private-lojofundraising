@@ -24,7 +24,6 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
-    <div class="buttons1">
     <button><a href="/newdonor">Upload a new donor</a></button>
 	<button><a href="/newdonation">Upload a new donation</a></button>
 	<button><a href="/newemail">Upload a new email</a></button>

@@ -32,6 +32,7 @@ public class DonationService {
 	private DonorService dservice;
 	
 	public Donation createDonation(Donation d) {
+		System.out.println("MADE IT TO CREATE DONATION " + d.getDondate());
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); 
 		String strDate = dateFormat.format(d.getDondate()); 
 		System.out.println("reccurences query");
