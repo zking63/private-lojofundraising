@@ -444,8 +444,8 @@ public class ExcelUtil {
 										}
 									}
 									else if (cell.getColumnIndex() == NameColumn) {
-										System.out.println("Values: " + values);
-										System.out.println("NameColumn TWO: " + NameColumn);
+										//System.out.println("Values: " + values);
+										//System.out.println("NameColumn TWO: " + NameColumn);
 										nameValue = dataFormatter.formatCellValue(cell);
 										System.out.println(nameValue);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
@@ -648,7 +648,7 @@ public class ExcelUtil {
 	private void setUpEmails(String recipientList, String excludedList, Long openers, Long bounces, Long unsubscribers, 
 			Long clicks, Long recipients, User uploader, String nameValue, String refcode, Emails email, 
 			Date date, Date dateValue, Committees committee) {
-		
+		System.out.println("email set up found");
 		List<Emails> emails = null;
 		if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
         	email = new Emails();
@@ -765,56 +765,56 @@ public class ExcelUtil {
 
 	                   
 	                	Cell cell = cellIterator.next();
-	                	System.out.println("CELL: " + cell.getAddress());
+	                	//System.out.println("CELL: " + cell.getAddress());
 						if (row.getRowNum() == 0) {
 							//header = cell.getAddress();
 							header = cell;
-							System.out.println("Header: " + header);
+							//System.out.println("Header: " + header);
 							headers.add(header);
 							//System.out.println("Header column: " + header.getColumn());
 							
 							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
 							if (headerValue.contains("NAME")) {
 								NameColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("DATE")) {
 								DateColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("REFCODE")) {
 								RefcodeColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("RECIPIENT LIST")) {
 								listColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("EXCLUDED LIST")) {
 								excludeColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("OPEN")) {
 								openersColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("UNSUBSCRIBE")) {
 								unsubscribersColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("CLICK")) {
 								clicksColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("RECIPIENTS")) {
 								recipientsColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
 							if (headerValue.contains("BOUNCE")) {
 								bouncesColumn = header.getColumnIndex();
-								System.out.println(headerValue);
+								//System.out.println(headerValue);
 							}
-							System.out.println("Headers: " + headers);
+							//System.out.println("Headers: " + headers);
 						}
 						else if (row.getRowNum() > 0){
 							//if (refcode == null) {
@@ -883,7 +883,7 @@ public class ExcelUtil {
 										}
 									}
 									if (cell.getColumnIndex() == excludeColumn) {
-										System.out.println("Values: " + values);
+										//System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										excludedList = dataFormatter.formatCellValue(cell);
 										//System.out.println(recipientList);
@@ -894,7 +894,7 @@ public class ExcelUtil {
 										}
 									}
 									if (cell.getColumnIndex() == listColumn) {
-										System.out.println("Values: " + values);
+										//System.out.println("Values: " + values);
 										//userMap.put(headerValue, valValue);
 										recipientList = dataFormatter.formatCellValue(cell);
 										//System.out.println(recipientList);
@@ -906,7 +906,7 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
 										String dateValue1 = dataFormatter.formatCellValue(cell);
-										System.out.println(dateValue1);
+										//System.out.println(dateValue1);
 										date = new SimpleDateFormat("MM/dd/yy").parse(dateValue1);
 										//System.out.println("Simple date: " + date);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
@@ -917,55 +917,11 @@ public class ExcelUtil {
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
 										refcode = dataFormatter.formatCellValue(cell);
-										/*System.out.println("REFCODE AFTER: " + refcode);
-										System.out.println("Name AFTER: " + nameValue);
-										System.out.println("DATE AFTER: " + date);*/
-										//start email set up below
-							    /*	if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
-					    	        	email = new Emails();
-					    	        	email.setEmailName(nameValue);
-					    	        	email.setEmaildate(date);
-					    	        	email.setEmailRefcode(refcode);
-					    	        	email.setBounces(bounces);
-					    	        	email.setClicks(clicks);
-					    	        	email.setOpeners(openers);
-					    	        	email.setRecipients(recipients);
-					    	        	email.setUnsubscribers(unsubscribers);
-					    	        	email.setExcludedList(excludedList);
-					    	        	email.setList(recipientList);
-					    	        	email.setEmail_uploader(uploader);
-					    	        	email.setCommittee(committee);
-					    	        	emails = committee.getEmails();
-					    	        	emails.add(email);
-					    	        	committee.setEmails(emails);
-					    	        	eservice.createEmail(email);
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-					    	        }
-					    	        else {
-					    	        	email = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
-					    	        	System.out.println("found email");
-					    	        	email.setEmailName(nameValue);
-					    	        	email.setEmaildate(date);
-					    	        	email.setEmailRefcode(refcode);
-					    	        	email.setBounces(bounces);
-					    	        	email.setClicks(clicks);
-					    	        	email.setOpeners(openers);
-					    	        	email.setRecipients(recipients);
-					    	        	email.setUnsubscribers(unsubscribers);
-					    	        	email.setExcludedList(excludedList);
-					    	        	email.setList(recipientList);
-					    	        	email.setEmail_uploader(uploader);
-					    	        	email.setCommittee(committee);
-					    	        	emails = committee.getEmails();
-					    	        	emails.add(email);
-					    	        	committee.setEmails(emails);
-					    	        	eservice.createEmail(email);
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-					                }*/
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, email, 
+													date, dateValue, committee);
+										}
 							    	//end email set up above
 								}
 				
