@@ -74,8 +74,8 @@ public class EmailService {
 		if (emaildata != null) {
 			System.out.println("email data: " + emaildata.getId());
 		}
-		String refcode = email.getEmailRefcode();
-		System.out.println("refcode: " + refcode);
+		//String refcode = email.getEmailRefcode();
+		//System.out.println("refcode: " + refcode);
 		Long id = email.getId();
 		Double esum = 0.00;
 		Double eaverage = 0.00;

@@ -79,7 +79,7 @@ public class ExcelUtil {
 	}
 	private void setUpDonation(int noOfColumns, String address, String city, String state,
 			String Zipcode, String country, String phone, String emailValue, String nameValue,
-			String LNValue, Double amount, String refcode, String ActBlueId, String Recurring,
+			String LNValue, Double amount, String refcode, String refcode2, String ActBlueId, String Recurring,
 			Integer Recurrence, Donor donor, Date dateValue, Date timeValue, Donation donation,
 			Emails email, User uploader, Committees committee, Date date) throws ParseException {
 		
@@ -89,6 +89,7 @@ public class ExcelUtil {
 			System.out.println("COLUMN DONE: " + noOfColumns);
 			System.out.println("EMAIL AFTER: " + emailValue);
 			System.out.println("REFCODE AFTER: " + refcode);
+			System.out.println("REFCODE 2 AFTER: " + refcode2);
 			System.out.println("Name AFTER: " + nameValue);
 			System.out.println("LN AFTER: " + LNValue);
 			System.out.println("AMOUNT AFTER: " + amount);
@@ -130,13 +131,15 @@ public class ExcelUtil {
         	donation.setRecurring(Recurring);
         	System.out.println("donation recurring " + donation.getRecurring());
         	donation.setDondate(date);
+        	donation.setDonationRefcode1(refcode);
+        	donation.setDonationRefcode2(refcode2);
         	donation.setDonation_uploader(uploader);
         	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
         	donation.setCommittee(committee);
         	donations = committee.getDonations();
         	donations.add(donation);
         	committee.setDonations(donations);
-        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
         	if (emaildonation == null){
         		String undate1 = "0001-01-01 01:01";
         		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
@@ -145,6 +148,7 @@ public class ExcelUtil {
 	        	System.out.println("TEMP DATE: " + undate);
 	        	email.setEmaildate(undate);
 	        	email.setEmailRefcode(refcode);
+	        	email.setEmailRefcode2(refcode2);
 	        	email.setBounces(null);
 	        	email.setClicks(null);
 	        	email.setOpeners(null);
@@ -165,10 +169,10 @@ public class ExcelUtil {
 	        	donation.setEmailDonation(email);
         	}
         	else {
-        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee));
         	}
         	System.out.println("committee after: " + committee.getCommitteeName());
-        	committees.add(committee);
+        	//committees.add(committee);
         	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
         	donservice.createDonation(donation);
         	System.out.println("CREATE DONATION 2: ");
@@ -178,6 +182,7 @@ public class ExcelUtil {
     		//System.out.println("donordata id: " + donor.getDonordata().getId());
     		eservice.getEmailData(email, committee.getId());
         	refcode = null;
+        	refcode2 = null;
         	Recurring = null;
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
         }
@@ -207,6 +212,8 @@ public class ExcelUtil {
         	donation.setRecurrenceNumber(Recurrence);
         	System.out.println("RECURRING SET: " + Recurring);
         	donation.setRecurring(Recurring);
+        	donation.setDonationRefcode1(refcode);
+        	donation.setDonationRefcode2(refcode2);
         	donation.setAmount(amount);
         	System.out.println("amount");
         	donation.setDondate(date);
@@ -228,7 +235,7 @@ public class ExcelUtil {
         	donservice.createDonation(donation);
         	System.out.println("create donation");
         	System.out.println("RECURRING END: " + donation.getRecurring());
-        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
         	if (emaildonation == null){
         		String undate1 = "0001-01-01 01:01";
         		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
@@ -238,6 +245,7 @@ public class ExcelUtil {
 	        	email.setEmaildate(undate);
 	        	System.out.println("***TEMP DATE FROM EMAIL: " + email.getEmaildate());
 	        	email.setEmailRefcode(refcode);
+	        	email.setEmailRefcode2(refcode2);
 	        	email.setBounces(null);
 	        	email.setClicks(null);
 	        	email.setOpeners(null);
@@ -258,7 +266,7 @@ public class ExcelUtil {
 	        	donation.setEmailDonation(email);
         	}
         	else {
-        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
+        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee));
         	}
         	System.out.println("CREATE DONATION 2: ");
         	donservice.createDonation(donation);
@@ -267,6 +275,7 @@ public class ExcelUtil {
     		dservice.getDonorData(donor, committee.getId());
     		eservice.getEmailData(email, committee.getId());
         	refcode = null;
+        	refcode2 = null;
         	Recurring = null;
         	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 		}
@@ -328,6 +337,7 @@ public class ExcelUtil {
 			int AmountColumn = 0;
 			int TimeColumn = 0;
 			int RefcodeColumn = 0;
+			int Refcode2Column = 0;
 			int DateColumn = 0;
 			int AbIdColumn = 0;
 			int RecurringColumn = 0;
@@ -350,6 +360,7 @@ public class ExcelUtil {
 			String LNValue = null;
 			Double amount = null;
 			String refcode = null;
+			String refcode2 = null;
 			String ActBlueId = null;
 			String Recurring = null;
 			Integer Recurrence = null;
@@ -388,11 +399,20 @@ public class ExcelUtil {
 							}
 							if (headerValue.contains("EMAIL")) {
 								EmailColumn = header.getColumnIndex();
-								System.out.println("refcode: " + headerValue);
+								System.out.println("donor email: " + headerValue);
 							}
 							if (headerValue.contains("REFERENCE CODE")) {
 								RefcodeColumn = header.getColumnIndex();
 								System.out.println("refcode: " + headerValue);
+								if (headerValue.contains("REFERENCE CODE 2")) {
+									Refcode2Column = header.getColumnIndex();
+									if (RefcodeColumn == Refcode2Column) {
+										RefcodeColumn = 0;
+										System.out.println("refcode 2: " + headerValue);
+									}
+								}
+								System.out.println("RefcodeColumn 1: " + RefcodeColumn);
+								System.out.println("RefcodeColumn 2: " + Refcode2Column);
 							}
 							if (headerValue.contains("AMOUNT")) {
 								AmountColumn = header.getColumnIndex();
@@ -438,7 +458,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -452,7 +472,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -464,7 +484,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -476,7 +496,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -489,7 +509,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -515,7 +535,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -527,7 +547,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -540,7 +560,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -552,7 +572,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -565,7 +585,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -578,7 +598,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -591,7 +611,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -604,7 +624,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -617,7 +637,7 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -631,7 +651,20 @@ public class ExcelUtil {
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
-													LNValue, amount, refcode, ActBlueId, Recurring,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date);
+										}
+									}
+									else if (cell.getColumnIndex() == Refcode2Column) {
+										refcode2 = dataFormatter.formatCellValue(cell);
+										System.out.println("Refcode 2: " + refcode);
+										System.out.println("Column 1: " + cell.getColumnIndex());
+										if (cell.getColumnIndex() == noOfColumns -1) { 
+											System.out.println("Column: " + noOfColumns);
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
 										}
@@ -646,16 +679,16 @@ public class ExcelUtil {
 	}
 	
 	private void setUpEmails(String recipientList, String excludedList, Long openers, Long bounces, Long unsubscribers, 
-			Long clicks, Long recipients, User uploader, String nameValue, String refcode, Emails email, 
+			Long clicks, Long recipients, User uploader, String nameValue, String refcode, String refcode2, Emails email, 
 			Date date, Date dateValue, Committees committee) {
 		System.out.println("email set up found");
 		List<Emails> emails = null;
-		if (eservice.findEmailbyRefcodeandCommittee(refcode, committee) == null) {
+		if (eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee) == null) {
         	email = new Emails();
-        	//System.out.println("ID: " + id);
         	email.setEmailName(nameValue);
         	email.setEmaildate(date);
         	email.setEmailRefcode(refcode);
+        	email.setEmailRefcode2(refcode2);
         	email.setBounces(bounces);
         	email.setClicks(clicks);
         	email.setOpeners(openers);
@@ -671,14 +704,16 @@ public class ExcelUtil {
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
         	refcode = null;
+        	refcode2 = null;
 			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
         }
         else {
-        	email = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
+        	email = eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
         	System.out.println("found email");
         	email.setEmailName(nameValue);
         	email.setEmaildate(date);
         	email.setEmailRefcode(refcode);
+        	email.setEmailRefcode2(refcode2);
         	email.setBounces(bounces);
         	email.setClicks(clicks);
         	email.setOpeners(openers);
@@ -694,6 +729,7 @@ public class ExcelUtil {
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
         	refcode = null;
+        	refcode2 = null;
 			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
         }
 	}
@@ -733,6 +769,7 @@ public class ExcelUtil {
 			DataFormatter dataFormatter = new DataFormatter();
 			int NameColumn = 0;
 			int RefcodeColumn = 0;
+			int Refcode2Column = 0;
 			int DateColumn = 0;
 			int listColumn = 0;
 			int excludeColumn = 0;
@@ -751,6 +788,7 @@ public class ExcelUtil {
 			User uploader = uservice.findUserbyId(user_id);
 			String nameValue = null;
 			String refcode = null;
+			String refcode2 = null;
 			Emails email = null;
 			Date date = null;
 			Date dateValue = new Date();
@@ -782,9 +820,15 @@ public class ExcelUtil {
 								DateColumn = header.getColumnIndex();
 								//System.out.println(headerValue);
 							}
-							if (headerValue.contains("REFCODE")) {
+							if (headerValue.contains("REFERENCE CODE")) {
 								RefcodeColumn = header.getColumnIndex();
-								//System.out.println(headerValue);
+								System.out.println("refcode: " + headerValue);
+								if (headerValue.contains("REFERENCE CODE 2")) {
+									Refcode2Column = header.getColumnIndex();
+									if (RefcodeColumn == Refcode2Column) {
+										RefcodeColumn = 0;
+									}
+								}
 							}
 							if (headerValue.contains("RECIPIENT LIST")) {
 								listColumn = header.getColumnIndex();
@@ -828,7 +872,7 @@ public class ExcelUtil {
 										//System.out.println(nameValue);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -838,7 +882,7 @@ public class ExcelUtil {
 										//System.out.println(clicks);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -848,7 +892,7 @@ public class ExcelUtil {
 										//System.out.println(recipients);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -858,7 +902,7 @@ public class ExcelUtil {
 										//System.out.println(unsubscribers);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -868,7 +912,7 @@ public class ExcelUtil {
 										//System.out.println(openers);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -878,7 +922,7 @@ public class ExcelUtil {
 										//System.out.println(bounces);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -889,7 +933,7 @@ public class ExcelUtil {
 										//System.out.println(recipientList);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -900,7 +944,7 @@ public class ExcelUtil {
 										//System.out.println(recipientList);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -911,7 +955,7 @@ public class ExcelUtil {
 										//System.out.println("Simple date: " + date);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
 									}
@@ -919,16 +963,22 @@ public class ExcelUtil {
 										refcode = dataFormatter.formatCellValue(cell);
 										if (cell.getColumnIndex() == noOfColumns - 1) {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
-													clicks, recipients, uploader, nameValue, refcode, email, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
 										}
-							    	//end email set up above
 								}
-				
+									else if (cell.getColumnIndex() == Refcode2Column) {
+										refcode2 = dataFormatter.formatCellValue(cell);
+										if (cell.getColumnIndex() == noOfColumns - 1) {
+											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
+													date, dateValue, committee);
+										}
 							}
 		    	        }
 
 	            }
+	        }
 		}
   }
     private XSSFWorkbook workbook;
