@@ -132,6 +132,8 @@ public class ExcelUtil {
         	System.out.println("donation recurring " + donation.getRecurring());
         	donation.setDondate(date);
         	donation.setDonationRefcode1(refcode);
+        	System.out.println("****DONATION REFCODE" + refcode);
+        	System.out.println("****GET DONATION REFCODE" + donation.getDonationRefcode1());
         	donation.setDonationRefcode2(refcode2);
         	donation.setDonation_uploader(uploader);
         	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
@@ -181,9 +183,6 @@ public class ExcelUtil {
     		dservice.getDonorData(donor, committee.getId());
     		//System.out.println("donordata id: " + donor.getDonordata().getId());
     		eservice.getEmailData(email, committee.getId());
-        	refcode = null;
-        	refcode2 = null;
-        	Recurring = null;
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
         }
         else {
@@ -213,6 +212,8 @@ public class ExcelUtil {
         	System.out.println("RECURRING SET: " + Recurring);
         	donation.setRecurring(Recurring);
         	donation.setDonationRefcode1(refcode);
+        	System.out.println("****DONATION REFCODE" + refcode);
+        	System.out.println("****GET DONATION REFCODE" + donation.getDonationRefcode1());
         	donation.setDonationRefcode2(refcode2);
         	donation.setAmount(amount);
         	System.out.println("amount");
@@ -274,9 +275,6 @@ public class ExcelUtil {
     		System.out.println("Email: " + email.getEmailName());
     		dservice.getDonorData(donor, committee.getId());
     		eservice.getEmailData(email, committee.getId());
-        	refcode = null;
-        	refcode2 = null;
-        	Recurring = null;
         	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 		}
 	}
@@ -461,6 +459,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == NameColumn) {
@@ -475,6 +488,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == LastNameColumn) {
@@ -487,6 +515,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == AbIdColumn) {
@@ -499,6 +542,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == AmountColumn) {
@@ -512,6 +570,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
@@ -538,6 +611,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == RecurringColumn) {
@@ -550,6 +638,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -563,6 +666,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == addressColumn) {
@@ -575,6 +693,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -588,6 +721,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -601,6 +749,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -614,6 +777,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -627,6 +805,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -640,6 +833,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 										
 									}
@@ -654,6 +862,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									else if (cell.getColumnIndex() == Refcode2Column) {
@@ -667,6 +890,21 @@ public class ExcelUtil {
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
 													email, uploader, committee, date);
+											address = null;
+											state = null;
+											city = null;
+											Zipcode = null;
+											phone = null;
+											emailValue = null;
+											nameValue = null;
+											LNValue = null;
+											amount = null;
+											refcode = null;
+											refcode2 = null;
+											ActBlueId = null;
+											Recurring = null;
+											Recurrence = null;
+											date = null;
 										}
 									}
 									
@@ -874,6 +1112,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == clicksColumn) {
@@ -884,6 +1133,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == recipientsColumn ) {
@@ -894,6 +1154,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == unsubscribersColumn) {
@@ -904,6 +1175,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == openersColumn) {
@@ -914,6 +1196,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == bouncesColumn) {
@@ -924,6 +1217,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == excludeColumn) {
@@ -935,6 +1239,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									if (cell.getColumnIndex() == listColumn) {
@@ -946,6 +1261,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									else if (cell.getColumnIndex() == DateColumn) {
@@ -957,6 +1283,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 									}
 									else if (cell.getColumnIndex() == RefcodeColumn) {
@@ -965,6 +1302,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 								}
 									else if (cell.getColumnIndex() == Refcode2Column) {
@@ -973,6 +1321,17 @@ public class ExcelUtil {
 											setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
 													clicks, recipients, uploader, nameValue, refcode, refcode2, email, 
 													date, dateValue, committee);
+											recipientList = null;
+											excludedList = null;
+											openers = null;
+											bounces = null;
+											unsubscribers = null;
+											clicks = null;
+											recipients = null;
+											nameValue = null;
+											refcode = null;
+											refcode2 = null;
+											email = null;
 										}
 							}
 		    	        }

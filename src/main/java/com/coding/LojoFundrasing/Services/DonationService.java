@@ -56,7 +56,12 @@ public class DonationService {
 					recurrencedated.get(j).setDonation_uploader(d.getDonation_uploader());
 					recurrencedated.get(j).setEmailDonation(d.getEmailDonation());
 					recurrencedated.get(j).setRecurring(d.getRecurring());
-					d = recurrencedated.get(j);
+					recurrencedated.get(j).setRecurrenceNumber(d.getRecurrenceNumber());
+					recurrencedated.get(j).setDonationRefcode1(d.getDonationRefcode1());
+					recurrencedated.get(j).setDonationRefcode2(d.getDonationRefcode2());
+					recurrencedated.get(j).setAmount(d.getAmount());
+					recurrencedated.get(j).setDondate(d.getDondate());
+					recurrencedated.get(j).setCommittee(d.getCommittee());
 					return donrepo.save(d);
 				}
 		}
