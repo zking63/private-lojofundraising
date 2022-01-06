@@ -43,8 +43,9 @@ public class Emails {
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
 	//private Double email_average;
-	@NotNull
+	//@NotNull
 	private String emailRefcode;
+	private String emailRefcode2;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -254,6 +255,14 @@ public class Emails {
 
 	public void setEmailgroup(EmailGroup emailgroup) {
 		this.emailgroup = emailgroup;
+	}
+
+	public String getEmailRefcode2() {
+		return emailRefcode2;
+	}
+
+	public void setEmailRefcode2(String emailRefcode2) {
+		this.emailRefcode2 = emailRefcode2;
 	}
 	
 	

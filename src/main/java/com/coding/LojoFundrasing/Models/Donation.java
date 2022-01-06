@@ -27,6 +27,8 @@ public class Donation {
 	private String recurring;
 	private Integer recurrenceNumber;
 	private String ActBlueId;
+	private String DonationRefcode1;
+	private String DonationRefcode2;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Dondate;
 	
@@ -160,6 +162,22 @@ public class Donation {
 
 	public void setCommittee(Committees committee) {
 		this.committee = committee;
+	}
+
+	public String getDonationRefcode1() {
+		return DonationRefcode1;
+	}
+
+	public void setDonationRefcode1(String donationRefcode1) {
+		DonationRefcode1 = donationRefcode1;
+	}
+
+	public String getDonationRefcode2() {
+		return DonationRefcode2;
+	}
+
+	public void setDonationRefcode2(String donationRefcode2) {
+		DonationRefcode2 = donationRefcode2;
 	}
 
 	@PrePersist
