@@ -1015,6 +1015,7 @@ public class LojoController {
 			 }
 			 Long committee_id = (Long)session.getAttribute("committee_id");
 			 Committees committee = cservice.findbyId(committee_id);
+			 //excelService.saveFile(file);
 			excelService.readData(user_id, committee, file);
 			return "redirect:/home";
 		}
@@ -1235,4 +1236,34 @@ public class LojoController {
 	    	excelService.exportTestToExcel(tests, response);
 			return "home.jsp";
 	    } 
+	    @RequestMapping(value="/import/chairreport")
+		public String importchair(HttpSession session, Model model, HttpServletRequest request) {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			model.addAttribute("user", user);
+			return "import2.jsp";
+		}
+		@PostMapping("/import/chairreport")
+		public String readchairreport(HttpSession session, MultipartFile file) throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 Committees committee = cservice.findbyId(committee_id);
+			 System.out.println("here");
+			excelService.readChairData(file);
+			return "redirect:/home";
+		}
 }

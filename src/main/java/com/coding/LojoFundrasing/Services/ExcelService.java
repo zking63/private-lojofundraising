@@ -1,8 +1,10 @@
 package com.coding.LojoFundrasing.Services;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,20 +33,19 @@ public class ExcelService {
 	@Autowired
 	private ExcelUtil excelUtil;
 	
-	public String excelUrl = "D:\\test excel\\";
+	public String excelUrl = "D:\\excel\\";
 	public void readData(Long user_id, Committees committee, MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
 			String filepath = excelUrl + multipartFile.getOriginalFilename();
-
 			byte[] bytes = multipartFile.getBytes();
-			java.nio.file.Path path = Paths.get(excelUrl + multipartFile.getOriginalFilename());
+			java.nio.file.Path path = Paths.get(filepath);
 			Files.write(path, bytes);
-
-
+			
 			excelUtil.getSheetDetails(filepath);
-			System.out.println("made it past get sheet details");
-		 /*response=*/	excelUtil.readExcelSheet(filepath, user_id, committee);
+			
+		 excelUtil.readExcelSheet(filepath, user_id, committee);
 		 System.out.println("made it through read excel!!!");
+		 Files.delete(path);
 	}
 	public void readEmailData(Long user_id, MultipartFile multipartFile, Committees committee) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
@@ -59,6 +60,7 @@ public class ExcelService {
 		System.out.println("made it past get sheet details");
 	 /*response=*/	excelUtil.readExcelSheetEmails(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
+	 Files.delete(path);
   }
 	public void readTestData(Long user_id, MultipartFile multipartFile, Committees committee) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
@@ -73,6 +75,7 @@ public class ExcelService {
 		System.out.println("made it past get sheet details");
 	 /*response=*/	excelUtil.readExcelSheetTest(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
+	 Files.delete(path);
   }
     public void exportToExcel(List<Donor> donors, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
@@ -129,4 +132,19 @@ public class ExcelService {
         
         excelUtil.Testexporter(tests, response);
     } 
+	public void readChairData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
+
+		String filepath = excelUrl + multipartFile.getOriginalFilename();
+
+		byte[] bytes = multipartFile.getBytes();
+		java.nio.file.Path path = Paths.get(excelUrl + multipartFile.getOriginalFilename());
+		Files.write(path, bytes);
+
+
+		excelUtil.getSheetDetails(filepath);
+		System.out.println("made it past get sheet details");
+	 /*response=*/	excelUtil.readChairReport(filepath);
+	 System.out.println("made it through read excel!!!");
+	 Files.delete(path);
+  }
 }
