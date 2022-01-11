@@ -81,11 +81,16 @@ public class ExcelUtil {
 			String Zipcode, String country, String phone, String emailValue, String nameValue,
 			String LNValue, Double amount, String refcode, String refcode2, String ActBlueId, String Recurring,
 			Integer Recurrence, Donor donor, Date dateValue, Date timeValue, Donation donation,
-			Emails email, User uploader, Committees committee, Date date) throws ParseException {
+			Emails email, User uploader, Committees committee, Date date, int rowNumber) throws ParseException {
+		
+			if (ActBlueId == null || amount == null || emailValue == null) {
+				System.out.println("NOTHING IN THIS ROW " + rowNumber);
+				return;
+			}
 		
 			List<Committees> committees = null;
 			
-			System.out.println("made it to setUpDonation");
+			/*System.out.println("made it to setUpDonation");
 			System.out.println("COLUMN DONE: " + noOfColumns);
 			System.out.println("EMAIL AFTER: " + emailValue);
 			System.out.println("REFCODE AFTER: " + refcode);
@@ -103,7 +108,7 @@ public class ExcelUtil {
 			System.out.println("STATE AFTER: " + state);
 			System.out.println("COUNTRY AFTER: " + country);
 			System.out.println("PHONE AFTER: " + phone);
-			System.out.println("ZIP AFTER: " + Zipcode);
+			System.out.println("ZIP AFTER: " + Zipcode);*/
     	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
         	donor = new Donor();
         	//System.out.println("ID: " + id);
@@ -385,7 +390,7 @@ public class ExcelUtil {
 	                	Cell cell = cellIterator.next();
 						if (row.getRowNum() == 0) {
 							header = cell;
-							System.out.println("Header: " + header);
+							//System.out.println("Header: " + header);
 							headers.add(header);
 							
 							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
@@ -445,7 +450,7 @@ public class ExcelUtil {
 							if (headerValue.contains("PHONE")) {
 								phoneColumn = header.getColumnIndex();
 							}
-							System.out.println("Headers: " + headers);
+							//System.out.println("Headers: " + headers);
 						}
 						else if (row.getRowNum() > 0){
 									value = cell;
@@ -458,7 +463,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -487,7 +492,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -514,7 +519,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -541,7 +546,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -569,7 +574,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -610,7 +615,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -637,7 +642,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -665,7 +670,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -692,7 +697,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -720,7 +725,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -748,7 +753,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -776,7 +781,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -804,7 +809,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -832,7 +837,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -861,7 +866,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -889,7 +894,7 @@ public class ExcelUtil {
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date);
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
