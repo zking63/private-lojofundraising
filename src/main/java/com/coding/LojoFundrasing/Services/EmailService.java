@@ -61,6 +61,10 @@ public class EmailService {
 		Long committee_id = committee.getId();
 		return erepo.findByemailRefcodeandCommittee(emailRefcode, emailRefcode2, committee_id);
 	}
+	public Emails findEmailbyOneRefcodeandCommittee(String emailRefcode, Committees committee) {
+		Long committee_id = committee.getId();
+		return erepo.findByemailOneRefcodeandCommittee(emailRefcode, committee_id);
+	}
 	public void delete(long id) {
 		erepo.deleteById(id);
 	}
