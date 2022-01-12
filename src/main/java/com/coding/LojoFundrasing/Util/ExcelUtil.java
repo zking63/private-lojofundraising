@@ -77,19 +77,16 @@ public class ExcelUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		return df.format(new Date());
 	}
-	private Integer setUpDonation(int noOfColumns, String address, String city, String state,
+	private void setUpDonation(int noOfColumns, String address, String city, String state,
 			String Zipcode, String country, String phone, String emailValue, String nameValue,
 			String LNValue, Double amount, String refcode, String refcode2, String ActBlueId, String Recurring,
 			Integer Recurrence, Donor donor, Date dateValue, Date timeValue, Donation donation,
 			Emails email, User uploader, Committees committee, Date date, int rowNumber) throws ParseException {
 		
-			int unsuccessful = 0;
 			if (ActBlueId == null || amount == null || emailValue == null) {
 				rowNumber = rowNumber +1;
-				unsuccessful++;
 				System.out.println("*****NOTHING IN THIS ROW " + rowNumber);
-				System.out.println("*****UNSUCCESSFUL ROWS " + unsuccessful);
-				return 1;
+				return;
 			}
 		
 			List<Committees> committees = null;
@@ -193,7 +190,6 @@ public class ExcelUtil {
     		//System.out.println("donordata id: " + donor.getDonordata().getId());
     		eservice.getEmailData(email, committee.getId());
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-			return 0;
         }
         else {
         	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
@@ -286,7 +282,6 @@ public class ExcelUtil {
     		dservice.getDonorData(donor, committee.getId());
     		eservice.getEmailData(email, committee.getId());
         	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-        	return 0;
 		}
 	}
 	
@@ -390,11 +385,6 @@ public class ExcelUtil {
 			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
 	        while (rowIterator.hasNext()) {
 	            Row row = rowIterator.next();
-	        	Integer RowReport = setUpDonation(noOfColumns, address, city, state, 
-						Zipcode, country, phone, emailValue, nameValue,
-						LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-						Recurrence, donor, dateValue, timeValue, donation,
-						email, uploader, committee, date, row.getRowNum());
 	             Iterator<Cell> cellIterator = row.cellIterator();
 	                while(cellIterator.hasNext()) {
 
@@ -471,15 +461,11 @@ public class ExcelUtil {
 										System.out.println("Email:" + emailValue);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
+											setUpDonation(noOfColumns, address, city, state, 
 													Zipcode, country, phone, emailValue, nameValue,
 													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
 													Recurrence, donor, dateValue, timeValue, donation,
-													email, uploader, committee, date, row.getRowNum());*/
-											if (RowReport != 0) {
-												UnsuccessfulRows.add(RowReport);
-												System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-											}
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -504,15 +490,11 @@ public class ExcelUtil {
 										System.out.println(nameValue);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -535,15 +517,11 @@ public class ExcelUtil {
 										System.out.println(LNValue);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -566,15 +544,11 @@ public class ExcelUtil {
 										System.out.println("ActBlue Id: " + ActBlueId);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -598,15 +572,11 @@ public class ExcelUtil {
 										System.out.println(amount);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -643,15 +613,11 @@ public class ExcelUtil {
 										//System.out.println("Simple date: " + date);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -674,15 +640,11 @@ public class ExcelUtil {
 										System.out.println("Recurring: " + Recurring);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -706,15 +668,11 @@ public class ExcelUtil {
 										System.out.println("Recurrence: " + Recurrence);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -737,15 +695,11 @@ public class ExcelUtil {
 										System.out.println("Address: " + address);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -769,15 +723,11 @@ public class ExcelUtil {
 										System.out.println("City: " + city);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -801,15 +751,11 @@ public class ExcelUtil {
 										System.out.println("State: " + state);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -833,15 +779,11 @@ public class ExcelUtil {
 										System.out.println("Zip: " + Zipcode);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -865,15 +807,11 @@ public class ExcelUtil {
 										System.out.println("Country: " + country);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -897,15 +835,11 @@ public class ExcelUtil {
 										System.out.println("Phone: " + phone);
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -931,15 +865,10 @@ public class ExcelUtil {
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
 											setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());
-									if (RowReport != 0) {
-										System.out.println("RowReport: " + RowReport);
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
@@ -963,15 +892,11 @@ public class ExcelUtil {
 										System.out.println("Column 1: " + cell.getColumnIndex());
 										if (cell.getColumnIndex() == noOfColumns -1) { 
 											System.out.println("Column: " + noOfColumns);
-											/*setUpDonation(noOfColumns, address, city, state, 
-											Zipcode, country, phone, emailValue, nameValue,
-											LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
-											Recurrence, donor, dateValue, timeValue, donation,
-											email, uploader, committee, date, row.getRowNum());*/
-									if (RowReport != 0) {
-										UnsuccessfulRows.add(RowReport);
-										System.out.println("UnsuccessfulRows: " + UnsuccessfulRows);
-									}
+											setUpDonation(noOfColumns, address, city, state, 
+													Zipcode, country, phone, emailValue, nameValue,
+													LNValue, amount, refcode, refcode2, ActBlueId, Recurring,
+													Recurrence, donor, dateValue, timeValue, donation,
+													email, uploader, committee, date, row.getRowNum());
 											address = null;
 											state = null;
 											city = null;
