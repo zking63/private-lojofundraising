@@ -90,7 +90,7 @@ public class EmailService {
 		Double donorsOpens = 0.00;
 		Double donorsClicks = 0.00;
 		Double clicksOpens = 0.00;
-		List<Data> alldata = datarepo.findAll();
+		
 			esum = erepo.sums(id, committee_id);
 			System.out.println("esum:" + esum);
 			eaverage = erepo.averages(id, committee_id);
@@ -125,9 +125,22 @@ public class EmailService {
 				System.out.println("recurringRevenue: " + "null");
 				recurringRevenue = 0.0;
 			}
-			else {
-				System.out.println("recurringRevenue: " + recurringRevenue);
-			}
+			email.setEmaildonationaverage(eaverage);
+			email.setEmaildonationsum(esum);
+			email.setRecurringDonationCount(recurringDonationCount);
+			email.setRecurringDonorCount(recurringDonorCount);
+			email.setRecurringRevenue(recurringRevenue);
+			email.setEmaildonationcount(donationscount);
+			email.setEmaildonorcount(donorscount);
+			email.setEmailunsubscribeRate(unsubscribeRate);
+			email.setEmailclickRate(clickRate);
+			email.setEmailopenRate(openRate);
+			email.setBounceRate(bounceRate);
+			email.setEmaildonationsOpens(donationsOpens);
+			email.setEmaildonationsClicks(donationsClicks);
+			email.setEmailclicksOpens(clicksOpens);
+			email.setEmaildonorsOpens(donorsOpens);
+			email.setEmaildonorsClicks(donorsClicks);
 		/*	email.setRecurringDonorCount(recurringDonorCount);
 			email.setRecurringDonationCount(recurringDonationCount);
 			email.setRecurringRevenue(recurringRevenue);

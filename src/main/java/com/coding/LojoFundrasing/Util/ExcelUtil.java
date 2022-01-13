@@ -963,8 +963,6 @@ public class ExcelUtil {
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
     		eservice.CalculateEmailData(email, committee.getId());
-        	refcode = null;
-        	refcode2 = null;
 			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
         }
         else {
@@ -989,8 +987,6 @@ public class ExcelUtil {
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
     		eservice.CalculateEmailData(email, committee.getId());
-        	refcode = null;
-        	refcode2 = null;
 			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
         }
 		}
@@ -1020,8 +1016,6 @@ public class ExcelUtil {
 	        	eservice.createEmail(email);
 	    		eservice.getEmailData(email, committee.getId());
 	    		eservice.CalculateEmailData(email, committee.getId());
-	        	refcode = null;
-	        	refcode2 = null;
 				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 	        }
 	        else {
@@ -1046,8 +1040,6 @@ public class ExcelUtil {
 	        	eservice.createEmail(email);
 	    		eservice.getEmailData(email, committee.getId());
 	    		eservice.CalculateEmailData(email, committee.getId());
-	        	refcode = null;
-	        	refcode2 = null;
 				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
 	        }
 		}
