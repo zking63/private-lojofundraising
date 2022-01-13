@@ -700,6 +700,7 @@ public class LojoController {
 						this.donservice.delete(id);
 						Emails email = donation.getEmailDonation();
 						Donor donor = donation.getDonor();
+						//1
 						this.eservice.getEmailData(email, committee_id);
 						this.dservice.getDonorData(donor, committee_id);
 					 }

@@ -65,6 +65,10 @@ public class EmailService {
 		Long committee_id = committee.getId();
 		return erepo.findByemailOneRefcodeandCommittee(emailRefcode, committee_id);
 	}
+	public Emails findEmailbyRefcodeTWOandCommittee(String emailRefcode2, Committees committee) {
+		Long committee_id = committee.getId();
+		return erepo.findByemailRefcodeTWOandCommittee(emailRefcode2, committee_id);
+	}
 	public void delete(long id) {
 		erepo.deleteById(id);
 	}
@@ -92,7 +96,7 @@ public class EmailService {
 		Double clicksOpens = 0.00;
 		
 			esum = erepo.sums(id, committee_id);
-			System.out.println("esum:" + esum);
+			System.out.println("esum in calculate:" + esum);
 			eaverage = erepo.averages(id, committee_id);
 			donationscount = erepo.donationscount(id, committee_id);
 			donorscount = erepo.donorscount(id, committee_id);
