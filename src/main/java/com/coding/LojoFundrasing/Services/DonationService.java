@@ -25,25 +25,7 @@ public class DonationService {
 	@Autowired
 	private DonationRepo donrepo;
 	
-	@Autowired
-	private EmailService eservice;
-	
-	@Autowired
-	private DonorService dservice;
-	
 	public Donation createDonation(Donation d) {
-		System.out.println("MADE IT TO CREATE DONATION " + d.getDondate());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); 
-		String strDate = dateFormat.format(d.getDondate()); 
-		System.out.println("reccurences query");
-		List<Donation> recurrences = donrepo.findbyActBlueIdandCommittee_id(d.getActBlueId(), d.getCommittee().getId());
-		if (recurrences.size() > 0) {
-			System.out.println("reccurences query: " + recurrences.size());
-			for (int i = 0; i < recurrences.size(); i++) {
-				System.out.println("  " + recurrences.get(i).getId());
-			}
-		}
-		System.out.println("reccurencedated query");
 		List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate(), d.getDonor().getId());
 		System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());

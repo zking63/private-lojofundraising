@@ -189,6 +189,7 @@ public class ExcelUtil {
     		dservice.getDonorData(donor, committee.getId());
     		//System.out.println("donordata id: " + donor.getDonordata().getId());
     		eservice.getEmailData(email, committee.getId());
+    		eservice.CalculateEmailData(email, committee.getId());
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
         }
         else {
@@ -281,6 +282,7 @@ public class ExcelUtil {
     		System.out.println("Email: " + email.getEmailName());
     		dservice.getDonorData(donor, committee.getId());
     		eservice.getEmailData(email, committee.getId());
+    		eservice.CalculateEmailData(email, committee.getId());
         	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 		}
 	}
@@ -960,6 +962,7 @@ public class ExcelUtil {
         	committee.setEmails(emails);
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
+    		eservice.CalculateEmailData(email, committee.getId());
         	refcode = null;
         	refcode2 = null;
 			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
@@ -985,6 +988,7 @@ public class ExcelUtil {
         	committee.setEmails(emails);
         	eservice.createEmail(email);
     		eservice.getEmailData(email, committee.getId());
+    		eservice.CalculateEmailData(email, committee.getId());
         	refcode = null;
         	refcode2 = null;
 			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
@@ -1015,6 +1019,7 @@ public class ExcelUtil {
 	        	committee.setEmails(emails);
 	        	eservice.createEmail(email);
 	    		eservice.getEmailData(email, committee.getId());
+	    		eservice.CalculateEmailData(email, committee.getId());
 	        	refcode = null;
 	        	refcode2 = null;
 				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
@@ -1040,6 +1045,7 @@ public class ExcelUtil {
 	        	committee.setEmails(emails);
 	        	eservice.createEmail(email);
 	    		eservice.getEmailData(email, committee.getId());
+	    		eservice.CalculateEmailData(email, committee.getId());
 	        	refcode = null;
 	        	refcode2 = null;
 				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());

@@ -18,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -40,6 +39,19 @@ public class Emails {
 	private Integer recurringDonorCount;
 	private Integer recurringDonationCount;
 	private Double recurringRevenue;
+	private Double emaildonationaverage;
+	private Double emaildonationsum;
+	private Integer emaildonationcount;
+	private Integer emaildonorcount;
+	private Double emailunsubscribeRate;
+	private Double emailclickRate;
+	private Double emailopenRate;
+	private Double bounceRate;
+	private Double emaildonationsOpens;
+	private Double emaildonationsClicks;
+	private Double emailclicksOpens;
+	private Double emaildonorsOpens;
+	private Double emaildonorsClicks;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
 	//private Double email_average;
@@ -263,6 +275,110 @@ public class Emails {
 
 	public void setEmailRefcode2(String emailRefcode2) {
 		this.emailRefcode2 = emailRefcode2;
+	}
+
+	public Double getEmaildonationaverage() {
+		return emaildonationaverage;
+	}
+
+	public void setEmaildonationaverage(Double emaildonationaverage) {
+		this.emaildonationaverage = emaildonationaverage;
+	}
+
+	public Double getEmaildonationsum() {
+		return emaildonationsum;
+	}
+
+	public void setEmaildonationsum(Double emaildonationsum) {
+		this.emaildonationsum = emaildonationsum;
+	}
+
+	public Integer getEmaildonationcount() {
+		return emaildonationcount;
+	}
+
+	public void setEmaildonationcount(Integer emaildonationcount) {
+		this.emaildonationcount = emaildonationcount;
+	}
+
+	public Integer getEmaildonorcount() {
+		return emaildonorcount;
+	}
+
+	public void setEmaildonorcount(Integer emaildonorcount) {
+		this.emaildonorcount = emaildonorcount;
+	}
+
+	public Double getEmailunsubscribeRate() {
+		return emailunsubscribeRate;
+	}
+
+	public void setEmailunsubscribeRate(Double emailunsubscribeRate) {
+		this.emailunsubscribeRate = emailunsubscribeRate;
+	}
+
+	public Double getEmailclickRate() {
+		return emailclickRate;
+	}
+
+	public void setEmailclickRate(Double emailclickRate) {
+		this.emailclickRate = emailclickRate;
+	}
+
+	public Double getEmailopenRate() {
+		return emailopenRate;
+	}
+
+	public void setEmailopenRate(Double emailopenRate) {
+		this.emailopenRate = emailopenRate;
+	}
+
+	public Double getBounceRate() {
+		return bounceRate;
+	}
+
+	public void setBounceRate(Double bounceRate) {
+		this.bounceRate = bounceRate;
+	}
+
+	public Double getEmaildonationsOpens() {
+		return emaildonationsOpens;
+	}
+
+	public void setEmaildonationsOpens(Double emaildonationsOpens) {
+		this.emaildonationsOpens = emaildonationsOpens;
+	}
+
+	public Double getEmaildonationsClicks() {
+		return emaildonationsClicks;
+	}
+
+	public void setEmaildonationsClicks(Double emaildonationsClicks) {
+		this.emaildonationsClicks = emaildonationsClicks;
+	}
+
+	public Double getEmailclicksOpens() {
+		return emailclicksOpens;
+	}
+
+	public void setEmailclicksOpens(Double emailclicksOpens) {
+		this.emailclicksOpens = emailclicksOpens;
+	}
+
+	public Double getEmaildonorsOpens() {
+		return emaildonorsOpens;
+	}
+
+	public void setEmaildonorsOpens(Double emaildonorsOpens) {
+		this.emaildonorsOpens = emaildonorsOpens;
+	}
+
+	public Double getEmaildonorsClicks() {
+		return emaildonorsClicks;
+	}
+
+	public void setEmaildonorsClicks(Double emaildonorsClicks) {
+		this.emaildonorsClicks = emaildonorsClicks;
 	}
 	
 	
