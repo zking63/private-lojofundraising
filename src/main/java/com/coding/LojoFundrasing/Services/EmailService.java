@@ -146,6 +146,7 @@ public class EmailService {
 			email.setEmailclicksOpens(clicksOpens);
 			email.setEmaildonorsOpens(donorsOpens);
 			email.setEmaildonorsClicks(donorsClicks);
+			erepo.save(email);
 		/*	email.setRecurringDonorCount(recurringDonorCount);
 			email.setRecurringDonationCount(recurringDonationCount);
 			email.setRecurringRevenue(recurringRevenue);
