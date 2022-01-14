@@ -55,7 +55,7 @@ public class EmailService {
 	}
 	
 	public Emails findEmailbyRefcode(String emailRefcode) {
-		return erepo.findByemailRefcode(emailRefcode);
+		return erepo.findByemailRefcode1(emailRefcode);
 	}
 	public Emails findEmailbyRefcodeandCommittee(String emailRefcode, String emailRefcode2, Committees committee) {
 		Long committee_id = committee.getId();
@@ -137,6 +137,7 @@ public class EmailService {
 			email.setEmaildonationcount(donationscount);
 			email.setEmaildonorcount(donorscount);
 			email.setEmailunsubscribeRate(unsubscribeRate);
+			System.out.println("unsubscribeRate set: " + email.getEmailunsubscribeRate());
 			email.setEmailclickRate(clickRate);
 			email.setEmailopenRate(openRate);
 			email.setBounceRate(bounceRate);

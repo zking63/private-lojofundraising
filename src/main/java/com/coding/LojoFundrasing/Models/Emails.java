@@ -54,9 +54,7 @@ public class Emails {
 	private Double emaildonorsClicks;
 	@DateTimeFormat(pattern ="yyyy-MM-dd kk:mm")
 	private Date Emaildate;
-	//private Double email_average;
-	//@NotNull
-	private String emailRefcode;
+	private String emailRefcode1;
 	private String emailRefcode2;
 	@Column(updatable=false)
 	private Date createdAt;
@@ -106,14 +104,6 @@ public class Emails {
 
 	public void setEmaildate(Date emaildate) {
 		Emaildate = emaildate;
-	}
-
-	public String getEmailRefcode() {
-		return emailRefcode;
-	}
-
-	public void setEmailRefcode(String emailRefcode) {
-		this.emailRefcode = emailRefcode;
 	}
 
 	public Date getCreatedAt() {
@@ -380,6 +370,13 @@ public class Emails {
 	public void setEmaildonorsClicks(Double emaildonorsClicks) {
 		this.emaildonorsClicks = emaildonorsClicks;
 	}
-	
+
+	public String getEmailRefcode1() {
+		return emailRefcode1;
+	}
+
+	public void setEmailRefcode1(String emailRefcode1) {
+		this.emailRefcode1 = emailRefcode1;
+	}
 	
 }

@@ -14,16 +14,21 @@ import com.coding.LojoFundrasing.Models.Emails;
 @Repository
 public interface EmailRepo extends CrudRepository<Emails, Long>{
 	List<Emails> findAll();
-	Emails findByemailRefcode(String emailRefcode);
+	Emails findByemailRefcode1(String emailRefcode1);
+	//find emails without group 
 	@Query(value = "SElECT * FROM emails where committees_id = :committee_id and emailgroup_id is NULL AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY)", nativeQuery = true)
 	List <Emails> findemailswithoutGroup(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
-	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode = :emailRefcode AND emails.email_refcode2 = :emailRefcode2", nativeQuery = true)
+	
+	//find emails by refcodes and commitee
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode1 = :emailRefcode AND emails.email_refcode2 = :emailRefcode2", nativeQuery = true)
 	Emails findByemailRefcodeandCommittee(String emailRefcode, String emailRefcode2, Long committee_id);
-	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode = :emailRefcode", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode1 = :emailRefcode AND emails.email_refcode2 IS NULL or emails.email_refcode2 = ''", nativeQuery = true)
 	Emails findByemailOneRefcodeandCommittee(String emailRefcode, Long committee_id);
-	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode2 = :emailRefcode2", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode2 = :emailRefcode2 AND emails.email_refcode1 IS NULL or emails.email_refcode1 = ''", nativeQuery = true)
 	Emails findByemailRefcodeTWOandCommittee(String emailRefcode2, Long committee_id);
+	
+	//order emails
 	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.Emaildate Desc", nativeQuery = true)
 	List<Emails> findByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
