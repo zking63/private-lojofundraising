@@ -23,9 +23,9 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 	//find emails by refcodes and commitee
 	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode1 = :emailRefcode AND emails.email_refcode2 = :emailRefcode2", nativeQuery = true)
 	Emails findByemailRefcodeandCommittee(String emailRefcode, String emailRefcode2, Long committee_id);
-	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode1 = :emailRefcode AND emails.email_refcode2 IS NULL or emails.email_refcode2 = ''", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode1 = :emailRefcode AND (emails.email_refcode2 IS NULL or emails.email_refcode2 = '')", nativeQuery = true)
 	Emails findByemailOneRefcodeandCommittee(String emailRefcode, Long committee_id);
-	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode2 = :emailRefcode2 AND emails.email_refcode1 IS NULL or emails.email_refcode1 = ''", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails LEFT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.email_refcode2 = :emailRefcode2 AND (emails.email_refcode1 IS NULL or emails.email_refcode1 = '')", nativeQuery = true)
 	Emails findByemailRefcodeTWOandCommittee(String emailRefcode2, Long committee_id);
 	
 	//order emails
