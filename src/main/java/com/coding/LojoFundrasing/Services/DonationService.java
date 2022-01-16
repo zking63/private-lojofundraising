@@ -25,6 +25,10 @@ import com.coding.LojoFundrasing.Repos.DonationRepo;
 public class DonationService {
 	@Autowired
 	private DonationRepo donrepo;
+	@Autowired 
+	private CommitteeService cservice;
+	@Autowired
+	private DonorService dservice;
 	
 	public Donation createDonation(Donation d) {
 		/*List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate(), d.getDonor().getId());
@@ -50,20 +54,46 @@ public class DonationService {
 		}*/
 		d = findandSetDonation(d.getActBlueId(), d.getRecurring(), d.getRecurrenceNumber(), d.getDondate(), 
 				d.getCommittee(), d.getDonor(), d.getAmount(), d.getDonation_uploader(), d.getEmailDonation(), 
-				d.getDonationRefcode1(), d.getDonationRefcode2());
+				d.getDonationRefcode1(), d.getDonationRefcode2());	
 		return donrepo.save(d);
 	}
 	
 	public Donation findandSetDonation(String ActBlueId, String Recurring, Integer Recurrence, Date dateValue, 
 			Committees committee, Donor donor, Double amount, User uploader, Emails email, String refcode1, 
 			String refcode2) {
-		List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId());
+		Donation OneRecurrencedated = null;
+		//OneRecurrencedated = donrepo.findOnebyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId());
 		Donation donation = null;
+		List<Donation> donations;
+		List<Donation> DonorDonations;
 		//System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());
-		if (recurrencedated.size() > 1) {
+		if (donrepo.findOnebyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId()) == null) {
+			donation = new Donation ();
+			donation.setAmount(amount);
+			donation.setDonation_uploader(uploader);
+			donation.setEmailDonation(email);
+			donation.setRecurring(Recurring);
+			donation.setRecurrenceNumber(Recurrence);
+			donation.setDonationRefcode1(refcode1);
+			donation.setDonationRefcode2(refcode2);
+			donation.setAmount(amount);
+			donation.setDondate(dateValue);
+			donation.setCommittee(committee);
+			donrepo.save(donation);
+			donations = committee.getDonations();
+			donations.add(donation);
+			committee.setDonations(donations);
+			cservice.createCommittee(committee);
+			DonorDonations = donor.getContributions();
+			DonorDonations.add(donation);
+			donor.setContributions(DonorDonations);
+			dservice.updateDonor(donor);
+			return (donation);
+		}
+		else if (donrepo.findbyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId()).size() > 1) {
 				System.out.println("more than 1 donation with same date, committee, ABid and donor");
-				//System.out.println("recurrence recurring number: " + recurrencedated.getId());
+				List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId());
 				for (int j = 0; j < recurrencedated.size(); j++) {
 					System.out.println("same donation found but not recurring");
 					recurrencedated.get(j).setAmount(amount);
@@ -81,7 +111,8 @@ public class DonationService {
 				donation = recurrencedated.get(0);
 				return (donation);
 		}
-		else if (recurrencedated.size() == 1) {
+		/*else if (recurrencedated.size() == 1) {
+			List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(ActBlueId, committee.getId(), dateValue, donor.getId());
 			System.out.println("1 donation with same date, committee, ABid and donor");
 			recurrencedated.get(0).setAmount(amount);
 			recurrencedated.get(0).setDonation_uploader(uploader);
@@ -96,22 +127,7 @@ public class DonationService {
 			donrepo.save(recurrencedated.get(0));
 			donation = recurrencedated.get(0);
 			return (donation);
-		}
-		else if (recurrencedated.size() == 0) {
-			donation = new Donation();
-			donation.setAmount(amount);
-			donation.setDonation_uploader(uploader);
-			donation.setEmailDonation(email);
-			donation.setRecurring(Recurring);
-			donation.setRecurrenceNumber(Recurrence);
-			donation.setDonationRefcode1(refcode1);
-			donation.setDonationRefcode2(refcode2);
-			donation.setAmount(amount);
-			donation.setDondate(dateValue);
-			donation.setCommittee(committee);
-			donrepo.save(donation);
-			return (donation);
-		}
+		}*/
 		return (donation);
 	}
 	

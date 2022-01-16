@@ -41,6 +41,7 @@ import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Models.test;
+import com.coding.LojoFundrasing.Services.CommitteeService;
 import com.coding.LojoFundrasing.Services.ContentTestService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
@@ -62,6 +63,8 @@ public class ExcelUtil {
 	private ContentTestService ctservice;
 	@Autowired
 	private TestService tservice;
+	@Autowired 
+	private CommitteeService cservice;
 	
 	public String getRateFormatted(Double number) {
 		if (number == null) {
@@ -270,6 +273,9 @@ public class ExcelUtil {
 			}
 		
 			List<Committees> committees = null;
+			/*List<Donation> donations = null;
+			List<Donation> DonorDonations = null;
+			List<Donor> donors = null;*/
 			
 			/*System.out.println("made it to setUpDonation");
 			System.out.println("COLUMN DONE: " + noOfColumns);
@@ -291,7 +297,8 @@ public class ExcelUtil {
 			System.out.println("PHONE AFTER: " + phone);
 			System.out.println("ZIP AFTER: " + Zipcode);*/
     	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
-        	donor = new Donor();
+    		System.out.println("                         /////??????????????NEWWWW DONOR ");
+    		donor = new Donor();
         	//set donor
         	donor.setDonorFirstName(nameValue);
         	donor.setDonorLastName(LNValue);
@@ -304,16 +311,22 @@ public class ExcelUtil {
         	donor.setPhone(phone);
         	donor.setZipcode(Zipcode);
         	donor.setState(state);
+        	//set donor committee
         	donors = committee.getDonors();
         	donors.add(donor);
         	committee.setDonors(donors);
+        	for (int i = 0; i < donors.size(); i++) {
+        		System.out.println("                   COMMITTEE DONORS : " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
+        	}
         	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
         	dservice.createDonor(donor);
+        	for (int i = 0; i < donors.size(); i++) {
+        		System.out.println("                   COMMITTEE DONORS after create donors: " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
+        	}
+        	System.out.println("ID FROM Donor: " + donor.getId());
         	Long id = donor.getId();
         	
         	//set donation
-        	/*donation = dservice.findandSetDonation(ActBlueId, Recurring, Recurrence, dateValue, 
-        			committee, donor, amount, uploader, email, refcode, refcode2);*/
         	System.out.println("before new donation ");
         	donation = new Donation();
         	System.out.println("after new donation ");
@@ -324,29 +337,43 @@ public class ExcelUtil {
         	System.out.println("donation recurring " + donation.getRecurring());
         	donation.setDondate(date);
         	donation.setDonationRefcode1(refcode);
-        	System.out.println("****DONATION REFCODE" + refcode);
-        	System.out.println("****GET DONATION REFCODE" + donation.getDonationRefcode1());
+        	System.out.println("****DONATION REFCODE " + refcode);
+        	System.out.println("****GET DONATION REFCODE " + donation.getDonationRefcode1());
         	donation.setDonationRefcode2(refcode2);
         	donation.setDonation_uploader(uploader);
         	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
+        	//set donations committee 
         	donation.setCommittee(committee);
-        	donations = committee.getDonations();
-        	donations.add(donation);
-        	committee.setDonations(donations);
+        	
+        	//check donor contributions
+        	List <Donation> DonorDonations = donor.getContributions();
+        	if (DonorDonations != null) {
+            	System.out.println("donor donations size before create donation: " + DonorDonations.size());
+            	for (int j = 0; j < DonorDonations.size(); j++) {
+            		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
+            	}
+        	}
+        	
+        	
         	//email
         	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
         	donation.setEmailDonation(email);
         	
         	//create donation
-        	System.out.println("committee after: " + committee.getCommitteeName());
-        	//committees.add(committee);
-        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
+        	System.out.println("CREATE DONATION 1: ");
         	donservice.createDonation(donation);
         	System.out.println("CREATE DONATION 2: ");
+        	
+        	//saving everything
+        	cservice.createCommittee(committee);
+        	eservice.updateEmail(email);
+        	dservice.updateDonor(donor);
         	
         	//update data
     		email = donation.getEmailDonation();
     		System.out.println("email: " + email);
+    		donor = donation.getDonor();
+    		System.out.println("donor after set up: " + donor.getDonorEmail());
     		dservice.getDonorData(donor, committee.getId());
     		//System.out.println("donordata id: " + donor.getDonordata().getId());
     		eservice.getEmailData(email, committee.getId());
@@ -355,13 +382,13 @@ public class ExcelUtil {
         }
         else {
         	//set up donor
+        	System.out.println("                         NOT /////??????????????NEWWWW DONOR ");
         	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
         	Long id = donor.getId();
         	System.out.println("ID: " + id);
         	donor.setDonorFirstName(nameValue);
         	donor.setDonorLastName(LNValue);
         	donor.setDonorEmail(emailValue);
-        	System.out.println("committee after: " + committee.getCommitteeName());
         	donor.setUploader(uploader);
         	donor.setCommittee(committee);
         	donor.setAddress(address);
@@ -370,11 +397,10 @@ public class ExcelUtil {
         	donor.setPhone(phone);
         	donor.setZipcode(Zipcode);
         	donor.setState(state);
-        	donors = committee.getDonors();
-        	donors.add(donor);
-        	committee.setDonors(donors);
+
         	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
         	dservice.updateDonor(donor);
+        	System.out.println("ID FROM Donor: " + donor.getId());
         	
         	//set up donation
         	System.out.println("before new donation ");
@@ -389,38 +415,44 @@ public class ExcelUtil {
         	System.out.println("****GET DONATION REFCODE" + donation.getDonationRefcode1());
         	donation.setDonationRefcode2(refcode2);
         	donation.setAmount(amount);
-        	System.out.println("amount");
         	donation.setDondate(date);
-        	System.out.println("date");
-        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-        	System.out.println("donor");
         	donation.setDonation_uploader(uploader);
-        	System.out.println("uploader");
-        	System.out.println("get committees " + committees);
-        	donations = committee.getDonations();
-        	System.out.println("get donations " + donations);
-        	donations.add(donation);
-        	System.out.println("add donation");
-        	committee.setDonations(donations);
-        	System.out.println("set donations " + donations);
+        	
+        	//set donations committee
         	donation.setCommittee(committee);
-        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
-        	System.out.println("create donation");
-        	donservice.createDonation(donation);
-        	System.out.println("create donation");
-        	System.out.println("RECURRING END: " + donation.getRecurring());
+        	
+        	//check donor contributions
+        	List <Donation> DonorDonations = donor.getContributions();
+        	if (DonorDonations != null) {
+            	System.out.println("donor donations size before create donation: " + DonorDonations.size());
+            	for (int j = 0; j < DonorDonations.size(); j++) {
+            		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
+            	}
+        	}
         	
         	//email
         	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
         	donation.setEmailDonation(email);
         	
         	//create donation
-        	System.out.println("CREATE DONATION 2: ");
+        	System.out.println("CREATE DONATION 1: ");
         	donservice.createDonation(donation);
+        	System.out.println("CREATE DONATION 2: ");
+        	
+        	//saving everything
+        	cservice.createCommittee(committee);
+        	eservice.updateEmail(email);
+        	dservice.updateDonor(donor);
+        	System.out.println("donor donations size after update + create donation: " + donor.getContributions().size());
+        	for (int j = 0; j < DonorDonations.size(); j++) {
+        		System.out.println("                   DONATIONS DONORS AFTER UPDATE : " + DonorDonations.get(j).getId());
+        	}
         	
         	//update data
     		email = donation.getEmailDonation();
-    		System.out.println("Email: " + email.getEmailName());
+    		System.out.println("email: " + email);
+    		donor = donation.getDonor();
+    		System.out.println("donor after set up: " + donor.getDonorEmail());
     		dservice.getDonorData(donor, committee.getId());
     		eservice.getEmailData(email, committee.getId());
     		eservice.CalculateEmailData(email, committee.getId());
