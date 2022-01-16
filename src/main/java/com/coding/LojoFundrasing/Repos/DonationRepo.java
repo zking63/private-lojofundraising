@@ -34,8 +34,8 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
 	List<Donation> findbyActBlueIdandCommittee_idandDate(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
 	
-	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid order by donations.Dondate DESC LIMIT 1", nativeQuery = true)
-	Donation findOnebyActBlueIdandCommittee_idandDate(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
+	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
+	Integer donationCountwithABid(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
 	
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.Dondate >= DATE(:startdate) and donations.Dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by donations.Dondate DESC", nativeQuery = true)
 	List <Donation> findAllWithDondateAfter(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 

@@ -188,5 +188,9 @@ public class Donation {
 	protected void onUpdate(){
 	    this.updatedAt = new Date();
 	}
+
+	public Donation orElse(Donation donation) {
+		return null;
+	}
     
 }
