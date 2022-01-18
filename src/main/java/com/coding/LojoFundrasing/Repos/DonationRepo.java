@@ -31,11 +31,14 @@ public interface DonationRepo extends CrudRepository<Donation, Long>{
 	List<Donation> findbyActBlueIdandCommittee_id(String actblueid, Long committee_id);
 	
 	
-	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
+	@Query(value = "SELECT * FROM donations WHERE committees_id = :committee_id AND act_blue_id = :actblueid AND Dondate = :dondate AND donor_id = :donorid", nativeQuery = true)
 	List<Donation> findbyActBlueIdandCommittee_idandDate(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
+	//////count
+	@Query(value = "SELECT COUNT(DISTINCT id) FROM donations WHERE committees_id = :committee_id AND act_blue_id = :actblueid AND donor_id = :donorid", nativeQuery = true)
+	Integer donationCountwithABid(String actblueid, Long committee_id, Long donorid);
 	
-	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.act_blue_id = :actblueid AND donations.Dondate = :dondate AND donations.donor_id = :donorid", nativeQuery = true)
-	Integer donationCountwithABid(String actblueid, Long committee_id, @DateTimeFormat(pattern="yyyy-MM-dd") Date dondate, Long donorid);
+	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id", nativeQuery = true)
+	Integer donationCountwithCOMMITTEE(Long committee_id);
 	
 	@Query(value = "SELECT * FROM donations LEFT JOIN committees ON committees.id = donations.committees_id WHERE committees.id = :committee_id AND donations.Dondate >= DATE(:startdate) and donations.Dondate < DATE_ADD(DATE(:enddate), INTERVAL 1 DAY) order by donations.Dondate DESC", nativeQuery = true)
 	List <Donation> findAllWithDondateAfter(@Param("startdate") @DateTimeFormat(pattern="yyyy-MM-dd") String startdate, 

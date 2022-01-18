@@ -311,6 +311,8 @@ public class ExcelUtil {
         	donor.setPhone(phone);
         	donor.setZipcode(Zipcode);
         	donor.setState(state);
+        	dservice.createDonor(donor);
+        	
         	//set donor committee
         	donors = committee.getDonors();
         	donors.add(donor);
@@ -320,30 +322,11 @@ public class ExcelUtil {
         	}
         	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
         	dservice.createDonor(donor);
+        	cservice.createCommittee(committee);
         	for (int i = 0; i < donors.size(); i++) {
         		System.out.println("                   COMMITTEE DONORS after create donors: " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
         	}
         	System.out.println("ID FROM Donor: " + donor.getId());
-        	Long id = donor.getId();
-        	
-        	//set donation
-        	System.out.println("before new donation ");
-        	donation = new Donation();
-        	System.out.println("after new donation ");
-        	donation.setAmount(amount);
-        	donation.setActBlueId(ActBlueId);
-        	donation.setRecurrenceNumber(Recurrence);
-        	donation.setRecurring(Recurring);
-        	System.out.println("donation recurring " + donation.getRecurring());
-        	donation.setDondate(date);
-        	donation.setDonationRefcode1(refcode);
-        	System.out.println("****DONATION REFCODE " + refcode);
-        	System.out.println("****GET DONATION REFCODE " + donation.getDonationRefcode1());
-        	donation.setDonationRefcode2(refcode2);
-        	donation.setDonation_uploader(uploader);
-        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-        	//set donations committee 
-        	donation.setCommittee(committee);
         	
         	//check donor contributions
         	List <Donation> DonorDonations = donor.getContributions();
@@ -354,14 +337,15 @@ public class ExcelUtil {
             	}
         	}
         	
-        	
         	//email
         	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
-        	donation.setEmailDonation(email);
         	
         	//create donation
-        	System.out.println("CREATE DONATION 1: ");
-        	donservice.createDonation(donation);
+        	Long id = donor.getId();
+        	System.out.println("CREATE DONATION 1: " + ActBlueId);
+        	donation = donservice.createDonationfromUpload(ActBlueId, Recurring, Recurrence, date, committee, 
+        			dservice.findDonorByIdandCommittee(id, committee.getId()), amount, uploader, email, 
+        			refcode, refcode2);
         	System.out.println("CREATE DONATION 2: ");
         	
         	//saving everything
@@ -402,25 +386,6 @@ public class ExcelUtil {
         	dservice.updateDonor(donor);
         	System.out.println("ID FROM Donor: " + donor.getId());
         	
-        	//set up donation
-        	System.out.println("before new donation ");
-        	donation = new Donation();
-        	System.out.println("after new donation ");
-        	donation.setActBlueId(ActBlueId);
-        	donation.setRecurrenceNumber(Recurrence);
-        	System.out.println("RECURRING SET: " + Recurring);
-        	donation.setRecurring(Recurring);
-        	donation.setDonationRefcode1(refcode);
-        	System.out.println("****DONATION REFCODE" + refcode);
-        	System.out.println("****GET DONATION REFCODE" + donation.getDonationRefcode1());
-        	donation.setDonationRefcode2(refcode2);
-        	donation.setAmount(amount);
-        	donation.setDondate(date);
-        	donation.setDonation_uploader(uploader);
-        	
-        	//set donations committee
-        	donation.setCommittee(committee);
-        	
         	//check donor contributions
         	List <Donation> DonorDonations = donor.getContributions();
         	if (DonorDonations != null) {
@@ -432,11 +397,12 @@ public class ExcelUtil {
         	
         	//email
         	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
-        	donation.setEmailDonation(email);
         	
         	//create donation
-        	System.out.println("CREATE DONATION 1: ");
-        	donservice.createDonation(donation);
+        	System.out.println("CREATE DONATION 1: " + ActBlueId);
+        	donation = donservice.createDonationfromUpload(ActBlueId, Recurring, Recurrence, date, committee, 
+        			dservice.findDonorByIdandCommittee(id, committee.getId()), amount, uploader, email, 
+        			refcode, refcode2);
         	System.out.println("CREATE DONATION 2: ");
         	
         	//saving everything
@@ -514,7 +480,6 @@ public class ExcelUtil {
 			int EmailColumn = 0;
 			int LastNameColumn = 0;
 			int AmountColumn = 0;
-			int TimeColumn = 0;
 			int RefcodeColumn = 0;
 			int Refcode2Column = 0;
 			int DateColumn = 0;
@@ -597,6 +562,7 @@ public class ExcelUtil {
 							}
 							if (headerValue.contains("DATE")) {
 								DateColumn = header.getColumnIndex();
+								System.out.println("DateColumn: " + DateColumn);
 							}
 							if (headerValue.contains("RECEIPT")) {
 								AbIdColumn = header.getColumnIndex();
@@ -777,7 +743,7 @@ public class ExcelUtil {
 											SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 											String strDate = dt.format(date);
 											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
-											//System.out.println("Simple date: " + date);
+											System.out.println("Simple date: " + date);
 										}
 										else if(dateValue1.contains("-")) {
 											date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateValue1);
