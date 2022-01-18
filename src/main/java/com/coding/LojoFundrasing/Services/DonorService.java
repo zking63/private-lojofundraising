@@ -15,6 +15,7 @@ import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.DonorData;
+import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Repos.CommitteesRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.DonorDataRepo;
@@ -63,6 +64,87 @@ public class DonorService {
 	public void delete(long id) {
 		drepo.deleteById(id);
 	}
+	
+	public Donor setUpDonorThroughUpload (String nameValue, String LNValue, String emailValue, String address, 
+			String city, String country, String phone, String Zipcode, String state, Committees committee, 
+			User uploader) {
+		Donor donor = null;
+ 	   if (findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
+ 		System.out.println("                         /////??????????????NEWWWW DONOR ");
+ 		donor = new Donor();
+     	//set donor
+     	donor.setDonorFirstName(nameValue);
+     	donor.setDonorLastName(LNValue);
+     	donor.setDonorEmail(emailValue);
+     	donor.setUploader(uploader);
+     	donor.setCommittee(committee);
+     	donor.setAddress(address);
+     	donor.setCity(city);
+     	donor.setCountry(country);
+     	donor.setPhone(phone);
+     	donor.setZipcode(Zipcode);
+     	donor.setState(state);
+     	createDonor(donor);
+     	
+     	//set donor committee
+     	/*donors = committee.getDonors();
+     	donors.add(donor);
+     	committee.setDonors(donors);
+     	for (int i = 0; i < donors.size(); i++) {
+     		System.out.println("                   COMMITTEE DONORS : " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
+     	}
+     	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
+     	createDonor(donor);
+     	comrepo.save(committee);
+     	for (int i = 0; i < donors.size(); i++) {
+     		System.out.println("                   COMMITTEE DONORS after create donors: " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
+     	}
+     	System.out.println("ID FROM Donor: " + donor.getId());
+     	
+     	//check donor contributions
+     	List <Donation> DonorDonations = donor.getContributions();
+     	if (DonorDonations != null) {
+         	System.out.println("donor donations size before create donation: " + DonorDonations.size());
+         	for (int j = 0; j < DonorDonations.size(); j++) {
+         		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
+         	}
+     	}*/
+     	return donor;
+     }
+     else {
+     	//set up donor
+     	System.out.println("                         NOT /////??????????????NEWWWW DONOR ");
+     	donor = findDonorByEmailandCommittee(emailValue, committee.getId());
+     	Long id = donor.getId();
+     	System.out.println("ID: " + id);
+     	donor.setDonorFirstName(nameValue);
+     	donor.setDonorLastName(LNValue);
+     	donor.setDonorEmail(emailValue);
+     	donor.setUploader(uploader);
+     	donor.setCommittee(committee);
+     	donor.setAddress(address);
+     	donor.setCity(city);
+     	donor.setCountry(country);
+     	donor.setPhone(phone);
+     	donor.setZipcode(Zipcode);
+     	donor.setState(state);
+
+     	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
+     	updateDonor(donor);
+     	System.out.println("ID FROM Donor: " + donor.getId());
+     	
+     	//check donor contributions
+     	List <Donation> DonorDonations = donor.getContributions();
+     	if (DonorDonations != null) {
+         	System.out.println("donor donations size before create donation: " + DonorDonations.size());
+         	for (int j = 0; j < DonorDonations.size(); j++) {
+         		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
+         	}
+     	}
+     	return donor;
+     }
+	}
+	
 	public Date getMostRecentdonation(Long id) {
 	Donor donor = drepo.findById(id).orElse(null);
 	List<Donation> contributions = donor.getContributions();
