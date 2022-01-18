@@ -30,6 +30,8 @@ public class DonationService {
 	private CommitteeService cservice;
 	@Autowired
 	private DonorService dservice;
+	@Autowired
+	private EmailService eservice;
 	
 	public Donation createDonation(Donation d) {
 		/*List<Donation> recurrencedated = donrepo.findbyActBlueIdandCommittee_idandDate(d.getActBlueId(), d.getCommittee().getId(), d.getDondate(), d.getDonor().getId());
@@ -79,6 +81,7 @@ public class DonationService {
 		Donation donation = null;
 		Boolean committeeListSet = false;
 		Boolean donorListSet = false;
+		Boolean emailListSet = false;
 		//System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());
 		if (recurrencedated == null || recurrencedated.size() == 0) {
@@ -86,7 +89,6 @@ public class DonationService {
 			donation = new Donation ();
 			donation.setAmount(amount);
 			donation.setDonation_uploader(uploader);
-			donation.setEmailDonation(email);
 			donation.setRecurring(Recurring);
 			donation.setRecurrenceNumber(Recurrence);
 			donation.setDonationRefcode1(refcode1);
@@ -96,7 +98,6 @@ public class DonationService {
 			donation.setCommittee(committee);
 			donation.setActBlueId(ActBlueId);
 			donation.setDonor(donor);
-			donation.setEmailDonation(email);
 			donrepo.save(donation);
 			while (committeeListSet == false) {
 				if (committee.getDonations().size() == 0 || committee.getDonations() == null) {
@@ -125,6 +126,48 @@ public class DonationService {
 					donorListSet = true;
 				}
 			}
+			while (emailListSet == false) {
+				//for when you have donations without refcodes
+				/*if (refcode2 == null || refcode2.isEmpty()) {
+					if (refcode1 == null || refcode1.isEmpty()) {
+						emailListSet = true;
+					}
+					else {
+						if (email.getEmaildonations() == null || email.getEmaildonations().size() == 0) {
+							donation.setEmailDonation(email);
+							List<Donation> emailDonations = new ArrayList<Donation>();
+							emailDonations.add(donation);
+							email.setEmaildonations(emailDonations);
+							eservice.updateEmail(email);
+							emailListSet = true;
+						}
+						else {
+							donation.setEmailDonation(email);
+							List<Donation> emailDonations = email.getEmaildonations();
+							emailDonations.add(donation);
+							email.setEmaildonations(emailDonations);
+							eservice.updateEmail(email);
+							emailListSet = true;
+						}
+					}
+				}*/
+				if (email.getEmaildonations() == null || email.getEmaildonations().size() == 0) {
+					donation.setEmailDonation(email);
+					List<Donation> emailDonations = new ArrayList<Donation>();
+					emailDonations.add(donation);
+					email.setEmaildonations(emailDonations);
+					eservice.updateEmail(email);
+					emailListSet = true;
+				}
+				else {
+					donation.setEmailDonation(email);
+					List<Donation> emailDonations = email.getEmaildonations();
+					emailDonations.add(donation);
+					email.setEmaildonations(emailDonations);
+					eservice.updateEmail(email);
+					emailListSet = true;
+				}
+			}
 			cservice.createCommittee(committee);
 			dservice.updateDonor(donor);
 			return donation;
@@ -135,7 +178,6 @@ public class DonationService {
 					System.out.println("same donation found but not recurring");
 					recurrencedated.get(j).setAmount(amount);
 					recurrencedated.get(j).setDonation_uploader(uploader);
-					recurrencedated.get(j).setEmailDonation(email);
 					recurrencedated.get(j).setRecurring(Recurring);
 					recurrencedated.get(j).setRecurrenceNumber(Recurrence);
 					recurrencedated.get(j).setDonationRefcode1(refcode1);
@@ -146,6 +188,48 @@ public class DonationService {
 					donrepo.save(recurrencedated.get(j));
 				}
 				donation = recurrencedated.get(0);
+				while (emailListSet == false) {
+					//for when you have donations without refcodes
+					/*if (refcode2 == null || refcode2.isEmpty()) {
+						if (refcode1 == null || refcode1.isEmpty()) {
+							emailListSet = true;
+						}
+						else {
+							if (email.getEmaildonations() == null || email.getEmaildonations().size() == 0) {
+								donation.setEmailDonation(email);
+								List<Donation> emailDonations = new ArrayList<Donation>();
+								emailDonations.add(donation);
+								email.setEmaildonations(emailDonations);
+								eservice.updateEmail(email);
+								emailListSet = true;
+							}
+							else {
+								donation.setEmailDonation(email);
+								List<Donation> emailDonations = email.getEmaildonations();
+								emailDonations.add(donation);
+								email.setEmaildonations(emailDonations);
+								eservice.updateEmail(email);
+								emailListSet = true;
+							}
+						}
+					}*/
+					if (email.getEmaildonations() == null || email.getEmaildonations().size() == 0) {
+						donation.setEmailDonation(email);
+						List<Donation> emailDonations = new ArrayList<Donation>();
+						emailDonations.add(donation);
+						email.setEmaildonations(emailDonations);
+						eservice.updateEmail(email);
+						emailListSet = true;
+					}
+					else {
+						donation.setEmailDonation(email);
+						List<Donation> emailDonations = email.getEmaildonations();
+						emailDonations.add(donation);
+						email.setEmaildonations(emailDonations);
+						eservice.updateEmail(email);
+						emailListSet = true;
+					}
+				}
 				return donation;
 		}
 	}

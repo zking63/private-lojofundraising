@@ -108,7 +108,6 @@ public class ExcelUtil {
 				}
 				else {
 					System.out.println("no refcodes");
-					//make a find by name/date with null refcodes
 					refcodesFiled = true;
 				}
 			}
@@ -147,117 +146,6 @@ public class ExcelUtil {
 			return email;
 		}
 		return email;
-		
-		/*if (refcode2 != null && refcode != null) {
-			System.out.println("refcode2 != null && refcode != null");
-	    	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-	    	if (emaildonation == null){
-	    		String undate1 = "0001-01-01 01:01";
-	    		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-	    		email = new Emails();
-	        	email.setEmailName(null);
-	        	System.out.println("TEMP DATE: " + undate);
-	        	email.setEmaildate(undate);
-	        	email.setEmailRefcode1(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(null);
-	        	email.setClicks(null);
-	        	email.setOpeners(null);
-	        	email.setRecipients(null);
-	        	email.setUnsubscribers(null);
-	        	email.setExcludedList(null);
-	        	email.setList(null);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	        	String tempname = "Null" + email.getId();
-	        	email.setEmailName(tempname);
-	        	System.out.println("TEMP NAME: " + tempname);
-	        	eservice.createEmail(email);
-	        	//donation.setEmailDonation(email);
-	        	return email;
-	    	}
-	    	else {
-	    		return eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-	    	}
-		}
-		else if (refcode2 == null && refcode != null){
-			System.out.println("refcode2 == null && refcode != null");
-	    	Emails emaildonation = eservice.findEmailbyOneRefcodeandCommittee(refcode, committee);
-	    	if (emaildonation == null){
-	    		String undate1 = "0001-01-01 01:01";
-	    		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-	    		email = new Emails();
-	        	email.setEmailName(null);
-	        	System.out.println("TEMP DATE: " + undate);
-	        	email.setEmaildate(undate);
-	        	email.setEmailRefcode1(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(null);
-	        	email.setClicks(null);
-	        	email.setOpeners(null);
-	        	email.setRecipients(null);
-	        	email.setUnsubscribers(null);
-	        	email.setExcludedList(null);
-	        	email.setList(null);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	        	String tempname = "Null" + email.getId();
-	        	email.setEmailName(tempname);
-	        	System.out.println("TEMP NAME: " + tempname);
-	        	eservice.createEmail(email);
-	        	//donation.setEmailDonation(email);
-	        	return email;
-	    	}
-	    	else {
-	    		return eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-	    	}
-		}
-		else if (refcode2 != null && refcode == null){
-			System.out.println("refcode2 != null && refcode == null");
-	    	Emails emaildonation = eservice.findEmailbyRefcodeTWOandCommittee(refcode2, committee);
-	    	if (emaildonation == null){
-	    		String undate1 = "0001-01-01 01:01";
-	    		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-	    		email = new Emails();
-	        	email.setEmailName(null);
-	        	System.out.println("TEMP DATE: " + undate);
-	        	email.setEmaildate(undate);
-	        	email.setEmailRefcode1(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(null);
-	        	email.setClicks(null);
-	        	email.setOpeners(null);
-	        	email.setRecipients(null);
-	        	email.setUnsubscribers(null);
-	        	email.setExcludedList(null);
-	        	email.setList(null);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	        	String tempname = "Null" + email.getId();
-	        	email.setEmailName(tempname);
-	        	System.out.println("TEMP NAME: " + tempname);
-	        	eservice.createEmail(email);
-	        	//donation.setEmailDonation(email);
-	        	return email;
-	    	}
-	    	else {
-	    		return eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-	    	}
-		}
-		System.out.println("NO REFCODES");
-		return email;*/
 	}
 	private void setUpDonation(int noOfColumns, String address, String city, String state,
 			String Zipcode, String country, String phone, String emailValue, String nameValue,
@@ -273,29 +161,8 @@ public class ExcelUtil {
 			}
 		
 			List<Committees> committees = null;
-			/*List<Donation> donations = null;
-			List<Donation> DonorDonations = null;
-			List<Donor> donors = null;*/
 			
-			/*System.out.println("made it to setUpDonation");
-			System.out.println("COLUMN DONE: " + noOfColumns);
-			System.out.println("EMAIL AFTER: " + emailValue);
-			System.out.println("REFCODE AFTER: " + refcode);
-			System.out.println("REFCODE 2 AFTER: " + refcode2);
-			System.out.println("Name AFTER: " + nameValue);
-			System.out.println("LN AFTER: " + LNValue);
-			System.out.println("AMOUNT AFTER: " + amount);
-			System.out.println("DATE AFTER: " + date);
-			System.out.println("UPLOADER: " + uploader.getId());
-			System.out.println("AB ID: " + ActBlueId);
-			System.out.println("RECURRING AFTER: " + Recurring);
-			System.out.println("Recurrence: " + Recurrence);
-			System.out.println("ADDRESS AFTER: " + address);
-			System.out.println("CITY AFTER: " + city);
-			System.out.println("STATE AFTER: " + state);
-			System.out.println("COUNTRY AFTER: " + country);
-			System.out.println("PHONE AFTER: " + phone);
-			System.out.println("ZIP AFTER: " + Zipcode);*/
+
     	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
     		System.out.println("                         /////??????????????NEWWWW DONOR ");
     		donor = new Donor();
