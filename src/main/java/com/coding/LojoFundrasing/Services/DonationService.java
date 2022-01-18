@@ -2,6 +2,7 @@ package com.coding.LojoFundrasing.Services;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -76,8 +77,8 @@ public class DonationService {
 		System.out.println("number of recurrences " + recurrencedated.size());
 		System.out.println("OneRecurrencedated " + recurrencedated);
 		Donation donation = null;
-		List<Donation> donations;
-		List<Donation> DonorDonations;
+		Boolean committeeListSet = false;
+		Boolean donorListSet = false;
 		//System.out.println("donation id: " + d.getId());
 		//System.out.println("recurrence id: " + recurrencedated.getId());
 		if (recurrencedated == null || recurrencedated.size() == 0) {
@@ -97,13 +98,34 @@ public class DonationService {
 			donation.setDonor(donor);
 			donation.setEmailDonation(email);
 			donrepo.save(donation);
-			donations = committee.getDonations();
-			donations.add(donation);
-			committee.setDonations(donations);
+			while (committeeListSet == false) {
+				if (committee.getDonations().size() == 0 || committee.getDonations() == null) {
+					List<Donation> committeeDonations = new ArrayList<Donation>();
+					committeeDonations.add(donation);
+					committee.setDonations(committeeDonations);
+					committeeListSet = true;
+				}
+				else {
+					List<Donation> committeeDonations = committee.getDonations();
+					committee.setDonations(committeeDonations);
+					committeeListSet = true;
+				}
+			}
+			while (donorListSet == false) {
+				if (donor.getContributions() == null || donor.getContributions().size() == 0) {
+					List<Donation> donorDonations = new ArrayList<Donation>();
+					donorDonations.add(donation);
+					donor.setContributions(donorDonations);
+					donorListSet = true;
+				}
+				else {
+					List<Donation> donorDonations = donor.getContributions();
+					donorDonations.add(donation);
+					donor.setContributions(donorDonations);
+					donorListSet = true;
+				}
+			}
 			cservice.createCommittee(committee);
-			DonorDonations = donor.getContributions();
-			DonorDonations.add(donation);
-			donor.setContributions(DonorDonations);
 			dservice.updateDonor(donor);
 			return donation;
 		}
@@ -124,7 +146,7 @@ public class DonationService {
 					donrepo.save(recurrencedated.get(j));
 				}
 				donation = recurrencedated.get(0);
-				return (donation);
+				return donation;
 		}
 	}
 	
