@@ -188,6 +188,17 @@ public class DonationService {
 					donrepo.save(recurrencedated.get(j));
 				}
 				donation = recurrencedated.get(0);
+				Emails originalEmail = donation.getEmailDonation();
+				if (originalEmail != email) {
+					System.out.println("OG email not matching new " + originalEmail.getId() + " " + email.getId());
+					donation.setEmailDonation(email);
+					List<Donation> OGemailDonations = originalEmail.getEmaildonations();
+					OGemailDonations.remove(donation);
+					originalEmail.setEmaildonations(OGemailDonations);
+					eservice.updateEmail(originalEmail);
+					eservice.CalculateEmailData(originalEmail, committee.getId());
+					eservice.getEmailData(originalEmail, committee.getId());
+				}
 				while (emailListSet == false) {
 					//for when you have donations without refcodes
 					/*if (refcode2 == null || refcode2.isEmpty()) {
