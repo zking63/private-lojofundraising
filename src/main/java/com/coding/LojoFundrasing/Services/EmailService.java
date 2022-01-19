@@ -134,6 +134,7 @@ public class EmailService {
         	email.setExcludedList(null);
         	email.setList(null);
         	email.setEmail_uploader(uploader);
+        	createEmail(email);
         	while (committeeSetList == false) {
     			if (committee.getEmails() == null || committee.getEmails().size() == 0) {
     				email.setCommittee(committee);
@@ -152,11 +153,11 @@ public class EmailService {
     				committeeSetList = true;
     			}
         	}
-        	createEmail(email);
+        	updateEmail(email);
         	String tempname = "ID: " + email.getId();
         	email.setEmailName(tempname);
         	System.out.println("TEMP NAME: " + tempname);
-        	createEmail(email);
+        	updateEmail(email);
         	return email;
 		}
 		else {
@@ -164,6 +165,114 @@ public class EmailService {
 			return email;
 		}
 	}
+	
+	public void setUpEmailsfromUpload(String recipientList, String excludedList, Long openers, Long bounces, Long unsubscribers, 
+			Long clicks, Long recipients, User uploader, String nameValue, String refcode, String refcode2,  
+			Date date, Committees committee, Integer rowNumber) {
+		System.out.println("email set up found");
+		System.out.println("*****NAME " + nameValue);
+		System.out.println("*****refcode " + refcode);
+		System.out.println("*****refcode2 " + refcode2);
+		Emails email = null;
+		Boolean refcodesFiled = false;
+		Boolean committeeSetList = false;
+		List<Emails> emails = null;
+		
+		if (nameValue.isEmpty() || nameValue == null || date == null) {
+			rowNumber = rowNumber +1;
+			System.out.println("*****NAME " + nameValue);
+			System.out.println("*****DATE " + date);
+			System.out.println("*****NOTHING IN THIS ROW " + rowNumber);
+			return;
+		}
+		while (refcodesFiled == false) {
+			if (refcode2 != null) {
+				if (refcode == null || refcode.isEmpty()) {
+					System.out.println("refcode2 != null && refcode == null");
+					email = findEmailbyRefcodeTWOandCommittee(refcode2, committee);
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("refcode2 != null && refcode != null");
+					email = findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
+					refcodesFiled = true;
+				}
+			}
+			if (refcode2 == null || refcode2.isEmpty()) {
+				if (refcode != null) {
+					System.out.println("refcode2 == null && refcode != null");
+					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("no refcodes");
+					//make a find by name/date with null refcodes
+					refcodesFiled = true;
+				}
+			}
+		}
+		if (email == null) {
+			System.out.println("*****email not found ");
+        	email = new Emails();
+        	email.setEmailName(nameValue);
+        	email.setEmaildate(date);
+        	email.setEmailRefcode1(refcode);
+        	email.setEmailRefcode2(refcode2);
+        	email.setBounces(bounces);
+        	email.setClicks(clicks);
+        	email.setOpeners(openers);
+        	email.setRecipients(recipients);
+        	email.setUnsubscribers(unsubscribers);
+        	email.setExcludedList(excludedList);
+        	email.setList(recipientList);
+        	email.setEmail_uploader(uploader);
+        	createEmail(email);
+        	while (committeeSetList == false) {
+    			if (committee.getEmails() == null || committee.getEmails().size() == 0) {
+    				email.setCommittee(committee);
+    				List<Emails> emailCommittee = new ArrayList<Emails>();
+    				emailCommittee.add(email);
+    				committee.setEmails(emailCommittee);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+    			else {
+    				email.setCommittee(committee);
+    				List<Emails> emailCommittee = committee.getEmails();
+    				emailCommittee.add(email);
+    				committee.setEmails(emailCommittee);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+        	}
+        	updateEmail(email);
+    		getEmailData(email, committee.getId());
+    		CalculateEmailData(email, committee.getId());
+			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailName());
+			return;
+		}
+		if (email !=  null) {
+        	System.out.println("found email: " + email.getId() + ", " + email.getEmailName());
+        	email.setEmailName(nameValue);
+        	email.setEmaildate(date);
+        	email.setEmailRefcode1(refcode);
+        	email.setEmailRefcode2(refcode2);
+        	email.setBounces(bounces);
+        	email.setClicks(clicks);
+        	email.setOpeners(openers);
+        	email.setRecipients(recipients);
+        	email.setUnsubscribers(unsubscribers);
+        	email.setExcludedList(excludedList);
+        	email.setList(recipientList);
+        	email.setEmail_uploader(uploader);
+        	updateEmail(email);
+    		getEmailData(email, committee.getId());
+    		CalculateEmailData(email, committee.getId());
+			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
+			return;
+		}
+	}
+	
 	public void CalculateEmailData(Emails email, Long committee_id) {
 		Long id = email.getId();
 		Double esum = 0.00;

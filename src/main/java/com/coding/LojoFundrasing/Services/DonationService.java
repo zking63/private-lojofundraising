@@ -98,6 +98,7 @@ public class DonationService {
 			donation.setCommittee(committee);
 			donation.setActBlueId(ActBlueId);
 			donation.setDonor(donor);
+			donation.setEmailDonation(email);
 			donrepo.save(donation);
 			while (committeeListSet == false) {
 				if (committee.getDonations().size() == 0 || committee.getDonations() == null) {
@@ -152,7 +153,6 @@ public class DonationService {
 					}
 				}*/
 				if (email.getEmaildonations() == null || email.getEmaildonations().size() == 0) {
-					donation.setEmailDonation(email);
 					List<Donation> emailDonations = new ArrayList<Donation>();
 					emailDonations.add(donation);
 					email.setEmaildonations(emailDonations);
@@ -160,7 +160,6 @@ public class DonationService {
 					emailListSet = true;
 				}
 				else {
-					donation.setEmailDonation(email);
 					List<Donation> emailDonations = email.getEmaildonations();
 					emailDonations.add(donation);
 					email.setEmaildonations(emailDonations);
@@ -241,6 +240,7 @@ public class DonationService {
 						emailListSet = true;
 					}
 				}
+				donrepo.save(donation);
 				return donation;
 		}
 	}

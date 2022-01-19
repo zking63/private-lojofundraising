@@ -859,191 +859,6 @@ public class ExcelUtil {
 			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
 			return;
 		}
-		
-		
-		/*if (refcode2 != null && refcode != null) {
-			System.out.println("refcode2 != null && refcode != null");
-			if (eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee) == null) {
-				System.out.println("*****email not found ");
-	        	Emails email = new Emails();
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-	        else {
-	        	Emails email = eservice.findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-	        	System.out.println("found email");
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-		}
-		else if (refcode2 == null && refcode != null){
-			System.out.println("refcode2 == null && refcode != null");
-			System.out.println("*****no refcode2 ");
-			System.out.println("*****refcode " + refcode);
-			System.out.println("*****committee " + committee);
-			if (eservice.findEmailbyOneRefcodeandCommittee(refcode, committee) == null) {
-				System.out.println("*****email not found ");
-	        	Emails email = new Emails();
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-	        else {
-	        	Emails email = eservice.findEmailbyOneRefcodeandCommittee(refcode, committee);
-	        	System.out.println("found email");
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-		}
-		else if (refcode == null && refcode2 != null){
-			System.out.println("refcode2 != null && refcode == null");
-			System.out.println("*****no refcode2 ");
-			System.out.println("*****refcode " + refcode);
-			System.out.println("*****committee " + committee);
-			if (eservice.findEmailbyRefcodeTWOandCommittee(refcode2, committee) == null) {
-				System.out.println("*****email not found ");
-	        	Emails email = new Emails();
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-	        else {
-	        	Emails email = eservice.findEmailbyRefcodeTWOandCommittee(refcode2, committee);
-	        	System.out.println("found email");
-	        	email.setEmailName(nameValue);
-	        	email.setEmaildate(date);
-	        	email.setEmailRefcode(refcode);
-	        	email.setEmailRefcode2(refcode2);
-	        	email.setBounces(bounces);
-	        	email.setClicks(clicks);
-	        	email.setOpeners(openers);
-	        	email.setRecipients(recipients);
-	        	email.setUnsubscribers(unsubscribers);
-	        	email.setExcludedList(excludedList);
-	        	email.setList(recipientList);
-	        	email.setEmail_uploader(uploader);
-	        	email.setCommittee(committee);
-	        	emails = committee.getEmails();
-	        	emails.add(email);
-	        	committee.setEmails(emails);
-	        	eservice.createEmail(email);
-	    		eservice.getEmailData(email, committee.getId());
-	    		eservice.CalculateEmailData(email, committee.getId());
-				System.out.println("Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-	        }
-		}
-		else {
-			System.out.println("NO REFCODE");
-        	Emails email = new Emails();
-        	email.setEmailName(nameValue);
-        	email.setEmaildate(date);
-        	email.setEmailRefcode(refcode);
-        	email.setEmailRefcode2(refcode2);
-        	email.setBounces(bounces);
-        	email.setClicks(clicks);
-        	email.setOpeners(openers);
-        	email.setRecipients(recipients);
-        	email.setUnsubscribers(unsubscribers);
-        	email.setExcludedList(excludedList);
-        	email.setList(recipientList);
-        	email.setEmail_uploader(uploader);
-        	email.setCommittee(committee);
-        	emails = committee.getEmails();
-        	emails.add(email);
-        	committee.setEmails(emails);
-        	eservice.createEmail(email);
-    		eservice.getEmailData(email, committee.getId());
-    		eservice.CalculateEmailData(email, committee.getId());
-			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailRefcode());
-		}*/
 	}
 	public void readExcelSheetEmails(String excelPath, Long user_id, Committees committee)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
@@ -1178,7 +993,7 @@ public class ExcelUtil {
 								nameValue = dataFormatter.formatCellValue(cell);
 								System.out.println(nameValue);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1200,7 +1015,7 @@ public class ExcelUtil {
 								System.out.println("clicks col: " + clicks);
 								//System.out.println(clicks);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1221,7 +1036,7 @@ public class ExcelUtil {
 								recipients = Long.parseLong(amount1); 
 								//System.out.println(recipients);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1243,7 +1058,7 @@ public class ExcelUtil {
 								System.out.println("unsub col: " + unsubscribers);
 								//System.out.println(unsubscribers);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1260,18 +1075,10 @@ public class ExcelUtil {
 								}
 							}
 							else if (cell.getColumnIndex() == openersColumn) {
-								System.out.println("date in last column openers: " + date);
-								System.out.println("refcode: " + refcode);
-								System.out.println("committee: " + committee);
-								System.out.println("col " + cell.getColumnIndex());
-								System.out.println("last col " + noOfColumns);
-								System.out.println("row " + cell.getRowIndex());
 								String amount1 = dataFormatter.formatCellValue(cell);
 								openers = Long.parseLong(amount1); 
-								System.out.println("openers col: " + openers);
-								//System.out.println(openers);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1293,7 +1100,7 @@ public class ExcelUtil {
 								System.out.println("bounces col: " + bounces);
 								//System.out.println(bounces);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1315,7 +1122,7 @@ public class ExcelUtil {
 								excludedList = dataFormatter.formatCellValue(cell);
 								System.out.println(excludedList);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1337,7 +1144,7 @@ public class ExcelUtil {
 								recipientList = dataFormatter.formatCellValue(cell);
 								//System.out.println(recipientList);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1369,7 +1176,7 @@ public class ExcelUtil {
 								}
 								//System.out.println("Simple date: " + date);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1393,7 +1200,7 @@ public class ExcelUtil {
 								System.out.println("last col " + noOfColumns);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
 									System.out.println("last column");
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1413,7 +1220,7 @@ public class ExcelUtil {
 								refcode2 = dataFormatter.formatCellValue(cell);
 								System.out.println("refcode2 in reader " + refcode2);
 								if (cell.getColumnIndex() == noOfColumns - 1) {
-									setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+									eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 											clicks, recipients, uploader, nameValue, refcode, refcode2, 
 											date, committee, row.getRowNum());
 									recipientList = null;
@@ -1430,13 +1237,7 @@ public class ExcelUtil {
 								}
 					}
 							else if (cell.getColumnIndex() == noOfColumns - 1) {
-								System.out.println("date in last column: " + date);
-								System.out.println("refcode: " + refcode);
-								System.out.println("committee: " + committee);
-								System.out.println("col " + cell.getColumnIndex());
-								System.out.println("last col " + noOfColumns);
-								System.out.println("row " + cell.getRowIndex());
-								setUpEmails(recipientList, excludedList, openers, bounces, unsubscribers, 
+								eservice.setUpEmailsfromUpload(recipientList, excludedList, openers, bounces, unsubscribers, 
 										clicks, recipients, uploader, nameValue, refcode, refcode2, 
 										date, committee, row.getRowNum());
 								recipientList = null;
