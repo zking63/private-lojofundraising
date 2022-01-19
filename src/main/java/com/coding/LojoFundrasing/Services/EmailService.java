@@ -2,6 +2,10 @@ package com.coding.LojoFundrasing.Services;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.DonorData;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Repos.DataRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.EmailRepo;
@@ -32,6 +37,9 @@ public class EmailService {
 	
 	@Autowired
 	private EmailGroupService egservice;
+	
+	@Autowired
+	private CommitteeService cservice;
 	
 	public Emails createEmail(Emails email) {
 		return erepo.save(email);
@@ -75,6 +83,86 @@ public class EmailService {
 	public List<Donation> getEmailDonations(Emails email){
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
+	}
+	private Emails setEmailThroughDonation(String refcode, String refcode2, Committees committee, User uploader) throws ParseException {
+		Emails email = null;
+		Boolean refcodesFiled = false;
+		Boolean committeeSetList = false;
+		
+		while (refcodesFiled == false) {
+			if (refcode2 != null) {
+				if (refcode == null || refcode.isEmpty()) {
+					System.out.println("refcode2 != null && refcode == null");
+					email = findEmailbyRefcodeTWOandCommittee(refcode2, committee);
+					if (email != null) {
+						System.out.println("///////email from refcode2: " + email.getEmailName());
+					}
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("refcode2 != null && refcode != null");
+					email = findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
+					refcodesFiled = true;
+				}
+			}
+			if (refcode2 == null || refcode2.isEmpty()) {
+				if (refcode != null) {
+					System.out.println("refcode2 == null && refcode != null");
+					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("no refcodes");
+					refcodesFiled = true;
+				}
+			}
+		}
+		if (email == null) {
+    		String undate1 = "0001-01-01 01:01";
+    		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
+    		email = new Emails();
+        	email.setEmailName(null);
+        	System.out.println("TEMP DATE: " + undate);
+        	email.setEmaildate(undate);
+        	email.setEmailRefcode1(refcode);
+        	email.setEmailRefcode2(refcode2);
+        	email.setBounces(null);
+        	email.setClicks(null);
+        	email.setOpeners(null);
+        	email.setRecipients(null);
+        	email.setUnsubscribers(null);
+        	email.setExcludedList(null);
+        	email.setList(null);
+        	email.setEmail_uploader(uploader);
+        	while (committeeSetList == false) {
+    			if (committee.getEmails() == null || committee.getEmails().size() == 0) {
+    				email.setCommittee(committee);
+    				List<Emails> emailCommittee = new ArrayList<Emails>();
+    				emailCommittee.add(email);
+    				committee.setEmails(emailCommittee);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+    			else {
+    				email.setCommittee(committee);
+    				List<Emails> emailCommittee = committee.getEmails();
+    				emailCommittee.add(email);
+    				committee.setEmails(emailCommittee);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+        	}
+        	createEmail(email);
+        	String tempname = "No Name: " + email.getId();
+        	email.setEmailName(tempname);
+        	System.out.println("TEMP NAME: " + tempname);
+        	createEmail(email);
+        	return email;
+		}
+		else {
+        	System.out.println("found email: " + email.getId() + ", " + email.getEmailName());
+			return email;
+		}
 	}
 	public void CalculateEmailData(Emails email, Long committee_id) {
 		Long id = email.getId();
