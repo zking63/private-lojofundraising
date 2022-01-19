@@ -161,53 +161,13 @@ public class ExcelUtil {
 				System.out.println("*****NOTHING IN THIS ROW " + rowNumber);
 				return;
 			}
-		
-			List<Committees> committees = null;
-			
-
-    	   if (dservice.findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
-    		System.out.println("                         /////??????????????NEWWWW DONOR ");
-    		donor = new Donor();
-        	//set donor
-        	donor.setDonorFirstName(nameValue);
-        	donor.setDonorLastName(LNValue);
-        	donor.setDonorEmail(emailValue);
-        	donor.setUploader(uploader);
-        	donor.setCommittee(committee);
-        	donor.setAddress(address);
-        	donor.setCity(city);
-        	donor.setCountry(country);
-        	donor.setPhone(phone);
-        	donor.setZipcode(Zipcode);
-        	donor.setState(state);
-        	dservice.createDonor(donor);
         	
         	//set donor committee
-        	donors = committee.getDonors();
-        	donors.add(donor);
-        	committee.setDonors(donors);
-        	for (int i = 0; i < donors.size(); i++) {
-        		System.out.println("                   COMMITTEE DONORS : " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
-        	}
-        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-        	dservice.createDonor(donor);
-        	cservice.createCommittee(committee);
-        	for (int i = 0; i < donors.size(); i++) {
-        		System.out.println("                   COMMITTEE DONORS after create donors: " + donors.get(i).getDonorEmail() + ' ' + donors.get(i).getId());
-        	}
-        	System.out.println("ID FROM Donor: " + donor.getId());
-        	
-        	//check donor contributions
-        	List <Donation> DonorDonations = donor.getContributions();
-        	if (DonorDonations != null) {
-            	System.out.println("donor donations size before create donation: " + DonorDonations.size());
-            	for (int j = 0; j < DonorDonations.size(); j++) {
-            		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
-            	}
-        	}
+    		donor = dservice.setUpDonorThroughUpload(nameValue, LNValue, emailValue, address, city, country, 
+    				phone, Zipcode, state, committee, uploader);
         	
         	//email
-        	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
+        	email = eservice.setEmailThroughDonation(refcode, refcode2, committee, uploader);
         	
         	//create donation
         	Long id = donor.getId();
@@ -217,7 +177,7 @@ public class ExcelUtil {
         			refcode, refcode2);
         	System.out.println("CREATE DONATION 2: ");
         	
-        	//saving everything
+        	//double saving everything
         	cservice.createCommittee(committee);
         	eservice.updateEmail(email);
         	dservice.updateDonor(donor);
@@ -232,67 +192,6 @@ public class ExcelUtil {
     		eservice.getEmailData(email, committee.getId());
     		eservice.CalculateEmailData(email, committee.getId());
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-        }
-        else {
-        	//set up donor
-        	System.out.println("                         NOT /////??????????????NEWWWW DONOR ");
-        	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
-        	Long id = donor.getId();
-        	System.out.println("ID: " + id);
-        	donor.setDonorFirstName(nameValue);
-        	donor.setDonorLastName(LNValue);
-        	donor.setDonorEmail(emailValue);
-        	donor.setUploader(uploader);
-        	donor.setCommittee(committee);
-        	donor.setAddress(address);
-        	donor.setCity(city);
-        	donor.setCountry(country);
-        	donor.setPhone(phone);
-        	donor.setZipcode(Zipcode);
-        	donor.setState(state);
-
-        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-        	dservice.updateDonor(donor);
-        	System.out.println("ID FROM Donor: " + donor.getId());
-        	
-        	//check donor contributions
-        	List <Donation> DonorDonations = donor.getContributions();
-        	if (DonorDonations != null) {
-            	System.out.println("donor donations size before create donation: " + DonorDonations.size());
-            	for (int j = 0; j < DonorDonations.size(); j++) {
-            		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
-            	}
-        	}
-        	
-        	//email
-        	email = setEmailThroughDonation(refcode, refcode2, committee, uploader);
-        	
-        	//create donation
-        	System.out.println("CREATE DONATION 1: " + ActBlueId);
-        	donation = donservice.createDonationfromUpload(ActBlueId, Recurring, Recurrence, date, committee, 
-        			dservice.findDonorByIdandCommittee(id, committee.getId()), amount, uploader, email, 
-        			refcode, refcode2);
-        	System.out.println("CREATE DONATION 2: ");
-        	
-        	//saving everything
-        	cservice.createCommittee(committee);
-        	eservice.updateEmail(email);
-        	dservice.updateDonor(donor);
-        	System.out.println("donor donations size after update + create donation: " + donor.getContributions().size());
-        	for (int j = 0; j < DonorDonations.size(); j++) {
-        		System.out.println("                   DONATIONS DONORS AFTER UPDATE : " + DonorDonations.get(j).getId());
-        	}
-        	
-        	//update data
-    		email = donation.getEmailDonation();
-    		System.out.println("email: " + email);
-    		donor = donation.getDonor();
-    		System.out.println("donor after set up: " + donor.getDonorEmail());
-    		dservice.getDonorData(donor, committee.getId());
-    		eservice.getEmailData(email, committee.getId());
-    		eservice.CalculateEmailData(email, committee.getId());
-        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-		}
 	}
 	
 	public void getSheetDetails(String excelPath)

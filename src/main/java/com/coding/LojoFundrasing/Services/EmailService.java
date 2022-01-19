@@ -84,7 +84,7 @@ public class EmailService {
 		Long id = email.getId();
 		return drepo.findByemailDonation(id);
 	}
-	private Emails setEmailThroughDonation(String refcode, String refcode2, Committees committee, User uploader) throws ParseException {
+	public Emails setEmailThroughDonation(String refcode, String refcode2, Committees committee, User uploader) throws ParseException {
 		Emails email = null;
 		Boolean refcodesFiled = false;
 		Boolean committeeSetList = false;
@@ -105,7 +105,7 @@ public class EmailService {
 					refcodesFiled = true;
 				}
 			}
-			if (refcode2 == null || refcode2.isEmpty()) {
+			else if (refcode2 == null || refcode2.isEmpty()) {
 				if (refcode != null) {
 					System.out.println("refcode2 == null && refcode != null");
 					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
@@ -153,7 +153,7 @@ public class EmailService {
     			}
         	}
         	createEmail(email);
-        	String tempname = "No Name: " + email.getId();
+        	String tempname = "ID: " + email.getId();
         	email.setEmailName(tempname);
         	System.out.println("TEMP NAME: " + tempname);
         	createEmail(email);
