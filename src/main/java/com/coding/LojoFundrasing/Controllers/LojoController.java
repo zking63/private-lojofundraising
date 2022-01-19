@@ -333,6 +333,7 @@ public class LojoController {
 		 Emails email = donation.getEmailDonation();
 		 Donor donor = dservice.findbyId(donation.getDonor().getId());
 		 this.eservice.getEmailData(email, committee_id);
+		 this.eservice.CalculateEmailData(email, committee_id);
 		 this.dservice.getDonorData(donor, committee_id);
 		 return "redirect:/home";
 	 }
@@ -367,6 +368,7 @@ public class LojoController {
 		 model.addAttribute("committee", committee);
 		 eservice.createEmail(email);
 		 this.eservice.getEmailData(email, committee_id);
+		 this.eservice.CalculateEmailData(email, committee_id);
 		 return "redirect:/emails";
 	 }
 	 @RequestMapping("/emails")
@@ -676,12 +678,13 @@ public class LojoController {
 			 model.addAttribute("committee", committee);
 			 Long id = email.getId();
 				if (committee == this.eservice.findEmailbyId(id).getCommittee()) {
-					 model.addAttribute("user", user);
-					 model.addAttribute("emails", this.eservice.findEmailbyId(id));
-						model.addAttribute("committee", committee);
-						model.addAttribute("dateFormat", dateFormat2());
-						model.addAttribute("timeFormat", timeFormat());
-						 eservice.updateEmail(email);
+					model.addAttribute("user", user);
+					model.addAttribute("emails", this.eservice.findEmailbyId(id));
+					model.addAttribute("committee", committee);
+					model.addAttribute("dateFormat", dateFormat2());
+					model.addAttribute("timeFormat", timeFormat());
+					eservice.updateEmail(email);
+					this.eservice.CalculateEmailData(email, committee_id);
 				 }
 				 else {
 					 return "redirect:/committees/select";
@@ -702,6 +705,7 @@ public class LojoController {
 						Donor donor = donation.getDonor();
 						//1
 						this.eservice.getEmailData(email, committee_id);
+						this.eservice.CalculateEmailData(email, committee_id);
 						this.dservice.getDonorData(donor, committee_id);
 					 }
 					 else {
@@ -757,6 +761,7 @@ public class LojoController {
 				 System.out.println("d AB ID: " + donation.getActBlueId());
 				 donservice.createDonation(donation);
 				 this.eservice.getEmailData(email, committee_id);
+				 this.eservice.CalculateEmailData(email, committee_id);
 				 this.dservice.getDonorData(donor, committee_id);
 			 }
 			 else {
