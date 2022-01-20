@@ -1454,43 +1454,43 @@ public class ExcelUtil {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
             }
             if (columnCount == OpenrateCol) {
-                createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getOpenRate()), bodyStyle);
+                createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailopenRate()), bodyStyle);
             }
             if (columnCount == ClickrateCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClickRate()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailclickRate()), bodyStyle);
             }
             if (columnCount == UnsubrateCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getUnsubscribeRate()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailunsubscribeRate()), bodyStyle);
             }
             if (columnCount == BouncerateCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getBounceRate()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getBounceRate()), bodyStyle);
             }
             if (columnCount == ClickOpenCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getClicksOpens()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailclicksOpens()), bodyStyle);
             }
             if (columnCount == RevCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailsum()), bodyStyle);
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonationsum()), bodyStyle);
             }
             if (columnCount == DonationsCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonationcount()), bodyStyle);
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonationcount()), bodyStyle);
             }
             if (columnCount == DonorsCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getDonorcount()), bodyStyle);
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonorcount()), bodyStyle);
             }
             if (columnCount == AvCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildata().getEmailAverageFormatted()), bodyStyle);
+            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmailAverageFormatted()), bodyStyle);
             }
             if (columnCount == DonOpenCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsOpens()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonationsOpens()), bodyStyle);
             }
             if (columnCount == DonClickCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonationsClicks()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonationsClicks()), bodyStyle);
             }
             if (columnCount == DonorsOpenCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsOpens()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonorsOpens()), bodyStyle);
             }
             if (columnCount == DonorsClickCol) {
-            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildata().getDonorsClicks()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonorsClicks()), bodyStyle);
             }
             if (columnCount == DonRecurCol) {
             	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonationCount()), bodyStyle);

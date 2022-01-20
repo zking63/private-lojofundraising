@@ -44,10 +44,10 @@
 			    </thead>
 				<tbody>
 					<tr>
-						<td>${emails.getEmaildonations().size()}</td>
+						<td>${emails.emaildonationcount}</td>
 						<td>${ emails.getEmailDateFormatted() }</td>
-						<td>$${ emails.emaildata.getEmailsum() }</td>
-						<td>$${ emails.emaildata.getEmailAverageFormatted() }</td>
+						<td>$${ emails.emaildonationsum }</td>
+						<td>$${ emails.emaildonationaverage }</td>
 					</tr>
 				</tbody>
 			</table>

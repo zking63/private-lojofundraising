@@ -1,5 +1,6 @@
 package com.coding.LojoFundrasing.Models;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -273,6 +274,15 @@ public class Emails {
 
 	public void setEmaildonationaverage(Double emaildonationaverage) {
 		this.emaildonationaverage = emaildonationaverage;
+	}
+	
+	public String getEmailAverageFormatted() {
+		if (this.emaildonationaverage == null) {
+			this.emaildonationaverage = 0.0;
+		}
+		double emailAverage1 = (double) getEmaildonationaverage();
+		DecimalFormat df = new DecimalFormat("0.00");
+		return df.format(emailAverage1);
 	}
 
 	public Double getEmaildonationsum() {
