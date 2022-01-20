@@ -1291,12 +1291,13 @@ public class ExcelUtil {
         createCell(row, 0, "Id", style); 
         createCell(row, 1, "Email", style); 
         createCell(row, 2, "Refcode", style); 
-        createCell(row, 3, "Send Date", style); 
-        createCell(row, 4, "List", style); 
-        createCell(row, 5, "Excluded List", style); 
-        createCell(row, 6, "Recipients", style);
+        createCell(row, 3, "Refcode 2", style); 
+        createCell(row, 4, "Send Date", style); 
+        createCell(row, 5, "List", style); 
+        createCell(row, 6, "Excluded List", style); 
+        createCell(row, 7, "Recipients", style);
         
-        int columnCount = 7;
+        int columnCount = 8;
         Cell cell = row.createCell(columnCount);
         
             for (int i = 0; i < input.size(); i++) {
@@ -1437,6 +1438,7 @@ public class ExcelUtil {
             createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode1(), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getEmailRefcode2(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getList(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getExcludedList(), bodyStyle);
