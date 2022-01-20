@@ -215,10 +215,10 @@
 					<td>${e.getEmailDateFormatted()}</td>
 					<td>${e.emailRefcode1}</td>
 					<td>${e.emailRefcode2}</td>
-					<td>$${e.emaildata.getEmailsum()}</td>
-					<td>$${e.emaildata.getEmailAverageFormatted()}</td>
-					<td>${e.emaildata.getDonationcount()}</td>
-					<td>${e.emaildata.getDonorcount()}</td>
+					<td>$${e.emaildonationsum}</td>
+					<td>$${e.emaildonationaverage}</td>
+					<td>${e.emaildonationcount}</td>
+					<td>${e.emaildonorcount}</td>
 					<td>${e.getList()}</td>
 					<td>${e.getExcludedList()}</td>
 					<td>${e.getRecipients()}</td>
