@@ -509,10 +509,15 @@ public class EmailService {
 					Long edid = emaildata.getId();
 					edid = alldata.get(i).getId();
 					emaildata = datarepo.findById(edid).orElse(null);
+					System.out.println("find esum: ");
 					esum = erepo.sums(id, committee_id);
+					System.out.println("after find esum: ");
 					eaverage = erepo.averages(id, committee_id);
+					System.out.println("don count: ");
 					donationscount = erepo.donationscount(id, committee_id);
+					System.out.println("after don count: ");
 					donorscount = erepo.donorscount(id, committee_id);
+					System.out.println("after donors count: ");
 					emaildata.setEmailsum(esum);
 					emaildata.setDonationcount(donationscount);
 					emaildata.setDonorcount(donorscount);
