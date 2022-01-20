@@ -141,6 +141,7 @@
 					</form>
 				</th>
 	            <th>Refcode</th>
+	            <th>Refcode 2</th>
 	            <th>Total revenue</br> 
 	            	 <form class="pointer" method="post" action="/emails">
 						<input type="hidden" name="field" value="sum">
@@ -212,7 +213,8 @@
 				<tr>
 					<td><a href="/emails/${e.id}">${ e.emailName }</a></td>
 					<td>${e.getEmailDateFormatted()}</td>
-					<td>${e.emailRefcode}</td>
+					<td>${e.emailRefcode1}</td>
+					<td>${e.emailRefcode2}</td>
 					<td>$${e.emaildata.getEmailsum()}</td>
 					<td>$${e.emaildata.getEmailAverageFormatted()}</td>
 					<td>${e.emaildata.getDonationcount()}</td>
