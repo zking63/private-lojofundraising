@@ -38,15 +38,15 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
 	
 	//average functions
-	@Query(value = "SELECT * FROM emails LEFT JOIN data_funds ON data_funds.email_id = emails.id RIGHT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by data_funds.emailaverage Desc", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emaildonationaverage Desc", nativeQuery = true)
 	List<Emails> findByAverageOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
 	
-	@Query(value = "SELECT * FROM emails LEFT JOIN data_funds ON data_funds.email_id = emails.id RIGHT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by data_funds.emailaverage Asc", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND emails.Emaildate >= DATE(:startdateE) and emails.Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emaildonationaverage Asc", nativeQuery = true)
 	List<Emails> findByAverageOrderByAsc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
 	
-	@Query(value = "SELECT AVG(donations.amount) FROM emails LEFT JOIN donations ON donations.email_id = emails.id RIGHT JOIN committees ON committees.id = emails.committees_id WHERE committees.id = :committee_id AND emails.id = :emailid", nativeQuery = true)
+	@Query(value = "SELECT AVG(amount) FROM donations WHERE committees_id = :committee_id AND email_id = :emailid", nativeQuery = true)
 	Double averages(@Param("emailid") Long id, Long committee_id);
 	
 	//sum functions
