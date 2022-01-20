@@ -14,13 +14,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Committees;
-import com.coding.LojoFundrasing.Models.Data;
+//import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.DonorData;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
-import com.coding.LojoFundrasing.Repos.DataRepo;
+//import com.coding.LojoFundrasing.Repos.DataRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.EmailRepo;
 
@@ -29,8 +29,8 @@ public class EmailService {
 	@Autowired
 	private EmailRepo erepo;
 	
-	@Autowired
-	private DataRepo datarepo;
+	/*@Autowired
+	private DataRepo datarepo;*/
 	
 	@Autowired
 	private DonationRepo drepo;
@@ -246,7 +246,7 @@ public class EmailService {
     			}
         	}
         	updateEmail(email);
-    		getEmailData(email, committee.getId());
+    		//getEmailData(email, committee.getId());
     		CalculateEmailData(email, committee.getId());
 			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailName());
 			return;
@@ -266,7 +266,7 @@ public class EmailService {
         	email.setList(recipientList);
         	email.setEmail_uploader(uploader);
         	updateEmail(email);
-    		getEmailData(email, committee.getId());
+    		//getEmailData(email, committee.getId());
     		CalculateEmailData(email, committee.getId());
 			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
 			return;
@@ -428,7 +428,7 @@ public class EmailService {
 			return datarepo.save(emaildata);
 		}*/
 	}
-	public Data getEmailData(Emails email, Long committee_id) {
+	/*public Data getEmailData(Emails email, Long committee_id) {
 		//need to make emaildata find by email id OR add email data to email
 		Data emaildata = datarepo.findEmailData(email.getId());
 		if (emaildata != null) {
@@ -580,7 +580,7 @@ public class EmailService {
 			}
 			return datarepo.save(emaildata);
 		}
-	}
+	}*/
 	//sorting
 	//date/time
 	public List<Emails> EmailTest(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 

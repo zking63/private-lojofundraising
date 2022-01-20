@@ -1,4 +1,4 @@
-package com.coding.LojoFundrasing.Models;
+/*package com.coding.LojoFundrasing.Models;
 
 import java.text.DecimalFormat;
 
@@ -200,4 +200,4 @@ public class Data {
 	}
 	
 	
-}
+}*/

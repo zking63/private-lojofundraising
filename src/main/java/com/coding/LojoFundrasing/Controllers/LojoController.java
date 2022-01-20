@@ -46,7 +46,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coding.LojoFundrasing.Models.Committees;
-import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
@@ -332,7 +331,7 @@ public class LojoController {
 		 donservice.createDonation(donation);
 		 Emails email = donation.getEmailDonation();
 		 Donor donor = dservice.findbyId(donation.getDonor().getId());
-		 this.eservice.getEmailData(email, committee_id);
+		// this.eservice.getEmailData(email, committee_id);
 		 this.eservice.CalculateEmailData(email, committee_id);
 		 this.dservice.getDonorData(donor, committee_id);
 		 return "redirect:/home";
@@ -367,7 +366,7 @@ public class LojoController {
 		 model.addAttribute("timeFormat", timeFormat());
 		 model.addAttribute("committee", committee);
 		 eservice.createEmail(email);
-		 this.eservice.getEmailData(email, committee_id);
+		 //this.eservice.getEmailData(email, committee_id);
 		 this.eservice.CalculateEmailData(email, committee_id);
 		 return "redirect:/emails";
 	 }
@@ -704,7 +703,7 @@ public class LojoController {
 						Emails email = donation.getEmailDonation();
 						Donor donor = donation.getDonor();
 						//1
-						this.eservice.getEmailData(email, committee_id);
+						//this.eservice.getEmailData(email, committee_id);
 						this.eservice.CalculateEmailData(email, committee_id);
 						this.dservice.getDonorData(donor, committee_id);
 					 }
@@ -760,7 +759,7 @@ public class LojoController {
 				 System.out.println("d recurring number: " + donation.getRecurring());
 				 System.out.println("d AB ID: " + donation.getActBlueId());
 				 donservice.createDonation(donation);
-				 this.eservice.getEmailData(email, committee_id);
+				 //this.eservice.getEmailData(email, committee_id);
 				 this.eservice.CalculateEmailData(email, committee_id);
 				 this.dservice.getDonorData(donor, committee_id);
 			 }

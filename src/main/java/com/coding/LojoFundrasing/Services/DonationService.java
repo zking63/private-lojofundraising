@@ -196,7 +196,7 @@ public class DonationService {
 					originalEmail.setEmaildonations(OGemailDonations);
 					eservice.updateEmail(originalEmail);
 					eservice.CalculateEmailData(originalEmail, committee.getId());
-					eservice.getEmailData(originalEmail, committee.getId());
+					//eservice.getEmailData(originalEmail, committee.getId());
 				}
 				while (emailListSet == false) {
 					//for when you have donations without refcodes

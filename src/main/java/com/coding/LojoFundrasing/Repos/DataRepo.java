@@ -1,4 +1,4 @@
-package com.coding.LojoFundrasing.Repos;
+/*package com.coding.LojoFundrasing.Repos;
 
 import java.util.List;
 
@@ -17,4 +17,4 @@ public interface DataRepo extends CrudRepository<Data, Long>{
 	List<Data>findAll();
 	@Query(value = "SELECT * FROM data_funds where email_id = :email_id", nativeQuery = true)
 	Data findEmailData(Long email_id);
-}
+}*/

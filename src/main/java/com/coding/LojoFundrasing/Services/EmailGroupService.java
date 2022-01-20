@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import com.coding.LojoFundrasing.Models.Data;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
@@ -75,11 +74,11 @@ public class EmailGroupService {
 						emailgroup.setGroupClicks(groupClicks);
 						emailgroup.setGroupBounces(groupBounces);
 						emailgroup.setGroupUnsubscribers(groupUnsubscribers);
-						if (email.getEmaildata().getEmailsum() != null) {
+						if (email.getEmaildonationsum() != null) {
 							//calculate donation info
-							groupsum = groupsum + email.getEmaildata().getEmailsum(); 
+							groupsum = groupsum + email.getEmaildonationsum(); 
 							System.out.println("group sum: " + groupsum);
-							groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
+							groupdonationcount = groupdonationcount + email.getEmaildonationcount();
 							System.out.println("group donation count: " + groupdonationcount);
 							//set donation info
 							emailgroup.setGroupsum(groupsum);
@@ -116,11 +115,11 @@ public class EmailGroupService {
 						emailgroup.setGroupClicks(groupClicks);
 						emailgroup.setGroupBounces(groupBounces);
 						emailgroup.setGroupUnsubscribers(groupUnsubscribers);
-						if (email.getEmaildata().getEmailsum() != null) {
+						if (email.getEmaildonationsum() != null) {
 							//calculate donation info
-							groupsum = groupsum + email.getEmaildata().getEmailsum(); 
+							groupsum = groupsum + email.getEmaildonationsum(); 
 							System.out.println(groupsum);
-							groupdonationcount = groupdonationcount + email.getEmaildata().getDonationcount();
+							groupdonationcount = groupdonationcount + email.getEmaildonationcount();
 							System.out.println(groupdonationcount);
 							//set donation info
 							emailgroup.setGroupsum(groupsum);
