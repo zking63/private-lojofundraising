@@ -42,6 +42,8 @@ public class EmailGroup {
 	private Double groupclicksOpens;
 	private Double groupdonorsOpens;
 	private Double groupdonorsClicks;
+	private String groupTest;
+	private String groupCategory;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -223,6 +225,18 @@ public class EmailGroup {
 	}
 	public void setGroupdonorsClicks(Double groupdonorsClicks) {
 		this.groupdonorsClicks = groupdonorsClicks;
+	}
+	public String getGroupTest() {
+		return groupTest;
+	}
+	public void setGroupTest(String groupTest) {
+		this.groupTest = groupTest;
+	}
+	public String getGroupCategory() {
+		return groupCategory;
+	}
+	public void setGroupCategory(String groupCategory) {
+		this.groupCategory = groupCategory;
 	}
 	
 }
