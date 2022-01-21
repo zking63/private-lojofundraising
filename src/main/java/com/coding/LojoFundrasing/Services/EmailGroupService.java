@@ -24,14 +24,23 @@ public class EmailGroupService {
 	public EmailGroup createEmailGroup(EmailGroup emailgroup) {
 		return egrepo.save(emailgroup);
 	}
-	public EmailGroup getEmailGroupData(EmailGroup emailgroup, Long committee_id) {
-		Long id = emailgroup.getId();
+	public EmailGroup findEmailGroupbyName(String emailGroupname, Long committee_id) {
+		EmailGroup group = egrepo.findbyNameandCommittee(emailGroupname, committee_id);
+		return group;
+	}
+	public EmailGroup findEmailGroupbyId(Long id, Long committee_id) {
+		EmailGroup group = egrepo.findbyIdandCommittee(id, committee_id);
+		return group;
+	}
+	public void getEmailGroupData(Long emailGroupId, Long committee_id) {
+		EmailGroup emailgroup = egrepo.findbyIdandCommittee(emailGroupId, committee_id);
+		System.out.println(emailgroup.getEmailgroupName());
 		//email performance
-		Long groupOpeners = (long) 0;
-		Long groupRecipients = (long) 0;
-		Long groupClicks = (long) 0;
-		Long groupBounces = (long) 0;
-		Long groupUnsubscribers = (long) 0;
+		Long groupOpeners = egrepo.GroupOpeners(emailGroupId, committee_id);
+		Long groupRecipients = egrepo.GroupRecipients(emailGroupId, committee_id);
+		Long groupClicks = egrepo.GroupClicks(emailGroupId, committee_id);
+		Long groupBounces = egrepo.GroupBounces(emailGroupId, committee_id);
+		Long groupUnsubscribers = egrepo.GroupUnsubscribers(emailGroupId, committee_id);
 		//donation info
 		Double groupaverage = 0.0;
 		Double groupsum = 0.0;
@@ -51,7 +60,44 @@ public class EmailGroupService {
 		Double groupclicksOpens = 0.0;
 		Double groupdonorsOpens = 0.0;
 		Double groupdonorsClicks = 0.0;
-			for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+		//strings
+		String test = null;
+		String category = null;
+		//if (emailgroup.getEmails().get(0).getOpeners() != null) {
+			groupOpeners = egrepo.GroupOpeners(emailGroupId, committee_id);
+			System.out.println("openers: " + groupOpeners);
+			groupRecipients = egrepo.GroupRecipients(emailGroupId, committee_id);
+			System.out.println("groupRecipients: " + groupRecipients);
+			groupClicks = egrepo.GroupClicks(emailGroupId, committee_id);
+			System.out.println("groupClicks : " + groupClicks );
+			groupBounces = egrepo.GroupBounces(emailGroupId, committee_id);
+			System.out.println("groupBounces: " + groupBounces);
+			groupUnsubscribers = egrepo.GroupUnsubscribers(emailGroupId, committee_id);
+			System.out.println("groupUnsubscribers: " + groupUnsubscribers);
+			emailgroup.setGroupOpeners(groupOpeners);
+			emailgroup.setGroupRecipients(groupRecipients);
+			emailgroup.setGroupClicks(groupClicks);
+			emailgroup.setGroupBounces(groupBounces);
+			emailgroup.setGroupUnsubscribers(groupUnsubscribers);
+			
+			emailgroup.setGroupsum(groupsum);
+			emailgroup.setGroupdonationcount(groupdonationcount);
+			emailgroup.setGroupRecurringDonationCount(groupRecurringDonationCount);
+			emailgroup.setGroupRecurringRevenue(groupRecurringRevenue);
+			emailgroup.setGroupaverage(groupaverage);
+			emailgroup.setGroupdonorcount(groupdonorcount);
+			emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
+			emailgroup.setGroupopenRate(groupopenRate);
+			emailgroup.setGroupdonationsOpens(groupdonationsOpens);
+			emailgroup.setGroupdonorsOpens(groupdonorsOpens);
+			emailgroup.setGroupclickRate(groupclickRate);
+			emailgroup.setGroupclicksOpens(groupclicksOpens);
+			emailgroup.setGroupdonationsClicks(groupdonationsClicks);
+			emailgroup.setGroupdonorsClicks(groupdonorsClicks);
+			emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
+			emailgroup.setGroupbounceRate(groupbounceRate);
+		//}
+			/*for (int i = 0; i < emailgroup.getEmails().size(); i++) {
 					Emails email = emailgroup.getEmails().get(i);
 					System.out.println(email.getEmailName());
 					if (email.getOpeners() != null) {
@@ -157,11 +203,11 @@ public class EmailGroupService {
 			System.out.println(groupaverage);
 			//donor count
 			System.out.println("groupdonorcount");
-			groupdonorcount = donrepo.findDonorsinGroup(committee_id, id);
+			groupdonorcount = donrepo.findDonorsinGroup(committee_id, emailGroupId);
 			emailgroup.setGroupdonorcount(groupdonorcount);
 			System.out.println(groupdonorcount);
 			//recurring donor count
-			groupRecurringDonorCount = donrepo.findRecurringDonorsinGroup(committee_id, id);
+			groupRecurringDonorCount = donrepo.findRecurringDonorsinGroup(committee_id, emailGroupId);
 			emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
 			System.out.println(groupRecurringDonorCount);
 			//rate functions 
@@ -249,8 +295,8 @@ public class EmailGroupService {
 			emailgroup.setGroupdonorsClicks(groupdonorsClicks);
 			emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
 			emailgroup.setGroupbounceRate(groupbounceRate);
-		}
-		return egrepo.save(emailgroup);
+		}*/
+		egrepo.save(emailgroup);
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
