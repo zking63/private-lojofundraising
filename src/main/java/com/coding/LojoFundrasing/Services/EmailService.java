@@ -133,6 +133,12 @@ public class EmailService {
         	email.setUnsubscribers(null);
         	email.setExcludedList(null);
         	email.setList(null);
+        	email.setSender(null);
+        	email.setSubjectLine(null);
+        	email.setEmailCategory(null);
+        	email.setTesting(null);
+        	email.setVariant(null);
+        	email.setLink(null);
         	email.setEmail_uploader(uploader);
         	createEmail(email);
         	while (committeeSetList == false) {
@@ -168,7 +174,8 @@ public class EmailService {
 	
 	public void setUpEmailsfromUpload(String recipientList, String excludedList, Long openers, Long bounces, Long unsubscribers, 
 			Long clicks, Long recipients, User uploader, String nameValue, String refcode, String refcode2,  
-			Date date, Committees committee, Integer rowNumber) {
+			Date date, Committees committee, String sender, String subject, String category, 
+			String testing, String variant, String link, Integer rowNumber) {
 		System.out.println("email set up found");
 		System.out.println("*****NAME " + nameValue);
 		System.out.println("*****refcode " + refcode);
@@ -226,6 +233,12 @@ public class EmailService {
         	email.setExcludedList(excludedList);
         	email.setList(recipientList);
         	email.setEmail_uploader(uploader);
+        	email.setSender(sender);
+        	email.setSubjectLine(subject);
+        	email.setEmailCategory(category);
+        	email.setTesting(testing);
+        	email.setVariant(variant);
+        	email.setLink(link);
         	createEmail(email);
         	while (committeeSetList == false) {
     			if (committee.getEmails() == null || committee.getEmails().size() == 0) {
