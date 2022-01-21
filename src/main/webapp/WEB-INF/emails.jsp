@@ -216,7 +216,7 @@
 					<td>${e.emailRefcode1}</td>
 					<td>${e.emailRefcode2}</td>
 					<td>$${e.emaildonationsum}</td>
-					<td>$${e.emaildonationaverage}</td>
+					<td>$${e.getEmailAverageFormatted()}</td>
 					<td>${e.emaildonationcount}</td>
 					<td>${e.emaildonorcount}</td>
 					<td>${e.getList()}</td>

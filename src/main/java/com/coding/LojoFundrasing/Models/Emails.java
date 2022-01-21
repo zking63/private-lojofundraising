@@ -37,6 +37,12 @@ public class Emails {
 	private Long clicks;
 	private Long bounces;
 	private Long unsubscribers;
+	private String subjectLine;
+	private String sender;
+	private String emailCategory;
+	private String testing;
+	private String Variant;
+	private String link;
 	private Integer recurringDonorCount;
 	private Integer recurringDonationCount;
 	private Double recurringRevenue;
@@ -387,6 +393,54 @@ public class Emails {
 
 	public void setEmailRefcode1(String emailRefcode1) {
 		this.emailRefcode1 = emailRefcode1;
+	}
+
+	public String getSubjectLine() {
+		return subjectLine;
+	}
+
+	public void setSubjectLine(String subjectLine) {
+		this.subjectLine = subjectLine;
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	public String getEmailCategory() {
+		return emailCategory;
+	}
+
+	public void setEmailCategory(String emailCategory) {
+		this.emailCategory = emailCategory;
+	}
+
+	public String getTesting() {
+		return testing;
+	}
+
+	public void setTesting(String testing) {
+		this.testing = testing;
+	}
+
+	public String getVariant() {
+		return Variant;
+	}
+
+	public void setVariant(String variant) {
+		Variant = variant;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 }
