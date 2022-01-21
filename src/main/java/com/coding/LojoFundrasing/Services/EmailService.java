@@ -219,16 +219,21 @@ public class EmailService {
 				}
 			}
 		}
+		System.out.println("                                          TESTING: " + testing);
 		while (variantSet == false) {
-			if (testing == "sender") {
+			String test = testing.toUpperCase();
+			if (test.contains("SENDER")) {
+				System.out.println("                                          TESTING = sender: " + testing);
 				variant = sender;
 				variantSet = true;
 			}
-			else if (testing == "subject") {
+			else if (test.contains("SUBJECT")) {
+				System.out.println("                                          TESTING = subject: " + testing);
 				variant = subject;
 				variantSet = true;
 			}
 			else {
+				System.out.println("                                          TESTING = other: " + testing);
 				variant = variant;
 				variantSet = true;
 			}
