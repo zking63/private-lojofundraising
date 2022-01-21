@@ -183,6 +183,7 @@ public class EmailService {
 		Emails email = null;
 		Boolean refcodesFiled = false;
 		Boolean committeeSetList = false;
+		Boolean variantSet = false;
 		List<Emails> emails = null;
 		
 		if (nameValue.isEmpty() || nameValue == null || date == null) {
@@ -216,6 +217,20 @@ public class EmailService {
 					//make a find by name/date with null refcodes
 					refcodesFiled = true;
 				}
+			}
+		}
+		while (variantSet == false) {
+			if (testing == "sender") {
+				variant = sender;
+				variantSet = true;
+			}
+			else if (testing == "subject") {
+				variant = subject;
+				variantSet = true;
+			}
+			else {
+				variant = variant;
+				variantSet = true;
 			}
 		}
 		if (email == null) {
@@ -278,6 +293,12 @@ public class EmailService {
         	email.setExcludedList(excludedList);
         	email.setList(recipientList);
         	email.setEmail_uploader(uploader);
+        	email.setSender(sender);
+        	email.setSubjectLine(subject);
+        	email.setEmailCategory(category);
+        	email.setTesting(testing);
+        	email.setVariant(variant);
+        	email.setLink(link);
         	updateEmail(email);
     		//getEmailData(email, committee.getId());
     		CalculateEmailData(email, committee.getId());
