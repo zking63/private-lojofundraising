@@ -69,6 +69,7 @@ public class DonorService {
 			String city, String country, String phone, String Zipcode, String state, Committees committee, 
 			User uploader) {
 		Donor donor = null;
+		Boolean committteeListSet = false;
  	   if (findDonorByEmailandCommittee(emailValue, committee.getId()) == null) {
  		System.out.println("                         /////??????????????NEWWWW DONOR ");
  		donor = new Donor();
@@ -85,7 +86,22 @@ public class DonorService {
      	donor.setZipcode(Zipcode);
      	donor.setState(state);
      	createDonor(donor);
-     	
+		while (committteeListSet == false) {
+			if (committee.getDonors() == null || committee.getDonors().size() == 0) {
+				List<Donor> donorCommittees = new ArrayList<Donor>();
+				donorCommittees.add(donor);
+				committee.setDonors(donorCommittees);
+				comrepo.save(committee);
+				committteeListSet = true;
+			}
+			else {
+				List<Donor> donorCommittees = committee.getDonors();
+				donorCommittees.add(donor);
+				committee.setDonors(donorCommittees);
+				comrepo.save(committee);
+				committteeListSet = true;
+			}
+		}
      	//set donor committee
      	/*donors = committee.getDonors();
      	donors.add(donor);
@@ -119,28 +135,14 @@ public class DonorService {
      	System.out.println("ID: " + id);
      	donor.setDonorFirstName(nameValue);
      	donor.setDonorLastName(LNValue);
-     	donor.setDonorEmail(emailValue);
      	donor.setUploader(uploader);
-     	donor.setCommittee(committee);
      	donor.setAddress(address);
      	donor.setCity(city);
      	donor.setCountry(country);
      	donor.setPhone(phone);
      	donor.setZipcode(Zipcode);
      	donor.setState(state);
-
-     	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
      	updateDonor(donor);
-     	System.out.println("ID FROM Donor: " + donor.getId());
-     	
-     	//check donor contributions
-     	List <Donation> DonorDonations = donor.getContributions();
-     	if (DonorDonations != null) {
-         	System.out.println("donor donations size before create donation: " + DonorDonations.size());
-         	for (int j = 0; j < DonorDonations.size(); j++) {
-         		System.out.println("                   DONATIONS DONORS : " + DonorDonations.get(j).getId());
-         	}
-     	}
      	return donor;
      }
 	}
