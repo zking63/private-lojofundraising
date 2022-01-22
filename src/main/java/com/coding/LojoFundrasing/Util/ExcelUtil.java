@@ -117,12 +117,8 @@ public class ExcelUtil {
         	
         	//update data
     		email = donation.getEmailDonation();
-    		System.out.println("email: " + email);
     		donor = donation.getDonor();
-    		System.out.println("donor after set up: " + donor.getDonorEmail());
     		dservice.getDonorData(donor, committee.getId());
-    		//System.out.println("donordata id: " + donor.getDonordata().getId());
-    		//eservice.getEmailData(email, committee.getId());
     		eservice.CalculateEmailData(email, committee.getId());
 			System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 	}
