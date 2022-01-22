@@ -93,9 +93,12 @@ public class TestService {
 		}
 	}
 	
-	public void CalculateTestData(Long committee_id, EmailGroup emailgroup) {
+	public void CalculateTestData(test test, Committees committee) {
+		if (test == null) {
+			return;
+		}
+		
 		String testcategory = null;
-		Committees committee = cservice.findbyId(committee_id);
 		Boolean committeeSetList = false;
 		
 	    Long variantARecipients = (long) 0;
@@ -136,46 +139,9 @@ public class TestService {
 	    
 	    Double variantAaverageDonation;
 	    Double variantBaverageDonation;
-		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() 
-				|| emailgroup.getGroupTest() == " ") {
-			System.out.println("NO TEST");
-			return;
-		}
-		else {
-			testcategory = emailgroup.getGroupTest();
-		}
-		test test = trepo.findbyTest(testcategory, committee.getId()).orElse(null);
-		if (test == null) {
-			test = new test();
-			System.out.println("NEW TEST");
-			test.setTestcategory(testcategory);
-			test.setVariantA(emailgroup.getVariantA());
-			test.setVariantB(emailgroup.getVariantB());
-        	while (committeeSetList == false) {
-    			if (committee.getBigtest() == null || committee.getBigtest().size() == 0) {
-    				test.setCommittee(committee);
-    				List<test> tests = new ArrayList<test>();
-    				tests.add(test);
-    				committee.setBigtest(tests);
-    				cservice.createCommittee(committee);
-    				committeeSetList = true;
-    			}
-    			else {
-    				test.setCommittee(committee);
-    				List<test> tests = committee.getBigtest();
-    				tests.add(test);
-    				committee.setBigtest(tests);
-    				cservice.createCommittee(committee);
-    				committeeSetList = true;
-    			}
-        	}
-        	createTest(test);
-		}
-		else {
-			System.out.println("OLD TEST");
-		}
-		variantARecipients = trepo.variantARecipients(committee_id, test.getId());
-		variantBRecipients = trepo.variantBRecipients(committee_id, test.getId());
+
+		variantARecipients = trepo.variantARecipients(committee.getId(), test.getId());
+		variantBRecipients = trepo.variantBRecipients(committee.getId(), test.getId());
 		System.out.println("variantARecipients " + variantARecipients);
 		System.out.println("variantBRecipients " + variantBRecipients);
 	}

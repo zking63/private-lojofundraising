@@ -46,6 +46,8 @@ public class EmailGroupService {
 	public void getEmailGroupData(Long emailGroupId, Long committee_id) {
 		EmailGroup emailgroup = egrepo.findbyIdandCommittee(emailGroupId, committee_id);
 		System.out.println(emailgroup.getEmailgroupName());
+		Committees committee = cservice.findbyId(committee_id);
+		
 		//email performance
 		Long groupOpeners = egrepo.GroupOpeners(emailGroupId, committee_id);
 		Long groupRecipients = egrepo.GroupRecipients(emailGroupId, committee_id);
@@ -220,7 +222,6 @@ public class EmailGroupService {
 		else {
 			overallTest = tservice.testSetUpTestfromGroup(committee_id, emailgroup);
 			emailgroup.setTest(overallTest);
-			tservice.testSetUpTestfromGroup(committee_id, emailgroup);
         	while (testListSet == false) {
     			if (overallTest.getEmailgroups() == null || overallTest.getEmailgroups().size() == 0) {
     				emailgroup.setTest(overallTest);
@@ -241,7 +242,6 @@ public class EmailGroupService {
         	}
 		}
     	while (committeeListSet == false) {
-    		Committees committee = cservice.findbyId(committee_id);
 			if (committee.getEmailgroups() == null || committee.getEmailgroups().size() == 0) {
 				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
 				emailgroups.add(emailgroup);
@@ -258,6 +258,7 @@ public class EmailGroupService {
 			}
     	}
     	updateEmailGroup(emailgroup);
+    	tservice.CalculateTestData(overallTest, committee);
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
