@@ -68,6 +68,16 @@ public class EmailGroupService {
 		String test = emailgroup.getEmails().get(0).getTesting();
 		String category = null;
 		
+		//variants
+		String variantA = emailgroup.getVariantA();
+		System.out.println("variantA in emailgroup " + emailgroup.getVariantA());
+		System.out.println("variantA out emailgroup " + variantA);
+		String variantB = emailgroup.getVariantB();
+		System.out.println("variantB in emailgroup " + emailgroup.getVariantB());
+		System.out.println("variantB out emailgroup " + variantB);
+		Boolean variantASet = false;
+		Boolean variantBSet = false;
+		
 		emailgroup.setGroupOpeners(groupOpeners);
 		emailgroup.setGroupRecipients(groupRecipients);
 		emailgroup.setGroupClicks(groupClicks);
@@ -117,6 +127,130 @@ public class EmailGroupService {
 			if (groupOpeners != null && groupOpeners != 0) {
 				groupopenRate = (double) groupOpeners/groupRecipients;
 			}
+		}
+		/*for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+			String variant = emailgroup.getEmails().get(i).getVariant();
+			System.out.println("variant before while " + variant);
+			while (variantASet == false) {
+				if (variantA == null || variantA.isEmpty() || variantA == " " ) {
+					if (variant == null || variant.isEmpty() || variant == " " ) {
+						System.out.println("variant is null " + variant);
+						if (i == (emailgroup.getEmails().size() - 1)) {
+							emailgroup.setVariantA(variantA);
+							System.out.println("variant A " + variantA);
+							variantASet = true;
+						}
+					}
+					else if (variant == variantB) {
+						if (i == (emailgroup.getEmails().size() - 1)) {
+							emailgroup.setVariantA(variantA);
+							System.out.println("variant A " + variantA);
+							variantASet = true;
+						}
+					}
+					else {
+						System.out.println("variant works " + variant);
+						variantA = variant;
+						emailgroup.setVariantA(variantA);
+						System.out.println("variant A " + variantA);
+						i++;
+						variantASet = true;
+					}
+				}
+				else {
+					System.out.println("variant A " + variantA);
+					variantASet = true;
+				}
+			}
+			while (variantBSet == false) {
+				if (variantB == null || variantB.isEmpty() || variantB == " " ) {
+						if (variant == null || variant.isEmpty() || variant == " " ) {
+							System.out.println("variant is null " + variant);
+							if (i == (emailgroup.getEmails().size())) {
+								emailgroup.setVariantB(variantB);
+								System.out.println("variant B " + variantB);
+								variantBSet = true;
+							}
+						}
+						else if (variant == variantA) {
+							System.out.println("variant is A " + variant);
+							if (i == (emailgroup.getEmails().size())) {
+								emailgroup.setVariantB(variantB);
+								System.out.println("variant B " + variantB);
+								variantBSet = true;
+							}
+						}
+						else {
+							System.out.println("variant works " + variant);
+							variantB = variant;
+							emailgroup.setVariantB(variantB);
+							System.out.println("variant B " + variantB);
+							variantBSet = true;
+						}
+				}
+				else {
+					System.out.println("variant B " + variantB);
+					variantBSet = true;
+				}
+			}
+		}*/
+		if (variantA == null || variantA.isEmpty() || variantA == " " ) {
+			variantASet = false;
+			System.out.println("variant A is null " + variantA);
+		}
+		else {
+			variantASet = true;
+			System.out.println("variant A is already set " + variantA);
+		}
+		if (variantB == null || variantB.isEmpty() || variantB == " " ) {
+			variantBSet = false;
+			System.out.println("variant B is null " + variantB);
+		}
+		else {
+			variantBSet = true;
+			System.out.println("variant b is already set " + variantB);
+		}
+		while (variantASet == false) {
+				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+					String variant = emailgroup.getEmails().get(i).getVariant();
+					System.out.println("variant in A loop" + variant);
+					if (variant == null || variant.isEmpty() || variant == " ") {
+						System.out.println("variant is null " + variant);
+					}
+					else {
+						System.out.println("variant works " + variant);
+						variantA = variant;
+						emailgroup.setVariantA(variantA);
+						System.out.println("variant A " + variantA);
+						variantASet = true;
+						break;
+					}
+				}
+				emailgroup.setVariantA(variantA);
+				System.out.println("variant A " + variantA);
+				variantASet = true;
+				break;
+		}
+		while (variantBSet == false && variantA != null) {
+				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
+					String variant = emailgroup.getEmails().get(i).getVariant();
+					System.out.println("variant in B loop " + variant);
+					System.out.println("variant in A check " + variantA);
+					if (variant == null || variant.isEmpty() || variant == " " || variant.contentEquals(variantA)) {
+						System.out.println("variant doesn't work " + variant);
+					}
+					else {
+						System.out.println("variant works " + variant);
+						variantB = variant;
+						emailgroup.setVariantB(variantB);
+						System.out.println("variant B " + variantB);
+						variantBSet = true;
+						break;
+					}
+				}
+				emailgroup.setVariantB(variantB);
+				System.out.println("variant B " + variantB);
+				variantBSet = true;
 		}
 		emailgroup.setGroupopenRate(groupopenRate);
 		emailgroup.setGroupdonationsOpens(groupdonationsOpens);

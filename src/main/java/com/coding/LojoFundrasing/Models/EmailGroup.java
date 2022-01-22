@@ -44,6 +44,8 @@ public class EmailGroup {
 	private Double groupdonorsClicks;
 	private String groupTest;
 	private String groupCategory;
+	private String variantA;
+	private String variantB;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -242,10 +244,22 @@ public class EmailGroup {
 	public void setGroupCategory(String groupCategory) {
 		this.groupCategory = groupCategory;
 	}
-	public test gettest() {
+	public String getVariantA() {
+		return variantA;
+	}
+	public void setVariantA(String variantA) {
+		this.variantA = variantA;
+	}
+	public String getVariantB() {
+		return variantB;
+	}
+	public void setVariantB(String variantB) {
+		this.variantB = variantB;
+	}
+	public test getTest() {
 		return test;
 	}
-	public void settest(test test) {
+	public void setTest(test test) {
 		this.test = test;
 	}
 	

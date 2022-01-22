@@ -128,6 +128,188 @@ public class test {
 	public void setVariantB(String variantB) {
 		VariantB = variantB;
 	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	public Committees getCommittee() {
+		return committee;
+	}
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
+	}
+	
+	public List<EmailGroup> getEmailgroups() {
+		return emailgroups;
+	}
+	public void setEmailgroups(List<EmailGroup> emailgroups) {
+		this.emailgroups = emailgroups;
+	}
+	public Long getVariantARecipients() {
+		return variantARecipients;
+	}
+	public void setVariantARecipients(Long variantARecipients) {
+		this.variantARecipients = variantARecipients;
+	}
+	public Long getVariantBRecipients() {
+		return variantBRecipients;
+	}
+	public void setVariantBRecipients(Long variantBRecipients) {
+		this.variantBRecipients = variantBRecipients;
+	}
+	public Long getVariantAOpens() {
+		return variantAOpens;
+	}
+	public void setVariantAOpens(Long variantAOpens) {
+		this.variantAOpens = variantAOpens;
+	}
+	public Long getVariantBOpens() {
+		return variantBOpens;
+	}
+	public void setVariantBOpens(Long variantBOpens) {
+		this.variantBOpens = variantBOpens;
+	}
+	public Long getVariantAClicks() {
+		return variantAClicks;
+	}
+	public void setVariantAClicks(Long variantAClicks) {
+		this.variantAClicks = variantAClicks;
+	}
+	public Long getVariantBClicks() {
+		return variantBClicks;
+	}
+	public void setVariantBClicks(Long variantBClicks) {
+		this.variantBClicks = variantBClicks;
+	}
+	public Long getVariantADonations() {
+		return variantADonations;
+	}
+	public void setVariantADonations(Long variantADonations) {
+		this.variantADonations = variantADonations;
+	}
+	public Long getVariantBDonations() {
+		return variantBDonations;
+	}
+	public void setVariantBDonations(Long variantBDonations) {
+		this.variantBDonations = variantBDonations;
+	}
+	public Double getVariantARevenue() {
+		return variantARevenue;
+	}
+	public void setVariantARevenue(Double variantARevenue) {
+		this.variantARevenue = variantARevenue;
+	}
+	public Double getVariantBRevenue() {
+		return variantBRevenue;
+	}
+	public void setVariantBRevenue(Double variantBRevenue) {
+		this.variantBRevenue = variantBRevenue;
+	}
+	public Double getVariantAOpenRate() {
+		return variantAOpenRate;
+	}
+	public void setVariantAOpenRate(Double variantAOpenRate) {
+		this.variantAOpenRate = variantAOpenRate;
+	}
+	public Double getVariantBOpenRate() {
+		return variantBOpenRate;
+	}
+	public void setVariantBOpenRate(Double variantBOpenRate) {
+		this.variantBOpenRate = variantBOpenRate;
+	}
+	public Double getVariantAClickOpens() {
+		return variantAClickOpens;
+	}
+	public void setVariantAClickOpens(Double variantAClickOpens) {
+		this.variantAClickOpens = variantAClickOpens;
+	}
+	public Double getVariantBClickOpens() {
+		return variantBClickOpens;
+	}
+	public void setVariantBClickOpens(Double variantBClickOpens) {
+		this.variantBClickOpens = variantBClickOpens;
+	}
+	public Double getVariantAClickRate() {
+		return variantAClickRate;
+	}
+	public void setVariantAClickRate(Double variantAClickRate) {
+		this.variantAClickRate = variantAClickRate;
+	}
+	public Double getVariantBClickRate() {
+		return variantBClickRate;
+	}
+	public void setVariantBClickRate(Double variantBClickRate) {
+		this.variantBClickRate = variantBClickRate;
+	}
+	public Double getVariantADonationsOpens() {
+		return variantADonationsOpens;
+	}
+	public void setVariantADonationsOpens(Double variantADonationsOpens) {
+		this.variantADonationsOpens = variantADonationsOpens;
+	}
+	public Double getVariantBDonationsOpens() {
+		return variantBDonationsOpens;
+	}
+	public void setVariantBDonationsOpens(Double variantBDonationsOpens) {
+		this.variantBDonationsOpens = variantBDonationsOpens;
+	}
+	public Double getVariantADonationsClicks() {
+		return variantADonationsClicks;
+	}
+	public void setVariantADonationsClicks(Double variantADonationsClicks) {
+		this.variantADonationsClicks = variantADonationsClicks;
+	}
+	public Double getVariantBDonationsClicks() {
+		return variantBDonationsClicks;
+	}
+	public void setVariantBDonationsClicks(Double variantBDonationsClicks) {
+		this.variantBDonationsClicks = variantBDonationsClicks;
+	}
+	public Double getVariantADonorsOpens() {
+		return variantADonorsOpens;
+	}
+	public void setVariantADonorsOpens(Double variantADonorsOpens) {
+		this.variantADonorsOpens = variantADonorsOpens;
+	}
+	public Double getVariantBDonorsOpens() {
+		return variantBDonorsOpens;
+	}
+	public void setVariantBDonorsOpens(Double variantBDonorsOpens) {
+		this.variantBDonorsOpens = variantBDonorsOpens;
+	}
+	public Double getVariantADonorsClicks() {
+		return variantADonorsClicks;
+	}
+	public void setVariantADonorsClicks(Double variantADonorsClicks) {
+		this.variantADonorsClicks = variantADonorsClicks;
+	}
+	public Double getVariantBDonorsClicks() {
+		return variantBDonorsClicks;
+	}
+	public void setVariantBDonorsClicks(Double variantBDonorsClicks) {
+		this.variantBDonorsClicks = variantBDonorsClicks;
+	}
+	public Double getVariantAaverageDonation() {
+		return variantAaverageDonation;
+	}
+	public void setVariantAaverageDonation(Double variantAaverageDonation) {
+		this.variantAaverageDonation = variantAaverageDonation;
+	}
+	public Double getVariantBaverageDonation() {
+		return variantBaverageDonation;
+	}
+	public void setVariantBaverageDonation(Double variantBaverageDonation) {
+		this.variantBaverageDonation = variantBaverageDonation;
+	}
+	//old getters/setters
 	public Integer getGoWinnerCountType1() {
 		return goWinnerCountType1;
 	}
@@ -189,24 +371,6 @@ public class test {
 	}
 	public void setFullsendCountType(Integer fullsendCountType) {
 		this.fullsendCountType = fullsendCountType;
-	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	public Committees getCommittee() {
-		return committee;
-	}
-	public void setCommittee(Committees committee) {
-		this.committee = committee;
 	}
 	public Integer getGoWinnerCountTied() {
 		return goWinnerCountTied;
@@ -316,6 +480,5 @@ public class test {
 	public void setOverallClickWinnerPercent(Double overallClickWinnerPercent) {
 		OverallClickWinnerPercent = overallClickWinnerPercent;
 	}
-	
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Contenttest;
+import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Repos.ContentTestRepo;
 import com.coding.LojoFundrasing.Repos.testrepo;
@@ -27,7 +28,15 @@ public class TestService {
 		return trepo.findbyTest(testcategory, committee_id).orElse(null);
 	}
 	
-	public test AddContenttoTest(Contenttest content) {
+	public void testSetUpTestfromGroup(String testcategory, Long committee_id, EmailGroup emailgroup) {
+		test test = trepo.findbyTest(testcategory, committee_id).orElse(null);
+		if (test == null) {
+			test = new test();
+			
+		}
+	}
+	
+	/*public test AddContenttoTest(Contenttest content) {
 		test test = content.getBigtest();
 		if (test.getContent() == null) {
 			List<Contenttest> contentlist = new ArrayList<Contenttest>();
@@ -183,5 +192,5 @@ public class TestService {
 	
 	public List<test> findAllTests(Long committee_id){
 		return trepo.findTestsbyCommittee(committee_id);
-	}
+	}*/
 }
