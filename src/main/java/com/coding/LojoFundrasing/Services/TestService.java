@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Contenttest;
 import com.coding.LojoFundrasing.Models.EmailGroup;
+import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Repos.ContentTestRepo;
 import com.coding.LojoFundrasing.Repos.testrepo;
@@ -20,20 +22,162 @@ public class TestService {
 	@Autowired
 	private ContentTestRepo ctrepo;
 	
+	@Autowired
+	private CommitteeService cservice;
+	
 	public test createTest(test test) {
+		return trepo.save(test);
+	}
+	public test updateTest(test test) {
 		return trepo.save(test);
 	}
 	
 	public test findTestByNameandCommittee(String testcategory, Long committee_id) {
 		return trepo.findbyTest(testcategory, committee_id).orElse(null);
 	}
-	
-	public void testSetUpTestfromGroup(String testcategory, Long committee_id, EmailGroup emailgroup) {
-		test test = trepo.findbyTest(testcategory, committee_id).orElse(null);
+	public test testSetUpTestfromGroup(Long committee_id, EmailGroup emailgroup) {
+		String testcategory = emailgroup.getGroupTest();
+		Committees committee = cservice.findbyId(committee_id);
+		Boolean committeeSetList = false;
+		Boolean emailgroupListSet = false;
+
+		test test = trepo.findbyTest(testcategory, committee.getId()).orElse(null);
 		if (test == null) {
 			test = new test();
-			
+			System.out.println("NEW TEST");
+			test.setTestcategory(testcategory);
+			test.setVariantA(emailgroup.getVariantA());
+			test.setVariantB(emailgroup.getVariantB());
+        	while (committeeSetList == false) {
+    			if (committee.getBigtest() == null || committee.getBigtest().size() == 0) {
+    				test.setCommittee(committee);
+    				List<test> tests = new ArrayList<test>();
+    				tests.add(test);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+    			else {
+    				test.setCommittee(committee);
+    				List<test> tests = committee.getBigtest();
+    				tests.add(test);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+        	}
+        	while (emailgroupListSet == false) {
+    			if (test.getEmailgroups() == null || test.getEmailgroups().size() == 0) {
+    				emailgroup.setTest(test);
+    				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
+    				emailgroups.add(emailgroup);
+    				test.setEmailgroups(emailgroups);
+    				updateTest(test);
+    				emailgroupListSet = true;
+    			}
+    			else {
+    				emailgroup.setTest(test);
+    				List<EmailGroup> emailgroups = test.getEmailgroups();
+    				emailgroups.add(emailgroup);
+    				test.setEmailgroups(emailgroups);
+    				updateTest(test);
+    				emailgroupListSet = true;
+    			}
+        	}
+        	createTest(test);
+        	return test;
 		}
+		else {
+			System.out.println("OLD TEST");
+			return test;
+		}
+	}
+	
+	public void CalculateTestData(Long committee_id, EmailGroup emailgroup) {
+		String testcategory = null;
+		Committees committee = cservice.findbyId(committee_id);
+		Boolean committeeSetList = false;
+		
+	    Long variantARecipients = (long) 0;
+	    Long variantBRecipients = (long) 0;
+	    
+	    Long variantAOpens;
+	    Long variantBOpens;
+	    
+	    Long variantAClicks;
+	    Long variantBClicks;
+	    
+	    Long variantADonations;
+	    Long variantBDonations;
+	    
+	    Double variantARevenue;
+	    Double variantBRevenue;
+	    
+	    Double variantAOpenRate;
+	    Double variantBOpenRate;
+	    
+	    Double variantAClickOpens;
+	    Double variantBClickOpens;
+	    
+	    Double variantAClickRate;
+	    Double variantBClickRate;
+	    
+	    Double variantADonationsOpens;
+	    Double variantBDonationsOpens;
+	    
+	    Double variantADonationsClicks;
+	    Double variantBDonationsClicks;
+	    
+	    Double variantADonorsOpens;
+	    Double variantBDonorsOpens;
+	    
+	    Double variantADonorsClicks;
+	    Double variantBDonorsClicks;
+	    
+	    Double variantAaverageDonation;
+	    Double variantBaverageDonation;
+		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() 
+				|| emailgroup.getGroupTest() == " ") {
+			System.out.println("NO TEST");
+			return;
+		}
+		else {
+			testcategory = emailgroup.getGroupTest();
+		}
+		test test = trepo.findbyTest(testcategory, committee.getId()).orElse(null);
+		if (test == null) {
+			test = new test();
+			System.out.println("NEW TEST");
+			test.setTestcategory(testcategory);
+			test.setVariantA(emailgroup.getVariantA());
+			test.setVariantB(emailgroup.getVariantB());
+        	while (committeeSetList == false) {
+    			if (committee.getBigtest() == null || committee.getBigtest().size() == 0) {
+    				test.setCommittee(committee);
+    				List<test> tests = new ArrayList<test>();
+    				tests.add(test);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+    			else {
+    				test.setCommittee(committee);
+    				List<test> tests = committee.getBigtest();
+    				tests.add(test);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+        	}
+        	createTest(test);
+		}
+		else {
+			System.out.println("OLD TEST");
+		}
+		variantARecipients = trepo.variantARecipients(committee_id, test.getId());
+		variantBRecipients = trepo.variantBRecipients(committee_id, test.getId());
+		System.out.println("variantARecipients " + variantARecipients);
+		System.out.println("variantBRecipients " + variantBRecipients);
 	}
 	
 	/*public test AddContenttoTest(Contenttest content) {

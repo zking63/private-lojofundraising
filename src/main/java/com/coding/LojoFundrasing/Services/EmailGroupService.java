@@ -8,8 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
 import com.coding.LojoFundrasing.Repos.EmailGroupRepo;
 
@@ -20,6 +22,12 @@ public class EmailGroupService {
 	
 	@Autowired
 	private DonationRepo donrepo;
+	
+	@Autowired
+	private TestService tservice;
+	
+	@Autowired
+	private CommitteeService cservice;
 	
 	public EmailGroup createEmailGroup(EmailGroup emailgroup) {
 		return egrepo.save(emailgroup);
@@ -67,6 +75,13 @@ public class EmailGroupService {
 		//strings
 		String test = emailgroup.getEmails().get(0).getTesting();
 		String category = null;
+		
+		//test
+		test overallTest;
+		
+		//set lists
+		Boolean testListSet = false;
+		Boolean committeeListSet = false;
 		
 		//variants
 		String variantA = emailgroup.getVariantA();
@@ -128,72 +143,6 @@ public class EmailGroupService {
 				groupopenRate = (double) groupOpeners/groupRecipients;
 			}
 		}
-		/*for (int i = 0; i < emailgroup.getEmails().size(); i++) {
-			String variant = emailgroup.getEmails().get(i).getVariant();
-			System.out.println("variant before while " + variant);
-			while (variantASet == false) {
-				if (variantA == null || variantA.isEmpty() || variantA == " " ) {
-					if (variant == null || variant.isEmpty() || variant == " " ) {
-						System.out.println("variant is null " + variant);
-						if (i == (emailgroup.getEmails().size() - 1)) {
-							emailgroup.setVariantA(variantA);
-							System.out.println("variant A " + variantA);
-							variantASet = true;
-						}
-					}
-					else if (variant == variantB) {
-						if (i == (emailgroup.getEmails().size() - 1)) {
-							emailgroup.setVariantA(variantA);
-							System.out.println("variant A " + variantA);
-							variantASet = true;
-						}
-					}
-					else {
-						System.out.println("variant works " + variant);
-						variantA = variant;
-						emailgroup.setVariantA(variantA);
-						System.out.println("variant A " + variantA);
-						i++;
-						variantASet = true;
-					}
-				}
-				else {
-					System.out.println("variant A " + variantA);
-					variantASet = true;
-				}
-			}
-			while (variantBSet == false) {
-				if (variantB == null || variantB.isEmpty() || variantB == " " ) {
-						if (variant == null || variant.isEmpty() || variant == " " ) {
-							System.out.println("variant is null " + variant);
-							if (i == (emailgroup.getEmails().size())) {
-								emailgroup.setVariantB(variantB);
-								System.out.println("variant B " + variantB);
-								variantBSet = true;
-							}
-						}
-						else if (variant == variantA) {
-							System.out.println("variant is A " + variant);
-							if (i == (emailgroup.getEmails().size())) {
-								emailgroup.setVariantB(variantB);
-								System.out.println("variant B " + variantB);
-								variantBSet = true;
-							}
-						}
-						else {
-							System.out.println("variant works " + variant);
-							variantB = variant;
-							emailgroup.setVariantB(variantB);
-							System.out.println("variant B " + variantB);
-							variantBSet = true;
-						}
-				}
-				else {
-					System.out.println("variant B " + variantB);
-					variantBSet = true;
-				}
-			}
-		}*/
 		if (variantA == null || variantA.isEmpty() || variantA == " " ) {
 			variantASet = false;
 			System.out.println("variant A is null " + variantA);
@@ -252,6 +201,7 @@ public class EmailGroupService {
 				System.out.println("variant B " + variantB);
 				variantBSet = true;
 		}
+		emailgroup.setGroupTest(test);
 		emailgroup.setGroupopenRate(groupopenRate);
 		emailgroup.setGroupdonationsOpens(groupdonationsOpens);
 		emailgroup.setGroupdonorsOpens(groupdonorsOpens);
@@ -261,8 +211,53 @@ public class EmailGroupService {
 		emailgroup.setGroupdonorsClicks(groupdonorsClicks);
 		emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
 		emailgroup.setGroupbounceRate(groupbounceRate);
-		emailgroup.setGroupTest(test);
 		updateEmailGroup(emailgroup);
+		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() || emailgroup.getGroupTest() == " " ) {
+			overallTest = null;
+			emailgroup.setTest(overallTest);
+			updateEmailGroup(emailgroup);
+		}
+		else {
+			overallTest = tservice.testSetUpTestfromGroup(committee_id, emailgroup);
+			emailgroup.setTest(overallTest);
+			tservice.testSetUpTestfromGroup(committee_id, emailgroup);
+        	while (testListSet == false) {
+    			if (overallTest.getEmailgroups() == null || overallTest.getEmailgroups().size() == 0) {
+    				emailgroup.setTest(overallTest);
+    				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
+    				emailgroups.add(emailgroup);
+    				overallTest.setEmailgroups(emailgroups);
+    				tservice.updateTest(overallTest);
+    				testListSet = true;
+    			}
+    			else {
+    				emailgroup.setTest(overallTest);
+    				List<EmailGroup> emailgroups = overallTest.getEmailgroups();
+    				emailgroups.add(emailgroup);
+    				overallTest.setEmailgroups(emailgroups);
+    				tservice.updateTest(overallTest);
+    				testListSet = true;
+    			}
+        	}
+		}
+    	while (committeeListSet == false) {
+    		Committees committee = cservice.findbyId(committee_id);
+			if (committee.getEmailgroups() == null || committee.getEmailgroups().size() == 0) {
+				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
+				emailgroups.add(emailgroup);
+				committee.setEmailgroups(emailgroups);
+				cservice.createCommittee(committee);
+				committeeListSet = true;
+			}
+			else {
+				List<EmailGroup> emailgroups = committee.getEmailgroups();
+				emailgroups.add(emailgroup);
+				committee.setEmailgroups(emailgroups);
+				cservice.createCommittee(committee);
+				committeeListSet = true;
+			}
+    	}
+    	updateEmailGroup(emailgroup);
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
