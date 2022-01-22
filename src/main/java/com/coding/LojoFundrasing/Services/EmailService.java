@@ -90,29 +90,27 @@ public class EmailService {
 		Boolean committeeSetList = false;
 		
 		while (refcodesFiled == false) {
-			if (refcode2 != null) {
-				if (refcode == null || refcode.isEmpty()) {
+			if (refcode2 == null || refcode2.isEmpty() || refcode2 == " ") {
+				if (refcode == null || refcode.isEmpty() || refcode == " ") {
+					System.out.println("no refcodes");
+					//make a find by name/date with null refcodes
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("refcode2 == null && refcode != null");
+					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
+					refcodesFiled = true;
+				}
+			}
+			else {
+				if (refcode == null || refcode.isEmpty() || refcode == " ") {
 					System.out.println("refcode2 != null && refcode == null");
 					email = findEmailbyRefcodeTWOandCommittee(refcode2, committee);
-					if (email != null) {
-						System.out.println("///////email from refcode2: " + email.getEmailName());
-					}
 					refcodesFiled = true;
 				}
 				else {
 					System.out.println("refcode2 != null && refcode != null");
 					email = findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-					refcodesFiled = true;
-				}
-			}
-			else if (refcode2 == null || refcode2.isEmpty()) {
-				if (refcode != null) {
-					System.out.println("refcode2 == null && refcode != null");
-					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
-					refcodesFiled = true;
-				}
-				else {
-					System.out.println("no refcodes");
 					refcodesFiled = true;
 				}
 			}
@@ -194,8 +192,20 @@ public class EmailService {
 			return;
 		}
 		while (refcodesFiled == false) {
-			if (refcode2 != null) {
-				if (refcode == null || refcode.isEmpty()) {
+			if (refcode2 == null || refcode2.isEmpty() || refcode2 == " ") {
+				if (refcode == null || refcode.isEmpty() || refcode == " ") {
+					System.out.println("no refcodes");
+					//make a find by name/date with null refcodes
+					refcodesFiled = true;
+				}
+				else {
+					System.out.println("refcode2 == null && refcode != null");
+					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
+					refcodesFiled = true;
+				}
+			}
+			else {
+				if (refcode == null || refcode.isEmpty() || refcode == " ") {
 					System.out.println("refcode2 != null && refcode == null");
 					email = findEmailbyRefcodeTWOandCommittee(refcode2, committee);
 					refcodesFiled = true;
@@ -203,18 +213,6 @@ public class EmailService {
 				else {
 					System.out.println("refcode2 != null && refcode != null");
 					email = findEmailbyRefcodeandCommittee(refcode, refcode2, committee);
-					refcodesFiled = true;
-				}
-			}
-			if (refcode2 == null || refcode2.isEmpty()) {
-				if (refcode != null) {
-					System.out.println("refcode2 == null && refcode != null");
-					email = findEmailbyOneRefcodeandCommittee(refcode, committee);
-					refcodesFiled = true;
-				}
-				else {
-					System.out.println("no refcodes");
-					//make a find by name/date with null refcodes
 					refcodesFiled = true;
 				}
 			}
