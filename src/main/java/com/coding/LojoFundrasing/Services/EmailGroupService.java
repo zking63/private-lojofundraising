@@ -65,34 +65,6 @@ public class EmailGroupService {
 		String test = null;
 		String category = null;
 		
-		//calculate email performance + fundraising stats
-		if (groupOpeners != null || groupOpeners != 0) {
-			System.out.println("groupOpeners is 0 " + groupOpeners);
-			groupclicksOpens = (double) groupClicks/groupOpeners;
-			groupdonationsOpens = (double) (groupdonationcount/groupOpeners);
-			groupdonorsOpens = (double) (groupdonorcount/groupOpeners);
-		}
-		if (groupClicks != null || groupClicks != 0) {
-			groupdonationsClicks = (double) (groupdonationcount/groupClicks);
-			groupdonorsClicks = (double) (groupdonorcount/groupClicks);
-		}
-		
-		//calculate email performance stats
-		if (groupRecipients != null || groupRecipients != 0) {
-			System.out.println("groupRecipients is 0 " + groupRecipients);
-			if (groupUnsubscribers != null || groupUnsubscribers == 0) {
-				groupunsubscribeRate = (double) (groupUnsubscribers/groupRecipients);
-			}
-			if (groupBounces != null || groupBounces == 0) {
-				groupbounceRate = (double) (groupBounces/groupRecipients);
-			}
-			if (groupClicks != null || groupClicks != 0) {
-				groupclickRate = (double) (groupClicks/groupRecipients);
-			}
-			if (groupOpeners != null || groupOpeners != 0) {
-				groupopenRate = (double) (groupOpeners/groupRecipients);
-			}
-		}
 		emailgroup.setGroupOpeners(groupOpeners);
 		emailgroup.setGroupRecipients(groupRecipients);
 		emailgroup.setGroupClicks(groupClicks);
@@ -106,6 +78,43 @@ public class EmailGroupService {
 		emailgroup.setGroupaverage(groupaverage);
 		emailgroup.setGroupdonorcount(groupdonorcount);
 		emailgroup.setGroupRecurringDonorCount(groupRecurringDonorCount);
+		
+		//calculate email performance + fundraising stats
+		if (groupOpeners != null && groupOpeners != 0) {
+			System.out.println("groupOpeners is 0 " + groupOpeners);
+			groupclicksOpens = (double) groupClicks/groupOpeners;
+			System.out.println("groupclicksOpens " + groupclicksOpens);
+			groupdonationsOpens = (double) groupdonationcount/groupOpeners;
+			System.out.println("groupdonationsOpens " + groupdonationsOpens);
+			groupdonorsOpens = (double) groupdonorcount/groupOpeners;
+			System.out.println("groupdonorsOpens " +  groupdonorsOpens);
+		}
+		if (groupClicks != null && groupClicks != 0) {
+			System.out.println("groupClicks is NOT 0 " + groupClicks);
+			System.out.println("groupdonationcount " + groupdonationcount);
+			groupdonationsClicks = (double) groupdonationcount/groupClicks;
+			System.out.println("groupdonationsClicks " + groupdonationsClicks);
+			groupdonorsClicks = (double) groupdonorcount/groupClicks;
+			System.out.println("groupdonorcount " + groupdonorcount);
+			System.out.println("groupdonorsClicks " + groupdonorsClicks);
+		}
+		
+		//calculate email performance stats
+		if (groupRecipients != null && groupRecipients != 0) {
+			System.out.println("groupRecipients is 0 " + groupRecipients);
+			if (groupUnsubscribers != null && groupUnsubscribers != 0) {
+				groupunsubscribeRate = (double) groupUnsubscribers/groupRecipients;
+			}
+			if (groupBounces != null && groupBounces != 0) {
+				groupbounceRate = (double) groupBounces/groupRecipients;
+			}
+			if (groupClicks != null && groupClicks != 0) {
+				groupclickRate = (double) groupClicks/groupRecipients;
+			}
+			if (groupOpeners != null && groupOpeners != 0) {
+				groupopenRate = (double) groupOpeners/groupRecipients;
+			}
+		}
 		emailgroup.setGroupopenRate(groupopenRate);
 		emailgroup.setGroupdonationsOpens(groupdonationsOpens);
 		emailgroup.setGroupdonorsOpens(groupdonorsOpens);
