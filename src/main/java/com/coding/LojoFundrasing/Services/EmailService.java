@@ -253,13 +253,13 @@ public class EmailService {
         	email.setEmail_uploader(uploader);
         	email.setSender(sender);
         	email.setSubjectLine(subject);
-        	email.setEmailCategory(category);
-        	email.setTesting(testing);
+        	email.setEmailCategory(category.toUpperCase());
+        	email.setTesting(testing.toUpperCase());
         	email.setVariant(variant);
         	email.setLink(link);
         	createEmail(email);
         	while (committeeSetList == false) {
-    			if (committee.getEmails() == null || committee.getEmails().size() == 0) {
+    			if (committee.getBigtest() == null || committee.getEmails().size() == 0) {
     				email.setCommittee(committee);
     				List<Emails> emailCommittee = new ArrayList<Emails>();
     				emailCommittee.add(email);

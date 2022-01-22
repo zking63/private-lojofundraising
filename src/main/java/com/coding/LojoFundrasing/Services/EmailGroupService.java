@@ -145,7 +145,7 @@ public class EmailGroupService {
 				groupopenRate = (double) groupOpeners/groupRecipients;
 			}
 		}
-		if (variantA == null || variantA.isEmpty() || variantA == " " ) {
+		else if (variantA == null || variantA.isEmpty() || variantA == " " ) {
 			variantASet = false;
 			System.out.println("variant A is null " + variantA);
 		}
@@ -214,7 +214,9 @@ public class EmailGroupService {
 		emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
 		emailgroup.setGroupbounceRate(groupbounceRate);
 		updateEmailGroup(emailgroup);
-		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() || emailgroup.getGroupTest() == " " ) {
+		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() 
+				|| emailgroup.getGroupTest() == " "  || emailgroup.getGroupTest().contains("SENDER")
+				|| emailgroup.getGroupTest().contains("SUBJECT")) {
 			overallTest = null;
 			emailgroup.setTest(overallTest);
 			updateEmailGroup(emailgroup);
@@ -224,7 +226,6 @@ public class EmailGroupService {
 			emailgroup.setTest(overallTest);
         	while (testListSet == false) {
     			if (overallTest.getEmailgroups() == null || overallTest.getEmailgroups().size() == 0) {
-    				emailgroup.setTest(overallTest);
     				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
     				emailgroups.add(emailgroup);
     				overallTest.setEmailgroups(emailgroups);

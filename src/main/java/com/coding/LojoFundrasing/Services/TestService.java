@@ -97,53 +97,51 @@ public class TestService {
 		if (test == null) {
 			return;
 		}
+		System.out.println("made it to calculate test ");
 		
 		String testcategory = null;
 		Boolean committeeSetList = false;
 		
-	    Long variantARecipients = (long) 0;
-	    Long variantBRecipients = (long) 0;
+	    Long variantARecipients = trepo.variantARecipients(committee.getId(), test.getId());
+	    Long variantBRecipients = trepo.variantBRecipients(committee.getId(), test.getId());
 	    
-	    Long variantAOpens;
-	    Long variantBOpens;
+	    Long variantAOpens = trepo.variantAOpens(committee.getId(), test.getId());
+	    Long variantBOpens = trepo.variantBOpens(committee.getId(), test.getId());
 	    
-	    Long variantAClicks;
-	    Long variantBClicks;
+	    Long variantAClicks = trepo.variantAClicks(committee.getId(), test.getId());
+	    Long variantBClicks = trepo.variantBClicks(committee.getId(), test.getId());
 	    
-	    Long variantADonations;
-	    Long variantBDonations;
+	    Long variantADonations = trepo.variantADonations(committee.getId(), test.getId());
+	    Long variantBDonations = trepo.variantBDonations(committee.getId(), test.getId());
 	    
-	    Double variantARevenue;
-	    Double variantBRevenue;
+	    System.out.println("variantADonations " + variantADonations);
 	    
-	    Double variantAOpenRate;
-	    Double variantBOpenRate;
+	    Double variantARevenue = trepo.variantARevenue(committee.getId(), test.getId());
+	    Double variantBRevenue = trepo.variantBRevenue(committee.getId(), test.getId());
 	    
-	    Double variantAClickOpens;
-	    Double variantBClickOpens;
+	    System.out.println("variantARevenue " + variantARevenue);
 	    
-	    Double variantAClickRate;
-	    Double variantBClickRate;
+	    Double variantAOpenRate = (double) variantAOpens/variantARecipients;
+	    Double variantBOpenRate = (double) variantBOpens/variantBRecipients;
 	    
-	    Double variantADonationsOpens;
-	    Double variantBDonationsOpens;
+	    Double variantAClickOpens = (double) variantAClicks/variantAOpens;
+	    Double variantBClickOpens = (double) variantBClicks/variantBOpens;
 	    
-	    Double variantADonationsClicks;
-	    Double variantBDonationsClicks;
+	    Double variantAClickRate = (double) variantAClicks/variantARecipients;
+	    Double variantBClickRate = (double) variantAClicks/variantARecipients;
 	    
-	    Double variantADonorsOpens;
-	    Double variantBDonorsOpens;
+	    Double variantADonationsOpens = (double) variantADonations/variantAOpens;
+	    Double variantBDonationsOpens = (double) variantADonations/variantAOpens;
 	    
-	    Double variantADonorsClicks;
-	    Double variantBDonorsClicks;
+	    Double variantADonationsClicks = (double) variantADonations/variantAClicks;
+	    Double variantBDonationsClicks = (double) variantADonations/variantAClicks;
 	    
-	    Double variantAaverageDonation;
-	    Double variantBaverageDonation;
-
-		variantARecipients = trepo.variantARecipients(committee.getId(), test.getId());
-		variantBRecipients = trepo.variantBRecipients(committee.getId(), test.getId());
-		System.out.println("variantARecipients " + variantARecipients);
-		System.out.println("variantBRecipients " + variantBRecipients);
+	    Double variantAaverageDonation = trepo.variantARaverage(committee.getId(), test.getId());
+	    Double variantBaverageDonation = trepo.variantARaverage(committee.getId(), test.getId());
+		
+		test.setVariantARecipients(variantARecipients);
+		test.setVariantBRecipients(variantBRecipients);
+		updateTest(test);
 	}
 	
 	/*public test AddContenttoTest(Contenttest content) {
