@@ -58,6 +58,10 @@ public class EmailGroup {
     @JoinColumn(name="committees_id")
     private Committees committee;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="test_id")
+    private test test;
+	
 	public Long getId() {
 		return id;
 	}
@@ -237,6 +241,12 @@ public class EmailGroup {
 	}
 	public void setGroupCategory(String groupCategory) {
 		this.groupCategory = groupCategory;
+	}
+	public test gettest() {
+		return test;
+	}
+	public void settest(test test) {
+		this.test = test;
 	}
 	
 }

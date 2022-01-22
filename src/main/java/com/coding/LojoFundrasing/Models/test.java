@@ -21,10 +21,50 @@ public class test {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
     @OneToMany(fetch=FetchType.LAZY, mappedBy="test")
-	private List<Contenttest> content;
+	private List<EmailGroup> emailgroups;
     private String testcategory;
     private String VariantA;
     private String VariantB;
+    
+    private Long variantARecipients;
+    private Long variantBRecipients;
+    
+    private Long variantAOpens;
+    private Long variantBOpens;
+    
+    private Long variantAClicks;
+    private Long variantBClicks;
+    
+    private Long variantADonations;
+    private Long variantBDonations;
+    
+    private Double variantARevenue;
+    private Double variantBRevenue;
+    
+    private Double variantAOpenRate;
+    private Double variantBOpenRate;
+    
+    private Double variantAClickOpens;
+    private Double variantBClickOpens;
+    
+    private Double variantAClickRate;
+    private Double variantBClickRate;
+    
+    private Double variantADonationsOpens;
+    private Double variantBDonationsOpens;
+    
+    private Double variantADonationsClicks;
+    private Double variantBDonationsClicks;
+    
+    private Double variantADonorsOpens;
+    private Double variantBDonorsOpens;
+    
+    private Double variantADonorsClicks;
+    private Double variantBDonorsClicks;
+    
+    private Double variantAaverageDonation;
+    private Double variantBaverageDonation;
+    
     
     private Integer goWinnerCountType1;
     private Integer clickWinnerCountType1;
@@ -69,12 +109,6 @@ public class test {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public List<Contenttest> getContent() {
-		return content;
-	}
-	public void setContent(List<Contenttest> content) {
-		this.content = content;
 	}
 	public String getTestcategory() {
 		return testcategory;

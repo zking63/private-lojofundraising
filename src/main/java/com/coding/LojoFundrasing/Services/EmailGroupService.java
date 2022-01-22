@@ -65,7 +65,7 @@ public class EmailGroupService {
 		Double groupdonorsOpens = 0.0;
 		Double groupdonorsClicks = 0.0;
 		//strings
-		String test = null;
+		String test = emailgroup.getEmails().get(0).getTesting();
 		String category = null;
 		
 		emailgroup.setGroupOpeners(groupOpeners);
@@ -127,6 +127,7 @@ public class EmailGroupService {
 		emailgroup.setGroupdonorsClicks(groupdonorsClicks);
 		emailgroup.setGroupunsubscribeRate(groupunsubscribeRate);
 		emailgroup.setGroupbounceRate(groupbounceRate);
+		emailgroup.setGroupTest(test);
 		updateEmailGroup(emailgroup);
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
