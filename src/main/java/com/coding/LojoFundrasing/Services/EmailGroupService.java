@@ -82,7 +82,7 @@ public class EmailGroupService {
 		Integer groupemailcount = egrepo.countEmailsinEmailGroup(emailgroup.getId(), committee_id);
 		
 		//test
-		test overallTest;
+		test overallTest = null;
 		
 		//set lists
 		Boolean testListSet = false;
@@ -168,7 +168,11 @@ public class EmailGroupService {
 		}
 		while (variantASet == false) {
 				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
-					String variant = emailgroup.getEmails().get(i).getVariant().toUpperCase();
+					String variant = emailgroup.getEmails().get(i).getVariant();
+					if (!test.toUpperCase().contains("SENDER") && !test.toUpperCase().contains("SUBJECT")) {
+						variant = variant.toUpperCase();
+						System.out.println("TEST IS " + test);
+					}
 					System.out.println("variant in A loop " + variant);
 					if (variant == null || variant.isEmpty() || variant == " ") {
 						System.out.println("variant is null " + variant);
@@ -189,7 +193,11 @@ public class EmailGroupService {
 		}
 		while (variantBSet == false && variantA != null) {
 				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
-					String variant = emailgroup.getEmails().get(i).getVariant().toUpperCase();
+					String variant = emailgroup.getEmails().get(i).getVariant();
+					if (!test.toUpperCase().contains("SENDER") && !test.toUpperCase().contains("SUBJECT")) {
+						variant = variant.toUpperCase();
+						System.out.println("TEST IS " + test);
+					}
 					System.out.println("variant in B loop " + variant);
 					System.out.println("variant in A check " + variantA);
 					if (variant == null || variant.isEmpty() || variant == " " || variant.contentEquals(variantA)) {
@@ -226,7 +234,9 @@ public class EmailGroupService {
 			emailgroup.setTest(overallTest);
 			updateEmailGroup(emailgroup);
 		}
-		else {
+		if ((emailgroup.getGroupTest() != null && !emailgroup.getGroupTest().isEmpty() 
+				&& emailgroup.getGroupTest() != " ")  && (!emailgroup.getGroupTest().contains("SENDER")
+				|| !emailgroup.getGroupTest().contains("SUBJECT"))) {
 			overallTest = tservice.testSetUpTestfromGroup(committee_id, emailgroup);
 			emailgroup.setTest(overallTest);
         	while (testListSet == false) {
@@ -264,7 +274,10 @@ public class EmailGroupService {
 			}
     	}
     	updateEmailGroup(emailgroup);
-    	tservice.CalculateTestData(overallTest, committee);
+    	if (overallTest != null) {
+        	System.out.println("OVERALL TEST " + overallTest.getTestcategory());
+        	tservice.CalculateTestData(overallTest, committee);
+    	}
 	}
 	public List<EmailGroup> EmailGroupList(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
