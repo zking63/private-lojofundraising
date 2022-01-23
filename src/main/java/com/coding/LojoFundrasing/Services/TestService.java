@@ -32,16 +32,16 @@ public class TestService {
 		return trepo.save(test);
 	}
 	
-	public test findTestByNameandCommittee(String testcategory, Long committee_id) {
-		return trepo.findbyTest(testcategory, committee_id).orElse(null);
-	}
+	/*public test findTestByNameandCommittee(String testcategory, Long committee_id) {
+		return trepo.findbyTestName(testcategory, committee_id).orElse(null);
+	}*/
 	public test testSetUpTestfromGroup(Long committee_id, EmailGroup emailgroup) {
-		String testcategory = emailgroup.getGroupTest();
+		String testcategory = emailgroup.getGroupTest().toUpperCase();
 		Committees committee = cservice.findbyId(committee_id);
 		Boolean committeeSetList = false;
 		Boolean emailgroupListSet = false;
 
-		test test = trepo.findbyTest(testcategory, committee.getId()).orElse(null);
+		test test = trepo.findbyTest(testcategory, committee.getId(), emailgroup.getVariantA(), emailgroup.getVariantB()).orElse(null);
 		if (test == null) {
 			test = new test();
 			System.out.println("NEW TEST");
@@ -89,6 +89,8 @@ public class TestService {
 		}
 		else {
 			System.out.println("OLD TEST");
+			test.setVariantA(emailgroup.getVariantA());
+			test.setVariantB(emailgroup.getVariantB());
 			return test;
 		}
 	}
@@ -98,9 +100,6 @@ public class TestService {
 			return;
 		}
 		System.out.println("made it to calculate test ");
-		
-		String testcategory = null;
-		Boolean committeeSetList = false;
 		
 	    Long variantARecipients = trepo.variantARecipients(committee.getId(), test.getId());
 	    Long variantBRecipients = trepo.variantBRecipients(committee.getId(), test.getId());
@@ -121,26 +120,85 @@ public class TestService {
 	    
 	    System.out.println("variantARevenue " + variantARevenue);
 	    
-	    Double variantAOpenRate = (double) variantAOpens/variantARecipients;
-	    Double variantBOpenRate = (double) variantBOpens/variantBRecipients;
+	    Double variantAOpenRate = 0.0;
+	    Double variantBOpenRate = 0.0;
 	    
-	    Double variantAClickOpens = (double) variantAClicks/variantAOpens;
-	    Double variantBClickOpens = (double) variantBClicks/variantBOpens;
+	    Double variantAClickOpens = 0.0;
+	    Double variantBClickOpens = 0.0;
 	    
-	    Double variantAClickRate = (double) variantAClicks/variantARecipients;
-	    Double variantBClickRate = (double) variantAClicks/variantARecipients;
+	    Double variantAClickRate = 0.0;
+	    Double variantBClickRate = 0.0;
 	    
-	    Double variantADonationsOpens = (double) variantADonations/variantAOpens;
-	    Double variantBDonationsOpens = (double) variantADonations/variantAOpens;
+	    Double variantADonationsOpens = 0.0;
+	    Double variantBDonationsOpens = 0.0;
 	    
-	    Double variantADonationsClicks = (double) variantADonations/variantAClicks;
-	    Double variantBDonationsClicks = (double) variantADonations/variantAClicks;
+	    Double variantADonationsClicks = 0.0;
+	    Double variantBDonationsClicks = 0.0;
 	    
-	    Double variantAaverageDonation = trepo.variantARaverage(committee.getId(), test.getId());
-	    Double variantBaverageDonation = trepo.variantARaverage(committee.getId(), test.getId());
+	    Double variantAaverageDonation = trepo.variantAaverage(committee.getId(), test.getId());
+	    Double variantBaverageDonation = trepo.variantBaverage(committee.getId(), test.getId());
 		
 		test.setVariantARecipients(variantARecipients);
 		test.setVariantBRecipients(variantBRecipients);
+		
+		test.setVariantAOpens(variantAOpens);
+		test.setVariantBOpens(variantBOpens);
+		
+		test.setVariantAClicks(variantAClicks);
+		test.setVariantBClicks(variantBClicks);
+		
+		test.setVariantADonations(variantADonations);
+		test.setVariantBDonations(variantBDonations);
+		
+		test.setVariantARevenue(variantARevenue);
+		test.setVariantBRevenue(variantBRevenue);
+		
+		test.setVariantAaverageDonation(variantAaverageDonation);
+		test.setVariantBaverageDonation(variantBaverageDonation);
+		
+		//getting variant a rates if possible
+		if (variantARecipients != null && variantARecipients != 0) {
+			System.out.println("variantARecipients is NOT 0 " + variantARecipients);
+			variantAOpenRate = (double) variantAOpens/variantARecipients;
+			variantAClickRate = (double) variantAClicks/variantARecipients;
+		}
+		if (variantAOpens != null && variantAOpens != 0.0) {
+			variantAClickOpens = (double) variantAClicks/variantAOpens;
+			variantADonationsOpens = (double) variantADonations/variantAOpens;
+		}
+		if (variantAClicks != null && variantAClicks != 0.0) {
+			variantADonationsClicks = (double) variantADonations/variantAClicks;
+		}
+		
+		//getting variant b rates if possible
+		if (variantBRecipients != null && variantBRecipients != 0) {
+			System.out.println("variantBRecipients is NOT 0 " + variantBRecipients);
+			variantBOpenRate = (double) variantBOpens/variantBRecipients;
+			variantBClickRate = (double) variantBClicks/variantBRecipients;
+		}
+		if (variantBOpens != null && variantBOpens != 0.0) {
+			variantBClickOpens = (double) variantBClicks/variantBOpens;
+			variantBDonationsOpens = (double) variantBDonations/variantBOpens;
+		}
+		if (variantBClicks != null && variantBClicks != 0.0) {
+			variantBDonationsClicks = (double) variantBDonations/variantBClicks;
+		}
+		
+		//setting rates
+		test.setVariantAOpenRate(variantAOpenRate);
+		test.setVariantBOpenRate(variantBOpenRate);
+		
+		test.setVariantAClickRate(variantAClickRate);
+		test.setVariantBClickRate(variantBClickRate);
+		
+		test.setVariantAClickOpens(variantAClickOpens);
+		test.setVariantBClickOpens(variantBClickOpens);
+
+		test.setVariantADonationsOpens(variantADonationsOpens);
+		test.setVariantBDonationsOpens(variantBDonationsOpens);
+		
+		test.setVariantADonationsClicks(variantADonationsClicks);
+		test.setVariantBDonationsClicks(variantBDonationsClicks);
 		updateTest(test);
 	}
 	

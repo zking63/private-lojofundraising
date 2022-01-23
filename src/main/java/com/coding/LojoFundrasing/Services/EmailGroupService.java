@@ -87,11 +87,7 @@ public class EmailGroupService {
 		
 		//variants
 		String variantA = emailgroup.getVariantA();
-		System.out.println("variantA in emailgroup " + emailgroup.getVariantA());
-		System.out.println("variantA out emailgroup " + variantA);
 		String variantB = emailgroup.getVariantB();
-		System.out.println("variantB in emailgroup " + emailgroup.getVariantB());
-		System.out.println("variantB out emailgroup " + variantB);
 		Boolean variantASet = false;
 		Boolean variantBSet = false;
 		
@@ -145,7 +141,7 @@ public class EmailGroupService {
 				groupopenRate = (double) groupOpeners/groupRecipients;
 			}
 		}
-		else if (variantA == null || variantA.isEmpty() || variantA == " " ) {
+		if (variantA == null || variantA.isEmpty() || variantA == " " ) {
 			variantASet = false;
 			System.out.println("variant A is null " + variantA);
 		}
@@ -161,10 +157,15 @@ public class EmailGroupService {
 			variantBSet = true;
 			System.out.println("variant b is already set " + variantB);
 		}
+		if (test == null || test.isEmpty() || test == " ") {
+			System.out.println("test is null ");
+			variantASet = true;
+			variantBSet = true;
+		}
 		while (variantASet == false) {
 				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
-					String variant = emailgroup.getEmails().get(i).getVariant();
-					System.out.println("variant in A loop" + variant);
+					String variant = emailgroup.getEmails().get(i).getVariant().toUpperCase();
+					System.out.println("variant in A loop " + variant);
 					if (variant == null || variant.isEmpty() || variant == " ") {
 						System.out.println("variant is null " + variant);
 					}
@@ -184,7 +185,7 @@ public class EmailGroupService {
 		}
 		while (variantBSet == false && variantA != null) {
 				for (int i = 0; i < emailgroup.getEmails().size(); i++) {
-					String variant = emailgroup.getEmails().get(i).getVariant();
+					String variant = emailgroup.getEmails().get(i).getVariant().toUpperCase();
 					System.out.println("variant in B loop " + variant);
 					System.out.println("variant in A check " + variantA);
 					if (variant == null || variant.isEmpty() || variant == " " || variant.contentEquals(variantA)) {

@@ -12,8 +12,8 @@ import com.coding.LojoFundrasing.Models.Contenttest;
 
 public interface testrepo extends CrudRepository<test, Long> {
 	List<test> findAll();
-	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory", nativeQuery = true)
-	Optional<test> findbyTest(String testcategory, Long committee_id);
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND varianta = :varianta AND variantb = :variantb", nativeQuery = true)
+	Optional<test> findbyTest(String testcategory, Long committee_id, String varianta, String variantb);
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id", nativeQuery = true)
 	List<test> findTestsbyCommittee(Long committee_id);
 	
@@ -54,7 +54,7 @@ public interface testrepo extends CrudRepository<test, Long> {
 	
 	//total averages per donation calculation
 	@Query(value = "SELECT AVG(emails.emaildonationsum) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.varianta = emails.variant", nativeQuery = true)
-	Double variantARaverage(Long committee_id, Long testid);
+	Double variantAaverage(Long committee_id, Long testid);
 	
 	@Query(value = "SELECT AVG(emails.emaildonationsum) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.variantb = emails.variant", nativeQuery = true)
 	Double variantBaverage(Long committee_id, Long testid);
