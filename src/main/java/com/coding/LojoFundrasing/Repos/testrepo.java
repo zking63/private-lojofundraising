@@ -31,6 +31,12 @@ public interface testrepo extends CrudRepository<test, Long> {
 	@Query(value = "SELECT COUNT(DISTINCT emails.id) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id", nativeQuery = true)
 	Long testEmailsCount(Long committee_id, Long testid);
 	
+	@Query(value = "SELECT COUNT(DISTINCT emails.id) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.varianta = emails.variant", nativeQuery = true)
+	Long testAEmailsCount(Long committee_id, Long testid);
+	
+	@Query(value = "SELECT COUNT(DISTINCT emails.id) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.variantb = emails.variant", nativeQuery = true)
+	Long testBEmailsCount(Long committee_id, Long testid);
+	
 	//total recipients calculation
 	@Query(value = "SELECT SUM(emails.recipients) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.varianta = emails.variant", nativeQuery = true)
 	Long variantARecipients(Long committee_id, Long testid);

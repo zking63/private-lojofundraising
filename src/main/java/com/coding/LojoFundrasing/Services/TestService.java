@@ -230,8 +230,14 @@ public class TestService {
 	    Double variantBaverageDonation = trepo.variantBaverage(committee.getId(), test.getId());
 	    
     	Long emailscount = trepo.testEmailsCount(committee.getId(), test.getId());
+    	Long variantaemailcount = trepo.testAEmailsCount(committee.getId(), test.getId());
+    	Long variantbemailcount = trepo.testBEmailsCount(committee.getId(), test.getId());
+    	System.out.println("variantaemailcount: " + variantaemailcount);
+    	System.out.println("variantbemailcount: " + variantbemailcount);
     	 
     	test.setEmailcount(emailscount);
+    	test.setVariantAemailcount(variantaemailcount);
+    	test.setVariantBemailcount(variantbemailcount);
 		
 		test.setVariantARecipients(variantARecipients);
 		test.setVariantBRecipients(variantBRecipients);

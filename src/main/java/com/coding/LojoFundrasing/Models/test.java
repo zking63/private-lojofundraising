@@ -24,7 +24,10 @@ public class test {
 	private List<EmailGroup> emailgroups;
     private String testcategory;
     private String testname;
+    
     private Long emailcount;
+    private Long variantAemailcount;
+    private Long variantBemailcount;
     
     private String VariantA;
     private String VariantB;
@@ -325,6 +328,19 @@ public class test {
 	public void setEmailcount(Long emailcount) {
 		this.emailcount = emailcount;
 	}
+	public Long getVariantAemailcount() {
+		return variantAemailcount;
+	}
+	public void setVariantAemailcount(Long variantAemailcount) {
+		this.variantAemailcount = variantAemailcount;
+	}
+	public Long getVariantBemailcount() {
+		return variantBemailcount;
+	}
+	public void setVariantBemailcount(Long variantBemailcount) {
+		this.variantBemailcount = variantBemailcount;
+	}
+	
 	//old getters/setters
 /*	public Integer getGoWinnerCountType1() {
 		return goWinnerCountType1;
