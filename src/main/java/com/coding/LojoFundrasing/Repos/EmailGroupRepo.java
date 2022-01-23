@@ -20,6 +20,10 @@ public interface EmailGroupRepo extends CrudRepository<EmailGroup, Long>{
 	List<Long> findGroupByOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
 			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
 	
+	//find number of emails in email group
+	@Query(value = "SELECT COUNT(DISTINCT emails.id) FROM emails WHERE committees_id = :committee_id AND emailgroup_id = :groupid", nativeQuery = true)
+	Integer countEmailsinEmailGroup(Long groupid, Long committee_id);
+	
 	//find email group
 	@Query(value = "SELECT * FROM emailgroups WHERE committees_id = :committee_id AND emailgroup_name = :groupname", nativeQuery = true)
 	EmailGroup findbyNameandCommittee(String groupname, Long committee_id);

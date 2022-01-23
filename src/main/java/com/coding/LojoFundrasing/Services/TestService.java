@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Committees;
 import com.coding.LojoFundrasing.Models.Contenttest;
+import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.test;
@@ -88,6 +89,17 @@ public class TestService {
         	return test;
 		}
 		else {
+			//if you want to make it so you can change the variant names in an email group and the tests will 
+			// readjust, you need this code but you also need to update it in the email group to prevent old variant names from sticking
+			/*test oldtest = trepo.findTestsbyIdandCommittee(committee_id, emailgroup.getTest().getId());
+			if (oldtest.getId() != test.getId()) {
+				System.out.println("OG test not matching new " + oldtest.getId() + " " + test.getId());
+				List<EmailGroup> oldTestemailgroups = oldtest.getEmailgroups();
+				oldTestemailgroups.remove(emailgroup);
+				oldtest.setEmailgroups(oldTestemailgroups);
+				updateTest(oldtest);
+				CalculateTestData(oldtest, committee);
+			}*/
 			System.out.println("OLD TEST");
 			test.setVariantA(emailgroup.getVariantA());
 			test.setVariantB(emailgroup.getVariantB());

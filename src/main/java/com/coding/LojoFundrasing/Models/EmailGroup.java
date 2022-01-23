@@ -46,6 +46,7 @@ public class EmailGroup {
 	private String groupCategory;
 	private String variantA;
 	private String variantB;
+	private Integer groupemailcount;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -261,6 +262,12 @@ public class EmailGroup {
 	}
 	public void setTest(test test) {
 		this.test = test;
+	}
+	public Integer getGroupemailcount() {
+		return groupemailcount;
+	}
+	public void setGroupemailcount(Integer groupemailcount) {
+		this.groupemailcount = groupemailcount;
 	}
 	
 }

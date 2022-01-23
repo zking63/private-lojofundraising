@@ -12,8 +12,13 @@ import com.coding.LojoFundrasing.Models.Contenttest;
 
 public interface testrepo extends CrudRepository<test, Long> {
 	List<test> findAll();
+	
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND id = :testid", nativeQuery = true)
+	test findTestsbyIdandCommittee(Long committee_id, Long testid);
+	
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND varianta = :varianta AND variantb = :variantb", nativeQuery = true)
 	Optional<test> findbyTest(String testcategory, Long committee_id, String varianta, String variantb);
+	
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id", nativeQuery = true)
 	List<test> findTestsbyCommittee(Long committee_id);
 	

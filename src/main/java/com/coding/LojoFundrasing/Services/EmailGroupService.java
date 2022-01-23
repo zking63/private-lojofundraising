@@ -78,6 +78,9 @@ public class EmailGroupService {
 		String test = emailgroup.getEmails().get(0).getTesting();
 		String category = null;
 		
+		//email count
+		Integer groupemailcount = egrepo.countEmailsinEmailGroup(emailgroup.getId(), committee_id);
+		
 		//test
 		test overallTest;
 		
@@ -96,6 +99,7 @@ public class EmailGroupService {
 		emailgroup.setGroupClicks(groupClicks);
 		emailgroup.setGroupBounces(groupBounces);
 		emailgroup.setGroupUnsubscribers(groupUnsubscribers);
+		emailgroup.setGroupemailcount(groupemailcount);
 		
 		emailgroup.setGroupsum(groupsum);
 		emailgroup.setGroupdonationcount(groupdonationcount);
