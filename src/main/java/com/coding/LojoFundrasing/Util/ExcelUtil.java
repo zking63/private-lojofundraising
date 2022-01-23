@@ -34,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.coding.LojoFundrasing.Models.Committees;
-import com.coding.LojoFundrasing.Models.Contenttest;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.Donor;
 import com.coding.LojoFundrasing.Models.EmailGroup;
@@ -42,7 +41,6 @@ import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.User;
 import com.coding.LojoFundrasing.Models.test;
 import com.coding.LojoFundrasing.Services.CommitteeService;
-import com.coding.LojoFundrasing.Services.ContentTestService;
 import com.coding.LojoFundrasing.Services.DonationService;
 import com.coding.LojoFundrasing.Services.DonorService;
 import com.coding.LojoFundrasing.Services.EmailService;
@@ -59,8 +57,6 @@ public class ExcelUtil {
 	private DonationService donservice;
 	@Autowired
 	private UserService uservice;
-	@Autowired
-	private ContentTestService ctservice;
 	@Autowired
 	private TestService tservice;
 	@Autowired 
@@ -2096,7 +2092,7 @@ public class ExcelUtil {
         outputStream.close();
 	}
     
-	public void readExcelSheetTest(String excelPath, Long user_id, Committees committee)
+	/*public void readExcelSheetTest(String excelPath, Long user_id, Committees committee)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
 
 		List<String> list = new ArrayList<String>();
@@ -2579,7 +2575,7 @@ public class ExcelUtil {
 					    	        	Recurring = null;
 					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
 					                }
-									}*/
+									}
 							}
 		    	        }
 
@@ -2588,7 +2584,7 @@ public class ExcelUtil {
 	        
 	}
     
-}
+}*/
 	public void Testexporter(List<test> bigtest, HttpServletResponse response) throws IOException{
         //this.bigtest = bigtest;
         workbook = new XSSFWorkbook();
@@ -2629,13 +2625,13 @@ public class ExcelUtil {
             
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getId()), bodyStyle);
             createCell(row, columnCount++, bigtest.get(i).getTestcategory(), bodyStyle);
-            createCell(row, columnCount++, bigtest.get(i).getOverallGoWinner(), bodyStyle);
+           /* createCell(row, columnCount++, bigtest.get(i).getOverallGoWinner(), bodyStyle);
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallGoWinnerPercent()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallClickWinner()), bodyStyle);
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallClickWinnerPercent()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallFullSendWinner()), bodyStyle);
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallFullSendWinnerPercent()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getClickWinnerCountType()), bodyStyle);
+            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getClickWinnerCountType()), bodyStyle);*/
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();

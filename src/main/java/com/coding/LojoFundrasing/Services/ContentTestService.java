@@ -1,4 +1,4 @@
-package com.coding.LojoFundrasing.Services;
+/*package com.coding.LojoFundrasing.Services;
 
 import java.util.Optional;
 
@@ -21,4 +21,4 @@ public class ContentTestService {
 	public Contenttest findContentTestbyListCommitteeJtk(String recipientslist, String jtk, Long committee_id) {
 		return ctrepo.findbyTest(recipientslist, jtk, committee_id).orElse(null);
 	}
-}
+}*/

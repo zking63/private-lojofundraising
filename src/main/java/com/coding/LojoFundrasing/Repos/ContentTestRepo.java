@@ -1,4 +1,4 @@
-package com.coding.LojoFundrasing.Repos;
+/*package com.coding.LojoFundrasing.Repos;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,4 +41,4 @@ public interface ContentTestRepo extends CrudRepository<Contenttest, Long>{
 	
 	@Query(value = "SELECT COUNT(DISTINCT id) FROM contenttest WHERE committees_id = :committee_id AND test_id = :test_id AND fullist_winner = :tied", nativeQuery = true)
 	Integer TiedFulllistWinner(Long test_id, Long committee_id, String tied);
-}
+}*/

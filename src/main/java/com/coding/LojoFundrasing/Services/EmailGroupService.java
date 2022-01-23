@@ -228,8 +228,7 @@ public class EmailGroupService {
 		emailgroup.setGroupbounceRate(groupbounceRate);
 		updateEmailGroup(emailgroup);
 		if (emailgroup.getGroupTest() == null || emailgroup.getGroupTest().isEmpty() 
-				|| emailgroup.getGroupTest() == " "  || emailgroup.getGroupTest().contains("SENDER")
-				|| emailgroup.getGroupTest().contains("SUBJECT")) {
+				|| emailgroup.getGroupTest() == " ") {
 			overallTest = null;
 			emailgroup.setTest(overallTest);
 			updateEmailGroup(emailgroup);
@@ -237,7 +236,7 @@ public class EmailGroupService {
 		if ((emailgroup.getGroupTest() != null && !emailgroup.getGroupTest().isEmpty() 
 				&& emailgroup.getGroupTest() != " ")  && (!emailgroup.getGroupTest().contains("SENDER")
 				|| !emailgroup.getGroupTest().contains("SUBJECT"))) {
-			overallTest = tservice.testSetUpTestfromGroup(committee_id, emailgroup);
+			overallTest = tservice.SetUpContentTestfromGroup(committee_id, emailgroup);
 			emailgroup.setTest(overallTest);
         	while (testListSet == false) {
     			if (overallTest.getEmailgroups() == null || overallTest.getEmailgroups().size() == 0) {

@@ -7,21 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Committees;
-import com.coding.LojoFundrasing.Models.Contenttest;
 import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.test;
-import com.coding.LojoFundrasing.Repos.ContentTestRepo;
 import com.coding.LojoFundrasing.Repos.testrepo;
 
 @Service
 public class TestService {
 	@Autowired
 	private testrepo trepo;
-	
-	@Autowired
-	private ContentTestRepo ctrepo;
 	
 	@Autowired
 	private CommitteeService cservice;
@@ -36,19 +31,100 @@ public class TestService {
 	/*public test findTestByNameandCommittee(String testcategory, Long committee_id) {
 		return trepo.findbyTestName(testcategory, committee_id).orElse(null);
 	}*/
-	public test testSetUpTestfromGroup(Long committee_id, EmailGroup emailgroup) {
+	/*public List<test> SetUpSlorSenderTestfromGroup(Long committee_id, EmailGroup emailgroup) {
 		String testcategory = emailgroup.getGroupTest().toUpperCase();
 		Committees committee = cservice.findbyId(committee_id);
 		Boolean committeeSetList = false;
 		Boolean emailgroupListSet = false;
-
-		test test = trepo.findbyTest(testcategory, committee.getId(), emailgroup.getVariantA(), emailgroup.getVariantB()).orElse(null);
+		
+		test testA = trepo.findbyVariantA(testcategory, committee.getId(), emailgroup.getVariantA()).orElse(null);
+		test testB = trepo.findbyVariantB(testcategory, committee.getId(), emailgroup.getVariantB()).orElse(null);
+		
+		if (testA == null) {
+			testA = new test();
+			System.out.println("NEW TEST");
+			testA.setTestcategory(testcategory);
+			testA.setVariantA(emailgroup.getVariantA());
+        	while (committeeSetList == false) {
+    			if (committee.getBigtest() == null || committee.getBigtest().size() == 0) {
+    				testA.setCommittee(committee);
+    				List<test> tests = new ArrayList<test>();
+    				tests.add(testA);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+    			else {
+    				testA.setCommittee(committee);
+    				List<test> tests = committee.getBigtest();
+    				tests.add(testA);
+    				committee.setBigtest(tests);
+    				cservice.createCommittee(committee);
+    				committeeSetList = true;
+    			}
+        	}
+        	while (emailgroupListSet == false) {
+    			if (testA.getEmailgroups() == null || testA.getEmailgroups().size() == 0) {
+    				emailgroup.setTest(testA);
+    				List<EmailGroup> emailgroups = new ArrayList<EmailGroup>();
+    				emailgroups.add(emailgroup);
+    				test.setEmailgroups(emailgroups);
+    				updateTest(test);
+    				emailgroupListSet = true;
+    			}
+    			else {
+    				emailgroup.setTest(test);
+    				List<EmailGroup> emailgroups = test.getEmailgroups();
+    				emailgroups.add(emailgroup);
+    				test.setEmailgroups(emailgroups);
+    				updateTest(test);
+    				emailgroupListSet = true;
+    			}
+        	}
+        	createTest(test);
+        	return test;
+		}
+		else {
+			//if you want to make it so you can change the variant names in an email group and the tests will 
+			// readjust, you need this code but you also need to update it in the email group to prevent old variant names from sticking
+			/*test oldtest = trepo.findTestsbyIdandCommittee(committee_id, emailgroup.getTest().getId());
+			if (oldtest.getId() != test.getId()) {
+				System.out.println("OG test not matching new " + oldtest.getId() + " " + test.getId());
+				List<EmailGroup> oldTestemailgroups = oldtest.getEmailgroups();
+				oldTestemailgroups.remove(emailgroup);
+				oldtest.setEmailgroups(oldTestemailgroups);
+				updateTest(oldtest);
+				CalculateTestData(oldtest, committee);
+			}*/
+			/*System.out.println("OLD TEST");
+			test.setVariantA(emailgroup.getVariantA());
+			test.setVariantB(emailgroup.getVariantB());
+			return test;
+		}
+	}*/
+	public test SetUpContentTestfromGroup(Long committee_id, EmailGroup emailgroup) {
+		String testname = emailgroup.getGroupTest().toUpperCase();
+		String testcategory = testname;
+		Committees committee = cservice.findbyId(committee_id);
+		Boolean committeeSetList = false;
+		Boolean emailgroupListSet = false;
+		
+		if (!testcategory.contains("SENDER") && !testcategory.contains("SUBJECT")) {
+			testcategory = "CONTENT TEST";
+		}
+		
+		System.out.println("TEST CATEGORY: " + testcategory);
+		System.out.println("TEST NAME: " + testname);
+		
+		test test = trepo.findbyTest(testname, committee.getId(), emailgroup.getVariantA(), emailgroup.getVariantB()).orElse(null);
 		if (test == null) {
 			test = new test();
 			System.out.println("NEW TEST");
+			test.setTestname(testname);
 			test.setTestcategory(testcategory);
 			test.setVariantA(emailgroup.getVariantA());
 			test.setVariantB(emailgroup.getVariantB());
+			createTest(test);
         	while (committeeSetList == false) {
     			if (committee.getBigtest() == null || committee.getBigtest().size() == 0) {
     				test.setCommittee(committee);
@@ -85,7 +161,7 @@ public class TestService {
     				emailgroupListSet = true;
     			}
         	}
-        	createTest(test);
+        	updateTest(test);
         	return test;
 		}
 		else {
@@ -101,8 +177,11 @@ public class TestService {
 				CalculateTestData(oldtest, committee);
 			}*/
 			System.out.println("OLD TEST");
+			test.setTestname(testname);
+			test.setTestcategory(testcategory);
 			test.setVariantA(emailgroup.getVariantA());
 			test.setVariantB(emailgroup.getVariantB());
+        	updateTest(test);
 			return test;
 		}
 	}
@@ -149,6 +228,10 @@ public class TestService {
 	    
 	    Double variantAaverageDonation = trepo.variantAaverage(committee.getId(), test.getId());
 	    Double variantBaverageDonation = trepo.variantBaverage(committee.getId(), test.getId());
+	    
+    	Long emailscount = trepo.testEmailsCount(committee.getId(), test.getId());
+    	 
+    	test.setEmailcount(emailscount);
 		
 		test.setVariantARecipients(variantARecipients);
 		test.setVariantBRecipients(variantBRecipients);

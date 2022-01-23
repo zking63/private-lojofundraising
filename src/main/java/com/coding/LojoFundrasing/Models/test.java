@@ -23,6 +23,9 @@ public class test {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="test")
 	private List<EmailGroup> emailgroups;
     private String testcategory;
+    private String testname;
+    private Long emailcount;
+    
     private String VariantA;
     private String VariantB;
     
@@ -66,7 +69,7 @@ public class test {
     private Double variantBaverageDonation;
     
     
-    private Integer goWinnerCountType1;
+ /*   private Integer goWinnerCountType1;
     private Integer clickWinnerCountType1;
     private Integer fullsendCountType1;
     private Double goWinnerPercentType1;
@@ -97,7 +100,7 @@ public class test {
     
     private Double OverallGoWinnerPercent;
     private Double OverallFullSendWinnerPercent;
-    private Double OverallClickWinnerPercent;
+    private Double OverallClickWinnerPercent;*/
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -309,8 +312,21 @@ public class test {
 	public void setVariantBaverageDonation(Double variantBaverageDonation) {
 		this.variantBaverageDonation = variantBaverageDonation;
 	}
+	
+	public String getTestname() {
+		return testname;
+	}
+	public void setTestname(String testname) {
+		this.testname = testname;
+	}
+	public Long getEmailcount() {
+		return emailcount;
+	}
+	public void setEmailcount(Long emailcount) {
+		this.emailcount = emailcount;
+	}
 	//old getters/setters
-	public Integer getGoWinnerCountType1() {
+/*	public Integer getGoWinnerCountType1() {
 		return goWinnerCountType1;
 	}
 	public void setGoWinnerCountType1(Integer goWinnerCountType1) {
@@ -479,6 +495,6 @@ public class test {
 	}
 	public void setOverallClickWinnerPercent(Double overallClickWinnerPercent) {
 		OverallClickWinnerPercent = overallClickWinnerPercent;
-	}
+	}*/
 	
 }

@@ -73,7 +73,7 @@ public class ExcelService {
 
 		excelUtil.getSheetDetails(filepath);
 		System.out.println("made it past get sheet details");
-	 /*response=*/	excelUtil.readExcelSheetTest(filepath, user_id, committee);
+	 /*response=*/	//excelUtil.readExcelSheetTest(filepath, user_id, committee);
 	 System.out.println("made it through read excel!!!");
 	 Files.delete(path);
   }

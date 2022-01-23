@@ -1,4 +1,4 @@
-package com.coding.LojoFundrasing.Models;
+/*package com.coding.LojoFundrasing.Models;
 
 import java.util.Date;
 
@@ -282,4 +282,4 @@ public class Contenttest {
 	}
 	
 	
-}
+}*/

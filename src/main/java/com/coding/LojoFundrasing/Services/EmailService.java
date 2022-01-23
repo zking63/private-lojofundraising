@@ -232,7 +232,7 @@ public class EmailService {
 			}
 			else {
 				System.out.println("                                          TESTING = other: " + testing);
-				variant = variant;
+				variant = variant.toUpperCase();
 				variantSet = true;
 			}
 		}
@@ -298,8 +298,8 @@ public class EmailService {
         	email.setEmail_uploader(uploader);
         	email.setSender(sender);
         	email.setSubjectLine(subject);
-        	email.setEmailCategory(category);
-        	email.setTesting(testing);
+        	email.setEmailCategory(category.toUpperCase());
+        	email.setTesting(testing.toUpperCase());
         	email.setVariant(variant);
         	email.setLink(link);
         	updateEmail(email);

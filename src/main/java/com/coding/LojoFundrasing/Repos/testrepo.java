@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.coding.LojoFundrasing.Models.Contenttest;
 import com.coding.LojoFundrasing.Models.test;
-import com.coding.LojoFundrasing.Models.Contenttest;
 
 public interface testrepo extends CrudRepository<test, Long> {
 	List<test> findAll();
@@ -16,11 +14,22 @@ public interface testrepo extends CrudRepository<test, Long> {
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND id = :testid", nativeQuery = true)
 	test findTestsbyIdandCommittee(Long committee_id, Long testid);
 	
-	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND varianta = :varianta AND variantb = :variantb", nativeQuery = true)
-	Optional<test> findbyTest(String testcategory, Long committee_id, String varianta, String variantb);
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testname = :testname AND varianta = :varianta AND variantb = :variantb", nativeQuery = true)
+	Optional<test> findbyTest(String testname, Long committee_id, String varianta, String variantb);
 	
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id", nativeQuery = true)
 	List<test> findTestsbyCommittee(Long committee_id);
+	
+	//find sender or subject tests
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND varianta = :varianta", nativeQuery = true)
+	Optional<test> findbyVariantA(String testcategory, Long committee_id, String varianta);
+	
+	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND variantb = :variantb", nativeQuery = true)
+	Optional<test> findbyVariantB(String testcategory, Long committee_id, String variantb);
+	
+	//emails per test calculation
+	@Query(value = "SELECT COUNT(DISTINCT emails.id) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id", nativeQuery = true)
+	Long testEmailsCount(Long committee_id, Long testid);
 	
 	//total recipients calculation
 	@Query(value = "SELECT SUM(emails.recipients) FROM emailgroups LEFT JOIN emails on emailgroups.id = emails.emailgroup_id RIGHT JOIN test on emailgroups.test_id = test.id WHERE test.id = :testid AND test.committees_id = :committee_id AND test.varianta = emails.variant", nativeQuery = true)
