@@ -82,6 +82,10 @@ public class Emails {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="emailDonation")
 	private List<Donation> Emaildonations;
     
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="link_id")
+    private Link overalllink;
+    
 	/*@OneToOne(mappedBy="dataemail", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Data emaildata;*/
 	
@@ -442,5 +446,15 @@ public class Emails {
 	public void setLink(String link) {
 		this.link = link;
 	}
+
+	public Link getOveralllink() {
+		return overalllink;
+	}
+
+	public void setOveralllink(Link overalllink) {
+		this.overalllink = overalllink;
+	}
+	
+	
 	
 }
