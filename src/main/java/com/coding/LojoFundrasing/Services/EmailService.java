@@ -19,6 +19,7 @@ import com.coding.LojoFundrasing.Models.Donation;
 import com.coding.LojoFundrasing.Models.DonorData;
 import com.coding.LojoFundrasing.Models.EmailGroup;
 import com.coding.LojoFundrasing.Models.Emails;
+import com.coding.LojoFundrasing.Models.Link;
 import com.coding.LojoFundrasing.Models.User;
 //import com.coding.LojoFundrasing.Repos.DataRepo;
 import com.coding.LojoFundrasing.Repos.DonationRepo;
@@ -28,6 +29,9 @@ import com.coding.LojoFundrasing.Repos.EmailRepo;
 public class EmailService {
 	@Autowired
 	private EmailRepo erepo;
+	
+	@Autowired
+	private LinkService lservice;
 	
 	/*@Autowired
 	private DataRepo datarepo;*/
@@ -183,6 +187,9 @@ public class EmailService {
 		Boolean committeeSetList = false;
 		Boolean variantSet = false;
 		List<Emails> emails = null;
+		String test = null;
+		Boolean LinkSetList = false;
+		Link overalllink = null;
 		
 		if (nameValue.isEmpty() || nameValue == null || date == null) {
 			rowNumber = rowNumber +1;
@@ -217,24 +224,32 @@ public class EmailService {
 				}
 			}
 		}
-		System.out.println("                                          TESTING: " + testing);
+		//System.out.println("                                          TESTING: " + testing);
 		while (variantSet == false) {
-			String test = testing.toUpperCase();
-			if (test.contains("SENDER")) {
-				System.out.println("                                          TESTING = sender: " + testing);
-				variant = sender;
-				variantSet = true;
-			}
-			else if (test.contains("SUBJECT")) {
-				System.out.println("                                          TESTING = subject: " + testing);
-				variant = subject;
+			if (testing == null || testing.isEmpty() || testing == " ") {
 				variantSet = true;
 			}
 			else {
-				System.out.println("                                          TESTING = other: " + testing);
-				variant = variant.toUpperCase();
-				variantSet = true;
+				test = testing.toUpperCase();
+				if (test.contains("SENDER")) {
+					System.out.println("                                          TESTING = sender: " + testing);
+					variant = sender;
+					variantSet = true;
+				}
+				else if (test.contains("SUBJECT")) {
+					System.out.println("                                          TESTING = subject: " + testing);
+					variant = subject;
+					variantSet = true;
+				}
+				else {
+					System.out.println("                                          TESTING = other: " + testing);
+					variant = variant.toUpperCase();
+					variantSet = true;
+				}
 			}
+		}
+		if (link != null && !link.isEmpty() && link != " ") {
+			overalllink = lservice.findAndSetUpLinkfromUpload(link, committee);
 		}
 		if (email == null) {
 			System.out.println("*****email not found ");
@@ -254,9 +269,10 @@ public class EmailService {
         	email.setSender(sender);
         	email.setSubjectLine(subject);
         	email.setEmailCategory(category.toUpperCase());
-        	email.setTesting(testing.toUpperCase());
+        	email.setTesting(testing);
         	email.setVariant(variant);
         	email.setLink(link);
+        	email.setOveralllink(overalllink);
         	createEmail(email);
         	while (committeeSetList == false) {
     			if (committee.getBigtest() == null || committee.getEmails().size() == 0) {
@@ -276,13 +292,23 @@ public class EmailService {
     				committeeSetList = true;
     			}
         	}
-        	updateEmail(email);
-    		//getEmailData(email, committee.getId());
-    		CalculateEmailData(email, committee.getId());
-			System.out.println("NEW Id: " + email.getId() + " Email: " + email.getEmailName());
-			return;
 		}
 		if (email !=  null) {
+			Link originalLink = null;
+			if (email.getOveralllink() != null) {
+				originalLink = email.getOveralllink();
+				if (overalllink != originalLink) {
+					if (overalllink != null) {
+						System.out.println("OG link not matching new " + originalLink.getLinkname() + " " + overalllink.getLinkname());
+					}
+					List<Emails> OGemailLink = originalLink.getEmails();
+					OGemailLink.remove(email);
+					originalLink.setEmails(OGemailLink);
+					email.setOveralllink(overalllink);
+					updateEmail(email);
+					//calc link data for old link
+				}
+			}
         	System.out.println("found email: " + email.getId() + ", " + email.getEmailName());
         	email.setEmailName(nameValue);
         	email.setEmaildate(date);
@@ -299,14 +325,36 @@ public class EmailService {
         	email.setSender(sender);
         	email.setSubjectLine(subject);
         	email.setEmailCategory(category.toUpperCase());
-        	email.setTesting(testing.toUpperCase());
+        	email.setTesting(test);
         	email.setVariant(variant);
         	email.setLink(link);
+        	email.setOveralllink(overalllink);
         	updateEmail(email);
-    		CalculateEmailData(email, committee.getId());
-			System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
-			return;
 		}
+    	while (LinkSetList == false) {
+    		if (overalllink == null) {
+    			LinkSetList = true;
+    		}
+    		else {
+    			if (overalllink.getEmails() == null || overalllink.getEmails().size() == 0) {
+    				List<Emails> emailsLink = new ArrayList<Emails>();
+    				emailsLink.add(email);
+    				overalllink.setEmails(emailsLink);
+    				lservice.updateLink(overalllink);
+    				LinkSetList = true;
+    			}
+    			else {
+    				List<Emails> emailsLink = new ArrayList<Emails>();
+    				emailsLink.add(email);
+    				overalllink.setEmails(emailsLink);
+    				lservice.updateLink(overalllink);
+    				LinkSetList = true;
+    			}
+    		}
+    	}
+		CalculateEmailData(email, committee.getId());
+		System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
+		return;
 	}
 	
 	public void CalculateEmailData(Emails email, Long committee_id) {
@@ -383,6 +431,9 @@ public class EmailService {
     		if (email.getEmailgroup() != null) {
     			egservice.getEmailGroupData(email.getEmailgroup().getId(), committee_id);
     		}
+    		/*if (email.getLink() != null) {
+    			lservice.findAndSetUpLinkfromUpload(email, email.getCommittee());
+    		}*/
 	}
 	/*public Data getEmailData(Emails email, Long committee_id) {
 		//need to make emaildata find by email id OR add email data to email

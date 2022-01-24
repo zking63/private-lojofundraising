@@ -20,6 +20,7 @@ public class Link {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	private String linkname;
     @OneToMany(fetch=FetchType.LAZY, mappedBy="overalllink")
 	private List<Emails> emails;
     
@@ -27,8 +28,10 @@ public class Link {
     @JoinColumn(name="committees_id")
     private Committees committee;
     
-    private Integer donations;
-    private Integer donors;
+    private Long donations;
+    private Long donors;
+    
+    private Long emailsUsingLink;
     
     private Long clicksFromEmail;
     
@@ -47,16 +50,16 @@ public class Link {
 	public void setEmails(List<Emails> emails) {
 		this.emails = emails;
 	}
-	public Integer getDonations() {
+	public Long getDonations() {
 		return donations;
 	}
-	public void setDonations(Integer donations) {
+	public void setDonations(Long donations) {
 		this.donations = donations;
 	}
-	public Integer getDonors() {
+	public Long getDonors() {
 		return donors;
 	}
-	public void setDonors(Integer donors) {
+	public void setDonors(Long donors) {
 		this.donors = donors;
 	}
 	public Long getClicksFromEmail() {
@@ -82,6 +85,18 @@ public class Link {
 	}
 	public void setCommittee(Committees committee) {
 		this.committee = committee;
+	}
+	public String getLinkname() {
+		return linkname;
+	}
+	public void setLinkname(String linkname) {
+		this.linkname = linkname;
+	}
+	public Long getEmailsUsingLink() {
+		return emailsUsingLink;
+	}
+	public void setEmailsUsingLink(Long emailsUsingLink) {
+		this.emailsUsingLink = emailsUsingLink;
 	}
 	
 	
