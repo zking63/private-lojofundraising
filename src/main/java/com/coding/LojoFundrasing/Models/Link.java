@@ -30,10 +30,19 @@ public class Link {
     
     private Long donations;
     private Long donors;
+    private Double revenue;
     
     private Long emailsUsingLink;
     
     private Long clicksFromEmail;
+    
+    private Double donorsEmailClicks;
+    private Double donationsEmailClicks;
+    private Double averageDonationperEmailClick;
+    
+    private Long recurringDonations;
+    private Long recurringDonors;
+    private Double recurringRevenue;
     
 	@Column(updatable=false)
 	private Date createdAt;
@@ -97,6 +106,48 @@ public class Link {
 	}
 	public void setEmailsUsingLink(Long emailsUsingLink) {
 		this.emailsUsingLink = emailsUsingLink;
+	}
+	public Double getRevenue() {
+		return revenue;
+	}
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
+	}
+	public Double getDonorsEmailClicks() {
+		return donorsEmailClicks;
+	}
+	public void setDonorsEmailClicks(Double donorsEmailClicks) {
+		this.donorsEmailClicks = donorsEmailClicks;
+	}
+	public Double getDonationsEmailClicks() {
+		return donationsEmailClicks;
+	}
+	public void setDonationsEmailClicks(Double donationsEmailClicks) {
+		this.donationsEmailClicks = donationsEmailClicks;
+	}
+	public Double getAverageDonationperEmailClick() {
+		return averageDonationperEmailClick;
+	}
+	public void setAverageDonationperEmailClick(Double averageDonationperEmailClick) {
+		this.averageDonationperEmailClick = averageDonationperEmailClick;
+	}
+	public Long getRecurringDonations() {
+		return recurringDonations;
+	}
+	public void setRecurringDonations(Long recurringDonations) {
+		this.recurringDonations = recurringDonations;
+	}
+	public Long getRecurringDonors() {
+		return recurringDonors;
+	}
+	public void setRecurringDonors(Long recurringDonors) {
+		this.recurringDonors = recurringDonors;
+	}
+	public Double getRecurringRevenue() {
+		return recurringRevenue;
+	}
+	public void setRecurringRevenue(Double recurringRevenue) {
+		this.recurringRevenue = recurringRevenue;
 	}
 	
 	

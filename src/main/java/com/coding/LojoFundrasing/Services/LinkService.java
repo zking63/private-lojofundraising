@@ -22,6 +22,8 @@ public class LinkService {
 	@Autowired
 	private CommitteeService cservice;
 	
+	Date date = new Date();
+	
 	public Link createLink(Link link) {
 		return lrepo.save(link);
 	}
@@ -32,7 +34,6 @@ public class LinkService {
 	
 	public Link findAndSetUpLinkfromUpload(String emaillink, Committees committee) {
 		Link link = null;
-		Date date = new Date();
 		Boolean committeeSetList = false;
 		if (emaillink == null) {
 			return link;
@@ -92,6 +93,7 @@ public class LinkService {
 	    link.setDonations(donations);
 	    link.setDonors(donors);
 	    link.setEmailsUsingLink(emailsUsingLink);
+	    link.setUpdatedAt(date);
 	    updateLink(link);
 	}
 }
