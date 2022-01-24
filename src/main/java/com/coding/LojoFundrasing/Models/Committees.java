@@ -46,6 +46,9 @@ public class Committees {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
 	private List<test> bigtest;
 	
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="committee")
+	private List<Link> links;
+	
 	public Committees() {
 		
 	}
@@ -103,5 +106,12 @@ public class Committees {
 	public void setBigtest(List<test> bigtest) {
 		this.bigtest = bigtest;
 	}
+	public List<Link> getLinks() {
+		return links;
+	}
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+	
 	
 }

@@ -23,6 +23,10 @@ public class Link {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="overalllink")
 	private List<Emails> emails;
     
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="committees_id")
+    private Committees committee;
+    
     private Integer donations;
     private Integer donors;
     
@@ -72,6 +76,12 @@ public class Link {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public Committees getCommittee() {
+		return committee;
+	}
+	public void setCommittee(Committees committee) {
+		this.committee = committee;
 	}
 	
 	
