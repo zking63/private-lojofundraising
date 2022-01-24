@@ -25,11 +25,11 @@ public interface LinkRepo extends CrudRepository<Link, Long>{
 	
 	//number of donations from link
 	@Query(value = "SELECT COUNT(DISTINCT donations.id) FROM donations LEFT JOIN emails on donations.email_id = emails.id WHERE emails.committees_id = :committee_id AND emails.link_id = :linkid", nativeQuery = true)
-	Integer donationscount(Long linkid, Long committee_id);
+	Long donationscount(Long linkid, Long committee_id);
 	
 	//number of donors from link
 	@Query(value = "SELECT COUNT(DISTINCT donations.donor_id) FROM donations LEFT JOIN emails on donations.email_id = emails.id WHERE emails.committees_id = :committee_id AND emails.link_id = :linkid", nativeQuery = true)
-	Integer donorscount(Long linkid, Long committee_id);
+	Long donorscount(Long linkid, Long committee_id);
 	
 	//clicks from email
 	@Query(value = "SELECT SUM(clicks) FROM emails WHERE committees_id = :committee_id AND link_id = :linkid", nativeQuery = true)

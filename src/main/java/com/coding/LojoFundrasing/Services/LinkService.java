@@ -73,15 +73,25 @@ public class LinkService {
 			return link;
 		}
 	}
-	public void CalculateLinkData (Link link, Committees committee) {
+	public void CalculateLinkData (Link link, Long committee_id) {
 		if (link == null) {
 			return;
 		}
-		Long donations;
-	    Long donors;
+		Long donations = lrepo.donationscount(link.getId(), committee_id);
+		System.out.println("donations: " + donations);
+	    Long donors = lrepo.donorscount(link.getId(), committee_id);
+	    System.out.println("donors: " + donors);
 	    
-	    Long emailsUsingLink;
+	    Long emailsUsingLink = lrepo.emailscount(link.getId(), committee_id);
+	    System.out.println("emails count: " + emailsUsingLink);
 	    
-	    Long clicksFromEmail;
+	    Long clicksFromEmail = lrepo.clicksfromEmailcount(link.getId(), committee_id);
+	    System.out.println("clicks from email: " + clicksFromEmail);
+	    
+	    link.setClicksFromEmail(clicksFromEmail);
+	    link.setDonations(donations);
+	    link.setDonors(donors);
+	    link.setEmailsUsingLink(emailsUsingLink);
+	    updateLink(link);
 	}
 }

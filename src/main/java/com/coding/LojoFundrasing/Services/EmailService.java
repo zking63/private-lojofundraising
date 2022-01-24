@@ -306,7 +306,7 @@ public class EmailService {
 					originalLink.setEmails(OGemailLink);
 					email.setOveralllink(overalllink);
 					updateEmail(email);
-					//calc link data for old link
+					lservice.CalculateLinkData (originalLink, committee.getId());
 				}
 			}
         	System.out.println("found email: " + email.getId() + ", " + email.getEmailName());
@@ -431,9 +431,9 @@ public class EmailService {
     		if (email.getEmailgroup() != null) {
     			egservice.getEmailGroupData(email.getEmailgroup().getId(), committee_id);
     		}
-    		/*if (email.getLink() != null) {
-    			lservice.findAndSetUpLinkfromUpload(email, email.getCommittee());
-    		}*/
+    		if (email.getOveralllink() != null) {
+    			lservice.CalculateLinkData (email.getOveralllink(), committee_id);
+    		}
 	}
 	/*public Data getEmailData(Emails email, Long committee_id) {
 		//need to make emaildata find by email id OR add email data to email
