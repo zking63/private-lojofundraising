@@ -78,21 +78,48 @@ public class LinkService {
 		if (link == null) {
 			return;
 		}
+		//fundraising data
 		Long donations = lrepo.donationscount(link.getId(), committee_id);
-		System.out.println("donations: " + donations);
 	    Long donors = lrepo.donorscount(link.getId(), committee_id);
-	    System.out.println("donors: " + donors);
+	    Double revenue = lrepo.revenue(link.getId(), committee_id);
 	    
+	    //recurring fundraising data
+	    Long recurringDonations = lrepo.recurringdonationscount(link.getId(), committee_id);
+	    Long recurringDonors = lrepo.recurringdonorscount(link.getId(), committee_id);
+	    Double recurringRevenue = lrepo.recurringrevenue(link.getId(), committee_id);
+	    
+	    //email performance
 	    Long emailsUsingLink = lrepo.emailscount(link.getId(), committee_id);
-	    System.out.println("emails count: " + emailsUsingLink);
-	    
 	    Long clicksFromEmail = lrepo.clicksfromEmailcount(link.getId(), committee_id);
-	    System.out.println("clicks from email: " + clicksFromEmail);
+	    
+	    //rates
+	    Double donorsEmailClicks = 0.0;
+	    Double donationsEmailClicks = 0.0;
+	    Double revenueperEmailClick = 0.0;
+	    
 	    
 	    link.setClicksFromEmail(clicksFromEmail);
 	    link.setDonations(donations);
 	    link.setDonors(donors);
 	    link.setEmailsUsingLink(emailsUsingLink);
+	    link.setRevenue(revenue);
+	    link.setRecurringRevenue(recurringRevenue);
+	    link.setRecurringDonors(recurringDonors);
+	    link.setRecurringDonations(recurringDonations);
+	    updateLink(link);
+	    
+	    if (link.getClicksFromEmail() != null && clicksFromEmail != 0) {
+	    	donorsEmailClicks = (double) donors/clicksFromEmail;
+	    	donationsEmailClicks = (double) donations/clicksFromEmail;
+	    	if (revenue != null) {
+	    		revenueperEmailClick = (double) revenue/clicksFromEmail;
+	    	}
+	    }
+	    
+	    link.setRevenuenperEmailClick(revenueperEmailClick);
+	    link.setDonationsEmailClicks(donationsEmailClicks);
+	    link.setDonorsEmailClicks(donorsEmailClicks);
+	    
 	    link.setUpdatedAt(date);
 	    updateLink(link);
 	}

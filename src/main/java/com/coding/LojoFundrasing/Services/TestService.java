@@ -226,8 +226,14 @@ public class TestService {
 	    Double variantADonationsClicks = 0.0;
 	    Double variantBDonationsClicks = 0.0;
 	    
-	    Double variantAaverageDonation = trepo.variantAaverage(committee.getId(), test.getId());
-	    Double variantBaverageDonation = trepo.variantBaverage(committee.getId(), test.getId());
+	    Double variantAaverageDonation = 0.0;
+	    Double variantBaverageDonation = 0.0;
+	    
+	    Double variantAaveragerevenueperEmail = trepo.variantAaverageperEmail(committee.getId(), test.getId());
+	    Double variantBaveragerevenueperEmail = trepo.variantBaverageperEmail(committee.getId(), test.getId());
+	    
+		test.setVariantAaverageRevenueperEmail(variantAaveragerevenueperEmail);
+		test.setVariantBaverageRevenueperEmail(variantBaveragerevenueperEmail);
 	    
     	Long emailscount = trepo.testEmailsCount(committee.getId(), test.getId());
     	Long variantaemailcount = trepo.testAEmailsCount(committee.getId(), test.getId());
@@ -253,9 +259,6 @@ public class TestService {
 		
 		test.setVariantARevenue(variantARevenue);
 		test.setVariantBRevenue(variantBRevenue);
-		
-		test.setVariantAaverageDonation(variantAaverageDonation);
-		test.setVariantBaverageDonation(variantBaverageDonation);
 		
 		//getting variant a rates if possible
 		if (variantARecipients != null && variantARecipients != 0) {
@@ -284,6 +287,21 @@ public class TestService {
 		if (variantBClicks != null && variantBClicks != 0.0) {
 			variantBDonationsClicks = (double) variantBDonations/variantBClicks;
 		}
+		if (variantADonations != null && variantADonations != 0) {
+			if (variantARevenue != null) {
+				variantAaverageDonation = (double) variantARevenue/variantADonations;
+			}
+		}
+		if (variantBDonations != null && variantBDonations != 0) {
+			if (variantBRevenue != null) {
+				variantBaverageDonation = (double) variantBRevenue/variantBDonations;
+			}
+		}
+		
+		//set averages
+		test.setVariantAaverageDonation(variantAaverageDonation);
+		test.setVariantBaverageDonation(variantBaverageDonation);
+		
 		
 		//setting rates
 		test.setVariantAOpenRate(variantAOpenRate);

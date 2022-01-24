@@ -71,6 +71,9 @@ public class test {
     private Double variantAaverageDonation;
     private Double variantBaverageDonation;
     
+    private Double variantAaverageRevenueperEmail;
+    private Double variantBaverageRevenueperEmail;
+    
     
  /*   private Integer goWinnerCountType1;
     private Integer clickWinnerCountType1;
@@ -340,6 +343,21 @@ public class test {
 	public void setVariantBemailcount(Long variantBemailcount) {
 		this.variantBemailcount = variantBemailcount;
 	}
+	public Double getVariantAaverageRevenueperEmail() {
+		return variantAaverageRevenueperEmail;
+	}
+	public void setVariantAaverageRevenueperEmail(Double variantAaverageRevenueperEmail) {
+		this.variantAaverageRevenueperEmail = variantAaverageRevenueperEmail;
+	}
+	public Double getVariantBaverageRevenueperEmail() {
+		return variantBaverageRevenueperEmail;
+	}
+	public void setVariantBaverageRevenueperEmail(Double variantBaverageRevenueperEmail) {
+		this.variantBaverageRevenueperEmail = variantBaverageRevenueperEmail;
+	}
+	
+	
+	
 	
 	//old getters/setters
 /*	public Integer getGoWinnerCountType1() {

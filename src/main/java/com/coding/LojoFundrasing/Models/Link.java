@@ -38,7 +38,7 @@ public class Link {
     
     private Double donorsEmailClicks;
     private Double donationsEmailClicks;
-    private Double averageDonationperEmailClick;
+    private Double revenuenperEmailClick;
     
     private Long recurringDonations;
     private Long recurringDonors;
@@ -125,12 +125,6 @@ public class Link {
 	public void setDonationsEmailClicks(Double donationsEmailClicks) {
 		this.donationsEmailClicks = donationsEmailClicks;
 	}
-	public Double getAverageDonationperEmailClick() {
-		return averageDonationperEmailClick;
-	}
-	public void setAverageDonationperEmailClick(Double averageDonationperEmailClick) {
-		this.averageDonationperEmailClick = averageDonationperEmailClick;
-	}
 	public Long getRecurringDonations() {
 		return recurringDonations;
 	}
@@ -148,6 +142,12 @@ public class Link {
 	}
 	public void setRecurringRevenue(Double recurringRevenue) {
 		this.recurringRevenue = recurringRevenue;
+	}
+	public Double getRevenuenperEmailClick() {
+		return revenuenperEmailClick;
+	}
+	public void setRevenuenperEmailClick(Double revenuenperEmailClick) {
+		this.revenuenperEmailClick = revenuenperEmailClick;
 	}
 	
 	

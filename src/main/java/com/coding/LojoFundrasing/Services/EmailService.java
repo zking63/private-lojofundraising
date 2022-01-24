@@ -376,11 +376,13 @@ public class EmailService {
 		Double donorsClicks = 0.00;
 		Double clicksOpens = 0.00;
 		
-			esum = erepo.sums(id, committee_id);
-			System.out.println("esum in calculate:" + esum);
-			eaverage = erepo.averages(id, committee_id);
-			donationscount = erepo.donationscount(id, committee_id);
-			donorscount = erepo.donorscount(id, committee_id);
+			if (erepo.donationscount(id, committee_id) != null && erepo.donationscount(id, committee_id) != 0.0) {
+				esum = erepo.sums(id, committee_id);
+				System.out.println("esum in calculate:" + esum);
+				eaverage = erepo.averages(id, committee_id);
+				donationscount = erepo.donationscount(id, committee_id);
+				donorscount = erepo.donorscount(id, committee_id);
+			}
 			//aggregate functions
 			if (email.getBounces() != null) {
 				//variables for aggregate functions
