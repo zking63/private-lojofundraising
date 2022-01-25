@@ -2146,10 +2146,10 @@ public class ExcelUtil {
         String input1 = "Clicks";
         List<String> input = new ArrayList<String>();
         input.add(input1);
-        input.add("Clicks/opens");
         input.add("Opens");
-        input.add("emailcount");
+        input.add("Clicks/opens");
         input.add("Revenue");
+        input.add("emailcount");
         
         int columnCount = 3;
         for (int i = 0; i < input.size(); i++) {
@@ -2292,30 +2292,37 @@ public class ExcelUtil {
                     rowStyleset = true;
                 }
             }
-            System.out.println("made it to cells: ");
+            System.out.println("2: " + columnCount);
             createCell(row, columnCount++, bigtest.get(i).getId(), cellstyle);
             createCell(row, columnCount++, bigtest.get(i).getTestname(), cellstyle);
             createCell(row, columnCount++, "Variant A: " + bigtest.get(i).getVariantA(), boldcellstyle);
+            System.out.println("column: " + columnCount);
             if (columnCount == ClickCol) {
             	System.out.println("clicks: " + bigtest.get(i).getVariantAClicks());
             	createCell(row, columnCount++, bigtest.get(i).getVariantAClicks(), cellstyle);
             }
+            System.out.println("2: " + columnCount);
             if (columnCount == OpenCol) {
             	System.out.println("opens: " + bigtest.get(i).getVariantAOpens());
             	createCell(row, columnCount++, bigtest.get(i).getVariantAOpens(), cellstyle);
             }
+            System.out.println("2: " + columnCount);
             if (columnCount == OpenrateCol) {
                 createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAOpenRate()), cellstyle);
             }
+            System.out.println("2: " + columnCount);
             if (columnCount == ClickrateCol) {
             	createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAClickRate()), cellstyle);
             }
             if (columnCount == ClickOpenCol) {
+            	System.out.println("clicks/opens: " + bigtest.get(i).getVariantAClickOpens());
             	createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAClickOpens()), cellstyle);
             }
+            System.out.println("2: " + columnCount);
             if (columnCount == RevCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantARevenue(), cellstyle);
             }
+            System.out.println("2: " + columnCount);
             if (columnCount == DonationsCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantADonations(), cellstyle);
             }
