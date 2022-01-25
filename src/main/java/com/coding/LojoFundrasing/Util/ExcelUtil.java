@@ -2146,10 +2146,10 @@ public class ExcelUtil {
         String input1 = "Clicks";
         List<String> input = new ArrayList<String>();
         input.add(input1);
-        //input.add("Clicks/opens");
+        input.add("Clicks/opens");
         input.add("Opens");
-        //input.add("emailcount");
-        //input.add("Revenue");
+        input.add("emailcount");
+        input.add("Revenue");
         
         int columnCount = 3;
         for (int i = 0; i < input.size(); i++) {
@@ -2297,9 +2297,11 @@ public class ExcelUtil {
             createCell(row, columnCount++, bigtest.get(i).getTestname(), cellstyle);
             createCell(row, columnCount++, "Variant A: " + bigtest.get(i).getVariantA(), boldcellstyle);
             if (columnCount == ClickCol) {
+            	System.out.println("clicks: " + bigtest.get(i).getVariantAClicks());
             	createCell(row, columnCount++, bigtest.get(i).getVariantAClicks(), cellstyle);
             }
             if (columnCount == OpenCol) {
+            	System.out.println("opens: " + bigtest.get(i).getVariantAOpens());
             	createCell(row, columnCount++, bigtest.get(i).getVariantAOpens(), cellstyle);
             }
             if (columnCount == OpenrateCol) {
@@ -2338,10 +2340,10 @@ public class ExcelUtil {
             if (columnCount == RecipientsCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantARecipients(), cellstyle);
             }
-            columnCount = 2;
-            createCell(rowB, 0, bigtest.get(i).getId(), cellstyle);
-            createCell(rowB, 1, bigtest.get(i).getTestname(), cellstyle);
-            createCell(rowB, 2, "Variant B: " + bigtest.get(i).getVariantB(), boldcellstyle);
+            columnCount = 0;
+            createCell(rowB, columnCount++, bigtest.get(i).getId(), cellstyle);
+            createCell(rowB, columnCount++, bigtest.get(i).getTestname(), cellstyle);
+            createCell(rowB, columnCount++, "Variant B: " + bigtest.get(i).getVariantB(), boldcellstyle);
             if (columnCount == ClickCol) {
             	createCell(rowB, columnCount++, bigtest.get(i).getVariantBClicks(), cellstyle);
             }
