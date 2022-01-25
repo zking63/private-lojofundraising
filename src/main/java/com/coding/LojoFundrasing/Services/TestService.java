@@ -1,9 +1,12 @@
 package com.coding.LojoFundrasing.Services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.coding.LojoFundrasing.Models.Committees;
@@ -21,16 +24,22 @@ public class TestService {
 	@Autowired
 	private CommitteeService cservice;
 	
+	Date date = new Date();
 	public test createTest(test test) {
+		test.setCreatedAt(date);
 		return trepo.save(test);
 	}
 	public test updateTest(test test) {
+		test.setUpdatedAt(date);
 		return trepo.save(test);
 	}
 	public List<test> findAllTests(Long committee_id){
 		return trepo.findTestsbyCommittee(committee_id);
 	}
-	
+	public List<test> findTestswithinRange(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
+		return trepo.findTestswithinRangeOrderByDesc(startdateE, enddateE, committee_id);
+	}
 	/*public test findTestByNameandCommittee(String testcategory, Long committee_id) {
 		return trepo.findbyTestName(testcategory, committee_id).orElse(null);
 	}*/

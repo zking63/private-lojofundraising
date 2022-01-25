@@ -1145,16 +1145,54 @@ public class LojoController {
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
+	    @GetMapping("/export/select/2")
+	    public String exportform(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("type") Integer type, HttpServletRequest request,  
+				 HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 if(type == 0) {
+				 String message = "Please select your parameters.";
+				 model.addAttribute("message", message);
+				 return "exporter.jsp";
+			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("type", type);
+			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("user", user);
+	        return "exporter.jsp";
+	    } 
 	    @GetMapping("/export/excel")
 	    public String exportToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
-				 HttpSession session, @RequestParam("field") Integer field, @RequestParam(value = "input", required = false) List<String> input, 
+				 HttpSession session, @RequestParam("field") Integer field, @RequestParam("type") Integer type, @RequestParam(value = "input", required = false) List<String> input, 
 				 HttpServletResponse response) throws IOException {
 			Long user_id = (Long)session.getAttribute("user_id");
 	    	Long committee_id = (Long)session.getAttribute("committee_id");
 	    	System.out.println("Start: " + startdateD);
 	    	System.out.println("End: " + enddateD);
 	    	System.out.println("Commmittee: " + committee_id);
+	    	System.out.println("type: " + type);
 			 if (field == 4) {
 				 String message = "Please select a category to export.";
 				 model.addAttribute("message", message);
@@ -1195,7 +1233,7 @@ public class LojoController {
 			 }
 			 if (field == 5) {
 				 System.out.println("Test");
-			     List<test> tests = tservice.findAllTests(committee_id);
+			     List<test> tests = tservice.findTestswithinRange(startdateD, enddateD, committee_id);
 				 System.out.println("Tests size " + tests.size());
 				 System.out.println("input " + input);
 				 excelService.exportTestToExcel(tests, input, response);

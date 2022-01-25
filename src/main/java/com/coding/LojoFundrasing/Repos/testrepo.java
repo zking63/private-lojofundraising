@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.coding.LojoFundrasing.Models.Emails;
 import com.coding.LojoFundrasing.Models.test;
 
 public interface testrepo extends CrudRepository<test, Long> {
@@ -19,6 +22,21 @@ public interface testrepo extends CrudRepository<test, Long> {
 	
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id", nativeQuery = true)
 	List<test> findTestsbyCommittee(Long committee_id);
+	
+	//find tests with an email in range
+	@Query(value = "SELECT test.* FROM emails left join test ON emails.testing = test.testname WHERE test.committees_id = :committee_id AND emails.emaildate >= DATE(:startdateE) and emails.emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) group by test.id order by test.testname ASC", nativeQuery = true)
+	List<test> findTestswithinRangeOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find tests within updated_at range
+	/*@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND updated_at >= DATE(:startdateE) and updated_at < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by test.updated_at Desc", nativeQuery = true)
+	List<test> findTestswithinRangeOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);*/
+	
+	//good for when you want to see every email
+	/*@Query(value = "SELECT * FROM test left join emailgroups ON emailgroups.test_id = test.id right join emails ON emails.emailgroup_id = emailgroups.id WHERE test.committees_id = :committee_id AND emails.emaildate >= DATE(:startdateE) and emails.emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) order by emails.emaildate Desc", nativeQuery = true)
+	List<test> findTestswithinRangeOrderByDesc(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);*/
 	
 	//find sender or subject tests
 	@Query(value = "SELECT * FROM test WHERE committees_id = :committee_id AND testcategory = :testcategory AND varianta = :varianta", nativeQuery = true)
