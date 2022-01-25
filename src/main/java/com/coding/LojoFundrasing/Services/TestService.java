@@ -27,18 +27,21 @@ public class TestService {
 	public test updateTest(test test) {
 		return trepo.save(test);
 	}
+	public List<test> findAllTests(Long committee_id){
+		return trepo.findTestsbyCommittee(committee_id);
+	}
 	
 	/*public test findTestByNameandCommittee(String testcategory, Long committee_id) {
 		return trepo.findbyTestName(testcategory, committee_id).orElse(null);
 	}*/
-	/*public List<test> SetUpSlorSenderTestfromGroup(Long committee_id, EmailGroup emailgroup) {
-		String testcategory = emailgroup.getGroupTest().toUpperCase();
+	/*public List<test> SetUpSenderTestfromGroup(String sender, Emails email, Long committee_id) {
 		Committees committee = cservice.findbyId(committee_id);
 		Boolean committeeSetList = false;
 		Boolean emailgroupListSet = false;
+		String testname = "SENDER";
+		String varianta = sender;
 		
-		test testA = trepo.findbyVariantA(testcategory, committee.getId(), emailgroup.getVariantA()).orElse(null);
-		test testB = trepo.findbyVariantB(testcategory, committee.getId(), emailgroup.getVariantB()).orElse(null);
+		test test = trepo.findbyVariantA(testname, committee.getId(), emailgroup.getVariantA()).orElse(null);
 		
 		if (testA == null) {
 			testA = new test();

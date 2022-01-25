@@ -22,6 +22,7 @@ public class test {
 	private Long id;
     @OneToMany(fetch=FetchType.LAZY, mappedBy="test")
 	private List<EmailGroup> emailgroups;
+
     private String testcategory;
     private String testname;
     

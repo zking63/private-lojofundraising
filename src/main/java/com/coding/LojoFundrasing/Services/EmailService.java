@@ -268,8 +268,8 @@ public class EmailService {
         	email.setEmail_uploader(uploader);
         	email.setSender(sender);
         	email.setSubjectLine(subject);
-        	email.setEmailCategory(category.toUpperCase());
-        	email.setTesting(testing);
+        	email.setEmailCategory(category);
+        	email.setTesting(test);
         	email.setVariant(variant);
         	email.setLink(link);
         	email.setOveralllink(overalllink);
@@ -324,7 +324,7 @@ public class EmailService {
         	email.setEmail_uploader(uploader);
         	email.setSender(sender);
         	email.setSubjectLine(subject);
-        	email.setEmailCategory(category.toUpperCase());
+        	email.setEmailCategory(category);
         	email.setTesting(test);
         	email.setVariant(variant);
         	email.setLink(link);
@@ -352,6 +352,7 @@ public class EmailService {
     			}
     		}
     	}
+    	//findorcreateSLSubjectTest
 		CalculateEmailData(email, committee.getId());
 		System.out.println("Id: " + email.getId() + " Email: " + email.getEmailName());
 		return;

@@ -22,7 +22,10 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -62,14 +65,15 @@ public class ExcelUtil {
 	@Autowired 
 	private CommitteeService cservice;
 	
-	public String getRateFormatted(Double number) {
+	public Double getRateFormatted(Double number) {
 		if (number == null) {
 			number = 0.0;
 		}
 		double number1 = (double) number;
 		DecimalFormat df = new DecimalFormat("0.00000");
 		String numberfinal = df.format(number1); 
-		return numberfinal;
+		number = Double.valueOf(numberfinal);
+		return number;
 	}
 	
 	private String dateFormat() {
@@ -1435,9 +1439,17 @@ public class ExcelUtil {
         Cell cell = row.createCell(columnCount);
         if (value instanceof Integer) {
             cell.setCellValue((Integer) value);
-        } else if (value instanceof Boolean) {
+        } 
+        else if (value instanceof Boolean) {
             cell.setCellValue((Boolean) value);
-        }else {
+        }
+        else if (value instanceof Long) {
+            cell.setCellValue((Long) value);
+        }
+        else if (value instanceof Double) {
+            cell.setCellValue((Double) value);
+        }
+        else {
             cell.setCellValue((String) value);
         }
         cell.setCellStyle(style);
@@ -1698,25 +1710,25 @@ public class ExcelUtil {
         for (int i = 0; i < emails.size(); i++) {
             row = sheet.createRow(rowCount++);
             columnCount = 0;
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getId(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailName(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode1(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailRefcode2(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getEmailDateFormatted(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getList(), bodyStyle);
             createCell(row, columnCount++, emails.get(i).getExcludedList(), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emails.get(i).getRecipients()), bodyStyle);
+            createCell(row, columnCount++, emails.get(i).getRecipients(), bodyStyle);
             if (columnCount == ClickCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getClicks()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getClicks(), bodyStyle);
             }
             if (columnCount == OpenCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getOpeners()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getOpeners(), bodyStyle);
             }
             if (columnCount == BounceCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getBounces()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getBounces(), bodyStyle);
             }
             if (columnCount == UnsubCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getUnsubscribers()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getUnsubscribers(), bodyStyle);
             }
             if (columnCount == OpenrateCol) {
                 createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailopenRate()), bodyStyle);
@@ -1734,16 +1746,16 @@ public class ExcelUtil {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmailclicksOpens()), bodyStyle);
             }
             if (columnCount == RevCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonationsum()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getEmaildonationsum(), bodyStyle);
             }
             if (columnCount == DonationsCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonationcount()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getEmaildonationcount(), bodyStyle);
             }
             if (columnCount == DonorsCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmaildonorcount()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getEmaildonorcount(), bodyStyle);
             }
             if (columnCount == AvCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getEmailAverageFormatted()), bodyStyle);
+            	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonationaverage()), bodyStyle);
             }
             if (columnCount == DonOpenCol) {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonationsOpens()), bodyStyle);
@@ -1758,13 +1770,13 @@ public class ExcelUtil {
             	createCell(row, columnCount++, getRateFormatted(emails.get(i).getEmaildonorsClicks()), bodyStyle);
             }
             if (columnCount == DonRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonationCount()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getRecurringDonationCount(), bodyStyle);
             }
             if (columnCount == DonorsRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringDonorCount()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getRecurringDonorCount(), bodyStyle);
             }
             if (columnCount == RevRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emails.get(i).getRecurringRevenue()), bodyStyle);
+            	createCell(row, columnCount++, emails.get(i).getRecurringRevenue(), bodyStyle);
             }
         }
         //export
@@ -1955,20 +1967,20 @@ public class ExcelUtil {
         for (int i = 0; i < emailgroup.size(); i++) {
             row = sheet.createRow(rowCount++);
             columnCount = 0;
-            createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getId()), bodyStyle);
+            createCell(row, columnCount++, emailgroup.get(i).getId(), bodyStyle);
             createCell(row, columnCount++, emailgroup.get(i).getEmailgroupName(), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupRecipients()), bodyStyle);
+            createCell(row, columnCount++, emailgroup.get(i).getGroupRecipients(), bodyStyle);
             if (columnCount == ClickCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupClicks()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupClicks(), bodyStyle);
             }
             if (columnCount == OpenCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupOpeners()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupOpeners(), bodyStyle);
             }
             if (columnCount == BounceCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupBounces()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupBounces(), bodyStyle);
             }
             if (columnCount == UnsubCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupUnsubscribers()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupUnsubscribers(), bodyStyle);
             }
             if (columnCount == OpenrateCol) {
                 createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupopenRate()), bodyStyle);
@@ -1986,37 +1998,37 @@ public class ExcelUtil {
             	createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupclicksOpens()), bodyStyle);
             }
             if (columnCount == RevCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupsum()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupsum(), bodyStyle);
             }
             if (columnCount == DonationsCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupdonationcount()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupdonationcount(), bodyStyle);
             }
             if (columnCount == DonorsCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupdonorcount()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupdonorcount(), bodyStyle);
             }
             if (columnCount == AvCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupaverage()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupaverage(), bodyStyle);
             }
             if (columnCount == DonOpenCol) {
-            	createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupdonationsOpens()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupdonationsOpens(), bodyStyle);
             }
             if (columnCount == DonClickCol) {
-            	createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupdonationsClicks()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupdonationsClicks(), bodyStyle);
             }
             if (columnCount == DonorsOpenCol) {
-            	createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupdonorsOpens()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupdonorsOpens(), bodyStyle);
             }
             if (columnCount == DonorsClickCol) {
             	createCell(row, columnCount++, getRateFormatted(emailgroup.get(i).getGroupdonorsClicks()), bodyStyle);
             }
             if (columnCount == DonRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupRecurringDonationCount()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupRecurringDonationCount(), bodyStyle);
             }
             if (columnCount == DonorsRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupRecurringDonorCount()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupRecurringDonorCount(), bodyStyle);
             }
             if (columnCount == RevRecurCol) {
-            	createCell(row, columnCount++, String.valueOf(emailgroup.get(i).getGroupRecurringRevenue()), bodyStyle);
+            	createCell(row, columnCount++, emailgroup.get(i).getGroupRecurringRevenue(), bodyStyle);
             }
         }
         //export
@@ -2069,14 +2081,14 @@ public class ExcelUtil {
             row = sheet.createRow(rowCount++);
             int columnCount = 0;
             
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getId()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getAmount()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getId(), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getAmount(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonationDateFormatted(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getEmailDonation().getEmailRefcode1(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorEmail(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorFirstName(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getDonorLastName(), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(donations.get(i).getDonor().getId()), bodyStyle);
+            createCell(row, columnCount++, donations.get(i).getDonor().getId(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getAddress(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getCity(), bodyStyle);
             createCell(row, columnCount++, donations.get(i).getDonor().getState(), bodyStyle);
@@ -2594,6 +2606,7 @@ public class ExcelUtil {
         sheet = workbook.createSheet("Emails");
         
         Row row = sheet.createRow(0);
+        Row rowB = sheet.createRow(1);
          
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
@@ -2603,7 +2616,7 @@ public class ExcelUtil {
          
         createCell(row, 0, "Test Id", style); 
         createCell(row, 1, "Testing", style); 
-        createCell(row, 2, "Overall G/O Winner", style); 
+        createCell(row, 2, "Variant:", style); 
         createCell(row, 3, "G/O Winner Percentage", style);
         createCell(row, 4, "Overall Click/Rcv Winner", style); 
         createCell(row, 5, "Click/Rcv Winner Percentage", style); 
@@ -2613,18 +2626,35 @@ public class ExcelUtil {
         
         //write data lines
         int rowCount = 1;
+        int rowBCount = 2;
+        CellStyle bodyStyleA = workbook.createCellStyle();
+        bodyStyleA.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+        bodyStyleA.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        
+        
         CellStyle bodyStyle = workbook.createCellStyle();
         XSSFFont bodyfont = workbook.createFont();
         bodyfont.setBold(false);
         bodyfont.setFontHeight(14);
         bodyStyle.setFont(bodyfont);
+        bodyStyleA.setFont(bodyfont);
                  
         for (int i = 0; i < bigtest.size(); i++) {
-            row = sheet.createRow(rowCount++);
+            row = sheet.createRow(rowCount);
+            rowB = sheet.createRow(rowBCount);
             int columnCount = 0;
             
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getId()), bodyStyle);
-            createCell(row, columnCount++, bigtest.get(i).getTestcategory(), bodyStyle);
+            createCell(row, columnCount++, bigtest.get(i).getId(), bodyStyleA);
+            createCell(row, columnCount++, bigtest.get(i).getTestcategory(), bodyStyleA);
+            createCell(row, columnCount++, bigtest.get(i).getTestname(), bodyStyleA);
+            createCell(row, columnCount++, bigtest.get(i).getVariantA(), bodyStyleA);
+            columnCount = 0;
+            createCell(rowB, columnCount++, bigtest.get(i).getId(), bodyStyle);
+            createCell(rowB, columnCount++, bigtest.get(i).getTestcategory(), bodyStyle);
+            createCell(rowB, columnCount++, bigtest.get(i).getTestname(), bodyStyle);
+            createCell(rowB, columnCount++, bigtest.get(i).getVariantB(), bodyStyle);
+            rowCount = rowCount + 2;
+            rowBCount = rowBCount + 2;
            /* createCell(row, columnCount++, bigtest.get(i).getOverallGoWinner(), bodyStyle);
             createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallGoWinnerPercent()), bodyStyle);
             createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallClickWinner()), bodyStyle);
