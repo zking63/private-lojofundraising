@@ -30,6 +30,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -2104,501 +2105,24 @@ public class ExcelUtil {
         outputStream.close();
 	}
     
-	/*public void readExcelSheetTest(String excelPath, Long user_id, Committees committee)
-			throws EncryptedDocumentException, InvalidFormatException, IOException, ParseException {
-
-		List<String> list = new ArrayList<String>();
-
-		// Creating a Workbook from an Excel file (.xls or .xlsx)
-		Workbook workbook = WorkbookFactory.create(new File(excelPath));
-		System.out.println("workbook created");
-
-		int x = workbook.getNumberOfSheets();
-		
-		System.out.println("number of sheets " + x);
-		
-		System.out.println("READ TEST EXCEL SHEET");
-
-		int noOfColumns = 0;
-		List<Cell> headers = new ArrayList<Cell>();
-		Cell header = null;
-		Cell value = null;
-		List<Cell> values = new ArrayList<Cell>();
-	
-		
-		// Getting the Sheet at index zero
-		for (int i = 0; i < x; i++) {
-
-			Sheet sheet1 = workbook.getSheetAt(i);
-			
-			System.out.println("sheet1 " + sheet1);
-			Iterator<Row> rowIterator = sheet1.iterator();
-
-			noOfColumns = sheet1.getRow(i).getLastCellNum();
-			
-			System.out.println("number of columns " + noOfColumns);
-			
-
-			// Create a DataFormatter to format and get each cell's value as String
-			DataFormatter dataFormatter = new DataFormatter();
-			int dateColumn = 0;
-			int typeColumn = 0;
-			int listColumn = 0;
-			int recipientNumberColumn = 0;
-			int nameColumn = 0;
-			int jtkColumn = 0;
-			int topicColumn = 0;
-			int testColumn = 0;
-			int fulllistColumn = 0;
-			int goWinnerColumn = 0;
-			int clickrcvColumn = 0;
-			int variantAColumn = 0;
-			int variantARecipientNumberColumn = 0;
-			int variantAOpenRateColumn = 0; 
-			int variantAClickRateColumn = 0;
-			int variantAOpensColumn = 0;
-			int variantAGOColumn = 0;
-			int variantBColumn = 0;
-			int variantBRecipientNumberColumn = 0;
-			int variantBOpenRateColumn = 0; 
-			int variantBClickRateColumn = 0;
-			int variantBOpensColumn = 0;
-			int variantBGOColumn = 0;
-			Contenttest contenttest = null;
-			test bigtest = null;
-			List<Contenttest> content = null;
-			User uploader = uservice.findUserbyId(user_id);
-			String senddate = null;
-			String type = null;
-			String RecipientsList = null;
-			Long recipients = null;
-			String name = null;
-			String jtk = null;
-			String topic = null;
-			String test = null;
-			String fullistWinner = null;
-			String GoWinner = null;
-			String ClickRcvWinner = null;
-			String VariantA = null;
-			Long ARecipientNumber = null;
-			Double AClickRate = null;
-			Double AOpenRate = null;
-			Long AOpens = null;
-			Double AGiftOpens = null;
-			String VariantB = null;
-			Long BRecipientNumber = null;
-			Double BClickRate = null;
-			Double BOpenRate = null;
-			Long BOpens = null;
-			Double BGiftOpens = null;
-
-			System.out.println("The sheet number is " + i + 1);
-			// 2. Or you can use a for-each loop to iterate over the rows and columns
-			System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
-	        while (rowIterator.hasNext()) {
-	            Row row = rowIterator.next();
-	             Iterator<Cell> cellIterator = row.cellIterator();
-	                while(cellIterator.hasNext()) {
-	                	Cell cell = cellIterator.next();
-	                	//System.out.println("CELL: " + cell.getAddress());
-						if (row.getRowNum() == 0) {
-							//header = cell.getAddress();
-							header = cell;
-							headers.add(header);
-							//System.out.println("Header column: " + header.getColumn());
-							
-							String headerValue = dataFormatter.formatCellValue(header).toUpperCase();
-							if (headerValue.contains("DATE")) {
-								dateColumn = header.getColumnIndex();
-								System.out.println("date column: " + dateColumn);
-							}
-							if (headerValue.contains("RS")) {
-								typeColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("RECIPIENTS LIST")) {
-								listColumn  = header.getColumnIndex();
-								System.out.println("RECIPIENTS LIST: " + headerValue);
-							}
-							if (headerValue.contains("TOTAL NUMBER OF RECIPIENTS")) {
-								recipientNumberColumn = header.getColumnIndex();
-								System.out.println("RECIPIENTS NUMBER: " + headerValue);
-							}
-							if (headerValue.contains("(ACOUSTIC NAME)")) {
-								nameColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("JTK")) {
-								jtkColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("TOPIC")) {
-								topicColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("TESTING FACTOR")) {
-								testColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("FULL LIST")) {
-								fulllistColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("G/O WINNER")) {
-								goWinnerColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("CLK/RCV WINNER")) {
-								clickrcvColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT A TEST")) {
-								variantAColumn = header.getColumnIndex();
-								System.out.println("VARIANT A: " + variantAColumn);
-							}
-							if (headerValue.contains("VARIANT A RECIPIENT NUMBER")) {
-								variantARecipientNumberColumn  = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT A OPEN RATE (OPN/RCV)")) {
-								variantAOpenRateColumn  = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT A CLICK RATE")) {
-								variantAClickRateColumn  = header.getColumnIndex();
-								System.out.println("variantAClickRateColumn: " + variantAClickRateColumn );
-							}
-							if (headerValue.contains("VARIANT A OPENS")) {
-								variantAOpensColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT A GIFT/OPEN")) {
-								variantAGOColumn  = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT B TEST")) {
-								variantBColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT B RECIPIENT NUMBER")) {
-								variantBRecipientNumberColumn = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT B OPEN RATE (OPN/RCV)")) {
-								variantBOpenRateColumn  = header.getColumnIndex();
-								System.out.println("variantBOpenRateColumn: " + variantBOpenRateColumn);
-							}
-							if (headerValue.contains("VARIANT B CLICK RATE")) {
-								variantBClickRateColumn  = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT B OPENS")) {
-								variantBOpensColumn  = header.getColumnIndex();
-							}
-							if (headerValue.contains("VARIANT B GIFT/OPEN")) {
-								variantBGOColumn  = header.getColumnIndex();
-								System.out.println("VARIANT B GIFT/OPEN: " + headerValue);
-							}
-						}
-						else if (row.getRowNum() > 0){
-							//if (refcode == null) {
-								//if (cell.getColumnIndex() == headers.get(j).getColumnIndex()) {
-									value = cell;
-									//System.out.println("CELL: " + cell);
-									//System.out.println("CELL COLUMN: " + cell.getColumnIndex());
-									if (cell.getColumnIndex() == jtkColumn) {
-										jtk = dataFormatter.formatCellValue(cell);
-										System.out.println("jtk:" + jtk);
-									}
-									else if (cell.getColumnIndex() == listColumn) {
-										RecipientsList = dataFormatter.formatCellValue(cell);
-										System.out.println(RecipientsList);
-									}
-									else if (cell.getColumnIndex() == recipientNumberColumn) {
-										String recipients1 = dataFormatter.formatCellValue(cell);
-										recipients = Long.parseLong(recipients1);
-										System.out.println(recipients1);
-									}
-									else if (cell.getColumnIndex() == typeColumn) {
-										type = dataFormatter.formatCellValue(cell);
-									}
-									else if (cell.getColumnIndex() == nameColumn) {
-										name = dataFormatter.formatCellValue(cell);
-									}
-									else if (cell.getColumnIndex() == dateColumn) {
-										senddate = dataFormatter.formatCellValue(cell);
-									}
-									else if (cell.getColumnIndex() == topicColumn) {
-										topic = dataFormatter.formatCellValue(cell);
-										System.out.println("topic: " + topic);
-									}
-									else if (cell.getColumnIndex() == testColumn) {
-										test = dataFormatter.formatCellValue(cell);
-										System.out.println("test: " + test);
-									}
-									else if (cell.getColumnIndex() == fulllistColumn) {
-										fullistWinner = dataFormatter.formatCellValue(cell);
-										System.out.println("fullistWinner: " + fullistWinner);
-									}
-									else if (cell.getColumnIndex() == goWinnerColumn) {
-										GoWinner = dataFormatter.formatCellValue(cell);
-										System.out.println("GoWinner : " + GoWinner);
-									}
-									else if (cell.getColumnIndex() == clickrcvColumn) {
-										ClickRcvWinner  = dataFormatter.formatCellValue(cell);
-										System.out.println("ClickRcvWinner: " + ClickRcvWinner);
-									}
-									else if (cell.getColumnIndex() == variantAColumn) {
-										VariantA  = dataFormatter.formatCellValue(cell);
-										System.out.println("VariantA : " + VariantA);
-									}
-									else if (cell.getColumnIndex() == variantARecipientNumberColumn) {
-										String ARecipientNumber1 = dataFormatter.formatCellValue(cell);
-										ARecipientNumber = Long.parseLong(ARecipientNumber1);
-										System.out.println("ARecipientNumber: " + ARecipientNumber);
-									}
-									else if (cell.getColumnIndex() == variantAOpenRateColumn) {
-										String AOpenRate1 = dataFormatter.formatCellValue(cell);
-										AOpenRate = Double.parseDouble(AOpenRate1);
-										System.out.println("AOpenRate: " + AOpenRate);
-									}
-									else if (cell.getColumnIndex() == variantAClickRateColumn) {
-										String AClickRate1 = dataFormatter.formatCellValue(cell);
-										System.out.println("AClickRate1: " + AClickRate1);
-										AClickRate = Double.parseDouble(AClickRate1);
-										System.out.println("AClickRate: " + AClickRate);
-									}
-									else if (cell.getColumnIndex() == variantAOpensColumn) {
-										String AOpens1 = dataFormatter.formatCellValue(cell);
-										AOpens = Long.parseLong(AOpens1);
-										System.out.println("AOpens: " + AOpens);
-									}
-									else if (cell.getColumnIndex() == variantAGOColumn) {
-										String AGiftOpens1 = dataFormatter.formatCellValue(cell);
-										AGiftOpens = Double.parseDouble(AGiftOpens1);
-										System.out.println("AGiftOpens: " + AGiftOpens);
-									}
-									else if (cell.getColumnIndex() == variantBColumn) {
-										VariantB = dataFormatter.formatCellValue(cell);
-										System.out.println("VariantB: " + VariantB);
-									}
-									else if (cell.getColumnIndex() == variantBRecipientNumberColumn) {
-										String BRecipientNumber1  = dataFormatter.formatCellValue(cell);
-										BRecipientNumber = Long.parseLong(BRecipientNumber1);
-										System.out.println("BRecipientNumber: " + BRecipientNumber);
-									}
-									else if (cell.getColumnIndex() == variantBOpenRateColumn) {
-										System.out.println("cell: " + cell);
-										String BOpenRate1 = dataFormatter.formatCellValue(cell);
-										System.out.println("BOpenRate1: " + BOpenRate1);
-										BOpenRate = Double.parseDouble(BOpenRate1);
-										System.out.println("BOpenRate: " + BOpenRate);
-									}
-									else if (cell.getColumnIndex() == variantBClickRateColumn) {
-										System.out.println("BClickRate: " + cell);
-										String BClickRate1 = dataFormatter.formatCellValue(cell);
-										BClickRate = Double.parseDouble(BClickRate1);
-										System.out.println("BClickRate: " + BClickRate);
-									}
-									else if (cell.getColumnIndex() == variantBOpensColumn) {
-										String BOpens1 = dataFormatter.formatCellValue(cell);
-										BOpens = Long.parseLong(BOpens1);
-										System.out.println("BOpens: " + BOpens);
-									}
-									else if (cell.getColumnIndex() == variantBGOColumn) {
-										String BGiftOpens1 = dataFormatter.formatCellValue(cell);
-										BGiftOpens  = Double.parseDouble(BGiftOpens1);
-							    	   if (ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId()) == null) {
-							    		   contenttest = new Contenttest();
-							    		   contenttest.setAClickRate(AClickRate);
-							    		   contenttest.setSenddate(senddate);
-							    		   contenttest.setType(type);
-							    		   contenttest.setTest(test);
-							    		   contenttest.setTopic(topic);
-							    		   contenttest.setRecipientsList(RecipientsList);
-							    		   contenttest.setRecipients(recipients);
-							    		   contenttest.setName(name);
-							    		   contenttest.setJtk(jtk);
-							    		   contenttest.setFullistWinner(fullistWinner);
-							    		   contenttest.setGoWinner(GoWinner);
-							    		   contenttest.setClickRcvWinner(ClickRcvWinner);
-							    		   contenttest.setVariantA(VariantA);
-							    		   contenttest.setARecipientNumber(ARecipientNumber);
-							    		   contenttest.setAClickRate(AClickRate);
-							    		   contenttest.setAOpenRate(AOpenRate);
-							    		   contenttest.setAOpens(AOpens);
-							    		   contenttest.setAGiftOpens(AGiftOpens);
-							    		   contenttest.setVariantB(VariantB);
-							    		   contenttest.setBRecipientNumber(BRecipientNumber);
-							    		   contenttest.setBClickRate(BClickRate);
-							    		   contenttest.setBOpenRate(BOpenRate);
-							    		   contenttest.setBOpens(BOpens);
-							    		   contenttest.setBGiftOpens(BGiftOpens);
-							    		   contenttest.setCommittee(committee);
-							    		   if (tservice.findTestByNameandCommittee(test, committee.getId()) == null) {
-							    			   bigtest = new test();
-							    			   bigtest.setTestcategory(test);
-							    			   bigtest.setCommittee(committee);
-									    	   tservice.createTest(bigtest);
-									    	   contenttest.setBigtest(bigtest);
-							    		   }
-							    		   else {
-							    			   bigtest = tservice.findTestByNameandCommittee(test, committee.getId()); 
-							    			   bigtest.setTestcategory(test);
-							    			   bigtest.setCommittee(committee);
-									    	   tservice.createTest(bigtest);
-									    	   contenttest.setBigtest(bigtest);
-							    		   }
-					    	        	}
-					    	        	else {
-								    		   contenttest = ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId());
-								    		   System.out.println("test: " + ctservice.findContentTestbyListCommitteeJtk(RecipientsList, jtk, committee.getId()).getId());
-								    		   contenttest.setAClickRate(AClickRate);
-								    		   contenttest.setSenddate(senddate);
-								    		   contenttest.setType(type);
-								    		   contenttest.setTest(test);
-								    		   contenttest.setTopic(topic);
-								    		   contenttest.setRecipientsList(RecipientsList);
-								    		   contenttest.setRecipients(recipients);
-								    		   contenttest.setName(name);
-								    		   contenttest.setJtk(jtk);
-								    		   contenttest.setFullistWinner(fullistWinner);
-								    		   contenttest.setGoWinner(GoWinner);
-								    		   contenttest.setClickRcvWinner(ClickRcvWinner);
-								    		   contenttest.setVariantA(VariantA);
-								    		   contenttest.setARecipientNumber(ARecipientNumber);
-								    		   contenttest.setAClickRate(AClickRate);
-								    		   contenttest.setAOpenRate(AOpenRate);
-								    		   contenttest.setAOpens(AOpens);
-								    		   contenttest.setAGiftOpens(AGiftOpens);
-								    		   contenttest.setVariantB(VariantB);
-								    		   contenttest.setBRecipientNumber(BRecipientNumber);
-								    		   contenttest.setBClickRate(BClickRate);
-								    		   contenttest.setBOpenRate(BOpenRate);
-								    		   contenttest.setBOpens(BOpens);
-								    		   contenttest.setBGiftOpens(BGiftOpens);
-								    		   contenttest.setCommittee(committee);
-								    		   if (tservice.findTestByNameandCommittee(test, committee.getId()) == null) {
-								    			   bigtest = new test();
-								    			   bigtest.setTestcategory(test);
-								    			   bigtest.setCommittee(committee);
-										    	   tservice.createTest(bigtest);
-										    	   contenttest.setBigtest(bigtest);
-								    		   }
-								    		   else {
-								    			   bigtest = tservice.findTestByNameandCommittee(test, committee.getId()); 
-								    			   bigtest.setTestcategory(test);
-								    			   bigtest.setCommittee(committee);
-										    	   tservice.createTest(bigtest);
-										    	   contenttest.setBigtest(bigtest);
-								    		   }
-					    	        	}
-							    	   ctservice.createContentTest(contenttest);
-							    	   tservice.TestVariables(contenttest);
-							    	   /*content = bigtest.getContent();
-					    			   bigtest.setContent(content);
-					    			   content.add(contenttest);
-					    			   bigtest.setContent(content);
-							    	   tservice.createTest(bigtest);
-					    	        	/*System.out.println("committee after: " + committee.getCommitteeName());
-					    	        	//committees.add(committee);
-					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("CREATE DONATION 2: ");
-					    	    		email = donation.getEmailDonation();
-					    	    		System.out.println("email: " + email);
-					    	    		dservice.getDonorData(donor, committee.getId());
-					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    	        	Recurring = null;
-					    				System.out.println("NEW Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					    	        }
-					    	        else {
-					    	        	donor = dservice.findDonorByEmailandCommittee(emailValue, committee.getId());
-					    	        	Long id = donor.getId();
-					    	        	System.out.println("ID: " + id);
-					    	        	donor.setDonorFirstName(nameValue);
-					    	        	donor.setDonorLastName(LNValue);
-					    	        	donor.setDonorEmail(emailValue);
-					    	        	System.out.println("committee after: " + committee.getCommitteeName());
-					    	        	donor.setUploader(uploader);
-					    	        	donor.setCommittee(committee);
-					    	        	donor.setAddress(address);
-					    	        	donor.setCity(city);
-					    	        	donor.setCountry(country);
-					    	        	donor.setPhone(phone);
-					    	        	donor.setZipcode(Zipcode);
-					    	        	donor.setState(state);
-					    	        	donors = committee.getDonors();
-					    	        	donors.add(donor);
-					    	        	committee.setDonors(donors);
-					    	        	System.out.println("UPLOADER FROM DONOR: " + donor.getUploader().getId());
-					    	        	dservice.updateDonor(donor);
-					    	        	donation = new Donation();
-					    	        	donation.setActBlueId(ActBlueId);
-					    	        	donation.setRecurrenceNumber(Recurrence);
-					    	        	System.out.println("RECURRING SET: " + Recurring);
-					    	        	donation.setRecurring(Recurring);
-					    	        	donation.setAmount(amount);
-					    	        	System.out.println("amount");
-					    	        	donation.setDondate(date);
-					    	        	System.out.println("date");
-					    	        	donation.setDonor(dservice.findDonorByIdandCommittee(id, committee.getId()));
-					    	        	System.out.println("donor");
-					    	        	donation.setDonation_uploader(uploader);
-					    	        	System.out.println("uploader");
-					    	        	System.out.println("get committees " + committees);
-					    	        	donations = committee.getDonations();
-					    	        	System.out.println("get donations " + donations);
-					    	        	donations.add(donation);
-					    	        	System.out.println("add donation");
-					    	        	committee.setDonations(donations);
-					    	        	System.out.println("set donations " + donations);
-					    	        	donation.setCommittee(committee);
-					    	        	System.out.println("UPLOADER FROM DONATION: " + donation.getDonation_uploader().getId());
-					    	        	System.out.println("create donation");
-					    	        	donservice.createDonation(donation);
-					    	        	System.out.println("create donation");
-					    	        	System.out.println("RECURRING END: " + donation.getRecurring());
-					    	        	Emails emaildonation = eservice.findEmailbyRefcodeandCommittee(refcode, committee);
-					    	        	if (emaildonation == null){
-					    	        		String undate1 = "0001-01-01 01:01";
-					    	        		Date undate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(undate1);
-					    	        		email = new Emails();
-						    	        	email.setEmailName(null);
-						    	        	email.setEmaildate(undate);
-						    	        	email.setEmailRefcode(refcode);
-						    	        	email.setBounces(null);
-						    	        	email.setClicks(null);
-						    	        	email.setOpeners(null);
-						    	        	email.setRecipients(null);
-						    	        	email.setUnsubscribers(null);
-						    	        	email.setExcludedList(null);
-						    	        	email.setList(null);
-						    	        	email.setEmail_uploader(uploader);
-						    	        	email.setCommittee(committee);
-						    	        	emails = committee.getEmails();
-						    	        	emails.add(email);
-						    	        	committee.setEmails(emails);
-						    	        	eservice.createEmail(email);
-						    	        	String tempname = "Null" + email.getId();
-						    	        	email.setEmailName(tempname);
-						    	        	System.out.println("TEMP NAME: " + tempname);
-						    	        	eservice.createEmail(email);
-						    	        	donation.setEmailDonation(email);
-					    	        	}
-					    	        	else {
-					    	        		donation.setEmailDonation(eservice.findEmailbyRefcodeandCommittee(refcode, committee));
-					    	        	}
-					    	        	System.out.println("CREATE DONATION 2: ");
-					    	        	donservice.createDonation(donation);
-					    	    		email = donation.getEmailDonation();
-					    	    		System.out.println("Email: " + email.getEmailName());
-					    	    		dservice.getDonorData(donor, committee.getId());
-					    	    		//System.out.println("donordata id: " + donor.getDonordata().getId());
-					    	    		eservice.getEmailData(email, committee.getId());
-					    	        	refcode = null;
-					    	        	Recurring = null;
-					    	        	System.out.println("UPDATED Id: " + donor.getId() + " Person: " + donor.getDonorFirstName() + " Email: " + donor.getDonorEmail());
-					                }
-									}
-							}
-		    	        }
-
-	            }
-		}
-	        
-	}
-    
-}*/
 	public void Testexporter(List<test> bigtest, HttpServletResponse response) throws IOException{
-        //this.bigtest = bigtest;
+	    int testcategoryCol = 0;
+    	int ClickCol = 0;
+    	int OpenCol = 0;
+    	int emailcountCol = 0;
+    	int AvEmailCol = 0;
+    	int ClickrateCol = 0;
+    	int OpenrateCol = 0;
+    	int ClickOpenCol = 0;
+    	int RevCol = 0;
+    	int DonationsCol = 0;
+    	int AvCol = 0;
+    	int DonOpenCol = 0;
+    	int DonClickCol = 0;
+    	int RecipientsCol = 0;
+	    
+		
+		//this.bigtest = bigtest;
         workbook = new XSSFWorkbook();
         DataFormatter dataFormatter = new DataFormatter();
         
@@ -2613,17 +2137,102 @@ public class ExcelUtil {
         font.setBold(true);
         font.setFontHeight(16);
         style.setFont(font);
+        row.setRowStyle(style);
          
         createCell(row, 0, "Test Id", style); 
-        createCell(row, 1, "Testing", style); 
-        createCell(row, 2, "Variant:", style); 
-        createCell(row, 3, "G/O Winner Percentage", style);
-        createCell(row, 4, "Overall Click/Rcv Winner", style); 
-        createCell(row, 5, "Click/Rcv Winner Percentage", style); 
-        createCell(row, 6, "Overall Full Send Winner", style); 
-        createCell(row, 7, "Full Send Winner Percentage", style);
-        createCell(row, 8, "Number of tests", style);
+        createCell(row, 1, "Testing factor", style); 
+        createCell(row, 2, "Variant", style); 
         
+        String input1 = "Clicks";
+        List<String> input = new ArrayList<String>();
+        input.add(input1);
+        //input.add("Clicks/opens");
+        input.add("Opens");
+        //input.add("emailcount");
+        //input.add("Revenue");
+        
+        int columnCount = 3;
+        for (int i = 0; i < input.size(); i++) {
+        	System.out.println("Input: " + input.get(i));
+        	if (input.get(i).equals("Clicks")) {
+                ClickCol = columnCount;
+                createCell(row, columnCount++, "Clicks", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + ClickCol);
+        	}
+        	if (input.get(i).equals("Opens")) {
+        		OpenCol = columnCount;
+                createCell(row, columnCount++, "Opens", style);
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + OpenCol);
+        	}
+        	if (input.get(i).equals("emailcount")) {
+                emailcountCol = columnCount;
+                createCell(row, columnCount++, "Number of emails tested", style); 
+                System.out.println("Input 2: " + input.get(i));
+        	}
+        	if (input.get(i).equals("testcategory")) {
+        		testcategoryCol = columnCount;
+                createCell(row, columnCount++, "Test category", style); 
+                System.out.println("Input 2: " + input.get(i));
+        	}
+        	if (input.get(i).equals("Open rate")) {
+        		OpenrateCol = columnCount;
+                createCell(row, columnCount++, "Open rate", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + OpenrateCol);
+        	}
+        	if (input.get(i).equals("Click rate")) {
+        		ClickrateCol = columnCount;
+                createCell(row, columnCount++, "Click rate", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + ClickrateCol);
+        	}
+        	if (input.get(i).equals("Clicks/opens")) {
+        		ClickOpenCol = columnCount;
+                createCell(row, columnCount++, "Clicks per open", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + ClickOpenCol);
+        	}
+        	if (input.get(i).equals("Revenue")) {
+        		RevCol = columnCount;
+                createCell(row, columnCount++, "Revenue", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + RevCol);
+        	}
+        	if (input.get(i).equals("Donations")) {
+        		DonationsCol = columnCount;
+                createCell(row, columnCount++, "Donations", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + DonationsCol);
+        	}
+        	if (input.get(i).equals("Average donation")) {
+        		AvCol = columnCount;
+                createCell(row, columnCount++, "Average donation", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + AvCol);
+        	}
+        	if (input.get(i).equals("Average email revenue")) {
+        		AvEmailCol = columnCount;
+                createCell(row, columnCount++, "Average email revenue", style); 
+                System.out.println("Input 2: " + input.get(i));
+        	}
+        	if (input.get(i).equals("Donations/open")) {
+        		DonOpenCol = columnCount;
+                createCell(row, columnCount++, "Donations per open", style); 
+                System.out.println("Input 2: " + input.get(i));
+        	}
+        	if (input.get(i).equals("Donations/click")) {
+        		DonClickCol = columnCount;
+                createCell(row, columnCount++, "Donations per click", style); 
+                System.out.println("Input 2: " + input.get(i));
+                System.out.println("Column logged: " + DonClickCol);
+        	}
+        	if (input.get(i).equals("Recipients")) {
+        		RecipientsCol = columnCount;
+                createCell(row, columnCount++, "Recipients", style); 
+        	}
+        }
         //write data lines
         int rowCount = 1;
         int rowBCount = 2;
@@ -2633,35 +2242,150 @@ public class ExcelUtil {
         
         
         CellStyle bodyStyle = workbook.createCellStyle();
+        CellStyle cellstyle = workbook.createCellStyle();
+        CellStyle boldcellstyle = workbook.createCellStyle();
         XSSFFont bodyfont = workbook.createFont();
+        XSSFFont boldfont = workbook.createFont();
         bodyfont.setBold(false);
         bodyfont.setFontHeight(14);
+        boldfont.setBold(true);
+        boldfont.setFontHeight(14);
         bodyStyle.setFont(bodyfont);
         bodyStyleA.setFont(bodyfont);
-                 
+        cellstyle.setFont(bodyfont);
+        boldcellstyle.setFont(boldfont);
+        
+        row.setRowStyle(bodyStyleA);
+        rowB.setRowStyle(bodyStyleA);
+        System.out.println("row: " +rowCount);
         for (int i = 0; i < bigtest.size(); i++) {
+        	System.out.println("bigtest: " + bigtest.size());
             row = sheet.createRow(rowCount);
             rowB = sheet.createRow(rowBCount);
-            int columnCount = 0;
-            
-            createCell(row, columnCount++, bigtest.get(i).getId(), bodyStyleA);
-            createCell(row, columnCount++, bigtest.get(i).getTestcategory(), bodyStyleA);
-            createCell(row, columnCount++, bigtest.get(i).getTestname(), bodyStyleA);
-            createCell(row, columnCount++, bigtest.get(i).getVariantA(), bodyStyleA);
             columnCount = 0;
-            createCell(rowB, columnCount++, bigtest.get(i).getId(), bodyStyle);
-            createCell(rowB, columnCount++, bigtest.get(i).getTestcategory(), bodyStyle);
-            createCell(rowB, columnCount++, bigtest.get(i).getTestname(), bodyStyle);
-            createCell(rowB, columnCount++, bigtest.get(i).getVariantB(), bodyStyle);
+            System.out.println("i: " + i);
+            Boolean rowStyleset = false;
+            
+            while (rowStyleset == false) {
+                if (cellstyle == bodyStyleA) {
+                	cellstyle = bodyStyle;
+                	boldcellstyle = bodyStyle;
+                	boldcellstyle.setFont(boldfont);
+                	cellstyle.setFont(bodyfont);
+                	if (rowCount == 0) {
+                		row.setRowStyle(style);
+                		rowB.setRowStyle(style);
+                	} 
+                	else {
+                        row.setRowStyle(cellstyle);
+                        rowB.setRowStyle(cellstyle);
+                	}
+                    rowStyleset = true;
+                }
+                else {
+                	cellstyle = bodyStyleA;
+                	boldcellstyle = bodyStyleA;
+                	boldcellstyle.setFont(boldfont);
+                	cellstyle.setFont(bodyfont);
+                    row.setRowStyle(cellstyle);
+                    rowB.setRowStyle(cellstyle);
+                    rowStyleset = true;
+                }
+            }
+            System.out.println("made it to cells: ");
+            createCell(row, columnCount++, bigtest.get(i).getId(), cellstyle);
+            createCell(row, columnCount++, bigtest.get(i).getTestname(), cellstyle);
+            createCell(row, columnCount++, "Variant A: " + bigtest.get(i).getVariantA(), boldcellstyle);
+            if (columnCount == ClickCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantAClicks(), cellstyle);
+            }
+            if (columnCount == OpenCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantAOpens(), cellstyle);
+            }
+            if (columnCount == OpenrateCol) {
+                createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAOpenRate()), cellstyle);
+            }
+            if (columnCount == ClickrateCol) {
+            	createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAClickRate()), cellstyle);
+            }
+            if (columnCount == ClickOpenCol) {
+            	createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getVariantAClickOpens()), cellstyle);
+            }
+            if (columnCount == RevCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantARevenue(), cellstyle);
+            }
+            if (columnCount == DonationsCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantADonations(), cellstyle);
+            }
+            if (columnCount == AvCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantAaverageDonation(), cellstyle);
+            }
+            if (columnCount == DonOpenCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantADonationsOpens(), cellstyle);
+            }
+            if (columnCount == DonClickCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantADonationsClicks(), cellstyle);
+            }
+            if (columnCount == AvEmailCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantAaverageRevenueperEmail(), cellstyle);
+            }
+            if (columnCount == testcategoryCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
+            }
+            if (columnCount == emailcountCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantAemailcount(), cellstyle);
+            }
+            if (columnCount == RecipientsCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getVariantARecipients(), cellstyle);
+            }
+            columnCount = 2;
+            createCell(rowB, 0, bigtest.get(i).getId(), cellstyle);
+            createCell(rowB, 1, bigtest.get(i).getTestname(), cellstyle);
+            createCell(rowB, 2, "Variant B: " + bigtest.get(i).getVariantB(), boldcellstyle);
+            if (columnCount == ClickCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBClicks(), cellstyle);
+            }
+            if (columnCount == OpenCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBOpens(), cellstyle);
+            }
+            if (columnCount == OpenrateCol) {
+                createCell(rowB, columnCount++, getRateFormatted(bigtest.get(i).getVariantBOpenRate()), cellstyle);
+            }
+            if (columnCount == ClickrateCol) {
+            	createCell(rowB, columnCount++, getRateFormatted(bigtest.get(i).getVariantBClickRate()), cellstyle);
+            }
+            if (columnCount == ClickOpenCol) {
+            	createCell(rowB, columnCount++, getRateFormatted(bigtest.get(i).getVariantBClickOpens()), cellstyle);
+            }
+            if (columnCount == RevCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBRevenue(), cellstyle);
+            }
+            if (columnCount == DonationsCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBDonations(), cellstyle);
+            }
+            if (columnCount == AvCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBaverageDonation(), cellstyle);
+            }
+            if (columnCount == DonOpenCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBDonationsOpens(), cellstyle);
+            }
+            if (columnCount == DonClickCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBDonationsClicks(), cellstyle);
+            }
+            if (columnCount == AvEmailCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBaverageRevenueperEmail(), cellstyle);
+            }
+            if (columnCount == testcategoryCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
+            }
+            if (columnCount == emailcountCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBemailcount(), cellstyle);
+            }
+            if (columnCount == RecipientsCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getVariantBRecipients(), cellstyle);
+            }
             rowCount = rowCount + 2;
             rowBCount = rowBCount + 2;
-           /* createCell(row, columnCount++, bigtest.get(i).getOverallGoWinner(), bodyStyle);
-            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallGoWinnerPercent()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallClickWinner()), bodyStyle);
-            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallClickWinnerPercent()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getOverallFullSendWinner()), bodyStyle);
-            createCell(row, columnCount++, getRateFormatted(bigtest.get(i).getOverallFullSendWinnerPercent()), bodyStyle);
-            createCell(row, columnCount++, String.valueOf(bigtest.get(i).getClickWinnerCountType()), bodyStyle);*/
         }
         //export
         ServletOutputStream outputStream = response.getOutputStream();
