@@ -126,24 +126,34 @@
 				<option name="field" value="1">Emails</option>
 		        <option name="field" value="2">Donations</option>
 		        <option name="field" value="3">Donors</option>
+		        <option name="field" value="5">Tests</option>
 			</c:when>
 			<c:when test="${ field == 1}">
 				<option name="field" value="1">Emails</option>
 		        <option name="field" value="2">Donations</option>
 		        <option name="field" value="3">Donors</option>
-		        <option name="field" value="0">Email groups</option>
+		        <option name="field" value="5">Tests</option>
 			</c:when>
 			<c:when test="${ field == 2}">
 				<option name="field" value="2">Donations</option>
 				<option name="field" value="1">Emails</option>
 				<option name="field" value="0">Email groups</option>
 		        <option name="field" value="3">Donors</option>
+		        <option name="field" value="5">Tests</option>
 			</c:when>
 			<c:when test="${ field == 3}">
 				<option name="field" value="3">Donors</option>
 				<option name="field" value="0">Email groups</option>
 				<option name="field" value="1">Emails</option>
 				<option name="field" value="2">Donations</option>
+				<option name="field" value="5">Tests</option>
+			</c:when>
+			<c:when test="${ field == 5}">
+				<option name="field" value="5">Tests</option>
+				<option name="field" value="0">Email groups</option>
+				<option name="field" value="1">Emails</option>
+				<option name="field" value="2">Donations</option>
+				<option name="field" value="3">Donors</option>
 			</c:when>
 			<c:otherwise>
 				<option name="field" value="4">Select</option>
@@ -151,6 +161,7 @@
 				<option name="field" value="1">Emails</option>
 		        <option name="field" value="2">Donations</option>
 		        <option name="field" value="3">Donors</option>
+		        <option name="field" value="5">Tests</option>
 			</c:otherwise>
 		</c:choose>
 		</select>
@@ -268,6 +279,40 @@
 				<label for="input"> Name</label><br>
 				<input type="checkbox" id="input" name="input" value="LastName">
 				<label for="input"> Last</label><br>
+			</c:when>
+			<c:when test="${ field == 5}">
+			<div id="export-choices">
+				<input type="checkbox" id="input" name="input" value="Clicks">
+				<label for="input"> Clicks</label><br>
+				<input type="checkbox" id="input" name="input" value="Opens">
+				<label for="input"> Opens</label><br>
+				<input type="checkbox" id="input" name="input" value="Open rate">
+				<label for="input"> Open rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Click rate">
+				<label for="input"> Click rate</label><br>	
+				<input type="checkbox" id="input" name="input" value="Clicks/opens">	
+				<label for="input"> Clicks per open</label><br>	
+				<input type="checkbox" id="input" name="input" value="Revenue">
+				<label for="input"> Revenue</label><br>	
+				<input type="checkbox" id="input" name="input" value="Donations">	
+				<label for="input"> Donations</label><br>		
+				</div>
+				<div id="export-choices">	
+				<input type="checkbox" id="input" name="input" value="Average donation">
+				<label for="input"> Average donation</label><br>
+				<input type="checkbox" id="input" name="input" value="Donations/open">
+				<label for="input"> Donations per open</label><br>
+				<input type="checkbox" id="input" name="input" value="Donations/click">
+				<label for="input"> Donations per click</label><br>
+				<input type="checkbox" id="input" name="input" value="Average email revenue">
+				<label for="input"> Average email revenue</label><br>
+				<input type="checkbox" id="input" name="input" value="emailcount">
+				<label for="input"> Number of emails tested</label><br>
+				<input type="checkbox" id="input" name="input" value="testcategory">
+				<label for="input"> Test category</label><br>
+				<input type="checkbox" id="input" name="input" value="Recipients">
+				<label for="input"> Recipients</label><br>
+				</div>
 			</c:when>
 		</c:choose>
 		<button>Download Excel</button>

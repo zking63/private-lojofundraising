@@ -2105,7 +2105,7 @@ public class ExcelUtil {
         outputStream.close();
 	}
     
-	public void Testexporter(List<test> bigtest, HttpServletResponse response) throws IOException{
+	public void Testexporter(List<test> bigtest, List<String> input, HttpServletResponse response) throws IOException{
 	    int testcategoryCol = 0;
     	int ClickCol = 0;
     	int OpenCol = 0;
@@ -2142,14 +2142,7 @@ public class ExcelUtil {
         createCell(row, 0, "Test Id", style); 
         createCell(row, 1, "Testing factor", style); 
         createCell(row, 2, "Variant", style); 
-        
-        String input1 = "Clicks";
-        List<String> input = new ArrayList<String>();
-        input.add(input1);
-        input.add("Opens");
-        input.add("Clicks/opens");
-        input.add("Revenue");
-        input.add("emailcount");
+       
         
         int columnCount = 3;
         for (int i = 0; i < input.size(); i++) {
@@ -2338,11 +2331,11 @@ public class ExcelUtil {
             if (columnCount == AvEmailCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantAaverageRevenueperEmail(), cellstyle);
             }
-            if (columnCount == testcategoryCol) {
-            	createCell(row, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
-            }
             if (columnCount == emailcountCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantAemailcount(), cellstyle);
+            }
+            if (columnCount == testcategoryCol) {
+            	createCell(row, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
             }
             if (columnCount == RecipientsCol) {
             	createCell(row, columnCount++, bigtest.get(i).getVariantARecipients(), cellstyle);
@@ -2384,11 +2377,11 @@ public class ExcelUtil {
             if (columnCount == AvEmailCol) {
             	createCell(rowB, columnCount++, bigtest.get(i).getVariantBaverageRevenueperEmail(), cellstyle);
             }
-            if (columnCount == testcategoryCol) {
-            	createCell(rowB, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
-            }
             if (columnCount == emailcountCol) {
             	createCell(rowB, columnCount++, bigtest.get(i).getVariantBemailcount(), cellstyle);
+            }
+            if (columnCount == testcategoryCol) {
+            	createCell(rowB, columnCount++, bigtest.get(i).getTestcategory(), cellstyle);
             }
             if (columnCount == RecipientsCol) {
             	createCell(rowB, columnCount++, bigtest.get(i).getVariantBRecipients(), cellstyle);

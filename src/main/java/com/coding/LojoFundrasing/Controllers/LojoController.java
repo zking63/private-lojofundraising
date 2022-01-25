@@ -1193,6 +1193,13 @@ public class LojoController {
 				 }
 				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
 			 }
+			 if (field == 5) {
+				 System.out.println("Test");
+			     List<test> tests = tservice.findAllTests(committee_id);
+				 System.out.println("Tests size " + tests.size());
+				 System.out.println("input " + input);
+				 excelService.exportTestToExcel(tests, input, response);
+			 }
 			 String message = "What are you exporting?";
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
@@ -1234,13 +1241,6 @@ public class LojoController {
 			excelService.readTestData(user_id, file, committee);
 			return "redirect:/home";
 		}
-	    @GetMapping("/export/excel/test")
-	    public String exportTestToExcel(HttpSession session, HttpServletResponse response) throws IOException {
-	    	Long committee_id = (Long)session.getAttribute("committee_id");
-	    	List<test> tests = tservice.findAllTests(committee_id);
-	    	excelService.exportTestToExcel(tests, response);
-			return "home.jsp";
-	    } 
 	    @RequestMapping(value="/import/chairreport")
 		public String importchair(HttpSession session, Model model, HttpServletRequest request) {
 			 Long user_id = (Long)session.getAttribute("user_id");

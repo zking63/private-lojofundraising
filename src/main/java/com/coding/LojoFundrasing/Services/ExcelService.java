@@ -121,7 +121,7 @@ public class ExcelService {
         
         excelUtil.Donationexporter(donations, response);
     } 
-    public void exportTestToExcel(List<test> tests, HttpServletResponse response) throws IOException {
+    public void exportTestToExcel(List<test> tests, List<String> input, HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -130,7 +130,7 @@ public class ExcelService {
         String headerValue = "attachment; filename=tests_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
         
-        excelUtil.Testexporter(tests, response);
+        excelUtil.Testexporter(tests, input, response);
     } 
 	public void readChairData(MultipartFile multipartFile) throws IOException, EncryptedDocumentException, InvalidFormatException, ParseException {
 
