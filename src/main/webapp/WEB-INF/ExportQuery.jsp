@@ -257,26 +257,27 @@
 			<c:when test="${field == 1}">
 				    <input type="hidden" name="page" value="${page}">
 				    <input type="hidden" name="field" value="${field}">
+				    <input type="hidden" name="type" value="${type}">
 				    <input type="hidden" name="range" value="${range}">
 					<input type="hidden" value="${startdateD}" name="startdateD"/>
 					<input type="hidden" value="${enddateD}" name="enddateD"/>
 				        <div id="parameter-choices">
-					        <label for="parameter">Select operator</label>
-							<select>
+					        <label for="operator">Select operator</label>
+							<select id="operator" name="operator">
 							<c:choose>
 							  	<c:when test="${ type != 7}">
-							  		<option name="parameter" value="0">Select</option>
-									<option name="parameter" value="1">Equals</option>
-									<option name="parameter" value="2">Contains</option>
+							  		<option name="operator" value="0">Select</option>
+									<option name="operator" value="1">Equals</option>
+									<option name="operator" value="2">Contains</option>
 						        </c:when>
 						        </c:choose>
 							</select>
 				        </div>
 				       <div id="parameter-choices">
-					        <label for="option"></label>
+					        <label for="operand"></label>
 							<c:choose>
 							  	<c:when test="${ type == 1}">
-									<textarea name="option" placeholder="Operand"></textarea>
+									<textarea name="operand" placeholder="Operand"></textarea>
 					            </c:when>
 						       </c:choose>
 				        </div>
@@ -377,10 +378,10 @@
 		</c:choose>
 					</c:when>
 			</c:choose>
+			<button>Download Excel</button>
 	</form>
 			</c:when>
 			</c:choose>
-			<button>Download Excel</button>
 			
 </div>
 </body>

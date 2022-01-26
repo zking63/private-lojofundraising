@@ -1300,54 +1300,94 @@ public class LojoController {
 				 model.addAttribute("message", message);
 				 return "ExportQuery.jsp";
 			 }
+			 Integer operator = 0;
+			 String operand = null;
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("field", field);
 			 model.addAttribute("range", range);
+			 model.addAttribute("operator", operator);
+			 model.addAttribute("operand", operand);
 			 model.addAttribute("type", type);
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("user", user);
 	        return "ExportQuery.jsp";
 	    } 
-	    @GetMapping("/export/query/options/type")
-	    public String exportQueryType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("type") Integer type, @RequestParam("field") Integer field, @RequestParam("range") Integer range, HttpServletRequest request,  
+	    @GetMapping("/export/query/excel")
+	    public String exportQueryToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
+				 HttpSession session, @RequestParam("field") Integer field, @RequestParam("type") Integer type, @RequestParam("operator") Integer operator, 
+				 @RequestParam("operand") String operand, @RequestParam(value = "input", required = false) List<String> input, 
 				 HttpServletResponse response) throws IOException {
+			Long user_id = (Long)session.getAttribute("user_id");
+	    	Long committee_id = (Long)session.getAttribute("committee_id");
+	    	System.out.println("Start: " + startdateD);
+	    	System.out.println("End: " + enddateD);
+	    	System.out.println("Commmittee: " + committee_id);
 	    	System.out.println("type: " + type);
-			 Long user_id = (Long)session.getAttribute("user_id");
-			 if (user_id == null) {
-				 return "redirect:/";
-			 }
-			 User user = uservice.findUserbyId(user_id);
-			 model.addAttribute("user", user);
-			 Long committee_id = (Long)session.getAttribute("committee_id");
-			 String pagename = request.getRequestURL().toString();
-			 System.out.println("page: " + pagename);
-			 session.setAttribute("page", pagename);
-			 Committees committee = cservice.findbyId(committee_id);
-			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
-			 model.addAttribute("committee", committee);
-			model.addAttribute("committees", committees);
-			 if (startdateD == null) {
-				 startdateD = dateFormat();
-			 }
-			 if (enddateD == null) {
-				 enddateD = dateFormat();
-			 }
-			 if(type == 4) {
+			 if (field == 4) {
 				 String message = "Please select a category to export.";
 				 model.addAttribute("message", message);
-				 return "ExportQuery.jsp";
+				 model.addAttribute("startdateD", startdateD);
+				 model.addAttribute("field", field);
+				 model.addAttribute("enddateD", enddateD);
+				 User user = uservice.findUserbyId(user_id);
+				 Committees committee = cservice.findbyId(committee_id);
+				 model.addAttribute("committee", committee);
+				 model.addAttribute("user", user);
+				 return "exporter.jsp";
 			 }
-			 String message = "What is your parameter";
+	    	if (field == 3) {
+				 System.out.println("Donors");
+				 dservice.DonorsWithinRange(startdateD, enddateD, committee_id);
+				 List<Donor> donors = dservice.orderbyDonorDesc(startdateD, enddateD, committee_id);
+				 excelService.exportToExcel(donors, response);
+			 }
+			 if (field == 2) {
+				 System.out.println("Donations");
+				 List<Donation> donations = donservice.DonTest(startdateD, enddateD, committee_id);
+				 excelService.exportDonationsToExcel(donations, response);
+			 }
+			 //emails
+			 if (field == 1) {
+				 System.out.println("Emails");
+				 if (type == 1) {
+					 System.out.println("refcode 1");
+					 if (operator == 1) {
+						 System.out.println("equals");
+						 System.out.println("operand " + operand);
+					 }
+				 }
+				 List<Emails> emails = eservice.EmailTest(startdateD, enddateD, committee_id);
+				 excelService.exportEmailsToExcel(emails, input, response);
+			 }
+			 if (field == 0) {
+				 System.out.println("Emails Groups");
+				 List<EmailGroup> emailgroups = egservice.EmailGroupList(startdateD, enddateD, committee_id);
+				 System.out.println("Emails Groups size " + emailgroups.size());
+				 for (int i = 0; i < emailgroups.size(); i++) {
+					 EmailGroup emailgroup = emailgroups.get(i);
+					 this.egservice.getEmailGroupData(emailgroup.getId(), committee_id);
+				 }
+				 excelService.exportEmailGroupsToExcel(emailgroups, input, response);
+			 }
+			 if (field == 5) {
+				 System.out.println("Test");
+			     List<test> tests = tservice.findTestswithinRange(startdateD, enddateD, committee_id);
+				 System.out.println("Tests size " + tests.size());
+				 System.out.println("input " + input);
+				 excelService.exportTestToExcel(tests, input, response);
+			 }
+			 String message = "What are you exporting?";
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("field", field);
-			 model.addAttribute("type", type);
-			 model.addAttribute("range", range);
 			 model.addAttribute("enddateD", enddateD);
+			 User user = uservice.findUserbyId(user_id);
+			 Committees committee = cservice.findbyId(committee_id);
+			 model.addAttribute("committee", committee);
 			 model.addAttribute("user", user);
-	        return "ExportQuery.jsp";
+			 return "ExportQuery.jsp";
 	    } 
 	    @GetMapping("/export/excel")
 	    public String exportToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
