@@ -116,7 +116,7 @@
             </li>
         </ul>
         </div>
-    <form method="get" class="date-form" id="input-form" action="/export/select">
+    <form method="get" class="export-form" id="input-form" action="/export/select">
    	<p>
         <label for="field">${message}</label>
 		<select onchange="this.form.submit()" id="field" name="field">
