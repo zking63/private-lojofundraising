@@ -167,25 +167,6 @@
 		</select>
     </p>
     </form>
-        <form method="get" class="date-form" id="input-form" action="/export/select/2">
-   	<p>
-        <label for="type">${message}</label>
-		<select onchange="this.form.submit()" id="field" name="field">
-		<c:choose>
-			<c:when test="${ field == 0}">
-				<option name="type" value="0">Email groups</option>
-				<option name="type" value="4">Emails</option>
-			</c:when>
-			<c:when test="${ field == 1}">
-				<option name="type" value="0">Email groups</option>
-				<option name="type" value="4">Emails</option>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
-		</select>
-    </p>
-    </form>
     <div id="export-form">
     <form method="get" class="date-form" action="/export/excel">
     	<div id="date-choices">
