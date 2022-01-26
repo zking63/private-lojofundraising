@@ -1108,6 +1108,41 @@ public class LojoController {
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
+	    @RequestMapping("/export/query")
+	    public String exportqueryPage(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, HttpServletRequest request,   
+				 HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 String message = "What are you exporting?";
+			 model.addAttribute("message", message);
+			 Integer field = 4;
+			 Integer range = 0;
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("range", range);
+			 model.addAttribute("user", user);
+	        return "ExportQuery.jsp";
+	    } 
 	    @GetMapping("/export/select")
 	    public String exportType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, HttpServletRequest request,  
@@ -1145,9 +1180,9 @@ public class LojoController {
 			 model.addAttribute("user", user);
 	        return "exporter.jsp";
 	    } 
-	    @GetMapping("/export/select/2")
-	    public String exportform(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
-				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("type") Integer type, HttpServletRequest request,  
+	    @GetMapping("/export/query/options")
+	    public String exportQueryOptions(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, HttpServletRequest request,  
 				 HttpServletResponse response) throws IOException {
 			 Long user_id = (Long)session.getAttribute("user_id");
 			 if (user_id == null) {
@@ -1169,18 +1204,152 @@ public class LojoController {
 			 if (enddateD == null) {
 				 enddateD = dateFormat();
 			 }
-			 if(type == 0) {
-				 String message = "Please select your parameters.";
+			 String message = "What is your parameter";
+			 if(field == 4) {
+				 message = "Please select a category to export.";
 				 model.addAttribute("message", message);
-				 return "exporter.jsp";
+				 return "ExportQuery.jsp";
 			 }
-			 String message = "What are you exporting?";
+			 if(field == 1) {
+				 message = "Emails where";
+			 }
+			 Integer type = 0;
+			 Integer range = 0;
+			 String typelabel = "Select";
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("type", type);
+			 model.addAttribute("range", range);
+			 model.addAttribute("typelabel", typelabel);
+			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("user", user);
+	        return "ExportQuery.jsp";
+	    } 
+	    @GetMapping("/export/query/options/range")
+	    public String exportQueryRange(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, @RequestParam("range") Integer range, HttpServletRequest request,  
+				 HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 String message = "What is your parameter";
+			 if(field == 4) {
+				 message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 return "ExportQuery.jsp";
+			 }
+			 if(range == 0) {
+				 message = "Please select range.";
+			 }
+			 String typelabel = "Select";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("range", range);
+			 model.addAttribute("typelabel", typelabel);
+			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("user", user);
+	        return "ExportQuery.jsp";
+	    } 
+	    @GetMapping("/export/query/options/rangeset")
+	    public String setexportQueryRange(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, @RequestParam("range") Integer range, HttpServletRequest request,  
+				 HttpServletResponse response) throws IOException {
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 String message = "What is your parameter";
+			 if(field == 4) {
+				 message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 return "ExportQuery.jsp";
+			 }
+			 if(range == 0) {
+				 message = "Please select range.";
+			 }
+			 String typelabel = "Select";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
+			 model.addAttribute("range", range);
+			 model.addAttribute("typelabel", typelabel);
+			 model.addAttribute("enddateD", enddateD);
+			 model.addAttribute("user", user);
+	        return "ExportQuery.jsp";
+	    } 
+	    @GetMapping("/export/query/options/type")
+	    public String exportQueryType(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
+				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("type") Integer type, @RequestParam("field") Integer field, HttpServletRequest request,  
+				 HttpServletResponse response) throws IOException {
+	    	System.out.println("type: " + type);
+			 Long user_id = (Long)session.getAttribute("user_id");
+			 if (user_id == null) {
+				 return "redirect:/";
+			 }
+			 User user = uservice.findUserbyId(user_id);
+			 model.addAttribute("user", user);
+			 Long committee_id = (Long)session.getAttribute("committee_id");
+			 String pagename = request.getRequestURL().toString();
+			 System.out.println("page: " + pagename);
+			 session.setAttribute("page", pagename);
+			 Committees committee = cservice.findbyId(committee_id);
+			List<Committees> committees = cservice.findAllexcept(committee_id, user_id);
+			 model.addAttribute("committee", committee);
+			model.addAttribute("committees", committees);
+			 if (startdateD == null) {
+				 startdateD = dateFormat();
+			 }
+			 if (enddateD == null) {
+				 enddateD = dateFormat();
+			 }
+			 if(type == 4) {
+				 String message = "Please select a category to export.";
+				 model.addAttribute("message", message);
+				 return "ExportQuery.jsp";
+			 }
+			 String message = "What is your parameter";
+			 model.addAttribute("message", message);
+			 model.addAttribute("startdateD", startdateD);
+			 model.addAttribute("field", field);
 			 model.addAttribute("type", type);
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("user", user);
-	        return "exporter.jsp";
+	        return "ExportQuery.jsp";
 	    } 
 	    @GetMapping("/export/excel")
 	    public String exportToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 

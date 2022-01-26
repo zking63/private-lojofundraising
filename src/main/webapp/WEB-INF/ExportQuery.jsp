@@ -116,7 +116,7 @@
             </li>
         </ul>
         </div>
-    <form method="get" class="date-form" id="input-form" action="/export/select">
+    <form method="get" class="date-form" id="input-form" action="/export/query/options">
    	<p>
         <label for="field">${message}</label>
 		<select onchange="this.form.submit()" id="field" name="field">
@@ -168,105 +168,110 @@
 		</select>
     </p>
     </form>
-    <div id="export-form">
-    <form method="get" class="date-form" action="/export/excel">
-    	<div id="date-choices">
-		<input type="hidden" value="${field}" name="field"/>
-		<input type="date" value="${startdateD}" name="startdateD"/>
-		<input type="date" value="${enddateD}" name="enddateD"/>
-		</div>
-		<p></p>
-		<c:choose>
-			<c:when test="${ field == 0}">
+    <c:choose>
+    <c:when test="${ field != 4}">
 			<div id="export-choices">
-				<input type="checkbox" id="input" name="input" value="Clicks">
-				<label for="input"> Clicks</label><br>
-				<input type="checkbox" id="input" name="input" value="Opens">
-				<label for="input"> Opens</label><br>
-				<input type="checkbox" id="input" name="input" value="Bounces">
-				<label for="input"> Bounces</label><br>	
-				<input type="checkbox" id="input" name="input" value="Unsubscribes">
-				<label for="input"> Unsubscribes</label><br>	
-				<input type="checkbox" id="input" name="input" value="Open rate">
-				<label for="input"> Open rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Click rate">
-				<label for="input"> Click rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Unsubscribe rate">	
-				<label for="input"> Unsubscribe rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Bounce rate">
-				<label for="input"> Bounce rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Clicks/opens">	
-				<label for="input"> Clicks per open</label><br>	
-				<input type="checkbox" id="input" name="input" value="Revenue">
-				<label for="input"> Revenue</label><br>		
+           		<div class="dropdown">
+					<form:form method="get" action="/export/query/options/range" class="date-form" id="input-form">
+				    <input type="hidden" name="page" value="${page}">
+				    <input type="hidden" name="field" value="${field}">
+				        <p>
+				        <label for="range">Select time period</label>
+					        <label for="range"></label>
+							<select onchange="this.form.submit()" id="range" name="range">
+									<option name="range" value="0">Select</option>
+							  		<option name="range" value="1">Within range</option>
+							  		<option name="range" value="2">All time</option>
+							</select>
+				        </p>
+				    </form:form>
+				</div>	
 				</div>
-				<div id="export-choices">
-				<input type="checkbox" id="input" name="input" value="Donations">	
-				<label for="input"> Donations</label><br>	
-				<input type="checkbox" id="input" name="input" value="Donors">
-				<label for="input"> Donors</label><br>	
-				<input type="checkbox" id="input" name="input" value="Average donation">
-				<label for="input"> Average donation</label><br>	
-				<input type="checkbox" id="input" name="input" value="Donations/open">
-				<label for="input"> Donations per open</label><br>
-				<input type="checkbox" id="input" name="input" value="Donations/click">
-				<label for="input"> Donations per click</label><br>
-				<input type="checkbox" id="input" name="input" value="Donors/open">
-				<label for="input"> Donors per open</label><br>
-				<input type="checkbox" id="input" name="input" value="Donors/click">
-				<label for="input"> Donors per click</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring donations">
-				<label for="input"> Recurring donations</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring donors">
-				<label for="input"> Recurring donors</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring revenue">
-				<label for="input"> Recurring revenue</label><br>
+							</c:when>
+			</c:choose>
+<c:choose>
+    <c:when test="${ range == 1}">
+			<div id="export-choices">
+           		<div class="dropdown">
+					<form:form method="get" action="/export/query/options/rangeset" class="date-form" id="input-form">
+					    	<div id="date-choices">
+					      	<input type="hidden" name="page" value="${page}">
+				   			 <input type="hidden" name="field" value="${field}">
+				  		    <input type="hidden" name="type" value="${range}">
+							<input type="date" value="${startdateD}" name="startdateD"/>
+							<input type="date" value="${enddateD}" name="enddateD"/>
+							</div>
+				    </form:form>
+				</div>	
 				</div>
 			</c:when>
-			<c:when test="${ field == 1}">
+			</c:choose>
+    <c:choose>
+    <c:when test="${ range > 0}">
 			<div id="export-choices">
-				<input type="checkbox" id="input" name="input" value="Clicks">
-				<label for="input"> Clicks</label><br>
-				<input type="checkbox" id="input" name="input" value="Opens">
-				<label for="input"> Opens</label><br>
-				<input type="checkbox" id="input" name="input" value="Bounces">
-				<label for="input"> Bounces</label><br>	
-				<input type="checkbox" id="input" name="input" value="Unsubscribes">
-				<label for="input"> Unsubscribes</label><br>	
-				<input type="checkbox" id="input" name="input" value="Open rate">
-				<label for="input"> Open rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Click rate">
-				<label for="input"> Click rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Unsubscribe rate">	
-				<label for="input"> Unsubscribe rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Bounce rate">
-				<label for="input"> Bounce rate</label><br>	
-				<input type="checkbox" id="input" name="input" value="Clicks/opens">	
-				<label for="input"> Clicks per open</label><br>	
-				<input type="checkbox" id="input" name="input" value="Revenue">
-				<label for="input"> Revenue</label><br>		
+           		<div class="dropdown">
+					<form:form method="get" action="/export/query/options/type" class="date-form" id="input-form">
+				    <input type="hidden" name="page" value="${page}">
+				    <input type="hidden" name="field" value="${field}">
+				        <p>
+				        <label for="type">${message}</label>
+					        <label for="type"></label>
+							<select onchange="this.form.submit()" id="type" name="type">
+							<c:choose>
+							  	<c:when test="${ field == 1}">
+							  		<option name="type" value="0">${ typelabel }</option>
+							  		<option name="type" value="7">All emails</option>
+									<option name="type" value="1">Refcode 1</option>
+									<option name="type" value="2">Refcode 2</option>
+									<option name="type" value="4">Title</option>
+									<option name="type" value="5">Category</option>
+									<option name="type" value="5">Subject line</option>
+									<option name="type" value="6">Sender</option>
+						        </c:when>
+						        </c:choose>
+							</select>
+				        </p>
+				    </form:form>
+				</div>	
 				</div>
-				<div id="export-choices">
-				<input type="checkbox" id="input" name="input" value="Donations">	
-				<label for="input"> Donations</label><br>	
-				<input type="checkbox" id="input" name="input" value="Donors">
-				<label for="input"> Donors</label><br>	
-				<input type="checkbox" id="input" name="input" value="Average donation">
-				<label for="input"> Average donation</label><br>	
-				<input type="checkbox" id="input" name="input" value="Donations/open">
-				<label for="input"> Donations per open</label><br>
-				<input type="checkbox" id="input" name="input" value="Donations/click">
-				<label for="input"> Donations per click</label><br>
-				<input type="checkbox" id="input" name="input" value="Donors/open">
-				<label for="input"> Donors per open</label><br>
-				<input type="checkbox" id="input" name="input" value="Donors/click">
-				<label for="input"> Donors per click</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring donations">
-				<label for="input"> Recurring donations</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring donors">
-				<label for="input"> Recurring donors</label><br>
-				<input type="checkbox" id="input" name="input" value="Recurring revenue">
-				<label for="input"> Recurring revenue</label><br>
+			</c:when>
+			</c:choose>
+    <div id="export-form">
+    <form method="get" class="date-form" action="/export/excel">
+		<c:choose>
+			<c:when test="${ type == 1}">
+			<div id="export-choices">
+           		<div class="dropdown">
+					<form:form method="POST" action="/export/query/excel" class="dropdown-item formclass">
+					    	<input type="hidden" name="page" value="${page}">
+				   			<input type="hidden" name="field" value="${field}">
+				  		    <input type="hidden" name="type" value="${range}">
+				    <input type="hidden" name="startdateD" value="${startdateD}">
+				    <input type="hidden" name="enddateD" value="${enddateD}">
+				        <p>
+				        <label for="type">${message}</label>
+					        <label for="parameter"></label>
+							<select>
+							<c:choose>
+							  	<c:when test="${ type == 1}">
+							  		<option name="parameter" value="0">Select</option>
+									<option name="parameter" value="1">Equals</option>
+									<option name="parameter" value="2">Contains</option>
+						        </c:when>
+						        </c:choose>
+							</select>
+				        </p>
+				       <p>
+				        <label for="type">${message}</label>
+					        <label for="option"></label>
+							<c:choose>
+							  	<c:when test="${ type == 1}">
+									<textarea name="option" placeholder="Final parameter"></textarea>
+					            </c:when>
+						       </c:choose>
+				        </p>
+				    </form:form>
+				</div>	
 				</div>
 			</c:when>
 			<c:when test="${ field == 2}">
