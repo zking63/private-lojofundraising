@@ -2,6 +2,10 @@ package com.coding.LojoFundrasing.Repos;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +16,8 @@ import com.coding.LojoFundrasing.Models.Emails;
 
 
 @Repository
-public interface EmailRepo extends CrudRepository<Emails, Long>{
+public interface EmailRepo extends CrudRepository<Emails, Long>, JpaRepository<Emails, Long>, JpaSpecificationExecutor<Emails>{
+	
 	List<Emails> findAll();
 	Emails findByemailRefcode1(String emailRefcode1);
 	//find emails without group 
@@ -88,4 +93,9 @@ public interface EmailRepo extends CrudRepository<Emails, Long>{
 	
 	@Query(value = "SELECT SUM(amount) FROM donations WHERE committees_id = :committee_id AND email_id = :emailid AND (recurring = 'unlimited' OR recurring >= 1)", nativeQuery = true)
 	Double RecurringDonationSum(@Param("emailid") Long id, Long committee_id);
+	
+	//order emails by date
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND :inSql = :refcode1 order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> Refcode1Equals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String refcode1, String inSql);
 }

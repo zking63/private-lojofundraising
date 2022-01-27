@@ -118,7 +118,7 @@
         </div>
     <form method="get" id="input-form" action="/export/query/options">
    	<div id="export-first-question">
-        <label for="field">${message}</label>
+        <label for="field">What are you exporting?</label>
 		<select onchange="this.form.submit()" id="field" name="field">
 		<c:choose>
 			<c:when test="${ field == 0}">
@@ -176,7 +176,6 @@
 					<div id="parameter-choices">
 				    <input type="hidden" name="page" value="${page}">
 				    <input type="hidden" name="field" value="${field}">
-				        <p>
 				        <label for="range">Time period:</label>
 							<select onchange="this.form.submit()" id="range" name="range">
 							<c:choose>
@@ -195,18 +194,16 @@
 							  	</c:otherwise>
 							</c:choose>
 							</select>
-				        </p>
 				        </div>
 				    </form:form>	
 							</c:when>
 			</c:choose>
-<c:choose>
-    <c:when test="${ range > 0}">
-					<form:form method="get" action="/export/query/options/typerange"  id="input-form">
-					    			<input type="hidden" name="page" value="${page}">
-						   			<input type="hidden" name="field" value="${field}">
-						  		    <input type="hidden" name="range" value="${range}">
-					    	<c:if test="${ range == 1 }">
+<form method="get" action="/export/query/excel" id="input-form">
+				    <input type="hidden" name="page" value="${page}">
+				    <input type="hidden" name="field" value="${field}">
+				    <input type="hidden" name="type" value="${type}">
+				    <input type="hidden" name="range" value="${range}">
+    					    	<c:if test="${ range == 1 }">
 						    	<div id="parameter-choices">
 						  		    <div id="date-choice">
 										<input type="date" value="${startdateD}" name="startdateD"/>
@@ -216,73 +213,46 @@
 									</div>
 								</div>
 					    	</c:if>
-						<div id="parameter-choices">
-				        <label for="type">Select variable</label>
-					        <label for="type"></label>
-							<select onchange="this.form.submit()" id="type" name="type">
-							<c:choose>
-							  	<c:when test="${ field == 1}">
-									<c:choose>
-								  		<c:when test="${ type == 0}">
-									  		<option name="type" value="0">Select</option>
-									  		<option name="type" value="7">All emails</option>
-											<option name="type" value="1">Refcode 1</option>
-											<option name="type" value="2">Refcode 2</option>
-											<option name="type" value="4">Title</option>
-											<option name="type" value="5">Category</option>
-											<option name="type" value="5">Subject line</option>
-											<option name="type" value="6">Sender</option>
-							        	</c:when>
-							        </c:choose>
-							        <c:choose>
-								  		<c:when test="${ type == 1}">
-											<option name="type" value="1">Refcode 1</option>
-											<option name="type" value="2">Refcode 2</option>
-											<option name="type" value="4">Title</option>
-											<option name="type" value="5">Category</option>
-											<option name="type" value="5">Subject line</option>
-											<option name="type" value="6">Sender</option>
-											<option name="type" value="7">All emails</option>
-							        	</c:when>
-							        </c:choose>
-						        </c:when>
-						        </c:choose>
-							</select>
-				        </div>
-				    </form:form>
-    <form method="get" action="/export/query/excel" id="input-form">
-		<c:choose>
-			<c:when test="${type != 0}">
 			<c:choose>
 			<c:when test="${field == 1}">
-				    <input type="hidden" name="page" value="${page}">
-				    <input type="hidden" name="field" value="${field}">
-				    <input type="hidden" name="type" value="${type}">
-				    <input type="hidden" name="range" value="${range}">
-					<input type="hidden" value="${startdateD}" name="startdateD"/>
-					<input type="hidden" value="${enddateD}" name="enddateD"/>
+					<div id="parameter-choices">
+				        <label for="type">Select search factor:</label>
+				        <select>
+											<option name="type" value="${type}">${type}</option>
+											<option name="type" value="Refcode 1">Refcode 1</option>
+											<option name="type" value="Refcode 2">Refcode 2</option>
+											<option name="type" value="Title">Title</option>
+											<option name="type" value="Category">Category</option>
+											<option name="type" value="Subject">Subject line</option>
+											<option name="type" value="Sender">Sender</option>
+											<option name="type" value="All emails">All emails</option>
+						</select>
+				        </div>
+					<c:choose>
+					<c:when test="${ type != 'All emails'}">
 				        <div id="parameter-choices">
-					        <label for="operator">Select operator</label>
+					        <label for="operator">Select operator:</label>
 							<select id="operator" name="operator">
-							<c:choose>
-							  	<c:when test="${ type != 7}">
-							  		<option name="operator" value="0">Select</option>
-									<option name="operator" value="1">Equals</option>
-									<option name="operator" value="2">Contains</option>
-						        </c:when>
-						        </c:choose>
+							  		<option value="${operator }">${operator }</option>
+									<option value="Equals">Equals</option>
+									<option value="Contains">Contains</option>
 							</select>
 				        </div>
-				       <div id="parameter-choices">
+				        <div id="parameter-choices">
 					        <label for="operand"></label>
 							<c:choose>
-							  	<c:when test="${ type == 1}">
+							  	<c:when test="${ type != 'All emails'}">
 									<textarea name="operand" placeholder="Operand"></textarea>
 					            </c:when>
 						       </c:choose>
-				        </div>
+						</div>
+				      </c:when>
+				</c:choose>
 				        </div>
 				        <div id="export-choices-box">
+				        <p>
+				        <label for="input">Select data fields:</label>
+				        </p>
 				        			<div id="export-choices">
 										<input type="checkbox" id="input" name="input" value="Clicks">
 										<label for="input"> Clicks</label><br>
@@ -376,13 +346,9 @@
 				</div>
 			</c:when>
 		</c:choose>
-					</c:when>
-			</c:choose>
 			<button>Download Excel</button>
 	</form>
-			</c:when>
-			</c:choose>
-			
+							        </div>
 </div>
 </body>
 </html>

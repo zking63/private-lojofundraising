@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +34,8 @@ import com.coding.LojoFundrasing.Repos.EmailRepo;
 
 @Service
 public class EmailService {
+	@PersistenceContext
+	private EntityManager entitymanager;
 	@Autowired
 	private EmailRepo erepo;
 	
@@ -637,4 +646,11 @@ public class EmailService {
 	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id){
 		return erepo.findByDonorCountOrderByAsc(startdateE, enddateE, committee_id);
 	}
+	
+	public List<Emails> Refcode1Equals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, @Param("enddateE") 
+	@DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String refcode1){
+		String inSql = "emails.email_refcode1";
+		return erepo.Refcode1Equals(startdateE, enddateE, committee_id, refcode1, inSql);
+	}
+
 }
