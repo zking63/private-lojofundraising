@@ -201,7 +201,6 @@
 <form method="get" action="/export/query/excel" id="input-form">
 				    <input type="hidden" name="page" value="${page}">
 				    <input type="hidden" name="field" value="${field}">
-				    <input type="hidden" name="type" value="${type}">
 				    <input type="hidden" name="range" value="${range}">
     					    	<c:if test="${ range == 1 }">
 						    	<div id="parameter-choices">
@@ -217,37 +216,30 @@
 			<c:when test="${field == 1}">
 					<div id="parameter-choices">
 				        <label for="type">Select search factor:</label>
-				        <select>
-											<option name="type" value="${type}">${type}</option>
-											<option name="type" value="Refcode 1">Refcode 1</option>
-											<option name="type" value="Refcode 2">Refcode 2</option>
-											<option name="type" value="Title">Title</option>
-											<option name="type" value="Category">Category</option>
-											<option name="type" value="Subject">Subject line</option>
-											<option name="type" value="Sender">Sender</option>
-											<option name="type" value="All emails">All emails</option>
+				        <select id="type" name="type">
+											<option value="${type}">${type}</option>
+											<option value="Refcode 1">Refcode 1</option>
+											<option value="Refcode 2">Refcode 2</option>
+											<option value="Title">Title</option>
+											<option value="Category">Category</option>
+											<option value="Subject">Subject line</option>
+											<option value="Sender">Sender</option>
+											<option value="All emails">All emails</option>
 						</select>
 				        </div>
-					<c:choose>
-					<c:when test="${ type != 'All emails'}">
 				        <div id="parameter-choices">
 					        <label for="operator">Select operator:</label>
 							<select id="operator" name="operator">
 							  		<option value="${operator }">${operator }</option>
 									<option value="Equals">Equals</option>
 									<option value="Contains">Contains</option>
+									<option value="Is blank">Is blank</option>
 							</select>
 				        </div>
 				        <div id="parameter-choices">
 					        <label for="operand"></label>
-							<c:choose>
-							  	<c:when test="${ type != 'All emails'}">
-									<textarea name="operand" placeholder="Operand"></textarea>
-					            </c:when>
-						       </c:choose>
+									<textarea name="operand" placeholder="${operand }"></textarea>
 						</div>
-				      </c:when>
-				</c:choose>
 				        </div>
 				        <div id="export-choices-box">
 				        <p>

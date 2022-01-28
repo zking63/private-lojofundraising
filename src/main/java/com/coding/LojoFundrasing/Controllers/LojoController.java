@@ -1259,11 +1259,10 @@ public class LojoController {
 			 if(range == 0) {
 				 message = "Please select range.";
 			 }
-			 String typelabel = "Select";
 			 String type = "Select";
 			 String select = "Select";
 			 String operator = "Select";
-			 String operand = "Select";
+			 String operand = "Operand";
 			 model.addAttribute("message", message);
 			 model.addAttribute("startdateD", startdateD);
 			 model.addAttribute("field", field);
@@ -1271,14 +1270,13 @@ public class LojoController {
 			 System.out.println("type in range: " + type);
 			 model.addAttribute("Select", select);
 			 model.addAttribute("range", range);
-			 model.addAttribute("typelabel", typelabel);
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("user", user);
 			 model.addAttribute("operator", operator);
 			 model.addAttribute("operand", operand);
 	        return "ExportQuery.jsp";
 	    } 
-	    @GetMapping("/export/query/options/type")
+	  /*  @GetMapping("/export/query/options/type")
 	    public String setexportoneQueryRange(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, @RequestParam("type") String type, @RequestParam("operator") String operator, 
 				 @RequestParam("operand") String operand, @RequestParam("range") Integer range, HttpServletRequest request,  
@@ -1320,8 +1318,8 @@ public class LojoController {
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("user", user);
 	        return "ExportQuery.jsp";
-	    } 
-	    @GetMapping("/export/query/options/typerange")
+	    } */
+	   /* @GetMapping("/export/query/options/typerange")
 	    public String setexportQueryRange(@ModelAttribute("donor") Donor donor, HttpSession session, Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, @RequestParam("field") Integer field, @RequestParam("type") String type, @RequestParam("range") Integer range, HttpServletRequest request,  
 				 HttpServletResponse response) throws IOException {
@@ -1364,7 +1362,7 @@ public class LojoController {
 			 model.addAttribute("enddateD", enddateD);
 			 model.addAttribute("user", user);
 	        return "ExportQuery.jsp";
-	    } 
+	    } */
 	    @GetMapping("/export/query/excel")
 	    public String exportQueryToExcel(Model model, @Param("startdateD") @DateTimeFormat(iso = ISO.DATE) String startdateD, 
 				 @Param("enddateD") @DateTimeFormat(iso = ISO.DATE) String enddateD, 
@@ -1407,22 +1405,8 @@ public class LojoController {
 			 //emails
 			 if (field == 1) {
 				 System.out.println("Emails");
-				 if (type.equals("Refcode 1")) {
-					 System.out.println("refcode 1");
-					 System.out.println("op" + operator);
-					 if (operator.equals("Equals")) {
-						 System.out.println("equals");
-						 System.out.println("operand " + operand);
-						 operand = "REFCODE2_TEST";
-						 //emails = eservice.Refcode1Equals(startdateD, enddateD, committee_id, operand);
-						// System.out.println("list size " + emails.size());
-						 for (int i = 0; i < emails.size(); i++) {
-							 System.out.println("email " + emails.get(i));
-						 }
-		
-					 }
-				 }
-				 excelService.exportEmailsToExcel(emails, input, response);
+				 emails = eservice.EmailListForExport(startdateD, enddateD, committee_id, type, operator, operand);
+				excelService.exportEmailsToExcel(emails, input, response);
 			 }
 			 if (field == 0) {
 				 System.out.println("Emails Groups");

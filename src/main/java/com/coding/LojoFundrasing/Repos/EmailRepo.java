@@ -28,9 +28,9 @@ public interface EmailRepo extends CrudRepository<Emails, Long>, JpaRepository<E
 	//find emails by refcodes and commitee
 	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND email_refcode1 = :emailRefcode AND email_refcode2 = :emailRefcode2", nativeQuery = true)
 	Emails findByemailRefcodeandCommittee(String emailRefcode, String emailRefcode2, Long committee_id);
-	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND email_refcode1 = :emailRefcode AND (email_refcode2 IS NULL or email_refcode2 = '')", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND email_refcode1 = :emailRefcode AND (email_refcode2 IS NULL or email_refcode2 = '' or email_refcode2 = ' ')", nativeQuery = true)
 	Emails findByemailOneRefcodeandCommittee(String emailRefcode, Long committee_id);
-	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND email_refcode2 = :emailRefcode2 AND (email_refcode1 IS NULL or email_refcode1 = '')", nativeQuery = true)
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND email_refcode2 = :emailRefcode2 AND (email_refcode1 IS NULL or email_refcode1 = '' or email_refcode1 = ' ')", nativeQuery = true)
 	Emails findByemailRefcodeTWOandCommittee(String emailRefcode2, Long committee_id);
 	
 	//order emails by date
@@ -94,8 +94,82 @@ public interface EmailRepo extends CrudRepository<Emails, Long>, JpaRepository<E
 	@Query(value = "SELECT SUM(amount) FROM donations WHERE committees_id = :committee_id AND email_id = :emailid AND (recurring = 'unlimited' OR recurring >= 1)", nativeQuery = true)
 	Double RecurringDonationSum(@Param("emailid") Long id, Long committee_id);
 	
-	//order emails by date
-	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND :inSql = :refcode1 order by emails.Emaildate Desc", nativeQuery = true)
+	//find emails by refcode1
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_refcode1 = :operand order by emails.Emaildate Desc", nativeQuery = true)
 	List<Emails> Refcode1Equals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
-			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String refcode1, String inSql);
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_refcode1 LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> Refcode1Contains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (email_refcode1 IS NULL or email_refcode1 = '' or email_refcode1 = ' ')", nativeQuery = true)
+	List<Emails> Refcode1isBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find emails by refcode2
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_refcode2 = :operand order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> Refcode2Equals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_refcode2 LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> Refcode2Contains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (email_refcode2 IS NULL or email_refcode2 = ' ' or email_refcode2 = '')", nativeQuery = true)
+	List<Emails> Refcode2isBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find emails by name
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_name = :operand order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> nameEquals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_name LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> nameContains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (email_name IS NULL or email_name = '' or email_name = ' ')", nativeQuery = true)
+	List<Emails> nameisBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find emails by category
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_category = :operand order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> categoryEquals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.email_category LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> categoryContains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (email_category IS NULL or email_category = '' or email_category = ' ')", nativeQuery = true)
+	List<Emails> categoryisBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find emails by subject line
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.subject_line = :operand order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> subjectEquals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.subject_line LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> subjectContains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (subject_line IS NULL or subject_line = '' or subject_line = ' ')", nativeQuery = true)
+	List<Emails> subjectisBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
+	//find emails by sender
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.sender = :operand order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> senderEquals(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND emails.sender LIKE %:operand% order by emails.Emaildate Desc", nativeQuery = true)
+	List<Emails> senderContains(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id, String operand);
+	
+	@Query(value = "SELECT * FROM emails WHERE committees_id = :committee_id AND Emaildate >= DATE(:startdateE) and Emaildate < DATE_ADD(DATE(:enddateE), INTERVAL 1 DAY) AND (sender IS NULL or sender = '' or sender = ' ')", nativeQuery = true)
+	List<Emails> senderisBlank(@Param("startdateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String startdateE, 
+			@Param("enddateE") @DateTimeFormat(pattern ="yyyy-MM-dd") String enddateE, Long committee_id);
+	
 }
