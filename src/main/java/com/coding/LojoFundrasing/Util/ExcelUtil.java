@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -1548,6 +1549,13 @@ public class ExcelUtil {
     	int DonorsRecurCol =0;
     	int RevRecurCol = 0;
     	
+    	int variantCol = 0;
+    	int categoryCol =0;
+    	int senderCol = 0;
+    	int subjectCol = 0;
+    	int testingCol =0;
+    	int linkCol = 0;
+    	
     	
     	this.emails = emails;
         workbook = new XSSFWorkbook();
@@ -1575,6 +1583,10 @@ public class ExcelUtil {
         
         int columnCount = 8;
         Cell cell = row.createCell(columnCount);
+        
+        if (input == null) {
+        	input = Arrays.asList("Clicks", "Opens", "Bounces","Unsubscribes","Open rate");
+        }
         
             for (int i = 0; i < input.size(); i++) {
             	System.out.println("Input: " + input.get(i));
@@ -1698,6 +1710,30 @@ public class ExcelUtil {
                     System.out.println("Input 2: " + input.get(i));
                     System.out.println("Column logged: " + RevRecurCol);
             	}
+            	if (input.get(i).equals("variant")) {
+            		variantCol = columnCount;
+                    createCell(row, columnCount++, "Testing variant", style); 
+            	}
+            	if (input.get(i).equals("category")) {
+            		categoryCol = columnCount;
+                    createCell(row, columnCount++, "Category", style); 
+            	}
+            	if (input.get(i).equals("link")) {
+            		linkCol = columnCount;
+                    createCell(row, columnCount++, "Link", style); 
+            	}
+            	if (input.get(i).equals("sender")) {
+            		senderCol = columnCount;
+                    createCell(row, columnCount++, "Sender", style); 
+            	}
+            	if (input.get(i).equals("subject")) {
+            		subjectCol = columnCount;
+                    createCell(row, columnCount++, "Subject line", style); 
+            	}
+            	if (input.get(i).equals("testing")) {
+            		testingCol = columnCount;
+                    createCell(row, columnCount++, "Testing factor", style); 
+            	}
             }
         
         //write data lines
@@ -1778,6 +1814,25 @@ public class ExcelUtil {
             }
             if (columnCount == RevRecurCol) {
             	createCell(row, columnCount++, emails.get(i).getRecurringRevenue(), bodyStyle);
+            }
+            
+            if (columnCount == variantCol) {
+            	createCell(row, columnCount++, emails.get(i).getVariant(), bodyStyle);
+            }
+            if (columnCount == categoryCol) {
+            	createCell(row, columnCount++, emails.get(i).getEmailCategory(), bodyStyle);
+            }
+            if (columnCount == linkCol) {
+            	createCell(row, columnCount++, emails.get(i).getLink(), bodyStyle);
+            }
+            if (columnCount == senderCol) {
+            	createCell(row, columnCount++, emails.get(i).getSender(), bodyStyle);
+            }
+            if (columnCount == subjectCol) {
+            	createCell(row, columnCount++, emails.get(i).getSubjectLine(), bodyStyle);
+            }
+            if (columnCount == testingCol) {
+            	createCell(row, columnCount++, emails.get(i).getTesting(), bodyStyle);
             }
         }
         //export

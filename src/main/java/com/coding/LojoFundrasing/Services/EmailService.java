@@ -655,7 +655,6 @@ public class EmailService {
 			System.out.println("type registered in ref " + type);
 			if (operator.contentEquals("Equals")) {
 				System.out.println("operator " + operator);
-				String string = "email_refcode1";
 				return erepo.Refcode1Equals(startdateE, enddateE, committee_id, operand);
 			}
 			if (operator.contentEquals("Contains")) {
@@ -692,7 +691,6 @@ public class EmailService {
 			System.out.println("type registered in ref " + type);
 			if (operator.contentEquals("Equals")) {
 				System.out.println("operator " + operator);
-				String string = "email_refcode1";
 				return erepo.nameEquals(startdateE, enddateE, committee_id, operand);
 			}
 			if (operator.contentEquals("Contains")) {
@@ -711,7 +709,6 @@ public class EmailService {
 			System.out.println("type registered in ref " + type);
 			if (operator.contentEquals("Equals")) {
 				System.out.println("operator " + operator);
-				String string = "email_refcode1";
 				return erepo.categoryEquals(startdateE, enddateE, committee_id, operand);
 			}
 			if (operator.contentEquals("Contains")) {
@@ -730,7 +727,6 @@ public class EmailService {
 			System.out.println("type registered in ref " + type);
 			if (operator.contentEquals("Equals")) {
 				System.out.println("operator " + operator);
-				String string = "email_refcode1";
 				return erepo.subjectEquals(startdateE, enddateE, committee_id, operand);
 			}
 			if (operator.contentEquals("Contains")) {
@@ -749,7 +745,6 @@ public class EmailService {
 			System.out.println("type registered in ref " + type);
 			if (operator.contentEquals("Equals")) {
 				System.out.println("operator " + operator);
-				String string = "email_refcode1";
 				return erepo.senderEquals(startdateE, enddateE, committee_id, operand);
 			}
 			if (operator.contentEquals("Contains")) {
@@ -759,6 +754,42 @@ public class EmailService {
 			if (operator.contentEquals("Is blank")) {
 				System.out.println("operator after equals " + operator);
 				return erepo.senderisBlank(startdateE, enddateE, committee_id);
+			}
+			else {
+				return erepo.findByOrderByDesc(startdateE, enddateE, committee_id);
+			}
+		}
+		if (type.contentEquals("Testing")) {
+			System.out.println("type registered in ref " + type);
+			if (operator.contentEquals("Equals")) {
+				System.out.println("operator " + operator);
+				return erepo.testingEquals(startdateE, enddateE, committee_id, operand);
+			}
+			if (operator.contentEquals("Contains")) {
+				System.out.println("operator after equals " + operator);
+				return erepo.testingContains(startdateE, enddateE, committee_id, operand);
+			}
+			if (operator.contentEquals("Is blank")) {
+				System.out.println("operator after equals " + operator);
+				return erepo.testingisBlank(startdateE, enddateE, committee_id);
+			}
+			else {
+				return erepo.findByOrderByDesc(startdateE, enddateE, committee_id);
+			}
+		}
+		if (type.contentEquals("Link")) {
+			System.out.println("type registered in ref " + type);
+			if (operator.contentEquals("Equals")) {
+				System.out.println("operator " + operator);
+				return erepo.linkEquals(startdateE, enddateE, committee_id, operand);
+			}
+			if (operator.contentEquals("Contains")) {
+				System.out.println("operator after equals " + operator);
+				return erepo.linkContains(startdateE, enddateE, committee_id, operand);
+			}
+			if (operator.contentEquals("Is blank")) {
+				System.out.println("operator after equals " + operator);
+				return erepo.linkisBlank(startdateE, enddateE, committee_id);
 			}
 			else {
 				return erepo.findByOrderByDesc(startdateE, enddateE, committee_id);

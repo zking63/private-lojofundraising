@@ -224,6 +224,8 @@
 											<option value="Category">Category</option>
 											<option value="Subject">Subject line</option>
 											<option value="Sender">Sender</option>
+											<option value="Testing">Testing</option>
+											<option value="Link">Link</option>
 											<option value="All emails">All emails</option>
 						</select>
 				        </div>
@@ -265,15 +267,15 @@
 										<input type="checkbox" id="input" name="input" value="Clicks/opens">	
 										<label for="input"> Clicks per open</label><br>	
 										<input type="checkbox" id="input" name="input" value="Revenue">
-										<label for="input"> Revenue</label><br>		
-									</div>
-									<div id="export-choices">
+										<label for="input"> Revenue</label><br>	
 										<input type="checkbox" id="input" name="input" value="Donations">	
 										<label for="input"> Donations</label><br>	
 										<input type="checkbox" id="input" name="input" value="Donors">
 										<label for="input"> Donors</label><br>	
 										<input type="checkbox" id="input" name="input" value="Average donation">
-										<label for="input"> Average donation</label><br>	
+										<label for="input"> Average donation</label><br>		
+									</div>
+									<div id="export-choices">
 										<input type="checkbox" id="input" name="input" value="Donations/open">
 										<label for="input"> Donations per open</label><br>
 										<input type="checkbox" id="input" name="input" value="Donations/click">
@@ -288,6 +290,18 @@
 										<label for="input"> Recurring donors</label><br>
 										<input type="checkbox" id="input" name="input" value="Recurring revenue">
 										<label for="input"> Recurring revenue</label><br>
+										<input type="checkbox" id="input" name="input" value="variant">
+										<label for="input"> Variant</label><br>
+										<input type="checkbox" id="input" name="input" value="category">
+										<label for="input"> Category</label><br>
+										<input type="checkbox" id="input" name="input" value="link">
+										<label for="input"> Link</label><br>
+										<input type="checkbox" id="input" name="input" value="sender">
+										<label for="input"> Sender</label><br>
+										<input type="checkbox" id="input" name="input" value="subject">
+										<label for="input"> Subject Line</label><br>
+										<input type="checkbox" id="input" name="input" value="testing">
+										<label for="input"> Testing</label><br>
 									</div>
 								</div>
 				</c:when>
